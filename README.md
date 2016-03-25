@@ -1,5 +1,5 @@
 # Mojo-ActivePerl
-基于ActivePerl打包的而成的包含perl-5.22+cpanm+Mojo-Webqq+Mojo-Weixin的完整运行环境
+基于ActivePerl打包的而成的包含Perl-5.22+cpanm+Mojo-Webqq+Mojo-Weixin的完整运行环境
 
 ##系统要求：
 * Unix/Linux x86_64
@@ -15,21 +15,21 @@
 
 ##安装方法：
 
-1. 下载[压缩包](https://github.com/sjdy521/Mojo-ActivePerl/blob/master/Mojo-ActivePerl-5.22.1.2201-x86_64-linux-glibc-2.15-299574.tar.gz)
+1. 下载[ZIP压缩包](https://github.com/sjdy521/Mojo-ActivePerl/archive/master.zip)(约43M)
 
-        $ wget https://github.com/sjdy521/Mojo-ActivePerl/blob/master/Mojo-ActivePerl-5.22.1.2201-x86_64-linux-glibc-2.15-299574.tar.gz
+        $ wget https://github.com/sjdy521/Mojo-ActivePerl/archive/master.zip -O Mojo-ActivePerl.zip
 
-2. 解压到任意目录
+2. 解压到当前目录并进入目录
     
-        $ tar zxf Mojo-ActivePerl-5.22.1.2201-x86_64-linux-glibc-2.15-299574.tar.gz
-        $ cd Mojo-ActivePerl-5.22.1.2201-x86_64-linux-glibc-2.15-299574
+        $ unzip Mojo-ActivePerl
+        $ cd Mojo-ActivePerl-master
 
 3. 运行安装脚本，指定安装目录(需要有权限创建和写入)
 
-        $ sh install.sh --prefix ~/Mojo-ActivePerl  #这里以~/Mojo-ActivePerl目录为例
+        $ sh install.sh --prefix /usr/local/Mojo-ActivePerl  #这里以/usr/local/Mojo-ActivePerl目录为例
 
-4. 把perl和cpanm路径添加到PATH环境变量（或不设置环境变量，直接使用绝对路径）
+4. 把如下perl和cpanm所在目录(/usr/local/Mojo-ActivePerl/bin/)添加到PATH环境变量（或不设置环境变量，直接使用绝对路径）
 
-        $ ~/Mojo-ActivePerl/bin/perl
-        $ ~/Mojo-ActivePerl/bin/cpanm
+        $ /usr/local/Mojo-ActivePerl/bin/perl
+        $ /usr/local/Mojo-ActivePerl/bin/cpanm
 
