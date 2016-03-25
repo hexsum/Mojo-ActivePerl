@@ -15,9 +15,9 @@
 
 ##安装方法：
 
-1. 下载[压缩包](bin/MojoActivePerl-5.22.1.2201-x86_64-linux-glibc-2.15-299574.tar.gz)
+1. 下载[压缩包](https://github.com/sjdy521/MojoActivePerl/blob/master/MojoActivePerl-5.22.1.2201-x86_64-linux-glibc-2.15-299574.tar.gz)
 
-        $ wget https://github.com/sjdy521/MojoActivePerl/bold/master/bin/MojoActivePerl-5.22.1.2201-x86_64-linux-glibc-2.15-299574.tar.gz
+        $ wget https://github.com/sjdy521/MojoActivePerl/blob/master/MojoActivePerl-5.22.1.2201-x86_64-linux-glibc-2.15-299574.tar.gz
 
 2. 解压到任意目录
     
