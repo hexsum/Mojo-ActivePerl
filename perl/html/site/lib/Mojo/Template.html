@@ -1,0 +1,483 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#SYNTAX">SYNTAX</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#auto_escape">auto_escape</a></li>
+      <li><a href="#append">append</a></li>
+      <li><a href="#capture_end">capture_end</a></li>
+      <li><a href="#capture_start">capture_start</a></li>
+      <li><a href="#code">code</a></li>
+      <li><a href="#comment_mark">comment_mark</a></li>
+      <li><a href="#compiled">compiled</a></li>
+      <li><a href="#encoding">encoding</a></li>
+      <li><a href="#escape">escape</a></li>
+      <li><a href="#escape_mark">escape_mark</a></li>
+      <li><a href="#expression_mark">expression_mark</a></li>
+      <li><a href="#line_start">line_start</a></li>
+      <li><a href="#name">name</a></li>
+      <li><a href="#namespace">namespace</a></li>
+      <li><a href="#prepend">prepend</a></li>
+      <li><a href="#replace_mark">replace_mark</a></li>
+      <li><a href="#tag_start">tag_start</a></li>
+      <li><a href="#tag_end">tag_end</a></li>
+      <li><a href="#tree">tree</a></li>
+      <li><a href="#trim_mark">trim_mark</a></li>
+      <li><a href="#unparsed">unparsed</a></li>
+      <li><a href="#vars">vars</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#process">process</a></li>
+      <li><a href="#render">render</a></li>
+      <li><a href="#render_file">render_file</a></li>
+    </ul>
+  </li>
+  <li><a href="#DEBUGGING">DEBUGGING</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Template - Perl-ish templates</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Template</span><span class="operator">;</span>
+  
+  <span class="comment"># Use Perl modules</span>
+  <span class="keyword">my</span> <span class="variable">$mt</span> <span class="operator">=</span> <span class="variable">Mojo::Template</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(&lt;&lt;</span><span class="default">'EOF'</span><span class="operator">);</span><span class="string">
+  % use Time::Piece;
+  &lt;div&gt;
+    % my $now = localtime;
+    Time: &lt;%= $now-&gt;hms %&gt;
+  &lt;/div&gt;
+  </span><span class="default">EOF</span>
+  
+  <span class="comment"># Render with arguments</span>
+  <span class="keyword">say</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(&lt;&lt;</span><span class="default">'EOF'</span><span class="operator">,</span> <span class="operator">[</span><span class="number">1</span> <span class="operator">..</span> <span class="number">13</span><span class="operator">]</span><span class="operator">,</span> <span class="string">'Hello World!'</span><span class="operator">);</span><span class="string">
+  % my ($numbers, $title) = @_;
+  &lt;div&gt;
+    &lt;h1&gt;&lt;%= $title %&gt;&lt;/h1&gt;
+    % for my $i (@$numbers) {
+      Test &lt;%= $i %&gt;
+    % }
+  &lt;/div&gt;
+  </span><span class="default">EOF</span>
+  
+  <span class="comment"># Render with named variables</span>
+  <span class="keyword">say</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">vars</span><span class="operator">(</span><span class="number">1</span><span class="operator">)-&gt;</span><span class="variable">render</span><span class="operator">(&lt;&lt;</span><span class="default">'EOF'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">title</span> <span class="operator">=&gt;</span> <span class="string">'Hello World!'</span><span class="operator">}</span><span class="operator">);</span><span class="string">
+  &lt;div&gt;
+    &lt;h1&gt;&lt;%= $title %&gt;&lt;/h1&gt;
+    %= 5 + 5
+  &lt;/div&gt;
+  </span><span class="default">EOF</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> is a minimalistic, fast, and very Perl-ish template engine, designed specifically for all those small tasks that come up during big projects. Like preprocessing a configuration file, generating text from heredocs and stuff like that.</p>
+
+<p>See <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Rendering.html">Mojolicious::Guides::Rendering</a> for information on how to generate content with the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> renderer.</p>
+
+<h1 id="SYNTAX">SYNTAX</h1>
+
+<p>For all templates <a href="../../../lib/strict.html">strict</a>, <a href="../../../lib/warnings.html">warnings</a>, <a href="../../../lib/utf8.html">utf8</a> and Perl 5.10 <a href="../../../lib/feature.html">features</a> are automatically enabled.</p>
+
+<pre><code>  &lt;% Perl code %&gt;
+  &lt;%= Perl expression, replaced with result %&gt;
+  &lt;%== Perl expression, replaced with XML escaped result %&gt;
+  &lt;%# Comment, useful for debugging %&gt;
+  &lt;%% Replaced with &quot;&lt;%&quot;, useful for generating templates %&gt;
+  % Perl code line, treated as &quot;&lt;% line =%&gt;&quot; (explained later)
+  %= Perl expression line, treated as &quot;&lt;%= line %&gt;&quot;
+  %== Perl expression line, treated as &quot;&lt;%== line %&gt;&quot;
+  %# Comment line, useful for debugging
+  %% Replaced with &quot;%&quot;, useful for generating templates</code></pre>
+
+<p>Escaping behavior can be reversed with the <a href="#auto_escape">&quot;auto_escape&quot;</a> attribute, this is the default in <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> <code>.ep</code> templates, for example.</p>
+
+<pre><code>  &lt;%= Perl expression, replaced with XML escaped result %&gt;
+  &lt;%== Perl expression, replaced with result %&gt;</code></pre>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> objects are always excluded from automatic escaping.</p>
+
+<pre><code>  <span class="operator">% </span><span class="keyword">use</span> <span class="variable">Mojo::ByteStream</span> <span class="string">'b'</span><span class="operator">;</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">b</span><span class="operator">(</span><span class="string">'&lt;div&gt;excluded!&lt;/div&gt;'</span><span class="operator">)</span> <span class="variable">%&gt;</span>
+</code></pre>
+
+<p>Whitespace characters around tags can be trimmed by adding an additional equal sign to the end of a tag.</p>
+
+<pre><code>  <span class="operator">&lt;% </span><span class="keyword">for</span> <span class="operator">(</span><span class="number">1</span> <span class="operator">..</span> <span class="number">3</span><span class="operator">)</span> <span class="operator">{</span> <span class="variable">%&gt;</span>
+    <span class="operator">&lt;</span><span class="variable">%=</span> <span class="string">'Trim all whitespace characters around this expression'</span> <span class="operator">=</span><span class="variable">%&gt;</span>
+  <span class="operator">&lt;% }</span> <span class="variable">%&gt;</span>
+</code></pre>
+
+<p>Newline characters can be escaped with a backslash.</p>
+
+<pre><code>  This is &lt;%= 1 + 1 %&gt; a\
+  single line</code></pre>
+
+<p>And a backslash in front of a newline character can be escaped with another backslash.</p>
+
+<pre><code>  This will &lt;%= 1 + 1 %&gt; result\\
+  in multiple\\
+  lines</code></pre>
+
+<p>You can capture whole template blocks for reuse later with the <code>begin</code> and <code>end</code> keywords. Just be aware that both keywords are part of the surrounding tag and not actual Perl code, so there can only be whitespace after <code>begin</code> and before <code>end</code>.</p>
+
+<pre><code>  <span class="operator">&lt;% </span><span class="keyword">my</span> <span class="variable">$block</span> <span class="operator">=</span> <span class="variable">begin</span> <span class="variable">%&gt;</span>
+    <span class="operator">&lt;% </span><span class="keyword">my</span> <span class="variable">$name</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span> <span class="operator">=</span><span class="variable">%&gt;</span>
+    <span class="variable">Hello</span> <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$name</span> <span class="variable">%&gt;</span><span class="operator">.</span>
+  <span class="operator">&lt;% </span><span class="variable">end</span> <span class="variable">%&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$block</span><span class="operator">-&gt;(</span><span class="string">'Baerbel'</span><span class="operator">)</span> <span class="variable">%&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$block</span><span class="operator">-&gt;(</span><span class="string">'Wolfgang'</span><span class="operator">)</span> <span class="variable">%&gt;</span>
+</code></pre>
+
+<p>Perl lines can also be indented freely.</p>
+
+<pre><code>  <span class="operator">% </span><span class="keyword">my</span> <span class="variable">$block</span> <span class="operator">=</span> <span class="variable">begin</span>
+    <span class="operator">% </span><span class="keyword">my</span> <span class="variable">$name</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">Hello</span> <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$name</span> <span class="variable">%&gt;</span><span class="operator">.</span>
+  <span class="operator">% </span><span class="variable">end</span>
+  <span class="variable">%=</span> <span class="variable">$block</span><span class="operator">-&gt;(</span><span class="string">'Baerbel'</span><span class="operator">)</span>
+  <span class="variable">%=</span> <span class="variable">$block</span><span class="operator">-&gt;(</span><span class="string">'Wolfgang'</span><span class="operator">)</span>
+</code></pre>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> templates get compiled to a Perl subroutine, that means you can access arguments simply via <code>@_</code>.</p>
+
+<pre><code>  <span class="operator">% </span><span class="keyword">my</span> <span class="operator">(</span><span class="variable">$foo</span><span class="operator">,</span> <span class="variable">$bar</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  <span class="operator">% </span><span class="keyword">my</span> <span class="variable">$x</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  <span class="variable">test</span> <span class="number">123</span> <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$foo</span> <span class="variable">%&gt;</span>
+</code></pre>
+
+<p>The compilation of templates to Perl code can make debugging a bit tricky, but <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> will return <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a> objects that stringify to error messages with context.</p>
+
+<pre><code>  <span class="variable">Bareword</span> <span class="string">"xx"</span> <span class="keyword">not</span> <span class="variable">allowed</span> <span class="keyword">while</span> <span class="string">"strict subs"</span> <span class="variable">in</span> <span class="keyword">use</span> <span class="variable">at</span> <span class="variable">template</span> <span class="variable">line</span> <span class="number">4.</span>
+  <span class="number">2</span><span class="operator">:</span> <span class="operator">&lt;/</span><span class="variable">head</span><span class="operator">&gt;</span>
+  <span class="number">3</span><span class="operator">:</span> <span class="operator">&lt;</span><span class="variable">body</span><span class="operator">&gt;</span>
+  <span class="number">4</span><span class="operator">:</span> <span class="operator">% </span><span class="keyword">my</span> <span class="variable">$i</span> <span class="operator">=</span> <span class="number">2</span><span class="operator">;</span> <span class="variable">xx</span>
+  <span class="number">5</span><span class="operator">:</span> <span class="variable">%=</span> <span class="variable">$i</span> <span class="operator">*</span> <span class="number">2</span>
+  <span class="number">6</span><span class="operator">:</span> <span class="operator">&lt;/</span><span class="variable">body</span><span class="operator">&gt;</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> implements the following attributes.</p>
+
+<h2 id="auto_escape">auto_escape</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">auto_escape</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">auto_escape</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Activate automatic escaping.</p>
+
+<pre><code>  <span class="comment"># "&amp;lt;html&amp;gt;"</span>
+  <span class="variable">Mojo::Template</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">auto_escape</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">)-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">"&lt;%= '&lt;html&gt;' %&gt;"</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="append">append</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$code</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">append</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">'warn "Processed template"'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Append Perl code to compiled template. Note that this code should not contain newline characters, or line numbers in error messages might end up being wrong.</p>
+
+<h2 id="capture_end">capture_end</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$end</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">capture_end</span><span class="operator">;</span>
+  <span class="variable">$mt</span>     <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">capture_end</span><span class="operator">(</span><span class="string">'end'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Keyword indicating the end of a capture block, defaults to <code>end</code>.</p>
+
+<pre><code>  &lt;% my $block = begin %&gt;
+    Some data!
+  &lt;% end %&gt;</code></pre>
+
+<h2 id="capture_start">capture_start</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$start</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">capture_start</span><span class="operator">;</span>
+  <span class="variable">$mt</span>       <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">capture_start</span><span class="operator">(</span><span class="string">'begin'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Keyword indicating the start of a capture block, defaults to <code>begin</code>.</p>
+
+<pre><code>  &lt;% my $block = begin %&gt;
+    Some data!
+  &lt;% end %&gt;</code></pre>
+
+<h2 id="code">code</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$code</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="variable">$code</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perl code for template if available.</p>
+
+<h2 id="comment_mark">comment_mark</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$mark</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">comment_mark</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">comment_mark</span><span class="operator">(</span><span class="string">'#'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character indicating the start of a comment, defaults to <code><span class="comment">#</span>
+</code>.</p>
+
+<pre><code>  &lt;%# This is a comment %&gt;</code></pre>
+
+<h2 id="compiled">compiled</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$compiled</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">compiled</span><span class="operator">;</span>
+  <span class="variable">$mt</span>          <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">compiled</span><span class="operator">(</span><span class="variable">$compiled</span><span class="operator">);</span>
+</code></pre>
+
+<p>Compiled template code if available.</p>
+
+<h2 id="encoding">encoding</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$encoding</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">encoding</span><span class="operator">;</span>
+  <span class="variable">$mt</span>          <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">encoding</span><span class="operator">(</span><span class="string">'UTF-8'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Encoding used for template files, defaults to <code>UTF-8</code>.</p>
+
+<h2 id="escape">escape</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cb</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">escape</span><span class="operator">;</span>
+  <span class="variable">$mt</span>    <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">escape</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>A callback used to escape the results of escaped expressions, defaults to <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#xml_escape">&quot;xml_escape&quot; in Mojo::Util</a>.</p>
+
+<pre><code>  <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">escape</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="keyword">reverse</span> <span class="variable">$str</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="escape_mark">escape_mark</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$mark</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">escape_mark</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">escape_mark</span><span class="operator">(</span><span class="string">'='</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character indicating the start of an escaped expression, defaults to <code>=</code>.</p>
+
+<pre><code>  &lt;%== $foo %&gt;</code></pre>
+
+<h2 id="expression_mark">expression_mark</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$mark</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">expression_mark</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">expression_mark</span><span class="operator">(</span><span class="string">'='</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character indicating the start of an expression, defaults to <code>=</code>.</p>
+
+<pre><code>  &lt;%= $foo %&gt;</code></pre>
+
+<h2 id="line_start">line_start</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$start</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">line_start</span><span class="operator">;</span>
+  <span class="variable">$mt</span>       <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">line_start</span><span class="operator">(</span><span class="string">'%'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character indicating the start of a code line, defaults to <code>%</code>.</p>
+
+<pre><code>  <span class="operator">% </span><span class="variable">$foo</span> <span class="operator">=</span> <span class="number">23</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="name">name</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$name</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">name</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">name</span><span class="operator">(</span><span class="string">'foo.mt'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Name of template currently being processed, defaults to <code>template</code>. Note that this value should not contain quotes or newline characters, or error messages might end up being wrong.</p>
+
+<h2 id="namespace">namespace</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$namespace</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">namespace</span><span class="operator">;</span>
+  <span class="variable">$mt</span>           <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">namespace</span><span class="operator">(</span><span class="string">'main'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Namespace used to compile templates, defaults to <code>Mojo::Template::SandBox</code>. Note that namespaces should only be shared very carefully between templates, since functions and global variables will not be cleared automatically.</p>
+
+<h2 id="prepend">prepend</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$code</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">prepend</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">prepend</span><span class="operator">(</span><span class="string">'my $self = shift;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Prepend Perl code to compiled template. Note that this code should not contain newline characters, or line numbers in error messages might end up being wrong.</p>
+
+<h2 id="replace_mark">replace_mark</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$mark</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">replace_mark</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">replace_mark</span><span class="operator">(</span><span class="string">'%'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character used for escaping the start of a tag or line, defaults to <code>%</code>.</p>
+
+<pre><code>  <span class="operator">&lt;</span><span class="variable">%%</span> <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="number">23</span><span class="operator">;</span> <span class="variable">%&gt;</span>
+</code></pre>
+
+<h2 id="tag_start">tag_start</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$start</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">tag_start</span><span class="operator">;</span>
+  <span class="variable">$mt</span>       <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">tag_start</span><span class="operator">(</span><span class="string">'&lt;%'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Characters indicating the start of a tag, defaults to <code>&lt;%</code>.</p>
+
+<pre><code>  <span class="operator">&lt;% </span><span class="variable">$foo</span> <span class="operator">=</span> <span class="number">23</span><span class="operator">;</span> <span class="variable">%&gt;</span>
+</code></pre>
+
+<h2 id="tag_end">tag_end</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$end</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">tag_end</span><span class="operator">;</span>
+  <span class="variable">$mt</span>     <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">tag_end</span><span class="operator">(</span><span class="string">'%&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Characters indicating the end of a tag, defaults to <code>%&gt;</code>.</p>
+
+<pre><code>  &lt;%= $foo %&gt;</code></pre>
+
+<h2 id="tree">tree</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tree</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">(</span><span class="operator">[[</span><span class="string">'text'</span><span class="operator">,</span> <span class="string">'foo'</span><span class="operator">]</span><span class="operator">,</span> <span class="operator">[</span><span class="string">'line'</span><span class="operator">]]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Template in parsed form if available. Note that this structure should only be used very carefully since it is very dynamic.</p>
+
+<h2 id="trim_mark">trim_mark</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$mark</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">trim_mark</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">trim_mark</span><span class="operator">(</span><span class="string">'-'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character activating automatic whitespace trimming, defaults to <code>=</code>.</p>
+
+<pre><code>  &lt;%= $foo =%&gt;</code></pre>
+
+<h2 id="unparsed">unparsed</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$unparsed</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">unparsed</span><span class="operator">;</span>
+  <span class="variable">$mt</span>          <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">unparsed</span><span class="operator">(</span><span class="string">'&lt;%= 1 + 1 %&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Raw unparsed template if available.</p>
+
+<h2 id="vars">vars</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">vars</span><span class="operator">;</span>
+  <span class="variable">$mt</span>      <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">vars</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Instead of a list of values, use a hash reference with named variables to pass data to templates.</p>
+
+<pre><code>  <span class="comment"># "works!"</span>
+  <span class="variable">Mojo::Template</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">vars</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">)-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'&lt;%= $test %&gt;!'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">test</span> <span class="operator">=&gt;</span> <span class="string">'works'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$mt</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;%= 1 + 1 %&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse template into <a href="#tree">&quot;tree&quot;</a>.</p>
+
+<h2 id="process">process</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">process</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">process</span><span class="operator">(</span><span class="variable">@args</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">process</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Process previously parsed template and return the result, or a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a> object if rendering failed.</p>
+
+<pre><code>  <span class="comment"># Parse and process</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Template</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'Hello &lt;%= $_[0] %&gt;'</span><span class="operator">)-&gt;</span><span class="variable">process</span><span class="operator">(</span><span class="string">'Bender'</span><span class="operator">);</span>
+  
+  <span class="comment"># Reuse template (for much better performance)</span>
+  <span class="keyword">my</span> <span class="variable">$mt</span> <span class="operator">=</span> <span class="variable">Mojo::Template</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'Hello &lt;%= $_[0] %&gt;!'</span><span class="operator">,</span> <span class="string">'Bender'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">process</span><span class="operator">(</span><span class="string">'Fry'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">process</span><span class="operator">(</span><span class="string">'Leela'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="render">render</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'&lt;%= 1 + 1 %&gt;'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'&lt;%= shift() + shift() %&gt;'</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'&lt;%= $foo %&gt;'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Render template and return the result, or a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a> object if rendering failed.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;%= 1 + 1 %&gt;'</span><span class="operator">)-&gt;</span><span class="variable">process</span><span class="operator">;</span>
+  
+  <span class="comment"># Render with arguments</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Template</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'&lt;%= $_[0] %&gt;'</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">);</span>
+  
+  <span class="comment"># Render with named variables</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Template</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">vars</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">)-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'&lt;%= $foo %&gt;'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="render_file">render_file</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">render_file</span><span class="operator">(</span><span class="string">'/tmp/foo.mt'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">render_file</span><span class="operator">(</span><span class="string">'/tmp/foo.mt'</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">render_file</span><span class="operator">(</span><span class="string">'/tmp/bar.mt'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Same as <a href="#render">&quot;render&quot;</a>, but renders a template file.</p>
+
+<h1 id="DEBUGGING">DEBUGGING</h1>
+
+<p>You can set the <code>MOJO_TEMPLATE_DEBUG</code> environment variable to get some advanced diagnostics information printed to <code>STDERR</code>.</p>
+
+<pre><code>  MOJO_TEMPLATE_DEBUG=1</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

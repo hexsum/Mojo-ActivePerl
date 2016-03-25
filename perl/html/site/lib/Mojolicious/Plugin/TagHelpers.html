@@ -1,0 +1,613 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#HELPERS">HELPERS</a>
+    <ul>
+      <li><a href="#check_box">check_box</a></li>
+      <li><a href="#color_field">color_field</a></li>
+      <li><a href="#csrf_field">csrf_field</a></li>
+      <li><a href="#date_field">date_field</a></li>
+      <li><a href="#datetime_field">datetime_field</a></li>
+      <li><a href="#email_field">email_field</a></li>
+      <li><a href="#file_field">file_field</a></li>
+      <li><a href="#form_for">form_for</a></li>
+      <li><a href="#hidden_field">hidden_field</a></li>
+      <li><a href="#image">image</a></li>
+      <li><a href="#input_tag">input_tag</a></li>
+      <li><a href="#javascript">javascript</a></li>
+      <li><a href="#label_for">label_for</a></li>
+      <li><a href="#link_to">link_to</a></li>
+      <li><a href="#month_field">month_field</a></li>
+      <li><a href="#number_field">number_field</a></li>
+      <li><a href="#password_field">password_field</a></li>
+      <li><a href="#radio_button">radio_button</a></li>
+      <li><a href="#range_field">range_field</a></li>
+      <li><a href="#search_field">search_field</a></li>
+      <li><a href="#select_field">select_field</a></li>
+      <li><a href="#stylesheet">stylesheet</a></li>
+      <li><a href="#submit_button">submit_button</a></li>
+      <li><a href="#t">t</a></li>
+      <li><a href="#tag">tag</a></li>
+      <li><a href="#tag_with_error">tag_with_error</a></li>
+      <li><a href="#tel_field">tel_field</a></li>
+      <li><a href="#text_area">text_area</a></li>
+      <li><a href="#text_field">text_field</a></li>
+      <li><a href="#time_field">time_field</a></li>
+      <li><a href="#url_field">url_field</a></li>
+      <li><a href="#week_field">week_field</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#register">register</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Plugin::TagHelpers - Tag helpers plugin</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="comment"># Mojolicious</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'TagHelpers'</span><span class="operator">);</span>
+  
+  <span class="comment"># Mojolicious::Lite</span>
+  <span class="variable">plugin</span> <span class="string">'TagHelpers'</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a> is a collection of HTML tag helpers for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, based on the <a href="https://html.spec.whatwg.org">HTML Living Standard</a>.</p>
+
+<p>Most form helpers can automatically pick up previous input values and will show them as default. You can also use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#param">&quot;param&quot; in Mojolicious::Plugin::DefaultHelpers</a> to set them manually and let necessary attributes always be generated automatically.</p>
+
+<pre><code>  <span class="operator">% </span><span class="variable">param</span> <span class="string">country</span> <span class="operator">=&gt;</span> <span class="string">'germany'</span> <span class="keyword">unless</span> <span class="variable">param</span> <span class="string">'country'</span><span class="operator">;</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">radio_button</span> <span class="string">country</span> <span class="operator">=&gt;</span> <span class="string">'germany'</span> <span class="variable">%&gt;</span> <span class="variable">Germany</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">radio_button</span> <span class="string">country</span> <span class="operator">=&gt;</span> <span class="string">'france'</span>  <span class="variable">%&gt;</span> <span class="variable">France</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">radio_button</span> <span class="string">country</span> <span class="operator">=&gt;</span> <span class="string">'uk'</span>      <span class="variable">%&gt;</span> <span class="variable">UK</span>
+</code></pre>
+
+<p>For fields that failed validation with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#validation">&quot;validation&quot; in Mojolicious::Controller</a> the <code>field-with-error</code> class will be automatically added through <a href="#tag_with_error">&quot;tag_with_error&quot;</a>, to make styling with CSS easier.</p>
+
+<pre><code>  &lt;input class=&quot;field-with-error&quot; name=&quot;age&quot; type=&quot;text&quot; value=&quot;250&quot;&gt;</code></pre>
+
+<p>This is a core plugin, that means it is always enabled and its code a good example for learning how to build new plugins, you&#39;re welcome to fork it.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html#PLUGINS">&quot;PLUGINS&quot; in Mojolicious::Plugins</a> for a list of plugins that are available by default.</p>
+
+<h1 id="HELPERS">HELPERS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a> implements the following helpers.</p>
+
+<h2 id="check_box">check_box</h2>
+
+<pre><code>  %= check_box &#39;employed&#39;
+  %= check_box employed =&gt; 1
+  %= check_box employed =&gt; 1, checked =&gt; undef, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>checkbox</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;employed&quot; type=&quot;checkbox&quot;&gt;
+  &lt;input name=&quot;employed&quot; type=&quot;checkbox&quot; value=&quot;1&quot;&gt;
+  &lt;input checked id=&quot;foo&quot; name=&quot;employed&quot; type=&quot;checkbox&quot; value=&quot;1&quot;&gt;</code></pre>
+
+<h2 id="color_field">color_field</h2>
+
+<pre><code>  %= color_field &#39;background&#39;
+  %= color_field background =&gt; &#39;#ffffff&#39;
+  %= color_field background =&gt; &#39;#ffffff&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>color</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;background&quot; type=&quot;color&quot;&gt;
+  &lt;input name=&quot;background&quot; type=&quot;color&quot; value=&quot;#ffffff&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;background&quot; type=&quot;color&quot; value=&quot;#ffffff&quot;&gt;</code></pre>
+
+<h2 id="csrf_field">csrf_field</h2>
+
+<pre><code>  %= csrf_field</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>hidden</code> with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#csrf_token">&quot;csrf_token&quot; in Mojolicious::Plugin::DefaultHelpers</a>.</p>
+
+<pre><code>  &lt;input name=&quot;csrf_token&quot; type=&quot;hidden&quot; value=&quot;fa6a08...&quot;&gt;</code></pre>
+
+<h2 id="date_field">date_field</h2>
+
+<pre><code>  %= date_field &#39;end&#39;
+  %= date_field end =&gt; &#39;2012-12-21&#39;
+  %= date_field end =&gt; &#39;2012-12-21&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>date</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;end&quot; type=&quot;date&quot;&gt;
+  &lt;input name=&quot;end&quot; type=&quot;date&quot; value=&quot;2012-12-21&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;end&quot; type=&quot;date&quot; value=&quot;2012-12-21&quot;&gt;</code></pre>
+
+<h2 id="datetime_field">datetime_field</h2>
+
+<pre><code>  %= datetime_field &#39;end&#39;
+  %= datetime_field end =&gt; &#39;2012-12-21T23:59:59&#39;
+  %= datetime_field end =&gt; &#39;2012-12-21T23:59:59&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>datetime-local</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;end&quot; type=&quot;datetime-local&quot;&gt;
+  &lt;input name=&quot;end&quot; type=&quot;datetime-local&quot; value=&quot;2012-12-21T23:59:59&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;end&quot; type=&quot;datetime-local&quot; value=&quot;2012-12-21T23:59:59&quot;&gt;</code></pre>
+
+<h2 id="email_field">email_field</h2>
+
+<pre><code>  %= email_field &#39;notify&#39;
+  %= email_field notify =&gt; &#39;nospam@example.com&#39;
+  %= email_field notify =&gt; &#39;nospam@example.com&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>email</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;notify&quot; type=&quot;email&quot;&gt;
+  &lt;input name=&quot;notify&quot; type=&quot;email&quot; value=&quot;nospam@example.com&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;notify&quot; type=&quot;email&quot; value=&quot;nospam@example.com&quot;&gt;</code></pre>
+
+<h2 id="file_field">file_field</h2>
+
+<pre><code>  %= file_field &#39;avatar&#39;
+  %= file_field &#39;avatar&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>file</code>.</p>
+
+<pre><code>  &lt;input name=&quot;avatar&quot; type=&quot;file&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;avatar&quot; type=&quot;file&quot;&gt;</code></pre>
+
+<h2 id="form_for">form_for</h2>
+
+<pre><code>  <span class="variable">%=</span> <span class="variable">form_for</span> <span class="string">login</span> <span class="operator">=&gt;</span> <span class="variable">begin</span>
+    <span class="variable">%=</span> <span class="variable">text_field</span> <span class="string">'first_name'</span>
+    <span class="variable">%=</span> <span class="variable">submit_button</span>
+  <span class="operator">% </span><span class="variable">end</span>
+  <span class="variable">%=</span> <span class="variable">form_for</span> <span class="string">login</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'txt'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="operator">(</span><span class="string">method</span> <span class="operator">=&gt;</span> <span class="string">'POST'</span><span class="operator">)</span> <span class="operator">=&gt;</span> <span class="variable">begin</span>
+    <span class="variable">%=</span> <span class="variable">text_field</span> <span class="string">'first_name'</span>
+    <span class="variable">%=</span> <span class="variable">submit_button</span>
+  <span class="operator">% </span><span class="variable">end</span>
+  <span class="variable">%=</span> <span class="variable">form_for</span> <span class="string">'/login'</span> <span class="operator">=&gt;</span> <span class="operator">(</span><span class="string">enctype</span> <span class="operator">=&gt;</span> <span class="string">'multipart/form-data'</span><span class="operator">)</span> <span class="operator">=&gt;</span> <span class="variable">begin</span>
+    <span class="variable">%=</span> <span class="variable">text_field</span> <span class="string">'first_name'</span><span class="operator">,</span> <span class="string">disabled</span> <span class="operator">=&gt;</span> <span class="string">'disabled'</span>
+    <span class="variable">%=</span> <span class="variable">submit_button</span>
+  <span class="operator">% </span><span class="variable">end</span>
+  <span class="variable">%=</span> <span class="variable">form_for</span> <span class="string">'http://example.com/login'</span> <span class="operator">=&gt;</span> <span class="operator">(</span><span class="string">method</span> <span class="operator">=&gt;</span> <span class="string">'POST'</span><span class="operator">)</span> <span class="operator">=&gt;</span> <span class="variable">begin</span>
+    <span class="variable">%=</span> <span class="variable">text_field</span> <span class="string">'first_name'</span>
+    <span class="variable">%=</span> <span class="variable">submit_button</span>
+  <span class="operator">% </span><span class="variable">end</span>
+  <span class="variable">%=</span> <span class="variable">form_for</span> <span class="string">some_delete_route</span> <span class="operator">=&gt;</span> <span class="variable">begin</span>
+    <span class="variable">%=</span> <span class="variable">submit_button</span> <span class="string">'Remove'</span>
+  <span class="operator">% </span><span class="variable">end</span>
+</code></pre>
+
+<p>Generate portable <code>form</code> tag with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#url_for">&quot;url_for&quot; in Mojolicious::Controller</a>. For routes that do not allow <code>GET</code>, a <code>method</code> attribute with the value <code>POST</code> will be automatically added. And for methods other than <code>GET</code> or <code>POST</code>, an <code>_method</code> query parameter will be added as well.</p>
+
+<pre><code>  &lt;form action=&quot;/path/to/login&quot;&gt;
+    &lt;input name=&quot;first_name&quot; type=&quot;text&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Ok&quot;&gt;
+  &lt;/form&gt;
+  &lt;form action=&quot;/path/to/login.txt&quot; method=&quot;POST&quot;&gt;
+    &lt;input name=&quot;first_name&quot; type=&quot;text&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Ok&quot;&gt;
+  &lt;/form&gt;
+  &lt;form action=&quot;/path/to/login&quot; enctype=&quot;multipart/form-data&quot;&gt;
+    &lt;input disabled=&quot;disabled&quot; name=&quot;first_name&quot; type=&quot;text&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Ok&quot;&gt;
+  &lt;/form&gt;
+  &lt;form action=&quot;http://example.com/login&quot; method=&quot;POST&quot;&gt;
+    &lt;input name=&quot;first_name&quot; type=&quot;text&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Ok&quot;&gt;
+  &lt;/form&gt;
+  &lt;form action=&quot;/path/to/delete/route?_method=DELETE&quot; method=&quot;POST&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Remove&quot;&gt;
+  &lt;/form&gt;</code></pre>
+
+<h2 id="hidden_field">hidden_field</h2>
+
+<pre><code>  %= hidden_field foo =&gt; &#39;bar&#39;
+  %= hidden_field foo =&gt; &#39;bar&#39;, id =&gt; &#39;bar&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>hidden</code>.</p>
+
+<pre><code>  &lt;input name=&quot;foo&quot; type=&quot;hidden&quot; value=&quot;bar&quot;&gt;
+  &lt;input id=&quot;bar&quot; name=&quot;foo&quot; type=&quot;hidden&quot; value=&quot;bar&quot;&gt;</code></pre>
+
+<h2 id="image">image</h2>
+
+<pre><code>  %= image &#39;/images/foo.png&#39;
+  %= image &#39;/images/foo.png&#39;, alt =&gt; &#39;Foo&#39;</code></pre>
+
+<p>Generate portable <code>img</code> tag.</p>
+
+<pre><code>  &lt;img src=&quot;/path/to/images/foo.png&quot;&gt;
+  &lt;img alt=&quot;Foo&quot; src=&quot;/path/to/images/foo.png&quot;&gt;</code></pre>
+
+<h2 id="input_tag">input_tag</h2>
+
+<pre><code>  %= input_tag &#39;first_name&#39;
+  %= input_tag first_name =&gt; &#39;Default&#39;
+  %= input_tag &#39;employed&#39;, type =&gt; &#39;checkbox&#39;</code></pre>
+
+<p>Generate <code>input</code> tag. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;first_name&quot;&gt;
+  &lt;input name=&quot;first_name&quot; value=&quot;Default&quot;&gt;
+  &lt;input name=&quot;employed&quot; type=&quot;checkbox&quot;&gt;</code></pre>
+
+<h2 id="javascript">javascript</h2>
+
+<pre><code>  <span class="variable">%=</span> <span class="variable">javascript</span> <span class="string">'/script.js'</span>
+  <span class="variable">%=</span> <span class="variable">javascript</span> <span class="variable">begin</span>
+    <span class="variable">var</span> <span class="variable">a</span> <span class="operator">=</span> <span class="string">'b'</span><span class="operator">;</span>
+  <span class="operator">% </span><span class="variable">end</span>
+</code></pre>
+
+<p>Generate portable <code>script</code> tag for JavaScript asset.</p>
+
+<pre><code>  <span class="operator">&lt;</span><span class="variable">script</span> <span class="variable">src</span><span class="operator">=</span><span class="string">"/path/to/script.js"</span><span class="operator">&gt;&lt;/</span><span class="variable">script</span><span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">script</span><span class="operator">&gt;&lt;!</span><span class="operator">[</span><span class="variable">CDATA</span><span class="operator">[</span>
+    <span class="variable">var</span> <span class="variable">a</span> <span class="operator">=</span> <span class="string">'b'</span><span class="operator">;</span>
+  <span class="operator">]]</span><span class="operator">&gt;&lt;/</span><span class="variable">script</span><span class="operator">&gt;</span>
+</code></pre>
+
+<h2 id="label_for">label_for</h2>
+
+<pre><code>  %= label_for first_name =&gt; &#39;First name&#39;
+  %= label_for first_name =&gt; &#39;First name&#39;, class =&gt; &#39;user&#39;
+  %= label_for first_name =&gt; begin
+    First name
+  % end
+  %= label_for first_name =&gt; (class =&gt; &#39;user&#39;) =&gt; begin
+    First name
+  % end</code></pre>
+
+<p>Generate <code>label</code> tag.</p>
+
+<pre><code>  &lt;label for=&quot;first_name&quot;&gt;First name&lt;/label&gt;
+  &lt;label class=&quot;user&quot; for=&quot;first_name&quot;&gt;First name&lt;/label&gt;
+  &lt;label for=&quot;first_name&quot;&gt;
+    First name
+  &lt;/label&gt;
+  &lt;label class=&quot;user&quot; for=&quot;first_name&quot;&gt;
+    First name
+  &lt;/label&gt;</code></pre>
+
+<h2 id="link_to">link_to</h2>
+
+<pre><code>  <span class="variable">%=</span> <span class="variable">link_to</span> <span class="string">Home</span> <span class="operator">=&gt;</span> <span class="string">'index'</span>
+  <span class="variable">%=</span> <span class="variable">link_to</span> <span class="string">Home</span> <span class="operator">=&gt;</span> <span class="string">'index'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'txt'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="operator">(</span><span class="string">class</span> <span class="operator">=&gt;</span> <span class="string">'menu'</span><span class="operator">)</span>
+  <span class="variable">%=</span> <span class="variable">link_to</span> <span class="string">index</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'txt'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="operator">(</span><span class="string">class</span> <span class="operator">=&gt;</span> <span class="string">'menu'</span><span class="operator">)</span> <span class="operator">=&gt;</span> <span class="variable">begin</span>
+    <span class="variable">Home</span>
+  <span class="operator">% </span><span class="variable">end</span>
+  <span class="variable">%=</span> <span class="variable">link_to</span> <span class="string">Contact</span> <span class="operator">=&gt;</span> <span class="string">'mailto:sri@example.com'</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">link_to</span> <span class="string">index</span> <span class="operator">=&gt;</span> <span class="variable">begin</span> <span class="variable">%&gt;</span><span class="variable">Home</span><span class="operator">&lt;% </span><span class="variable">end</span> <span class="variable">%&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">link_to</span> <span class="string">'/file.txt'</span> <span class="operator">=&gt;</span> <span class="variable">begin</span> <span class="variable">%&gt;</span><span class="variable">File</span><span class="operator">&lt;% </span><span class="variable">end</span> <span class="variable">%&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">link_to</span> <span class="string">'http://mojolicious.org'</span> <span class="operator">=&gt;</span> <span class="variable">begin</span> <span class="variable">%&gt;</span><span class="variable">Mojolicious</span><span class="operator">&lt;% </span><span class="variable">end</span> <span class="variable">%&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">link_to</span> <span class="variable">url_for</span><span class="operator">-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">)-&gt;</span><span class="variable">to_abs</span> <span class="operator">=&gt;</span> <span class="variable">begin</span> <span class="variable">%&gt;</span><span class="variable">Retry</span><span class="operator">&lt;% </span><span class="variable">end</span> <span class="variable">%&gt;</span>
+</code></pre>
+
+<p>Generate portable <code>a</code> tag with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#url_for">&quot;url_for&quot; in Mojolicious::Controller</a>, defaults to using the capitalized link target as content.</p>
+
+<pre><code>  &lt;a href=&quot;/path/to/index&quot;&gt;Home&lt;/a&gt;
+  &lt;a class=&quot;menu&quot; href=&quot;/path/to/index.txt&quot;&gt;Home&lt;/a&gt;
+  &lt;a class=&quot;menu&quot; href=&quot;/path/to/index.txt&quot;&gt;
+    Home
+  &lt;/a&gt;
+  &lt;a href=&quot;mailto:sri@example.com&quot;&gt;Contact&lt;/a&gt;
+  &lt;a href=&quot;/path/to/index&quot;&gt;Home&lt;/a&gt;
+  &lt;a href=&quot;/path/to/file.txt&quot;&gt;File&lt;/a&gt;
+  &lt;a href=&quot;http://mojolicious.org&quot;&gt;Mojolicious&lt;/a&gt;
+  &lt;a href=&quot;http://127.0.0.1:3000/current/path?foo=bar&quot;&gt;Retry&lt;/a&gt;</code></pre>
+
+<h2 id="month_field">month_field</h2>
+
+<pre><code>  %= month_field &#39;vacation&#39;
+  %= month_field vacation =&gt; &#39;2012-12&#39;
+  %= month_field vacation =&gt; &#39;2012-12&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>month</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;vacation&quot; type=&quot;month&quot;&gt;
+  &lt;input name=&quot;vacation&quot; type=&quot;month&quot; value=&quot;2012-12&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;vacation&quot; type=&quot;month&quot; value=&quot;2012-12&quot;&gt;</code></pre>
+
+<h2 id="number_field">number_field</h2>
+
+<pre><code>  %= number_field &#39;age&#39;
+  %= number_field age =&gt; 25
+  %= number_field age =&gt; 25, id =&gt; &#39;foo&#39;, min =&gt; 0, max =&gt; 200</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>number</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;age&quot; type=&quot;number&quot;&gt;
+  &lt;input name=&quot;age&quot; type=&quot;number&quot; value=&quot;25&quot;&gt;
+  &lt;input id=&quot;foo&quot; max=&quot;200&quot; min=&quot;0&quot; name=&quot;age&quot; type=&quot;number&quot; value=&quot;25&quot;&gt;</code></pre>
+
+<h2 id="password_field">password_field</h2>
+
+<pre><code>  %= password_field &#39;pass&#39;
+  %= password_field &#39;pass&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>password</code>.</p>
+
+<pre><code>  &lt;input name=&quot;pass&quot; type=&quot;password&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;pass&quot; type=&quot;password&quot;&gt;</code></pre>
+
+<h2 id="radio_button">radio_button</h2>
+
+<pre><code>  %= radio_button &#39;test&#39;
+  %= radio_button country =&gt; &#39;germany&#39;
+  %= radio_button country =&gt; &#39;germany&#39;, checked =&gt; undef, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>radio</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;test&quot; type=&quot;radio&quot;&gt;
+  &lt;input name=&quot;country&quot; type=&quot;radio&quot; value=&quot;germany&quot;&gt;
+  &lt;input checked id=&quot;foo&quot; name=&quot;country&quot; type=&quot;radio&quot; value=&quot;germany&quot;&gt;</code></pre>
+
+<h2 id="range_field">range_field</h2>
+
+<pre><code>  %= range_field &#39;age&#39;
+  %= range_field age =&gt; 25
+  %= range_field age =&gt; 25, id =&gt; &#39;foo&#39;, min =&gt; 0, max =&gt; 200</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>range</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;age&quot; type=&quot;range&quot;&gt;
+  &lt;input name=&quot;age&quot; type=&quot;range&quot; value=&quot;25&quot;&gt;
+  &lt;input id=&quot;foo&quot; max=&quot;200&quot; min=&quot;200&quot; name=&quot;age&quot; type=&quot;range&quot; value=&quot;25&quot;&gt;</code></pre>
+
+<h2 id="search_field">search_field</h2>
+
+<pre><code>  %= search_field &#39;q&#39;
+  %= search_field q =&gt; &#39;perl&#39;
+  %= search_field q =&gt; &#39;perl&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>search</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;q&quot; type=&quot;search&quot;&gt;
+  &lt;input name=&quot;q&quot; type=&quot;search&quot; value=&quot;perl&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;q&quot; type=&quot;search&quot; value=&quot;perl&quot;&gt;</code></pre>
+
+<h2 id="select_field">select_field</h2>
+
+<pre><code>  %= select_field country =&gt; [&#39;de&#39;, &#39;en&#39;]
+  %= select_field country =&gt; [[Germany =&gt; &#39;de&#39;], &#39;en&#39;], id =&gt; &#39;eu&#39;
+  %= select_field country =&gt; [[Germany =&gt; &#39;de&#39;, selected =&gt; &#39;selected&#39;], &#39;en&#39;]
+  %= select_field country =&gt; [c(EU =&gt; [[Germany =&gt; &#39;de&#39;], &#39;en&#39;], id =&gt; &#39;eu&#39;)]
+  %= select_field country =&gt; [c(EU =&gt; [&#39;de&#39;, &#39;en&#39;]), c(Asia =&gt; [&#39;cn&#39;, &#39;jp&#39;])]</code></pre>
+
+<p>Generate <code>select</code> and <code>option</code> tags from array references and <code>optgroup</code> tags from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> objects. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;select name=&quot;country&quot;&gt;
+    &lt;option value=&quot;de&quot;&gt;de&lt;/option&gt;
+    &lt;option value=&quot;en&quot;&gt;en&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;select id=&quot;eu&quot; name=&quot;country&quot;&gt;
+    &lt;option value=&quot;de&quot;&gt;Germany&lt;/option&gt;
+    &lt;option value=&quot;en&quot;&gt;en&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;select name=&quot;country&quot;&gt;
+    &lt;option selected=&quot;selected&quot; value=&quot;de&quot;&gt;Germany&lt;/option&gt;
+    &lt;option value=&quot;en&quot;&gt;en&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;select name=&quot;country&quot;&gt;
+    &lt;optgroup id=&quot;eu&quot; label=&quot;EU&quot;&gt;
+      &lt;option value=&quot;de&quot;&gt;Germany&lt;/option&gt;
+      &lt;option value=&quot;en&quot;&gt;en&lt;/option&gt;
+    &lt;/optgroup&gt;
+  &lt;/select&gt;
+  &lt;select name=&quot;country&quot;&gt;
+    &lt;optgroup label=&quot;EU&quot;&gt;
+      &lt;option value=&quot;de&quot;&gt;de&lt;/option&gt;
+      &lt;option value=&quot;en&quot;&gt;en&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label=&quot;Asia&quot;&gt;
+      &lt;option value=&quot;cn&quot;&gt;cn&lt;/option&gt;
+      &lt;option value=&quot;jp&quot;&gt;jp&lt;/option&gt;
+    &lt;/optgroup&gt;
+  &lt;/select&gt;</code></pre>
+
+<h2 id="stylesheet">stylesheet</h2>
+
+<pre><code>  <span class="variable">%=</span> <span class="variable">stylesheet</span> <span class="string">'/foo.css'</span>
+  <span class="variable">%=</span> <span class="variable">stylesheet</span> <span class="variable">begin</span>
+    <span class="variable">body</span> <span class="operator">{</span><span class="variable">color</span><span class="operator">:</span> <span class="comment">#000}</span>
+  <span class="operator">% </span><span class="variable">end</span>
+</code></pre>
+
+<p>Generate portable <code>style</code> or <code>link</code> tag for CSS asset.</p>
+
+<pre><code>  <span class="operator">&lt;</span><span class="keyword">link</span> <span class="variable">href</span><span class="operator">=</span><span class="string">"/path/to/foo.css"</span> <span class="variable">rel</span><span class="operator">=</span><span class="string">"stylesheet"</span><span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">style</span><span class="operator">&gt;&lt;!</span><span class="operator">[</span><span class="variable">CDATA</span><span class="operator">[</span>
+    <span class="variable">body</span> <span class="operator">{</span><span class="variable">color</span><span class="operator">:</span> <span class="comment">#000}</span>
+  <span class="operator">]]</span><span class="operator">&gt;&lt;/</span><span class="variable">style</span><span class="operator">&gt;</span>
+</code></pre>
+
+<h2 id="submit_button">submit_button</h2>
+
+<pre><code>  %= submit_button
+  %= submit_button &#39;Ok!&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>submit</code>.</p>
+
+<pre><code>  &lt;input type=&quot;submit&quot; value=&quot;Ok&quot;&gt;
+  &lt;input id=&quot;foo&quot; type=&quot;submit&quot; value=&quot;Ok!&quot;&gt;</code></pre>
+
+<h2 id="t">t</h2>
+
+<pre><code>  %= t div =&gt; &#39;test &amp; 123&#39;</code></pre>
+
+<p>Alias for <a href="#tag">&quot;tag&quot;</a>.</p>
+
+<pre><code>  <span class="operator">&lt;</span><span class="variable">div</span><span class="operator">&gt;</span><span class="variable">test</span> <span class="operator">&amp;</span><span class="variable">amp</span><span class="operator">;</span> <span class="number">123</span><span class="operator">&lt;/</span><span class="variable">div</span><span class="operator">&gt;</span>
+</code></pre>
+
+<h2 id="tag">tag</h2>
+
+<pre><code>  <span class="variable">%=</span> <span class="variable">tag</span> <span class="string">'br'</span>
+  <span class="variable">%=</span> <span class="variable">tag</span> <span class="string">'div'</span>
+  <span class="variable">%=</span> <span class="variable">tag</span> <span class="string">'div'</span><span class="operator">,</span> <span class="string">id</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">,</span> <span class="string">hidden</span> <span class="operator">=&gt;</span> <span class="keyword">undef</span>
+  <span class="variable">%=</span> <span class="variable">tag</span> <span class="string">div</span> <span class="operator">=&gt;</span> <span class="string">'test &amp; 123'</span>
+  <span class="variable">%=</span> <span class="variable">tag</span> <span class="string">div</span> <span class="operator">=&gt;</span> <span class="operator">(</span><span class="string">id</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">)</span> <span class="operator">=&gt;</span> <span class="string">'test &amp; 123'</span>
+  <span class="variable">%=</span> <span class="variable">tag</span> <span class="string">div</span> <span class="operator">=&gt;</span> <span class="operator">(</span><span class="string">data</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">my_id</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span> <span class="string">Name</span> <span class="operator">=&gt;</span> <span class="string">'test'</span><span class="operator">}</span><span class="operator">)</span> <span class="operator">=&gt;</span> <span class="string">'test &amp; 123'</span>
+  <span class="variable">%=</span> <span class="variable">tag</span> <span class="string">div</span> <span class="operator">=&gt;</span> <span class="variable">begin</span>
+    <span class="variable">test</span> <span class="operator">&amp;</span> <span class="number">123</span>
+  <span class="operator">% </span><span class="variable">end</span>
+  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">tag</span> <span class="string">div</span> <span class="operator">=&gt;</span> <span class="operator">(</span><span class="string">id</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">)</span> <span class="operator">=&gt;</span> <span class="variable">begin</span> <span class="variable">%&gt;</span><span class="variable">test</span> <span class="operator">&amp;</span> <span class="number">123</span><span class="operator">&lt;% </span><span class="variable">end</span> <span class="variable">%&gt;</span>
+</code></pre>
+
+<p>HTML tag generator, the <code>data</code> attribute may contain a hash reference with key/value pairs to generate attributes from.</p>
+
+<pre><code>  <span class="operator">&lt;</span><span class="variable">br</span><span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">div</span><span class="operator">&gt;&lt;/</span><span class="variable">div</span><span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">div</span> <span class="variable">id</span><span class="operator">=</span><span class="string">"foo"</span> <span class="variable">hidden</span><span class="operator">&gt;&lt;/</span><span class="variable">div</span><span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">div</span><span class="operator">&gt;</span><span class="variable">test</span> <span class="operator">&amp;</span><span class="variable">amp</span><span class="operator">;</span> <span class="number">123</span><span class="operator">&lt;/</span><span class="variable">div</span><span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">div</span> <span class="variable">id</span><span class="operator">=</span><span class="string">"foo"</span><span class="operator">&gt;</span><span class="variable">test</span> <span class="operator">&amp;</span><span class="variable">amp</span><span class="operator">;</span> <span class="number">123</span><span class="operator">&lt;/</span><span class="variable">div</span><span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">div</span> <span class="variable">data</span><span class="operator">-</span><span class="keyword">my</span><span class="operator">-</span><span class="variable">id</span><span class="operator">=</span><span class="string">"1"</span> <span class="variable">data</span><span class="operator">-</span><span class="variable">name</span><span class="operator">=</span><span class="string">"test"</span><span class="operator">&gt;</span><span class="variable">test</span> <span class="operator">&amp;</span><span class="variable">amp</span><span class="operator">;</span> <span class="number">123</span><span class="operator">&lt;/</span><span class="variable">div</span><span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">div</span><span class="operator">&gt;</span>
+    <span class="variable">test</span> <span class="operator">&amp;</span> <span class="number">123</span>
+  <span class="operator">&lt;/</span><span class="variable">div</span><span class="operator">&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">div</span> <span class="variable">id</span><span class="operator">=</span><span class="string">"foo"</span><span class="operator">&gt;</span><span class="variable">test</span> <span class="operator">&amp;</span> <span class="number">123</span><span class="operator">&lt;/</span><span class="variable">div</span><span class="operator">&gt;</span>
+</code></pre>
+
+<p>Very useful for reuse in more specific tag helpers.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tag</span><span class="operator">(</span><span class="string">'meta'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tag</span><span class="operator">(</span><span class="string">'meta'</span><span class="operator">,</span> <span class="string">charset</span> <span class="operator">=&gt;</span> <span class="string">'UTF-8'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tag</span><span class="operator">(</span><span class="string">div</span> <span class="operator">=&gt;</span> <span class="string">'&lt;p&gt;This will be escaped&lt;/p&gt;'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tag</span><span class="operator">(</span><span class="string">div</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="string">'&lt;p&gt;This will not be escaped&lt;/p&gt;'</span> <span class="operator">});</span>
+</code></pre>
+
+<p>Results are automatically wrapped in <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> objects to prevent accidental double escaping in <code>ep</code> templates.</p>
+
+<h2 id="tag_with_error">tag_with_error</h2>
+
+<pre><code>  %= tag_with_error &#39;input&#39;, class =&gt; &#39;foo&#39;</code></pre>
+
+<p>Same as <a href="#tag">&quot;tag&quot;</a>, but adds the class <code>field-with-error</code>.</p>
+
+<pre><code>  &lt;input class=&quot;foo field-with-error&quot;&gt;</code></pre>
+
+<h2 id="tel_field">tel_field</h2>
+
+<pre><code>  %= tel_field &#39;work&#39;
+  %= tel_field work =&gt; &#39;123456789&#39;
+  %= tel_field work =&gt; &#39;123456789&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>tel</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;work&quot; type=&quot;tel&quot;&gt;
+  &lt;input name=&quot;work&quot; type=&quot;tel&quot; value=&quot;123456789&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;work&quot; type=&quot;tel&quot; value=&quot;123456789&quot;&gt;</code></pre>
+
+<h2 id="text_area">text_area</h2>
+
+<pre><code>  %= text_area &#39;story&#39;
+  %= text_area &#39;story&#39;, cols =&gt; 40
+  %= text_area story =&gt; &#39;Default&#39;, cols =&gt; 40
+  %= text_area story =&gt; (cols =&gt; 40) =&gt; begin
+    Default
+  % end</code></pre>
+
+<p>Generate <code>textarea</code> tag. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;textarea name=&quot;story&quot;&gt;&lt;/textarea&gt;
+  &lt;textarea cols=&quot;40&quot; name=&quot;story&quot;&gt;&lt;/textarea&gt;
+  &lt;textarea cols=&quot;40&quot; name=&quot;story&quot;&gt;Default&lt;/textarea&gt;
+  &lt;textarea cols=&quot;40&quot; name=&quot;story&quot;&gt;
+    Default
+  &lt;/textarea&gt;</code></pre>
+
+<h2 id="text_field">text_field</h2>
+
+<pre><code>  %= text_field &#39;first_name&#39;
+  %= text_field first_name =&gt; &#39;Default&#39;
+  %= text_field first_name =&gt; &#39;Default&#39;, class =&gt; &#39;user&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>text</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;first_name&quot; type=&quot;text&quot;&gt;
+  &lt;input name=&quot;first_name&quot; type=&quot;text&quot; value=&quot;Default&quot;&gt;
+  &lt;input class=&quot;user&quot; name=&quot;first_name&quot; type=&quot;text&quot; value=&quot;Default&quot;&gt;</code></pre>
+
+<h2 id="time_field">time_field</h2>
+
+<pre><code>  %= time_field &#39;start&#39;
+  %= time_field start =&gt; &#39;23:59:59&#39;
+  %= time_field start =&gt; &#39;23:59:59&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>time</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;start&quot; type=&quot;time&quot;&gt;
+  &lt;input name=&quot;start&quot; type=&quot;time&quot; value=&quot;23:59:59&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;start&quot; type=&quot;time&quot; value=&quot;23:59:59&quot;&gt;</code></pre>
+
+<h2 id="url_field">url_field</h2>
+
+<pre><code>  %= url_field &#39;address&#39;
+  %= url_field address =&gt; &#39;http://mojolicious.org&#39;
+  %= url_field address =&gt; &#39;http://mojolicious.org&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>url</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;address&quot; type=&quot;url&quot;&gt;
+  &lt;input name=&quot;address&quot; type=&quot;url&quot; value=&quot;http://mojolicious.org&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;address&quot; type=&quot;url&quot; value=&quot;http://mojolicious.org&quot;&gt;</code></pre>
+
+<h2 id="week_field">week_field</h2>
+
+<pre><code>  %= week_field &#39;vacation&#39;
+  %= week_field vacation =&gt; &#39;2012-W17&#39;
+  %= week_field vacation =&gt; &#39;2012-W17&#39;, id =&gt; &#39;foo&#39;</code></pre>
+
+<p>Generate <code>input</code> tag of type <code>week</code>. Previous input values will automatically get picked up and shown as default.</p>
+
+<pre><code>  &lt;input name=&quot;vacation&quot; type=&quot;week&quot;&gt;
+  &lt;input name=&quot;vacation&quot; type=&quot;week&quot; value=&quot;2012-W17&quot;&gt;
+  &lt;input id=&quot;foo&quot; name=&quot;vacation&quot; type=&quot;week&quot; value=&quot;2012-W17&quot;&gt;</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin.html">Mojolicious::Plugin</a> and implements the following new ones.</p>
+
+<h2 id="register">register</h2>
+
+<pre><code>  <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">register</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Register helpers in <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

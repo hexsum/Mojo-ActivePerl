@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#error">error</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#new-raw_resp">new($raw_resp, ...)</a></li>
+      <li><a href="#code">code</a></li>
+      <li><a href="#message">message</a></li>
+      <li><a href="#to_string">to_string</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::SMTP::Client::Response - Response class for Mojo::SMTP::Client</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>        <span class="keyword">use</span> <span class="variable">Mojo::SMTP::Client</span><span class="operator">;</span>
+        
+        <span class="keyword">my</span> <span class="variable">$smtp</span> <span class="operator">=</span> <span class="variable">Mojo::SMTP::Client</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+        <span class="keyword">my</span> <span class="variable">$resp</span> <span class="operator">=</span> <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">from</span> <span class="operator">=&gt;</span> <span class="variable">$from</span><span class="operator">,</span> <span class="string">to</span> <span class="operator">=&gt;</span> <span class="variable">$to</span><span class="operator">,</span> <span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$msg</span><span class="operator">);</span>
+        <span class="keyword">if</span> <span class="operator">(</span><span class="variable">$resp</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">)</span> <span class="operator">{</span>
+                <span class="keyword">die</span> <span class="variable">$resp</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">;</span>
+        <span class="operator">}</span>
+        
+        <span class="keyword">say</span> <span class="string">"Sent successfully with last response = "</span><span class="operator">,</span> <span class="variable">$resp</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><code>Mojo::SMTP::Client::Response</code> represents response from SMTP server and may be used to get code, message or raw response.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><code>Mojo::SMTP::Client::Response</code> implements the following attributes</p>
+
+<h2 id="error">error</h2>
+
+<p>Error for this response. Should be one of <code>Mojo::SMTP::Client::Exception::*</code> defined in <a href="../../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Exception.html">Mojo::SMTP::Client::Exception</a>. Default is <code>undef</code>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><code>Mojo::SMTP::Client::Response</code> implements the following methods</p>
+
+<h2 id="new-raw_resp">new($raw_resp, ...)</h2>
+
+<p>Contructs new <code>Mojo::SMTP::Client::Response</code> object. One required parameter is raw response from SMTP server as a string.</p>
+
+<h2 id="code">code</h2>
+
+<p>Get three-digit code for this response. May be undefined if response was not received because of error in the stream (timeout or other).</p>
+
+<h2 id="message">message</h2>
+
+<p>Get message for this response. Will contain several lines for multiline responses. May be undefined if response was not received because of error in the stream (timeout or other).</p>
+
+<h2 id="to_string">to_string</h2>
+
+<p>Get raw response as a string. Response will be also auto stringified in string context.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client.html">Mojo::SMTP::Client</a>, <a href="../../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Response.html">Mojo::SMTP::Client::Response</a>, <a href="../../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Exception.html">Mojo::SMTP::Client::Exception</a></p>
+
+<h1 id="COPYRIGHT">COPYRIGHT</h1>
+
+<p>Copyright Oleg G &lt;oleg@cpan.org&gt;.</p>
+
+<p>This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.</p>
+
+
+</body>
+
+</html>
+
+

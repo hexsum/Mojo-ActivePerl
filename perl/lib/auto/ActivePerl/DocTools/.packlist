@@ -1,0 +1,13 @@
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/bin/ap-update-html
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/bin/ap-user-guide
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ActivePerl/DocTools.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ActivePerl/DocTools/Pod.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ActivePerl/DocTools/TOC.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ActivePerl/DocTools/TOC/HTML.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ActivePerl/DocTools/TOC/RDF.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ActivePerl/DocTools/TOC/tocTab.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ActivePerl/DocTools/TOC/tocxml.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ActivePerl/DocTools/Tree/HTML.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man1/ap-update-html.1
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man1/ap-user-guide.1
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/ActivePerl::DocTools::Pod.3

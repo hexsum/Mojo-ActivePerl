@@ -1,0 +1,176 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#code">code</a></li>
+      <li><a href="#message">message</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#cookies">cookies</a></li>
+      <li><a href="#default_message">default_message</a></li>
+      <li><a href="#extract_start_line">extract_start_line</a></li>
+      <li><a href="#fix_headers">fix_headers</a></li>
+      <li><a href="#get_start_line_chunk">get_start_line_chunk</a></li>
+      <li><a href="#is_empty">is_empty</a></li>
+      <li><a href="#is_status_class">is_status_class</a></li>
+      <li><a href="#start_line_size">start_line_size</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Message::Response - HTTP response</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Message::Response</span><span class="operator">;</span>
+  
+  <span class="comment"># Parse</span>
+  <span class="keyword">my</span> <span class="variable">$res</span> <span class="operator">=</span> <span class="variable">Mojo::Message::Response</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"HTTP/1.0 200 OK\x0d\x0a"</span><span class="operator">);</span>
+  <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Length: 12\x0d\x0a"</span><span class="operator">);</span>
+  <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Type: text/plain\x0d\x0a\x0d\x0a"</span><span class="operator">);</span>
+  <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'Hello World!'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  
+  <span class="comment"># Build</span>
+  <span class="keyword">my</span> <span class="variable">$res</span> <span class="operator">=</span> <span class="variable">Mojo::Message::Response</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+  <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+  <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">(</span><span class="string">'Hello World!'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Response.html">Mojo::Message::Response</a> is a container for HTTP responses, based on <a href="http://tools.ietf.org/html/rfc7230">RFC 7230</a> and <a href="http://tools.ietf.org/html/rfc7231">RFC 7231</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Response.html">Mojo::Message::Response</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Response.html">Mojo::Message::Response</a> inherits all attributes from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a> and implements the following new ones.</p>
+
+<h2 id="code">code</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$code</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">;</span>
+  <span class="variable">$res</span>     <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+</code></pre>
+
+<p>HTTP response status code.</p>
+
+<h2 id="message">message</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">message</span><span class="operator">;</span>
+  <span class="variable">$res</span>    <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">message</span><span class="operator">(</span><span class="string">'OK'</span><span class="operator">);</span>
+</code></pre>
+
+<p>HTTP response status message.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Response.html">Mojo::Message::Response</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a> and implements the following new ones.</p>
+
+<h2 id="cookies">cookies</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cookies</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">;</span>
+  <span class="variable">$res</span>        <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">(</span><span class="variable">Mojo::Cookie::Response</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="variable">$res</span>        <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">(</span><span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">,</span> <span class="string">value</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Access response cookies, usually <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie/Response.html">Mojo::Cookie::Response</a> objects.</p>
+
+<pre><code>  <span class="comment"># Names of all cookies</span>
+  <span class="keyword">say</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">name</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="default_message">default_message</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">default_message</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">default_message</span><span class="operator">(</span><span class="number">418</span><span class="operator">);</span>
+</code></pre>
+
+<p>Generate default response message for status code, defaults to using <a href="#code">&quot;code&quot;</a>.</p>
+
+<h2 id="extract_start_line">extract_start_line</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">extract_start_line</span><span class="operator">(\</span><span class="variable">$str</span><span class="operator">);</span>
+</code></pre>
+
+<p>Extract status-line from string.</p>
+
+<h2 id="fix_headers">fix_headers</h2>
+
+<pre><code>  <span class="variable">$res</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">fix_headers</span><span class="operator">;</span>
+</code></pre>
+
+<p>Make sure response has all required headers.</p>
+
+<h2 id="get_start_line_chunk">get_start_line_chunk</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">get_start_line_chunk</span><span class="operator">(</span><span class="variable">$offset</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get a chunk of status-line data starting from a specific position. Note that this method finalizes the response.</p>
+
+<h2 id="is_empty">is_empty</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">is_empty</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if this is a <code>1xx</code>, <code>204</code> or <code>304</code> response.</p>
+
+<h2 id="is_status_class">is_status_class</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">is_status_class</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check response status class.</p>
+
+<h2 id="start_line_size">start_line_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">start_line_size</span><span class="operator">;</span>
+</code></pre>
+
+<p>Size of the status-line in bytes. Note that this method finalizes the response.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

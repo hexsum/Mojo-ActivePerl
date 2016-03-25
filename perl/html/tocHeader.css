@@ -1,0 +1,32 @@
+.tocHeader
+    {
+    background-color:#FFFFFF;
+    }
+.tocHeaderSel
+    {
+    padding: 4px;
+    background-color: #FFFFFF; 
+/*    border-top: solid 1px #BDBDBD; */
+    }
+    a div.tocHeaderSel
+        {
+        color: #000000; 
+        font-weight: bold;
+        }
+ .tocHeaderUnsel
+    {
+    padding: 4px;
+    border-top: solid 1px #BDBDBD; 
+    }
+.tocContent
+    {
+    padding-left: 12px; 
+    padding-top: 10px;
+    background-color:#FFFFFF; 
+    border-top: solid 1px #BDBDBD; 
+    }
+h1
+    {
+    margin-bottom:4px;
+    padding-bottom:0px;
+    }

@@ -1,0 +1,16 @@
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Base.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/Unix.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/VMS.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/Windows.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/Windows/BCC.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/Windows/GCC.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/Windows/MSVC.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/aix.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/android.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/cygwin.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/darwin.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/dec_osf.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/ExtUtils/CBuilder/Platform/os2.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/ExtUtils::CBuilder.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/ExtUtils::CBuilder::Platform::Windows.3

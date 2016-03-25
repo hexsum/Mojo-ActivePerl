@@ -1,0 +1,277 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#cache">cache</a></li>
+      <li><a href="#classes">classes</a></li>
+      <li><a href="#default_format">default_format</a></li>
+      <li><a href="#default_handler">default_handler</a></li>
+      <li><a href="#encoding">encoding</a></li>
+      <li><a href="#handlers">handlers</a></li>
+      <li><a href="#helpers">helpers</a></li>
+      <li><a href="#paths">paths</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#accepts">accepts</a></li>
+      <li><a href="#add_handler">add_handler</a></li>
+      <li><a href="#add_helper">add_helper</a></li>
+      <li><a href="#get_data_template">get_data_template</a></li>
+      <li><a href="#get_helper">get_helper</a></li>
+      <li><a href="#render">render</a></li>
+      <li><a href="#template_for">template_for</a></li>
+      <li><a href="#template_handler">template_handler</a></li>
+      <li><a href="#template_name">template_name</a></li>
+      <li><a href="#template_path">template_path</a></li>
+      <li><a href="#warmup">warmup</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Renderer - Generate dynamic content</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Renderer</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$renderer</span> <span class="operator">=</span> <span class="variable">Mojolicious::Renderer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'MyApp::Controller::Foo'</span><span class="operator">;</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'/home/sri/templates'</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html">Mojolicious::Renderer</a> is the standard <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> renderer.</p>
+
+<p>See <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Rendering.html">Mojolicious::Guides::Rendering</a> for more.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html">Mojolicious::Renderer</a> implements the following attributes.</p>
+
+<h2 id="cache">cache</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cache</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">cache</span><span class="operator">;</span>
+  <span class="variable">$renderer</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">cache</span><span class="operator">(</span><span class="variable">Mojo::Cache</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Renderer cache, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cache.html">Mojo::Cache</a> object.</p>
+
+<h2 id="classes">classes</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$classes</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">;</span>
+  <span class="variable">$renderer</span>   <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">(</span><span class="operator">[</span><span class="string">'main'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Classes to use for finding templates in <code>DATA</code> sections with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Loader.html">Mojo::Loader</a>, first one has the highest precedence, defaults to <code>main</code>. Only files with exactly two extensions will be used, like <code>index.html.ep</code>. Note that for templates to be detected, these classes need to have already been loaded and added before <a href="#warmup">&quot;warmup&quot;</a> is called, which usually happens automatically during application startup.</p>
+
+<pre><code>  <span class="comment"># Add another class with templates in DATA section</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'Mojolicious::Plugin::Fun'</span><span class="operator">;</span>
+  
+  <span class="comment"># Add another class with templates in DATA section and higher precedence</span>
+  <span class="keyword">unshift</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'Mojolicious::Plugin::MoreFun'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="default_format">default_format</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$default</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">default_format</span><span class="operator">;</span>
+  <span class="variable">$renderer</span>   <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">default_format</span><span class="operator">(</span><span class="string">'html'</span><span class="operator">);</span>
+</code></pre>
+
+<p>The default format to render if <code>format</code> is not set in the stash, defaults to <code>html</code>.</p>
+
+<h2 id="default_handler">default_handler</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$default</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">default_handler</span><span class="operator">;</span>
+  <span class="variable">$renderer</span>   <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">default_handler</span><span class="operator">(</span><span class="string">'ep'</span><span class="operator">);</span>
+</code></pre>
+
+<p>The default template handler to use for rendering in cases where auto-detection doesn&#39;t work, like for <code>inline</code> templates.</p>
+
+<h2 id="encoding">encoding</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$encoding</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">encoding</span><span class="operator">;</span>
+  <span class="variable">$renderer</span>    <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">encoding</span><span class="operator">(</span><span class="string">'koi8-r'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Will encode generated content if set, defaults to <code>UTF-8</code>. Note that many renderers such as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/EPRenderer.html">Mojolicious::Plugin::EPRenderer</a> also use this value to determine if template files should be decoded before processing.</p>
+
+<h2 id="handlers">handlers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$handlers</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">handlers</span><span class="operator">;</span>
+  <span class="variable">$renderer</span>    <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">handlers</span><span class="operator">(</span><span class="operator">{</span><span class="string">epl</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Registered handlers.</p>
+
+<h2 id="helpers">helpers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$helpers</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">helpers</span><span class="operator">;</span>
+  <span class="variable">$renderer</span>   <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">helpers</span><span class="operator">(</span><span class="operator">{</span><span class="string">url_for</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Registered helpers.</p>
+
+<h2 id="paths">paths</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$paths</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">;</span>
+  <span class="variable">$renderer</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">(</span><span class="operator">[</span><span class="string">'/home/sri/templates'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Directories to look for templates in, first one has the highest precedence.</p>
+
+<pre><code>  <span class="comment"># Add another "templates" directory</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'/home/sri/templates'</span><span class="operator">;</span>
+  
+  <span class="comment"># Add another "templates" directory with higher precedence</span>
+  <span class="keyword">unshift</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'/home/sri/themes/blue/templates'</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html">Mojolicious::Renderer</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="accepts">accepts</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$all</span>  <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$best</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="string">'html'</span><span class="operator">,</span> <span class="string">'json'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Select best possible representation for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a> object from <code>Accept</code> request header, <code>format</code> stash value or <code>format</code> <code>GET</code>/<code>POST</code> parameter, defaults to returning the first extension if no preference could be detected. Since browsers often don&#39;t really know what they actually want, unspecific <code>Accept</code> request headers with more than one MIME type will be ignored, unless the <code>X-Requested-With</code> header is set to the value <code>XMLHttpRequest</code>.</p>
+
+<h2 id="add_handler">add_handler</h2>
+
+<pre><code>  <span class="variable">$renderer</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">add_handler</span><span class="operator">(</span><span class="string">epl</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Register a handler.</p>
+
+<pre><code>  <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">add_handler</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$renderer</span><span class="operator">,</span> <span class="variable">$c</span><span class="operator">,</span> <span class="variable">$output</span><span class="operator">,</span> <span class="variable">$options</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+    <span class="variable">$$output</span> <span class="operator">=</span> <span class="string">'Hello World!'</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="add_helper">add_helper</h2>
+
+<pre><code>  <span class="variable">$renderer</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">add_helper</span><span class="operator">(</span><span class="string">url_for</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Register a helper.</p>
+
+<pre><code>  <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">add_helper</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="get_data_template">get_data_template</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$template</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">get_data_template</span><span class="operator">(</span><span class="operator">{</span>
+    <span class="string">template</span>       <span class="operator">=&gt;</span> <span class="string">'foo/bar'</span><span class="operator">,</span>
+    <span class="string">format</span>         <span class="operator">=&gt;</span> <span class="string">'html'</span><span class="operator">,</span>
+    <span class="string">handler</span>        <span class="operator">=&gt;</span> <span class="string">'epl'</span>
+  <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Return a <code>DATA</code> section template from <a href="#classes">&quot;classes&quot;</a> for an options hash reference with <code>template</code>, <code>format</code>, <code>variant</code> and <code>handler</code> values, or <code>undef</code> if no template could be found, usually used by handlers.</p>
+
+<h2 id="get_helper">get_helper</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$helper</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">get_helper</span><span class="operator">(</span><span class="string">'url_for'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get a helper by full name, generate a helper dynamically for a prefix, or return <code>undef</code> if no helper or prefix could be found. Generated helpers return a proxy object containing the current controller object and on which nested helpers can be called.</p>
+
+<h2 id="render">render</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$output</span><span class="operator">,</span> <span class="variable">$format</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="operator">{</span>
+    <span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/bar'</span><span class="operator">,</span>
+    <span class="string">foo</span>      <span class="operator">=&gt;</span> <span class="string">'bar'</span>
+  <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Render output through one of the renderers. See <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#render">&quot;render&quot; in Mojolicious::Controller</a> for a more user-friendly interface.</p>
+
+<h2 id="template_for">template_for</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$name</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">template_for</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Return default template name for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a> object, or <code>undef</code> if no name could be generated.</p>
+
+<h2 id="template_handler">template_handler</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$handler</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">template_handler</span><span class="operator">(</span><span class="operator">{</span>
+    <span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/bar'</span><span class="operator">,</span>
+    <span class="string">format</span>   <span class="operator">=&gt;</span> <span class="string">'html'</span>
+  <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Return handler for an options hash reference with <code>template</code>, <code>format</code> and <code>variant</code> values, or <code>undef</code> if no handler could be found.</p>
+
+<h2 id="template_name">template_name</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$template</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">template_name</span><span class="operator">(</span><span class="operator">{</span>
+    <span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/bar'</span><span class="operator">,</span>
+    <span class="string">format</span>   <span class="operator">=&gt;</span> <span class="string">'html'</span><span class="operator">,</span>
+    <span class="string">handler</span>  <span class="operator">=&gt;</span> <span class="string">'epl'</span>
+  <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Return a template name for an options hash reference with <code>template</code>, <code>format</code>, <code>variant</code> and <code>handler</code> values, or <code>undef</code> if no template could be found, usually used by handlers.</p>
+
+<h2 id="template_path">template_path</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">template_path</span><span class="operator">(</span><span class="operator">{</span>
+    <span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/bar'</span><span class="operator">,</span>
+    <span class="string">format</span>   <span class="operator">=&gt;</span> <span class="string">'html'</span><span class="operator">,</span>
+    <span class="string">handler</span>  <span class="operator">=&gt;</span> <span class="string">'epl'</span>
+  <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Return the full template path for an options hash reference with <code>template</code>, <code>format</code>, <code>variant</code> and <code>handler</code> values, or <code>undef</code> if the file does not exist in <a href="#paths">&quot;paths&quot;</a>, usually used by handlers.</p>
+
+<h2 id="warmup">warmup</h2>
+
+<pre><code>  <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">warmup</span><span class="operator">;</span>
+</code></pre>
+
+<p>Prepare templates from <a href="#classes">&quot;classes&quot;</a> for future use.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

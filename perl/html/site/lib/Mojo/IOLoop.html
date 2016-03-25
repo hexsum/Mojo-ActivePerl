@@ -1,0 +1,459 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#finish">finish</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#max_accepts">max_accepts</a></li>
+      <li><a href="#max_connections">max_connections</a></li>
+      <li><a href="#reactor">reactor</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#acceptor">acceptor</a></li>
+      <li><a href="#client">client</a></li>
+      <li><a href="#delay">delay</a></li>
+      <li><a href="#is_running">is_running</a></li>
+      <li><a href="#next_tick">next_tick</a></li>
+      <li><a href="#one_tick">one_tick</a></li>
+      <li><a href="#recurring">recurring</a></li>
+      <li><a href="#remove">remove</a></li>
+      <li><a href="#reset">reset</a></li>
+      <li><a href="#server">server</a></li>
+      <li><a href="#singleton">singleton</a></li>
+      <li><a href="#start">start</a></li>
+      <li><a href="#stop">stop</a></li>
+      <li><a href="#stop_gracefully">stop_gracefully</a></li>
+      <li><a href="#stream">stream</a></li>
+      <li><a href="#timer">timer</a></li>
+    </ul>
+  </li>
+  <li><a href="#DEBUGGING">DEBUGGING</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::IOLoop - Minimalistic event loop</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::IOLoop</span><span class="operator">;</span>
+  
+  <span class="comment"># Listen on port 3000</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">(</span><span class="operator">{</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$loop</span><span class="operator">,</span> <span class="variable">$stream</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">read</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$stream</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+      <span class="comment"># Process input chunk</span>
+      <span class="keyword">say</span> <span class="variable">$bytes</span><span class="operator">;</span>
+  
+      <span class="comment"># Write response</span>
+      <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">'HTTP/1.1 200 OK'</span><span class="operator">);</span>
+    <span class="operator">});</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Connect to port 3000</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">client</span><span class="operator">(</span><span class="operator">{</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$loop</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">,</span> <span class="variable">$stream</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">read</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$stream</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+      <span class="comment"># Process input</span>
+      <span class="keyword">say</span> <span class="string">"Input: </span><span class="variable">$bytes</span><span class="string">"</span><span class="operator">;</span>
+    <span class="operator">});</span>
+  
+    <span class="comment"># Write request</span>
+    <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">"GET / HTTP/1.1\x0d\x0a\x0d\x0a"</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Add a timer</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">5</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Start event loop if necessary</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> is a very minimalistic event loop based on <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor.html">Mojo::Reactor</a>, it has been reduced to the absolute minimal feature set required to build solid and scalable non-blocking TCP clients and servers.</p>
+
+<p>Depending on operating system, the default per-process and system-wide file descriptor limits are often very low and need to be tuned for better scalability. The <code>LIBEV_FLAGS</code> environment variable should also be used to select the best possible <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">EV</a> backend, which usually defaults to the not very scalable <code>select</code>.</p>
+
+<pre><code>  LIBEV_FLAGS=1   # select
+  LIBEV_FLAGS=2   # poll
+  LIBEV_FLAGS=4   # epoll (Linux)
+  LIBEV_FLAGS=8   # kqueue (*BSD, OS X)</code></pre>
+
+<p>The event loop will be resilient to time jumps if a monotonic clock is available through <a href="../../../lib/Time/HiRes.html">Time::HiRes</a>. A TLS certificate and key are also built right in, to make writing test servers as easy as possible. Also note that for convenience the <code>PIPE</code> signal will be set to <code>IGNORE</code> when <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> is loaded.</p>
+
+<p>For better scalability (epoll, kqueue) and to provide non-blocking name resolution, SOCKS5 as well as TLS support, the optional modules <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">EV</a> (4.0+), <a>Net::DNS::Native</a> (0.15+), <a>IO::Socket::Socks</a> (0.64+) and <a href="../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> (1.94+) will be used automatically if possible. Individual features can also be disabled with the <code>MOJO_NO_NDN</code>, <code>MOJO_NO_SOCKS</code> and <code>MOJO_NO_TLS</code> environment variables.</p>
+
+<p>See <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Cookbook.html#REAL-TIME-WEB">&quot;REAL-TIME WEB&quot; in Mojolicious::Guides::Cookbook</a> for more.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> inherits all events from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones.</p>
+
+<h2 id="finish">finish</h2>
+
+<pre><code>  <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when the event loop wants to shut down gracefully and is just waiting for all existing connections to be closed.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> implements the following attributes.</p>
+
+<h2 id="max_accepts">max_accepts</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$max</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">max_accepts</span><span class="operator">;</span>
+  <span class="variable">$loop</span>   <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">max_accepts</span><span class="operator">(</span><span class="number">1000</span><span class="operator">);</span>
+</code></pre>
+
+<p>The maximum number of connections this event loop is allowed to accept, before shutting down gracefully without interrupting existing connections, defaults to <code>0</code>. Setting the value to <code>0</code> will allow this event loop to accept new connections indefinitely. Note that up to half of this value can be subtracted randomly to improve load balancing between multiple server processes.</p>
+
+<h2 id="max_connections">max_connections</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$max</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">max_connections</span><span class="operator">;</span>
+  <span class="variable">$loop</span>   <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">max_connections</span><span class="operator">(</span><span class="number">100</span><span class="operator">);</span>
+</code></pre>
+
+<p>The maximum number of accepted connections this event loop is allowed to handle concurrently, before stopping to accept new incoming connections, defaults to <code>1000</code>.</p>
+
+<h2 id="reactor">reactor</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$reactor</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">;</span>
+  <span class="variable">$loop</span>       <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">(</span><span class="variable">Mojo::Reactor</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Low-level event reactor, usually a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/Poll.html">Mojo::Reactor::Poll</a> or <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">Mojo::Reactor::EV</a> object with a default subscriber to the event <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor.html#error">&quot;error&quot; in Mojo::Reactor</a>.</p>
+
+<pre><code>  <span class="comment"># Watch if handle becomes readable or writable</span>
+  <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">io</span><span class="operator">(</span><span class="variable">$handle</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$reactor</span><span class="operator">,</span> <span class="variable">$writable</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$writable</span> <span class="operator">?</span> <span class="string">'Handle is writable'</span> <span class="operator">:</span> <span class="string">'Handle is readable'</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Change to watching only if handle becomes writable</span>
+  <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">);</span>
+  
+  <span class="comment"># Remove handle again</span>
+  <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="acceptor">acceptor</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">acceptor</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">acceptor</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$id</span>     <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">acceptor</span><span class="operator">(</span><span class="variable">Mojo::IOLoop::Server</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Server.html">Mojo::IOLoop::Server</a> object for id or turn object into an acceptor.</p>
+
+<h2 id="client">client</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$id</span>
+    <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">client</span><span class="operator">(</span><span class="string">address</span> <span class="operator">=&gt;</span> <span class="string">'127.0.0.1'</span><span class="operator">,</span> <span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">,</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">client</span><span class="operator">(</span><span class="string">address</span> <span class="operator">=&gt;</span> <span class="string">'127.0.0.1'</span><span class="operator">,</span> <span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">,</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">client</span><span class="operator">(</span><span class="operator">{</span><span class="string">address</span> <span class="operator">=&gt;</span> <span class="string">'127.0.0.1'</span><span class="operator">,</span> <span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Open TCP connection with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Client.html">Mojo::IOLoop::Client</a>, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Client.html#connect">&quot;connect&quot; in Mojo::IOLoop::Client</a>.</p>
+
+<pre><code>  <span class="comment"># Connect to 127.0.0.1 on port 3000</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">client</span><span class="operator">(</span><span class="operator">{</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$loop</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">,</span> <span class="variable">$stream</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="delay">delay</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...},</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Build <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Delay.html">Mojo::IOLoop::Delay</a> object to manage callbacks and control the flow of events for this event loop, which can help you avoid deep nested closures that often result from continuation-passing style. Callbacks will be passed along to <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Delay.html#steps">&quot;steps&quot; in Mojo::IOLoop::Delay</a>.</p>
+
+<pre><code>  <span class="comment"># Synchronize multiple non-blocking operations</span>
+  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="string">'BOOM!'</span> <span class="operator">});</span>
+  <span class="keyword">for</span> <span class="keyword">my</span> <span class="variable">$i</span> <span class="operator">(</span><span class="number">1</span> <span class="operator">..</span> <span class="number">10</span><span class="operator">)</span> <span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$end</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">;</span>
+    <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="variable">$i</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">say</span> <span class="number">10</span> <span class="operator">-</span> <span class="variable">$i</span><span class="operator">;</span>
+      <span class="variable">$end</span><span class="operator">-&gt;();</span>
+    <span class="operator">});</span>
+  <span class="operator">}</span>
+  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+  
+  <span class="comment"># Sequentialize multiple non-blocking operations</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span>
+  
+    <span class="comment"># First step (simple timer)</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">2</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+      <span class="keyword">say</span> <span class="string">'Second step in 2 seconds.'</span><span class="operator">;</span>
+    <span class="operator">},</span>
+  
+    <span class="comment"># Second step (concurrent timers)</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">1</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+      <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">3</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+      <span class="keyword">say</span> <span class="string">'Third step in 3 seconds.'</span><span class="operator">;</span>
+    <span class="operator">},</span>
+  
+    <span class="comment"># Third step (the end)</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="string">'And done after 5 seconds total.'</span> <span class="operator">}</span>
+  <span class="operator">)-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+  
+  <span class="comment"># Handle exceptions in all steps</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="keyword">die</span> <span class="string">'Intentional error'</span><span class="operator">;</span>
+    <span class="operator">},</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="keyword">say</span> <span class="string">'Never actually reached.'</span><span class="operator">;</span>
+    <span class="operator">}</span>
+  <span class="operator">)-&gt;</span><span class="variable">catch</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Something went wrong: </span><span class="variable">$err</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">})-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="is_running">is_running</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if event loop is running.</p>
+
+<pre><code>  <span class="keyword">exit</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="next_tick">next_tick</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$undef</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">next_tick</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$undef</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">next_tick</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Execute callback as soon as possible, but not before returning or other callbacks that have been registered with this method, always returns <code>undef</code>.</p>
+
+<pre><code>  <span class="comment"># Perform operation on next reactor tick</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">next_tick</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="one_tick">one_tick</h2>
+
+<pre><code>  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">one_tick</span><span class="operator">;</span>
+  <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">one_tick</span><span class="operator">;</span>
+</code></pre>
+
+<p>Run event loop until an event occurs. Note that this method can recurse back into the reactor, so you need to be careful.</p>
+
+<pre><code>  <span class="comment"># Don't block longer than 0.5 seconds</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">0</span><span class="operator">.</span><span class="number">5</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">one_tick</span><span class="operator">;</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="recurring">recurring</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">recurring</span><span class="operator">(</span><span class="number">3</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">recurring</span><span class="operator">(</span><span class="number">0</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">recurring</span><span class="operator">(</span><span class="number">0</span><span class="operator">.</span><span class="number">25</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Create a new recurring timer, invoking the callback repeatedly after a given amount of time in seconds.</p>
+
+<pre><code>  <span class="comment"># Perform operation every 5 seconds</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">recurring</span><span class="operator">(</span><span class="number">5</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="remove">remove</h2>
+
+<pre><code>  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+  <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+</code></pre>
+
+<p>Remove anything with an id, connections will be dropped gracefully by allowing them to finish writing all data in their write buffers.</p>
+
+<h2 id="reset">reset</h2>
+
+<pre><code>  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">reset</span><span class="operator">;</span>
+  <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">reset</span><span class="operator">;</span>
+</code></pre>
+
+<p>Remove everything and stop the event loop.</p>
+
+<h2 id="server">server</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">(</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">,</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">(</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">,</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">(</span><span class="operator">{</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Accept TCP connections with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Server.html">Mojo::IOLoop::Server</a>, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Server.html#listen">&quot;listen&quot; in Mojo::IOLoop::Server</a>.</p>
+
+<pre><code>  <span class="comment"># Listen on port 3000</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">(</span><span class="operator">{</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$loop</span><span class="operator">,</span> <span class="variable">$stream</span><span class="operator">,</span> <span class="variable">$id</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Listen on random port</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">(</span><span class="operator">{</span><span class="string">address</span> <span class="operator">=&gt;</span> <span class="string">'127.0.0.1'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$loop</span><span class="operator">,</span> <span class="variable">$stream</span><span class="operator">,</span> <span class="variable">$id</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  <span class="keyword">my</span> <span class="variable">$port</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">acceptor</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">)-&gt;</span><span class="variable">port</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="singleton">singleton</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">singleton</span><span class="operator">;</span>
+</code></pre>
+
+<p>The global <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> singleton, used to access a single shared event loop object from everywhere inside the process.</p>
+
+<pre><code>  <span class="comment"># Many methods also allow you to take shortcuts</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">2</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">stop</span> <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  
+  <span class="comment"># Restart active timer</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">3</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="string">'Timeout!'</span> <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">singleton</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">again</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+  
+  <span class="comment"># Turn file descriptor into handle and watch if it becomes readable</span>
+  <span class="keyword">my</span> <span class="variable">$handle</span> <span class="operator">=</span> <span class="variable">IO::Handle</span><span class="operator">-&gt;</span><span class="variable">new_from_fd</span><span class="operator">(</span><span class="variable">$fd</span><span class="operator">,</span> <span class="string">'r'</span><span class="operator">);</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">singleton</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">io</span><span class="operator">(</span><span class="variable">$handle</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$reactor</span><span class="operator">,</span> <span class="variable">$writable</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$writable</span> <span class="operator">?</span> <span class="string">'Handle is writable'</span> <span class="operator">:</span> <span class="string">'Handle is readable'</span><span class="operator">;</span>
+  <span class="operator">})-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="start">start</h2>
+
+<pre><code>  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>Start the event loop, this will block until <a href="#stop">&quot;stop&quot;</a> is called. Note that some reactors stop automatically if there are no events being watched anymore.</p>
+
+<pre><code>  <span class="comment"># Start event loop only if it is not running already</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="stop">stop</h2>
+
+<pre><code>  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">stop</span><span class="operator">;</span>
+  <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">stop</span><span class="operator">;</span>
+</code></pre>
+
+<p>Stop the event loop, this will not interrupt any existing connections and the event loop can be restarted by running <a href="#start">&quot;start&quot;</a> again.</p>
+
+<h2 id="stop_gracefully">stop_gracefully</h2>
+
+<pre><code>  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">stop_gracefully</span><span class="operator">;</span>
+  <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">stop_gracefully</span><span class="operator">;</span>
+</code></pre>
+
+<p>Stop accepting new connections and wait for already accepted connections to be closed, before stopping the event loop.</p>
+
+<h2 id="stream">stream</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">stream</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">stream</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$id</span>     <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">stream</span><span class="operator">(</span><span class="variable">Mojo::IOLoop::Stream</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Stream.html">Mojo::IOLoop::Stream</a> object for id or turn object into a connection.</p>
+
+<pre><code>  <span class="comment"># Increase inactivity timeout for connection to 300 seconds</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">stream</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">)-&gt;</span><span class="variable">timeout</span><span class="operator">(</span><span class="number">300</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="timer">timer</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">3</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">0</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">0</span><span class="operator">.</span><span class="number">25</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Create a new timer, invoking the callback after a given amount of time in seconds.</p>
+
+<pre><code>  <span class="comment"># Perform operation in 5 seconds</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">5</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="DEBUGGING">DEBUGGING</h1>
+
+<p>You can set the <code>MOJO_IOLOOP_DEBUG</code> environment variable to get some advanced diagnostics information printed to <code>STDERR</code>.</p>
+
+<pre><code>  MOJO_IOLOOP_DEBUG=1</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

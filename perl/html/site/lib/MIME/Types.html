@@ -1,0 +1,290 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#INHERITANCE">INHERITANCE</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#MIME::Types-and-daemons-fork">MIME::Types and daemons (fork)</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#Constructors">Constructors</a></li>
+      <li><a href="#Knowledge">Knowledge</a></li>
+      <li><a href="#HTTP-support">HTTP support</a></li>
+    </ul>
+  </li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#LICENSE">LICENSE</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>MIME::Types - Definition of MIME types</p>
+
+<h1 id="INHERITANCE">INHERITANCE</h1>
+
+<pre><code> MIME::Types
+   is a Exporter</code></pre>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> <span class="keyword">use</span> <span class="variable">MIME::Types</span><span class="operator">;</span>
+ <span class="keyword">my</span> <span class="variable">$mt</span>    <span class="operator">=</span> <span class="variable">MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(...);</span>    <span class="comment"># MIME::Types object</span>
+ <span class="keyword">my</span> <span class="variable">$type</span>  <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>  <span class="comment"># MIME::Type  object</span>
+ <span class="keyword">my</span> <span class="variable">$type</span>  <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">mimeTypeOf</span><span class="operator">(</span><span class="string">'gif'</span><span class="operator">);</span>
+ <span class="keyword">my</span> <span class="variable">$type</span>  <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">mimeTypeOf</span><span class="operator">(</span><span class="string">'picture.jpg'</span><span class="operator">);</span>
+ <span class="keyword">my</span> <span class="variable">@types</span> <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">httpAccept</span><span class="operator">(</span><span class="string">'text/html, application/json;q=0.1'</span><span class="operator">)</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>MIME types are used in many applications (for instance as part of e-mail and HTTP traffic) to indicate the type of content which is transmitted. or expected. See RFC2045 at <i>https://www.ietf.org/rfc/rfc2045.txt</i></p>
+
+<p>Sometimes detailed knowledge about a mime-type is need, however this module only knows about the file-name extensions which relate to some filetype. It can also be used to produce the right format: types which are not registered at IANA need to use &#39;x-&#39; prefixes.</p>
+
+<p>This object administers a huge list of known mime-types, combined from various sources. For instance, it contains <b>all IANA</b> types and the knowledge of Apache. Probably the most complete table on the net!</p>
+
+<h2 id="MIME::Types-and-daemons-fork">MIME::Types and daemons (fork)</h2>
+
+<p>If your program uses fork (usually for a daemon), then you want to have the type table initialized before you start forking. So, first call</p>
+
+<pre><code>   <span class="keyword">my</span> <span class="variable">$mt</span> <span class="operator">=</span> <span class="variable">MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+</code></pre>
+
+<p>Later, each time you create this object (you may, of course, also reuse the object you create here) you will get access to <b>the same global table</b> of types.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<h2 id="Constructors">Constructors</h2>
+
+<dl>
+
+<dt id="MIME::Types-new-options">MIME::Types-&gt;<b>new</b>(%options)</dt>
+<dd>
+
+<p>Create a new <code>MIME::Types</code> object which manages the data. In the current implementation, it does not matter whether you create this object often within your program, but in the future this may change.</p>
+
+<pre><code> -Option         --Default
+  db_file          &lt;installed source&gt;
+  only_complete    &lt;false&gt;
+  only_iana        &lt;false&gt;
+  skip_extensions  &lt;false&gt;</code></pre>
+
+<dl>
+
+<dt id="db_file-FILENAME">db_file =&gt; FILENAME</dt>
+<dd>
+
+<p>The location of the database which contains the type information. Only the first instantiation of this object will have this parameter obeyed.</p>
+
+<p>[2.10] This parameter can be globally overruled via the <code>PERL_MIME_TYPE_DB</code> environment variable, which may be needed in case of PAR or other tricky installations. For PAR, you probably set this environment variable to &quot;inc/lib/MIME/types.db&quot;</p>
+
+</dd>
+<dt id="only_complete-BOOLEAN">only_complete =&gt; BOOLEAN</dt>
+<dd>
+
+<p>Only include complete MIME type definitions: requires at least one known extension. This will reduce the number of entries --and with that the amount of memory consumed-- considerably.</p>
+
+<p>In your program you have to decide: the first time that you call the creator (<code>new</code>) determines whether you get the full or the partial information.</p>
+
+</dd>
+<dt id="only_iana-BOOLEAN">only_iana =&gt; BOOLEAN</dt>
+<dd>
+
+<p>Only load the types which are currently known by IANA.</p>
+
+</dd>
+<dt id="skip_extensions-BOOLEAN">skip_extensions =&gt; BOOLEAN</dt>
+<dd>
+
+<p>Do not load the table to map extensions to types, which is quite large.</p>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+<h2 id="Knowledge">Knowledge</h2>
+
+<dl>
+
+<dt id="obj-addType-type">$obj-&gt;<b>addType</b>($type, ...)</dt>
+<dd>
+
+<p>Add one or more TYPEs to the set of known types. Each TYPE is a <code>MIME::Type</code> which must be experimental: either the main-type or the sub-type must start with <code>x-</code>.</p>
+
+<p>Please inform the maintainer of this module when registered types are missing. Before version MIME::Types version 1.14, a warning was produced when an unknown IANA type was added. This has been removed, because some people need that to get their application to work locally... broken applications...</p>
+
+</dd>
+<dt id="obj-extensions">$obj-&gt;<b>extensions</b>()</dt>
+<dd>
+
+<p>Returns a list of all defined extensions.</p>
+
+</dd>
+<dt id="obj-listTypes">$obj-&gt;<b>listTypes</b>()</dt>
+<dd>
+
+<p>Returns a list of all defined mime-types by name only. This will <b>not</b> instantiate <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Type.html">MIME::Type</a> objects. See <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html#Knowledge">types()</a></p>
+
+</dd>
+<dt id="obj-mimeTypeOf-filename">$obj-&gt;<b>mimeTypeOf</b>($filename)</dt>
+<dd>
+
+<p>Returns the <code>MIME::Type</code> object which belongs to the FILENAME (or simply its filename extension) or <code>undef</code> if the file type is unknown. The extension is used and considered case-insensitive.</p>
+
+<p>In some cases, more than one type is known for a certain filename extension. In that case, the preferred one is taken (for an unclear definition of preference)</p>
+
+<p>example: use of mimeTypeOf()</p>
+
+<pre><code> <span class="keyword">my</span> <span class="variable">$types</span> <span class="operator">=</span> <span class="variable">MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+ <span class="keyword">my</span> <span class="variable">$mime</span> <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">mimeTypeOf</span><span class="operator">(</span><span class="string">'gif'</span><span class="operator">);</span>
+ 
+ <span class="keyword">my</span> <span class="variable">$mime</span> <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">mimeTypeOf</span><span class="operator">(</span><span class="string">'picture.jpg'</span><span class="operator">);</span>
+ <span class="keyword">print</span> <span class="variable">$mime</span><span class="operator">-&gt;</span><span class="variable">isBinary</span><span class="operator">;</span>
+</code></pre>
+
+</dd>
+<dt id="obj-type-string">$obj-&gt;<b>type</b>($string)</dt>
+<dd>
+
+<p>Returns the <code>MIME::Type</code> which describes the type related to STRING. [2.00] Only one type will be returned.</p>
+
+<p>[before 2.00] One type may be described more than once. Different extensions may be in use for this type, and different operating systems may cause more than one <code>MIME::Type</code> object to be defined. In scalar context, only the first is returned.</p>
+
+</dd>
+<dt id="obj-types">$obj-&gt;<b>types</b>()</dt>
+<dd>
+
+<p>Returns a list of all defined mime-types. For reasons of backwards compatibility, this will instantiate <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Type.html">MIME::Type</a> objects, which will be returned. See <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html#Knowledge">listTypes()</a>.</p>
+
+</dd>
+</dl>
+
+<h2 id="HTTP-support">HTTP support</h2>
+
+<dl>
+
+<dt id="obj-httpAccept-header">$obj-&gt;<b>httpAccept</b>($header)</dt>
+<dd>
+
+<p>[2.07] Decompose a typical HTTP-Accept header, and sort it based on the included priority information. Returned is a sorted list of type names, where the highest priority type is first. The list may contain &#39;*/*&#39; (accept any) or a &#39;*&#39; as subtype.</p>
+
+<p>Ill-formated typenames are ignored. On equal qualities, the order is kept. See RFC2616 section 14.1</p>
+
+<p>example:</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">@types</span> <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">httpAccept</span><span class="operator">(</span><span class="string">'text/html, application/json;q=0.9'</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+<dt id="obj-httpAcceptBest-accept-types-have">$obj-&gt;<b>httpAcceptBest</b>($accept|\@types, @have)</dt>
+<dd>
+
+<p>[2.07] The <code>$accept</code> string is processed via <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html#HTTP-support">httpAccept()</a> to order the types on preference. You may also provide a list of ordered <code>@types</code> which may have been the result of that method, called earlier.</p>
+
+<p>As second parameter, you pass a LIST of types you <code>@have</code> to offer. Those need to be <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Type.html">MIME::Type</a> objects. The preferred type will get selected. When none of these are accepted by the client, this will return <code>undef</code>. It should result in a 406 server response.</p>
+
+<p>example:</p>
+
+<pre><code>   <span class="keyword">my</span> <span class="variable">$accept</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">header</span><span class="operator">(</span><span class="string">'Accept'</span><span class="operator">);</span>
+   <span class="keyword">my</span> <span class="variable">@have</span>   <span class="operator">=</span> <span class="keyword">map</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="variable">$_</span><span class="operator">),</span> <span class="string">qw[text/plain text/html]</span><span class="operator">;</span>
+   <span class="keyword">my</span> <span class="variable">@ext</span>    <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">httpAcceptBest</span><span class="operator">(</span><span class="variable">$accept</span><span class="operator">,</span> <span class="variable">@have</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+<dt id="obj-httpAcceptSelect-accept-types-filenames-filenames">$obj-&gt;<b>httpAcceptSelect</b>($accept|\@types, @filenames|\@filenames)</dt>
+<dd>
+
+<p>[2.07] Like <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html#HTTP-support">httpAcceptBest()</a>, but now we do not return a pair with mime-type and filename, not just the type. If $accept is <code>undef</code>, the first filename is returned.</p>
+
+<p>example:</p>
+
+<pre><code>   <span class="keyword">use</span> <span class="variable">HTTP::Status</span> <span class="string">':constants'</span><span class="operator">;</span>
+   <span class="keyword">use</span> <span class="variable">File::Glob</span>   <span class="string">'bsd_glob'</span><span class="operator">;</span>    <span class="comment"># understands blanks in filename</span>
+   
+   <span class="keyword">my</span> <span class="variable">@filenames</span>   <span class="operator">=</span> <span class="variable">bsd_glob</span> <span class="string">"</span><span class="variable">$imagedir</span><span class="string">/</span><span class="variable">$fnbase</span><span class="string">.*;
+   my </span><span class="variable">$accept</span><span class="string">      = </span><span class="variable">$req</span><span class="string">-&gt;header('Accept');
+   my (</span><span class="variable">$fn</span><span class="string">, </span><span class="variable">$mime</span><span class="string">) = </span><span class="variable">$mt</span><span class="string">-&gt;httpAcceptSelect(</span><span class="variable">$accept</span><span class="string">, </span><span class="variable">@filenames</span><span class="string">);
+   my </span><span class="variable">$code</span><span class="string">        = defined </span><span class="variable">$mime</span><span class="string"> ? HTTP_NOT_ACCEPTABLE : HTTP_OK;
+   </span>
+</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="FUNCTIONS">FUNCTIONS</h1>
+
+<p>The next functions are provided for backward compatibility with MIME::Types versions [0.06] and below. This code originates from Jeff Okamoto <i>okamoto@corp.hp.com</i> and others.</p>
+
+<dl>
+
+<dt id="by_mediatype-TYPE"><b>by_mediatype</b>(TYPE)</dt>
+<dd>
+
+<p>This function takes a media type and returns a list or anonymous array of anonymous three-element arrays whose values are the file name suffix used to identify it, the media type, and a content encoding.</p>
+
+<p>TYPE can be a full type name (contains &#39;/&#39;, and will be matched in full), a partial type (which is used as regular expression) or a real regular expression.</p>
+
+</dd>
+<dt id="by_suffix-FILENAME-SUFFIX"><b>by_suffix</b>(FILENAME|SUFFIX)</dt>
+<dd>
+
+<p>Like <code>mimeTypeOf</code>, but does not return an <code>MIME::Type</code> object. If the file +type is unknown, both the returned media type and encoding are empty strings.</p>
+
+<p>example: use of function by_suffix()</p>
+
+<pre><code> <span class="keyword">use</span> <span class="variable">MIME::Types</span> <span class="string">'by_suffix'</span><span class="operator">;</span>
+ <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$mediatype</span><span class="operator">,</span> <span class="variable">$encoding</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">by_suffix</span><span class="operator">(</span><span class="string">'image.gif'</span><span class="operator">);</span>
+ 
+ <span class="keyword">my</span> <span class="variable">$refdata</span> <span class="operator">=</span> <span class="variable">by_suffix</span><span class="operator">(</span><span class="string">'image.gif'</span><span class="operator">);</span>
+ <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$mediatype</span><span class="operator">,</span> <span class="variable">$encoding</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@$refdata</span><span class="operator">;</span>
+</code></pre>
+
+</dd>
+<dt id="import_mime_types"><b>import_mime_types</b>()</dt>
+<dd>
+
+<p>This method has been removed: mime-types are only useful if understood by many parties. Therefore, the IANA assigns names which can be used. In the table kept by this <code>MIME::Types</code> module all these names, plus the most often used temporary names are kept. When names seem to be missing, please contact the maintainer for inclusion.</p>
+
+</dd>
+</dl>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p>This module is part of MIME-Types distribution version 2.13, built on March 07, 2016. Website: <i>http://perl.overmeer.net/mimetypes/</i></p>
+
+<h1 id="LICENSE">LICENSE</h1>
+
+<p>Copyrights 1999,2001-2016 by [Mark Overmeer]. For other contributors see ChangeLog.</p>
+
+<p>This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself. See <i>http://www.perl.com/perl/misc/Artistic.html</i></p>
+
+
+</body>
+
+</html>
+
+

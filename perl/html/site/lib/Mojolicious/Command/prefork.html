@@ -1,0 +1,130 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#description">description</a></li>
+      <li><a href="#usage">usage</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#run">run</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Command::prefork - Prefork command</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  Usage: APPLICATION prefork [OPTIONS]
+
+    ./myapp.pl prefork
+    ./myapp.pl prefork -m production -l http://*:8080
+    ./myapp.pl prefork -l http://127.0.0.1:8080 -l https://[::]:8081
+    ./myapp.pl prefork -l &#39;https://*:443?cert=./server.crt&amp;key=./server.key&#39;
+
+  Options:
+    -a, --accepts &lt;number&gt;               Number of connections for workers to
+                                         accept, defaults to 10000
+    -b, --backlog &lt;size&gt;                 Listen backlog size, defaults to
+                                         SOMAXCONN
+    -c, --clients &lt;number&gt;               Maximum number of concurrent
+                                         connections, defaults to 1000
+    -G, --graceful-timeout &lt;seconds&gt;     Graceful timeout, defaults to 20.
+    -I, --heartbeat-interval &lt;seconds&gt;   Heartbeat interval, defaults to 5
+    -H, --heartbeat-timeout &lt;seconds&gt;    Heartbeat timeout, defaults to 20
+    -h, --help                           Show this summary of available options
+        --home &lt;path&gt;                    Path to home directory of your
+                                         application, defaults to the value of
+                                         MOJO_HOME or auto-detection
+    -i, --inactivity-timeout &lt;seconds&gt;   Inactivity timeout, defaults to the
+                                         value of MOJO_INACTIVITY_TIMEOUT or 15
+    -l, --listen &lt;location&gt;              One or more locations you want to
+                                         listen on, defaults to the value of
+                                         MOJO_LISTEN or &quot;http://*:3000&quot;
+    -m, --mode &lt;name&gt;                    Operating mode for your application,
+                                         defaults to the value of
+                                         MOJO_MODE/PLACK_ENV or &quot;development&quot;
+    -P, --pid-file &lt;path&gt;                Path to process id file, defaults to
+                                         &quot;prefork.pid&quot; in a temporary diretory
+    -p, --proxy                          Activate reverse proxy support,
+                                         defaults to the value of
+                                         MOJO_REVERSE_PROXY
+    -r, --requests &lt;number&gt;              Maximum number of requests per
+                                         keep-alive connection, defaults to 100
+    -w, --workers &lt;number&gt;               Number of workers, defaults to 4</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/prefork.html">Mojolicious::Command::prefork</a> starts applications with the <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a> backend.</p>
+
+<p>This is a core command, that means it is always enabled and its code a good example for learning to build new commands, you&#39;re welcome to fork it.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Commands.html#COMMANDS">&quot;COMMANDS&quot; in Mojolicious::Commands</a> for a list of commands that are available by default.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/prefork.html">Mojolicious::Command::prefork</a> inherits all attributes from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command.html">Mojolicious::Command</a> and implements the following new ones.</p>
+
+<h2 id="description">description</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$description</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">description</span><span class="operator">;</span>
+  <span class="variable">$prefork</span>        <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">description</span><span class="operator">(</span><span class="string">'Foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Short description of this command, used for the command list.</p>
+
+<h2 id="usage">usage</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$usage</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">usage</span><span class="operator">;</span>
+  <span class="variable">$prefork</span>  <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">usage</span><span class="operator">(</span><span class="string">'Foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Usage information for this command, used for the help screen.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/prefork.html">Mojolicious::Command::prefork</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command.html">Mojolicious::Command</a> and implements the following new ones.</p>
+
+<h2 id="run">run</h2>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">(</span><span class="variable">@ARGV</span><span class="operator">);</span>
+</code></pre>
+
+<p>Run this command.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

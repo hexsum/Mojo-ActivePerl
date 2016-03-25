@@ -1,0 +1,216 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#OVERVIEW">OVERVIEW</a></li>
+  <li><a href="#QUESTIONS">QUESTIONS</a>
+    <ul>
+      <li><a href="#How-does-Mojolicious-compare-to-other-Perl-web-frameworks">How does Mojolicious compare to other Perl web frameworks?</a></li>
+      <li><a href="#Why-doesnt-Mojolicious-have-any-dependencies">Why doesn&#39;t Mojolicious have any dependencies?</a></li>
+      <li><a href="#Why-reinvent-wheels">Why reinvent wheels?</a></li>
+      <li><a href="#What-about-backwards-compatibility">What about backwards compatibility?</a></li>
+      <li><a href="#Why-not-split-up-Mojolicious-into-many-smaller-distributions">Why not split up Mojolicious into many smaller distributions?</a></li>
+      <li><a href="#Which-versions-of-Perl-are-supported-by-Mojolicious">Which versions of Perl are supported by Mojolicious?</a></li>
+      <li><a href="#Do-I-need-to-clean-my-environment-before-testing-Mojolicious">Do I need to clean my environment before testing Mojolicious?</a></li>
+      <li><a href="#What-is-the-difference-between-blocking-and-non-blocking-operations">What is the difference between blocking and non-blocking operations?</a></li>
+      <li><a href="#Will-my-code-magically-become-non-blocking-with-Mojolicious">Will my code magically become non-blocking with Mojolicious?</a></li>
+      <li><a href="#What-is-an-event-loop">What is an event loop?</a></li>
+      <li><a href="#Where-did-my-file-extension-go">Where did my file extension go?</a></li>
+      <li><a href="#Can-I-configure-Hypnotoad-from-the-command-line">Can I configure Hypnotoad from the command line?</a></li>
+      <li><a href="#What-does-the-error-Maximum-message-size-exceeded-mean">What does the error &quot;Maximum message size exceeded&quot; mean?</a></li>
+      <li><a href="#What-does-the-error-Maximum-start-line-size-exceeded-mean">What does the error &quot;Maximum start-line size exceeded&quot; mean?</a></li>
+      <li><a href="#What-does-the-error-Maximum-header-size-exceeded-mean">What does the error &quot;Maximum header size exceeded&quot; mean?</a></li>
+      <li><a href="#What-does-the-error-Maximum-buffer-size-exceeded-mean">What does the error &quot;Maximum buffer size exceeded&quot; mean?</a></li>
+      <li><a href="#What-does-the-error-EV-does-not-work-with-ithreads-mean">What does the error &quot;EV does not work with ithreads&quot; mean?</a></li>
+      <li><a href="#What-does-Your-secret-passphrase-needs-to-be-changed-mean">What does &quot;Your secret passphrase needs to be changed&quot; mean?</a></li>
+      <li><a href="#What-does-Nothing-has-been-rendered-expecting-delayed-response-mean">What does &quot;Nothing has been rendered, expecting delayed response&quot; mean?</a></li>
+      <li><a href="#What-does-Inactivity-timeout-mean">What does &quot;Inactivity timeout&quot; mean?</a></li>
+      <li><a href="#What-does-Premature-connection-close-mean">What does &quot;Premature connection close&quot; mean?</a></li>
+      <li><a href="#What-does-Worker-31842-has-no-heartbeat-restarting-mean">What does &quot;Worker 31842 has no heartbeat, restarting&quot; mean?</a></li>
+    </ul>
+  </li>
+  <li><a href="#MORE">MORE</a></li>
+  <li><a href="#SUPPORT">SUPPORT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Guides::FAQ - Frequently Asked Questions</p>
+
+<h1 id="OVERVIEW">OVERVIEW</h1>
+
+<p>This document contains answers for the most frequently asked questions about <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+<h1 id="QUESTIONS">QUESTIONS</h1>
+
+<p>We hope these answers are to your satisfaction.</p>
+
+<h2 id="How-does-Mojolicious-compare-to-other-Perl-web-frameworks">How does Mojolicious compare to other Perl web frameworks?</h2>
+
+<p>The short answer is &quot;it doesn&#39;t&quot;, because we interpret the term &quot;web framework&quot; much more literally than others. With the emergence of the real-time web and new technologies such as WebSockets, we are facing new challenges that go way beyond what commonly used modules like <a href="../../../../lib/LWP.html">LWP</a> were designed for. Because of this, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> contains a whole new HTTP client/server stack called <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a>, which was heavily inspired by the original LWPng effort and carefully designed with these new requirements in mind. So while some of the higher abstraction layers might look similar to other web frameworks, it is more of a web toolkit and can even be used as the foundation for more advanced web frameworks.</p>
+
+<h2 id="Why-doesnt-Mojolicious-have-any-dependencies">Why doesn&#39;t Mojolicious have any dependencies?</h2>
+
+<p>We are optimizing <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> for user-friendliness and development speed, without compromises. While there are no rules in <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Contributing.html">Mojolicious::Guides::Contributing</a> that forbid dependencies, we do currently discourage adding non-optional ones in favor of a faster and more painless installation process. And we do in fact already use several optional CPAN modules such as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">EV</a>, <a>IO::Socket::Socks</a>, <a href="../../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a>, <a>Net::DNS::Native</a> and <a>Plack</a> to provide advanced functionality if possible.</p>
+
+<h2 id="Why-reinvent-wheels">Why reinvent wheels?</h2>
+
+<p>Because we can make them rounder. Components specifically designed for user-friendliness and development speed are not easy to come by. We are strong believers of the Perl mantra &quot;There is more than one way to do it&quot;, and our quest is to develop the best possible solutions for these two criteria.</p>
+
+<h2 id="What-about-backwards-compatibility">What about backwards compatibility?</h2>
+
+<p>In conformance with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Contributing.html">Mojolicious::Guides::Contributing</a>, we will always deprecate a feature for 3 months, before removing or changing it in incompatible ways between major releases. New features can however be marked as experimental to explicitly exclude them from these rules. This gives us the necessary freedom to ensure a healthy future for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>. So, as long as you are not using anything marked experimental, untested or undocumented, you can always count on backwards compatibility, everything else would be considered a bug.</p>
+
+<h2 id="Why-not-split-up-Mojolicious-into-many-smaller-distributions">Why not split up Mojolicious into many smaller distributions?</h2>
+
+<p>Because there are no advantages, it drastically increases maintenance costs and installation times without giving us anything in return. It would only make sense if we wanted to pass ownership of a module to a new maintainer, which we already have done in the past.</p>
+
+<h2 id="Which-versions-of-Perl-are-supported-by-Mojolicious">Which versions of Perl are supported by Mojolicious?</h2>
+
+<p>First of all, you need to be aware that according to the <a href="../../../../lib/pod/perlpolicy.html">perlpolicy</a>, only the two most recent stable release series of Perl are supported by the community and receive bug fixes, which are currently 5.22.x and 5.20.x. <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> follows this model and fully supports these two release series. In addition we will also keep the distribution installable up to a certain legacy version that we deem worthy of supporting, but not specifically optimize for it, this is currently 5.10.1.</p>
+
+<h2 id="Do-I-need-to-clean-my-environment-before-testing-Mojolicious">Do I need to clean my environment before testing Mojolicious?</h2>
+
+<p>Mojolicious uses many environment variables both internally and externally, notably (but not exclusively) those starting with the prefix <code>MOJO_*</code> and <code>PLACK_ENV</code>. The test suite expects a clean environment; testing with a non-standard environment is unsupported and is unlikely to succeed. Therefore when installing or upgrading <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> and when running its tests, we highly recommend using an environment which does not set these variables.</p>
+
+<h2 id="What-is-the-difference-between-blocking-and-non-blocking-operations">What is the difference between blocking and non-blocking operations?</h2>
+
+<p>A <i>blocking</i> operation is a subroutine that blocks the execution of the calling subroutine until the subroutine is finished.</p>
+
+<pre><code>  <span class="keyword">sub</span><span class="variable"> foo </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$result</span> <span class="operator">=</span> <span class="variable">blocking_subroutine</span><span class="operator">();</span>
+    <span class="operator">...</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<p>A <i>non-blocking</i> operation on the other hand lets the calling subroutine continue execution even though the subroutine is not yet finished. Instead of waiting, the calling subroutine passes along a callback to be executed once the subroutine is finished, this is called continuation-passing style.</p>
+
+<pre><code>  <span class="keyword">sub</span><span class="variable"> foo </span><span class="operator">{</span>
+    <span class="variable">non_blocking_subroutine</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$result</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="operator">...</span>
+    <span class="operator">});</span>
+    <span class="operator">...</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h2 id="Will-my-code-magically-become-non-blocking-with-Mojolicious">Will my code magically become non-blocking with Mojolicious?</h2>
+
+<p>No, it is not possible to magically make Perl code non-blocking. While <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> has been designed from the ground up for non-blocking I/O and event loops, taking advantage of this requires specialized code available through modules like <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>, or third-party event loops. In the documentation we often refer to this as real-time web, for more information see also <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Cookbook.html#REAL-TIME-WEB">&quot;REAL-TIME WEB&quot; in Mojolicious::Guides::Cookbook</a>.</p>
+
+<h2 id="What-is-an-event-loop">What is an event loop?</h2>
+
+<p>An event loop is basically a loop that continually tests for external events and executes the appropriate callbacks to handle them, it is often the main loop in a program. Non-blocking tests for readability/writability of file descriptors and timers are commonly used events for highly scalable network servers, because they allow a single process to handle thousands of client connections concurrently.</p>
+
+<pre><code>  <span class="keyword">while</span> <span class="operator">(</span><span class="number">1</span><span class="operator">)</span> <span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">@readable</span> <span class="operator">=</span> <span class="variable">test_fds_for_readability</span><span class="operator">();</span>
+    <span class="variable">handle_readable_fds</span><span class="operator">(</span><span class="variable">@readable</span><span class="operator">);</span>
+  
+    <span class="keyword">my</span> <span class="variable">@writable</span> <span class="operator">=</span> <span class="variable">test_fds_for_writability</span><span class="operator">();</span>
+    <span class="variable">handle_writable_fds</span><span class="operator">(</span><span class="variable">@writable</span><span class="operator">);</span>
+  
+    <span class="keyword">my</span> <span class="variable">@expired</span> <span class="operator">=</span> <span class="variable">test_timers</span><span class="operator">();</span>
+    <span class="variable">handle_timers</span><span class="operator">(</span><span class="variable">@expired</span><span class="operator">);</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<p>In <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> this event loop is <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a>.</p>
+
+<h2 id="Where-did-my-file-extension-go">Where did my file extension go?</h2>
+
+<p>Standard route placeholders will not match the <code>.</code> character, however <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> routes automatically take file extensions like <code>.html</code>, remove the leading <code>.</code>, and store the result in the <code>format</code> stash value. This can be useful for URL-based content negotiation, such as automatically rendering different templates based on the file extension. See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Routing.html#Formats">&quot;Formats&quot; in Mojolicious::Guides::Routing</a> for information on customizing format detection, or consider using <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Routing.html#Relaxed-placeholders">relaxed placeholders</a> to allow matching of the <code>.</code> character.</p>
+
+<h2 id="Can-I-configure-Hypnotoad-from-the-command-line">Can I configure Hypnotoad from the command line?</h2>
+
+<p>No, you can&#39;t, Hypnotoad is a bit special in this regard. Because when you initiate a zero downtime software upgrade (hot deployment), you are only really sending a <code>USR2</code> signal to the already running server, and no other information can be passed along. What you can do instead, is to use a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Config.html">Mojolicious::Plugin::Config</a> or <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/JSONConfig.html">Mojolicious::Plugin::JSONConfig</a> configuration file.</p>
+
+<pre><code>  <span class="comment"># myapp.conf</span>
+  <span class="operator">{</span>
+    <span class="string">hypnotoad</span> <span class="operator">=&gt;</span> <span class="operator">{</span>
+      <span class="string">listen</span>  <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'http://*:8080'</span><span class="operator">]</span><span class="operator">,</span>
+      <span class="string">workers</span> <span class="operator">=&gt;</span> <span class="number">10</span>
+    <span class="operator">}</span>
+  <span class="operator">};</span>
+</code></pre>
+
+<p>Or if you don&#39;t actually need zero downtime software upgrades, just use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/prefork.html">Mojolicious::Command::prefork</a> instead, which is otherwise almost identical to Hypnotoad.</p>
+
+<pre><code>  $ ./myapp.pl prefork -m production -l http://*:8080 -w 10</code></pre>
+
+<h2 id="What-does-the-error-Maximum-message-size-exceeded-mean">What does the error &quot;Maximum message size exceeded&quot; mean?</h2>
+
+<p>To protect your applications from excessively large requests and responses, our HTTP parser has a cap after which it will automatically stop accepting new data, and in most cases force the connection to be closed. The limit is 16MB by default, you can use the attribute <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html#max_message_size">&quot;max_message_size&quot; in Mojo::Message</a> or <code>MOJO_MAX_MESSAGE_SIZE</code> environment variable to change this value.</p>
+
+<h2 id="What-does-the-error-Maximum-start-line-size-exceeded-mean">What does the error &quot;Maximum start-line size exceeded&quot; mean?</h2>
+
+<p>This is a very similar protection mechanism to the one described in the previous answer, but a little more specific. It limits the maximum length of the start-line for HTTP requests and responses. The limit is 8KB by default, you can use the attribute <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html#max_line_size">&quot;max_line_size&quot; in Mojo::Message</a> or <code>MOJO_MAX_LINE_SIZE</code> environment variable to change this value.</p>
+
+<h2 id="What-does-the-error-Maximum-header-size-exceeded-mean">What does the error &quot;Maximum header size exceeded&quot; mean?</h2>
+
+<p>Almost the same as the previous answer, but this protection mechanism limits the number and maximum length of HTTP request and response headers. The limits are 100 headers with 8KB each by default, you can use the attributes <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Headers.html#max_lines">&quot;max_lines&quot; in Mojo::Headers</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Headers.html#max_line_size">&quot;max_line_size&quot; in Mojo::Headers</a> or the <code>MOJO_MAX_LINES</code> and <code>MOJO_MAX_LINE_SIZE</code> environment variables to change these values.</p>
+
+<h2 id="What-does-the-error-Maximum-buffer-size-exceeded-mean">What does the error &quot;Maximum buffer size exceeded&quot; mean?</h2>
+
+<p>This protection mechanism limits how much content the HTTP parser is allowed to buffer when parsing chunked, compressed and multipart messages. The limit is around 256KB by default, you can use the attribute <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html#max_buffer_size">&quot;max_buffer_size&quot; in Mojo::Content</a> or <code>MOJO_MAX_BUFFER_SIZE</code> environment variable to change this value.</p>
+
+<h2 id="What-does-the-error-EV-does-not-work-with-ithreads-mean">What does the error &quot;EV does not work with ithreads&quot; mean?</h2>
+
+<p>The <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> user agent and web servers are based on an event loop that supports multiple reactor backends. One of these backends is <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">EV</a>, it is very fast and will be automatically used if possible. On Windows however, the <code>ithreads</code>-based <code>fork()</code> emulation can interfere with it, and you may have to use the <code>MOJO_REACTOR</code> environment variable to enforce a more portable one.</p>
+
+<pre><code>  MOJO_REACTOR=Mojo::Reactor::Poll</code></pre>
+
+<h2 id="What-does-Your-secret-passphrase-needs-to-be-changed-mean">What does &quot;Your secret passphrase needs to be changed&quot; mean?</h2>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> uses secret passphrases for security features such as signed cookies. It defaults to using <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#moniker">&quot;moniker&quot; in Mojolicious</a>, which is not very secure, so we added this log message as a reminder. You can change the passphrase with the attribute <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#secrets">&quot;secrets&quot; in Mojolicious</a>.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">secrets</span><span class="operator">(</span><span class="operator">[</span><span class="string">'My very secret passphrase.'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="What-does-Nothing-has-been-rendered-expecting-delayed-response-mean">What does &quot;Nothing has been rendered, expecting delayed response&quot; mean?</h2>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> has been designed from the ground up for non-blocking I/O and event loops. So when a new request comes in and no response is generated right away, it will assume that this was intentional and return control to the web server, which can then handle other requests while waiting for events such as timers to finally generate a response.</p>
+
+<h2 id="What-does-Inactivity-timeout-mean">What does &quot;Inactivity timeout&quot; mean?</h2>
+
+<p>To protect your applications from denial-of-service attacks, all connections have an inactivity timeout which limits how long a connection may be inactive before being closed automatically. It defaults to <code>20</code> seconds for the user agent and <code>15</code> seconds for all built-in web servers, and can be changed with the attributes <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html#inactivity_timeout">&quot;inactivity_timeout&quot; in Mojo::UserAgent</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html#inactivity_timeout">&quot;inactivity_timeout&quot; in Mojo::Server::Daemon</a> or the <code>MOJO_INACTIVITY_TIMEOUT</code> environment variable. In <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> applications you can also use the helper <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#inactivity_timeout">&quot;inactivity_timeout&quot; in Mojolicious::Plugin::DefaultHelpers</a> to change it on demand for each connection individually. This timeout always applies, so you might have to tweak it for applications that take a long time to process a request.</p>
+
+<h2 id="What-does-Premature-connection-close-mean">What does &quot;Premature connection close&quot; mean?</h2>
+
+<p>This error message is often related to the one above, and means that the web server closed the connection before the user agent could receive the whole response or that the user agent got destroyed, which forces all connections to be closed immediately.</p>
+
+<h2 id="What-does-Worker-31842-has-no-heartbeat-restarting-mean">What does &quot;Worker 31842 has no heartbeat, restarting&quot; mean?</h2>
+
+<p>As long as they are accepting new connections, worker processes of all built-in preforking web servers send heartbeat messages to the manager process at regular intervals, to signal that they are still responsive. A blocking operation such as an infinite loop in your application can prevent this, and will force the affected worker to be restarted after a timeout. This timeout defaults to <code>20</code> seconds and can be extended with the attribute <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html#heartbeat_timeout">&quot;heartbeat_timeout&quot; in Mojo::Server::Prefork</a> if your application requires it.</p>
+
+<h1 id="MORE">MORE</h1>
+
+<p>You can continue with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a> now or take a look at the <a href="http://github.com/kraih/mojo/wiki">Mojolicious wiki</a>, which contains a lot more documentation and examples by many different authors.</p>
+
+<h1 id="SUPPORT">SUPPORT</h1>
+
+<p>If you have any questions the documentation might not yet answer, don&#39;t hesitate to ask on the <a href="http://groups.google.com/group/mojolicious">mailing-list</a> or the official IRC channel <code><span class="comment">#mojo</span>
+</code> on <code>irc.perl.org</code>.</p>
+
+
+</body>
+
+</html>
+
+

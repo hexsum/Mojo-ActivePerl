@@ -1,0 +1,1486 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#OVERVIEW">OVERVIEW</a></li>
+  <li><a href="#CONCEPTS">CONCEPTS</a>
+    <ul>
+      <li><a href="#Renderer">Renderer</a></li>
+      <li><a href="#Embedded-Perl">Embedded Perl</a></li>
+    </ul>
+  </li>
+  <li><a href="#BASICS">BASICS</a>
+    <ul>
+      <li><a href="#Automatic-rendering">Automatic rendering</a></li>
+      <li><a href="#Rendering-templates">Rendering templates</a></li>
+      <li><a href="#Rendering-to-strings">Rendering to strings</a></li>
+      <li><a href="#Template-variants">Template variants</a></li>
+      <li><a href="#Rendering-inline-templates">Rendering inline templates</a></li>
+      <li><a href="#Rendering-text">Rendering text</a></li>
+      <li><a href="#Rendering-data">Rendering data</a></li>
+      <li><a href="#Rendering-JSON">Rendering JSON</a></li>
+      <li><a href="#Status-code">Status code</a></li>
+      <li><a href="#Content-type">Content type</a></li>
+      <li><a href="#Stash-data">Stash data</a></li>
+      <li><a href="#Helpers">Helpers</a></li>
+      <li><a href="#Content-negotiation">Content negotiation</a></li>
+      <li><a href="#Rendering-exception-and-not_found-pages">Rendering exception and not_found pages</a></li>
+      <li><a href="#Layouts">Layouts</a></li>
+      <li><a href="#Partial-templates">Partial templates</a></li>
+      <li><a href="#Reusable-template-blocks">Reusable template blocks</a></li>
+      <li><a href="#Adding-helpers">Adding helpers</a></li>
+      <li><a href="#Content-blocks">Content blocks</a></li>
+      <li><a href="#Forms">Forms</a></li>
+      <li><a href="#Form-validation">Form validation</a></li>
+      <li><a href="#Adding-form-validation-checks">Adding form validation checks</a></li>
+      <li><a href="#Cross-site-request-forgery">Cross-site request forgery</a></li>
+    </ul>
+  </li>
+  <li><a href="#ADVANCED">ADVANCED</a>
+    <ul>
+      <li><a href="#Template-inheritance">Template inheritance</a></li>
+      <li><a href="#Serving-static-files">Serving static files</a></li>
+      <li><a href="#Custom-responses">Custom responses</a></li>
+      <li><a href="#Helper-plugins">Helper plugins</a></li>
+      <li><a href="#Bundling-assets-with-plugins">Bundling assets with plugins</a></li>
+      <li><a href="#Post-processing-dynamic-content">Post-processing dynamic content</a></li>
+      <li><a href="#Streaming">Streaming</a></li>
+      <li><a href="#Chunked-transfer-encoding">Chunked transfer encoding</a></li>
+      <li><a href="#Encoding">Encoding</a></li>
+      <li><a href="#Base64-encoded-DATA-files">Base64 encoded DATA files</a></li>
+      <li><a href="#Inflating-DATA-templates">Inflating DATA templates</a></li>
+      <li><a href="#Customizing-the-template-syntax">Customizing the template syntax</a></li>
+      <li><a href="#Adding-your-favorite-template-system">Adding your favorite template system</a></li>
+      <li><a href="#Adding-a-handler-to-generate-binary-data">Adding a handler to generate binary data</a></li>
+    </ul>
+  </li>
+  <li><a href="#MORE">MORE</a></li>
+  <li><a href="#SUPPORT">SUPPORT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Guides::Rendering - Rendering content</p>
+
+<h1 id="OVERVIEW">OVERVIEW</h1>
+
+<p>This document explains content generation with the <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> renderer.</p>
+
+<h1 id="CONCEPTS">CONCEPTS</h1>
+
+<p>Essentials every <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> developer should know.</p>
+
+<h2 id="Renderer">Renderer</h2>
+
+<p>The renderer is a tiny black box turning stash data into actual responses utilizing multiple template systems and data encoding modules.</p>
+
+<pre><code>  <span class="operator">{</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Hello.'</span><span class="operator">}</span>                 <span class="operator">-&gt;</span> <span class="variable">200</span> <span class="variable">OK</span><span class="operator">,</span> <span class="variable">text</span><span class="operator">/</span><span class="variable">html</span><span class="operator">,</span> <span class="string">'Hello.'</span>
+  <span class="operator">{</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">x</span> <span class="operator">=&gt;</span> <span class="number">3</span><span class="operator">}</span><span class="operator">}</span>                 <span class="operator">-&gt;</span> <span class="variable">200</span> <span class="variable">OK</span><span class="operator">,</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">json</span><span class="operator">,</span> <span class="string">'{"x":3}'</span>
+  <span class="operator">{</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Oops.'</span><span class="operator">,</span> <span class="string">status</span> <span class="operator">=&gt;</span> <span class="string">'410'</span><span class="operator">}</span> <span class="operator">-&gt;</span> <span class="variable">410</span> <span class="variable">Gone</span><span class="operator">,</span> <span class="variable">text</span><span class="operator">/</span><span class="variable">html</span><span class="operator">,</span> <span class="string">'Oops.'</span>
+</code></pre>
+
+<p>Templates can be automatically detected if enough information is provided by the developer or routes. Template names are expected to follow the <code>template.format.handler</code> scheme, with <code>template</code> defaulting to <code>controller/action</code> or the route name, <code>format</code> defaulting to <code>html</code> and <code>handler</code> to <code>ep</code>.</p>
+
+<pre><code>  {controller =&gt; &#39;users&#39;, action =&gt; &#39;list&#39;} -&gt; &#39;users/list.html.ep&#39;
+  {template =&gt; &#39;foo&#39;, format =&gt; &#39;txt&#39;}      -&gt; &#39;foo.txt.ep&#39;
+  {template =&gt; &#39;foo&#39;, handler =&gt; &#39;epl&#39;}     -&gt; &#39;foo.html.epl&#39;</code></pre>
+
+<p>The <code>controller</code> value gets converted from <code>CamelCase</code> to <code>snake_case</code> using <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#decamelize">&quot;decamelize&quot; in Mojo::Util</a> and <code>-</code> characters replaced with <code>/</code>.</p>
+
+<pre><code>  {controller =&gt; &#39;My::Users&#39;, action =&gt; &#39;add&#39;} -&gt; &#39;my/users/add.html.ep&#39;
+  {controller =&gt; &#39;my-users&#39;, action =&gt; &#39;show&#39;} -&gt; &#39;my/users/show.html.ep&#39;</code></pre>
+
+<p>All templates should be in the <code>templates</code> directories of the application, which can be customized with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html#paths">&quot;paths&quot; in Mojolicious::Renderer</a>, or one of the the <code>DATA</code> sections from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html#classes">&quot;classes&quot; in Mojolicious::Renderer</a>.</p>
+
+<pre><code>  <span class="comment">__DATA__
+  
+  @@ time.html.ep
+  % use Time::Piece;
+  % my $now = localtime;
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;&lt;title&gt;Time&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;The time is &lt;%= $now-&gt;hms %&gt;.&lt;/body&gt;
+  &lt;/html&gt;
+  
+  @@ hello.txt.ep
+  ...
+  </span>
+</code></pre>
+
+<p>The renderer can be easily extended to support additional template systems with plugins, but more about that later.</p>
+
+<h2 id="Embedded-Perl">Embedded Perl</h2>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> includes a minimalistic but very powerful template system out of the box called Embedded Perl or <code>ep</code> for short. It is based on <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> and allows the embedding of Perl code right into actual content using a small set of special tags and line start characters. For all templates <a href="../../../../lib/strict.html">strict</a>, <a href="../../../../lib/warnings.html">warnings</a>, <a href="../../../../lib/utf8.html">utf8</a> and Perl 5.10 <a href="../../../../lib/feature.html">features</a> are automatically enabled.</p>
+
+<pre><code>  &lt;% Perl code %&gt;
+  &lt;%= Perl expression, replaced with XML escaped result %&gt;
+  &lt;%== Perl expression, replaced with result %&gt;
+  &lt;%# Comment, useful for debugging %&gt;
+  &lt;%% Replaced with &quot;&lt;%&quot;, useful for generating templates %&gt;
+  % Perl code line, treated as &quot;&lt;% line =%&gt;&quot; (explained later)
+  %= Perl expression line, treated as &quot;&lt;%= line %&gt;&quot;
+  %== Perl expression line, treated as &quot;&lt;%== line %&gt;&quot;
+  %# Comment line, useful for debugging
+  %% Replaced with &quot;%&quot;, useful for generating templates</code></pre>
+
+<p>Tags and lines work pretty much the same, but depending on context one will usually look a bit better. Semicolons get automatically appended to all expressions.</p>
+
+<pre><code>  <span class="operator">&lt;% </span><span class="keyword">my</span> <span class="variable">$i</span> <span class="operator">=</span> <span class="number">10</span><span class="operator">;</span> <span class="variable">%&gt;</span>
+  <span class="operator">&lt;</span><span class="variable">ul</span><span class="operator">&gt;</span>
+    <span class="operator">&lt;% </span><span class="keyword">for</span> <span class="keyword">my</span> <span class="variable">$j</span> <span class="operator">(</span><span class="number">1</span> <span class="operator">..</span> <span class="variable">$i</span><span class="operator">)</span> <span class="operator">{</span> <span class="variable">%&gt;</span>
+      <span class="operator">&lt;</span><span class="variable">li</span><span class="operator">&gt;</span>
+        <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$j</span> <span class="variable">%&gt;</span>
+      <span class="operator">&lt;/</span><span class="variable">li</span><span class="operator">&gt;</span>
+    <span class="operator">&lt;% }</span> <span class="variable">%&gt;</span>
+  <span class="operator">&lt;/</span><span class="variable">ul</span><span class="operator">&gt;</span>
+  
+  <span class="operator">% </span><span class="keyword">my</span> <span class="variable">$i</span> <span class="operator">=</span> <span class="number">10</span><span class="operator">;</span>
+  <span class="operator">&lt;</span><span class="variable">ul</span><span class="operator">&gt;</span>
+    <span class="operator">% </span><span class="keyword">for</span> <span class="keyword">my</span> <span class="variable">$j</span> <span class="operator">(</span><span class="number">1</span> <span class="operator">..</span> <span class="variable">$i</span><span class="operator">)</span> <span class="operator">{</span>
+      <span class="operator">&lt;</span><span class="variable">li</span><span class="operator">&gt;</span>
+        <span class="variable">%=</span> <span class="variable">$j</span>
+      <span class="operator">&lt;/</span><span class="variable">li</span><span class="operator">&gt;</span>
+    <span class="operator">% }</span>
+  <span class="operator">&lt;/</span><span class="variable">ul</span><span class="operator">&gt;</span>
+</code></pre>
+
+<p>Aside from differences in whitespace handling, both examples generate similar Perl code, a naive translation could look like this.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="string">''</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$i</span> <span class="operator">=</span> <span class="number">10</span><span class="operator">;</span>
+  <span class="variable">$output</span> <span class="operator">.=</span> <span class="string">'&lt;ul&gt;'</span><span class="operator">;</span>
+  <span class="keyword">for</span> <span class="keyword">my</span> <span class="variable">$j</span> <span class="operator">(</span><span class="number">1</span> <span class="operator">..</span> <span class="variable">$i</span><span class="operator">)</span> <span class="operator">{</span>
+    <span class="variable">$output</span> <span class="operator">.=</span> <span class="string">'&lt;li&gt;'</span><span class="operator">;</span>
+    <span class="variable">$output</span> <span class="operator">.=</span> <span class="variable">xml_escape</span> <span class="keyword">scalar</span> <span class="operator">+</span> <span class="variable">$j</span><span class="operator">;</span>
+    <span class="variable">$output</span> <span class="operator">.=</span> <span class="string">'&lt;/li&gt;'</span><span class="operator">;</span>
+  <span class="operator">}</span>
+  <span class="variable">$output</span> <span class="operator">.=</span> <span class="string">'&lt;/ul&gt;'</span><span class="operator">;</span>
+  <span class="keyword">return</span> <span class="variable">$output</span><span class="operator">;</span>
+</code></pre>
+
+<p>An additional equal sign can be used to disable escaping of the characters <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&#39;</code> and <code>&quot;</code> in results from Perl expressions, which is the default to prevent XSS attacks against your application.</p>
+
+<pre><code>  &lt;%= &#39;I &hearts; Mojolicious!&#39; %&gt;
+  &lt;%== &#39;&lt;p&gt;I &hearts; Mojolicious!&lt;/p&gt;&#39; %&gt;</code></pre>
+
+<p>Only <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> objects are excluded from automatic escaping.</p>
+
+<pre><code>  &lt;%= b(&#39;&lt;p&gt;I &hearts; Mojolicious!&lt;/p&gt;&#39;) %&gt;</code></pre>
+
+<p>Whitespace characters around tags can be trimmed by adding an additional equal sign to the end of a tag.</p>
+
+<pre><code>  <span class="operator">&lt;% </span><span class="keyword">for</span> <span class="operator">(</span><span class="number">1</span> <span class="operator">..</span> <span class="number">3</span><span class="operator">)</span> <span class="operator">{</span> <span class="variable">%&gt;</span>
+    <span class="operator">&lt;</span><span class="variable">%=</span> <span class="string">'Trim all whitespace characters around this expression'</span> <span class="operator">=</span><span class="variable">%&gt;</span>
+  <span class="operator">&lt;% }</span> <span class="variable">%&gt;</span>
+</code></pre>
+
+<p>Newline characters can be escaped with a backslash.</p>
+
+<pre><code>  This is &lt;%= 1 + 1 %&gt; a\
+  single line</code></pre>
+
+<p>And a backslash in front of a newline character can be escaped with another backslash.</p>
+
+<pre><code>  This will &lt;%= 1 + 1 %&gt; result\\
+  in multiple\\
+  lines</code></pre>
+
+<p>At the beginning of the template, stash values that don&#39;t have invalid characters in their name get automatically initialized as normal variables, and the controller object as both <code>$self</code> and <code>$c</code>.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">(</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'tester'</span><span class="operator">);</span>
+  
+  <span class="variable">Hello</span> <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$name</span> <span class="variable">%&gt;</span> <span class="variable">from</span> <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">remote_address</span> <span class="variable">%&gt;</span><span class="operator">.</span>
+</code></pre>
+
+<p>A prefix like <code>myapp.*</code> is commonly used for stash values that you don&#39;t want to expose in templates.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">(</span><span class="string">'myapp.name'</span> <span class="operator">=&gt;</span> <span class="string">'tester'</span><span class="operator">);</span>
+</code></pre>
+
+<p>There are also many helper functions available, but more about that later.</p>
+
+<pre><code>  <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">dumper</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span> <span class="variable">%&gt;</span>
+</code></pre>
+
+<h1 id="BASICS">BASICS</h1>
+
+<p>Most commonly used features every <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> developer should know about.</p>
+
+<h2 id="Automatic-rendering">Automatic rendering</h2>
+
+<p>The renderer can be manually started by calling the method <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#render">&quot;render&quot; in Mojolicious::Controller</a>, but that&#39;s usually not necessary, because it will get automatically called if nothing has been rendered after the router finished its work. This also means you can have routes pointing only to templates without actual actions.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">;</span>
+</code></pre>
+
+<p>There is one big difference though, by calling it manually you can make sure that templates use the current controller object, and not the default controller specified with the attribute <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#controller_class">&quot;controller_class&quot; in Mojolicious</a>.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_later</span><span class="operator">;</span>
+</code></pre>
+
+<p>You can also disable automatic rendering with the method <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#render_later">&quot;render_later&quot; in Mojolicious::Controller</a>, which can be very useful to delay rendering when a non-blocking operation has to be performed first.</p>
+
+<h2 id="Rendering-templates">Rendering templates</h2>
+
+<p>The renderer will always try to detect the right template, but you can also use the <code>template</code> stash value to render a specific one. Everything before the last slash will be interpreted as the subdirectory path in which to find the template.</p>
+
+<pre><code>  <span class="comment"># foo/bar/baz.*.*</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/bar/baz'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Choosing a specific <code>format</code> and <code>handler</code> is just as easy.</p>
+
+<pre><code>  <span class="comment"># foo/bar/baz.txt.epl</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/bar/baz'</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'txt'</span><span class="operator">,</span> <span class="string">handler</span> <span class="operator">=&gt;</span> <span class="string">'epl'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Because rendering a specific template is the most common task it also has a shortcut.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'foo/bar/baz'</span><span class="operator">);</span>
+</code></pre>
+
+<p>If you&#39;re not sure in advance if a template actually exists, you can also use the method <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#render_maybe">&quot;render_maybe&quot; in Mojolicious::Controller</a> to try multiple alternatives.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_maybe</span><span class="operator">(</span><span class="string">'localized/baz'</span><span class="operator">)</span> <span class="keyword">or</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'foo/bar/baz'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Rendering-to-strings">Rendering to strings</h2>
+
+<p>Sometimes you might want to use the rendered result directly instead of generating a response, for example, to send emails, this can be done with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#render_to_string">&quot;render_to_string&quot; in Mojolicious::Controller</a>.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$html</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_to_string</span><span class="operator">(</span><span class="string">'mail'</span><span class="operator">);</span>
+</code></pre>
+
+<p>No encoding will be performed, making it easy to reuse the result in other templates or to generate binary data.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$pdf</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_to_string</span><span class="operator">(</span><span class="string">'invoice'</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'pdf'</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$pdf</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'pdf'</span><span class="operator">);</span>
+</code></pre>
+
+<p>All arguments passed will get localized automatically and are only available during this render operation.</p>
+
+<h2 id="Template-variants">Template variants</h2>
+
+<p>To make your application look great on many different devices you can also use the <code>variant</code> stash value to choose between different variants of your templates.</p>
+
+<pre><code>  <span class="comment"># foo/bar/baz.html+phone.ep</span>
+  <span class="comment"># foo/bar/baz.html.ep</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'foo/bar/baz'</span><span class="operator">,</span> <span class="string">variant</span> <span class="operator">=&gt;</span> <span class="string">'phone'</span><span class="operator">);</span>
+</code></pre>
+
+<p>This can be done very liberally since it only applies when a template with the correct name actually exists and falls back to the generic one otherwise.</p>
+
+<h2 id="Rendering-inline-templates">Rendering inline templates</h2>
+
+<p>Some renderers such as <code>ep</code> allow templates to be passed <code>inline</code>.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">inline</span> <span class="operator">=&gt;</span> <span class="string">'The result is &lt;%= 1 + 1 %&gt;.'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Since auto-detection depends on a path you might have to supply a <code>handler</code> too.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">inline</span> <span class="operator">=&gt;</span> <span class="string">"&lt;%= shift-&gt;param('foo') %&gt;"</span><span class="operator">,</span> <span class="string">handler</span> <span class="operator">=&gt;</span> <span class="string">'epl'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Rendering-text">Rendering text</h2>
+
+<p>Characters can be rendered to bytes with the <code>text</code> stash value, the given content will be automatically encoded with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html#encoding">&quot;encoding&quot; in Mojolicious::Renderer</a>.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Rendering-data">Rendering data</h2>
+
+<p>Bytes can be rendered with the <code>data</code> stash value, no encoding will be performed.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Rendering-JSON">Rendering JSON</h2>
+
+<p>The <code>json</code> stash value allows you to pass Perl data structures to the renderer which get directly encoded to JSON with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a>.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="string">'test'</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Status-code">Status code</h2>
+
+<p>Response status codes can be changed with the <code>status</code> stash value.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Oops.'</span><span class="operator">,</span> <span class="string">status</span> <span class="operator">=&gt;</span> <span class="number">500</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Content-type">Content type</h2>
+
+<p>The <code>Content-Type</code> header of the response is actually based on the MIME type mapping of the <code>format</code> stash value.</p>
+
+<pre><code>  <span class="comment"># Content-Type: text/plain</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Hello.'</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'txt'</span><span class="operator">);</span>
+  
+  <span class="comment"># Content-Type: image/png</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'png'</span><span class="operator">);</span>
+</code></pre>
+
+<p>These mappings can be easily extended or changed with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#types">&quot;types&quot; in Mojolicious</a>.</p>
+
+<pre><code>  <span class="comment"># Add new MIME type</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">md</span> <span class="operator">=&gt;</span> <span class="string">'text/markdown'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Stash-data">Stash data</h2>
+
+<p>Any of the native Perl data types can be passed to templates as references through the <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#stash">&quot;stash&quot; in Mojolicious::Controller</a>.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">(</span><span class="string">description</span> <span class="operator">=&gt;</span> <span class="string">'web framework'</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">(</span><span class="string">frameworks</span>  <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'Catalyst'</span><span class="operator">,</span> <span class="string">'Mojolicious'</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">(</span><span class="string">spinoffs</span>    <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">minion</span> <span class="operator">=&gt;</span> <span class="string">'job queue'</span><span class="operator">}</span><span class="operator">);</span>
+  
+  <span class="variable">%=</span> <span class="variable">$description</span>
+  <span class="variable">%=</span> <span class="variable">$frameworks</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span>
+  <span class="variable">%=</span> <span class="variable">$spinoffs</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">minion</span><span class="operator">}</span>
+</code></pre>
+
+<p>Since everything is just Perl normal control structures just work.</p>
+
+<pre><code>  <span class="operator">% </span><span class="keyword">for</span> <span class="keyword">my</span> <span class="variable">$framework</span> <span class="operator">(</span><span class="variable">@$frameworks</span><span class="operator">)</span> <span class="operator">{</span>
+    <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$framework</span> <span class="variable">%&gt;</span> <span class="variable">is</span> <span class="variable">a</span> <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$description</span> <span class="variable">%&gt;</span><span class="operator">.</span>
+  <span class="operator">% }</span>
+  
+  <span class="operator">% </span><span class="keyword">if</span> <span class="operator">(</span><span class="keyword">my</span> <span class="variable">$description</span> <span class="operator">=</span> <span class="variable">$spinoffs</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">minion</span><span class="operator">}</span><span class="operator">)</span> <span class="operator">{</span>
+    <span class="variable">Minion</span> <span class="variable">is</span> <span class="variable">a</span> <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$description</span> <span class="variable">%&gt;</span><span class="operator">.</span>
+  <span class="operator">% }</span>
+</code></pre>
+
+<p>For templates that might get rendered in different ways and where you&#39;re not sure if a stash value will actually be set, you can just use the helper <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#stash">&quot;stash&quot; in Mojolicious::Plugin::DefaultHelpers</a>.</p>
+
+<pre><code>  <span class="operator">% </span><span class="keyword">if</span> <span class="operator">(</span><span class="keyword">my</span> <span class="variable">$spinoffs</span> <span class="operator">=</span> <span class="variable">stash</span> <span class="string">'spinoffs'</span><span class="operator">)</span> <span class="operator">{</span>
+    <span class="variable">Minion</span> <span class="variable">is</span> <span class="variable">a</span> <span class="operator">&lt;</span><span class="variable">%=</span> <span class="variable">$spinoffs</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">minion</span><span class="operator">}</span> <span class="variable">%&gt;</span><span class="operator">.</span>
+  <span class="operator">% }</span>
+</code></pre>
+
+<p>Just be aware that too many optional stash values will make templates less cacheable, which can reduce performance. So passing an <code>undef</code> value to the stash, instead of making it optional, is always preferable.</p>
+
+<h2 id="Helpers">Helpers</h2>
+
+<p>Helpers are little functions you can use in templates as well as application and controller code.</p>
+
+<pre><code>  <span class="comment"># Template</span>
+  <span class="variable">%=</span> <span class="variable">dumper</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]</span>
+  
+  <span class="comment"># Application</span>
+  <span class="keyword">my</span> <span class="variable">$serialized</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">dumper</span><span class="operator">(</span><span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Controller</span>
+  <span class="keyword">my</span> <span class="variable">$serialized</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">dumper</span><span class="operator">(</span><span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>We differentiate between default helpers, which are more general purpose like <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#dumper">&quot;dumper&quot; in Mojolicious::Plugin::DefaultHelpers</a>, and tag helpers like <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html#link_to">&quot;link_to&quot; in Mojolicious::Plugin::TagHelpers</a>, which are template specific and mostly used to generate HTML tags.</p>
+
+<pre><code>  %= link_to Mojolicious =&gt; &#39;http://mojolicious.org&#39;</code></pre>
+
+<p>In controllers you can also use the method <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#helpers">&quot;helpers&quot; in Mojolicious::Controller</a> to fully qualify helper calls and ensure that they don&#39;t conflict with existing methods you may already have.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$serialized</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">helpers</span><span class="operator">-&gt;</span><span class="variable">dumper</span><span class="operator">(</span><span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>A list of all built-in helpers can be found in <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html">Mojolicious::Plugin::DefaultHelpers</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a>.</p>
+
+<h2 id="Content-negotiation">Content negotiation</h2>
+
+<p>For resources with different representations and that require truly RESTful content negotiation you can also use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#respond_to">&quot;respond_to&quot; in Mojolicious::Controller</a> instead of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#render">&quot;render&quot; in Mojolicious::Controller</a>.</p>
+
+<pre><code>  <span class="comment"># /hello (Accept: application/json) -&gt; "json"</span>
+  <span class="comment"># /hello (Accept: application/xml)  -&gt; "xml"</span>
+  <span class="comment"># /hello.json                       -&gt; "json"</span>
+  <span class="comment"># /hello.xml                        -&gt; "xml"</span>
+  <span class="comment"># /hello?format=json                -&gt; "json"</span>
+  <span class="comment"># /hello?format=xml                 -&gt; "xml"</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">respond_to</span><span class="operator">(</span>
+    <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">hello</span> <span class="operator">=&gt;</span> <span class="string">'world'</span><span class="operator">}}</span><span class="operator">,</span>
+    <span class="string">xml</span>  <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'&lt;hello&gt;world&lt;/hello&gt;'</span><span class="operator">}</span>
+  <span class="operator">);</span>
+</code></pre>
+
+<p>The best possible representation will be automatically selected from the <code>Accept</code> request header, <code>format</code> stash value or <code>format</code> <code>GET</code>/<code>POST</code> parameter and stored in the <code>format</code> stash value. To change MIME type mappings for the <code>Accept</code> request header or the <code>Content-Type</code> response header you can use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#types">&quot;types&quot; in Mojolicious</a>.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">respond_to</span><span class="operator">(</span>
+    <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">hello</span> <span class="operator">=&gt;</span> <span class="string">'world'</span><span class="operator">}}</span><span class="operator">,</span>
+    <span class="string">html</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">content_for</span><span class="operator">(</span><span class="string">head</span> <span class="operator">=&gt;</span> <span class="string">'&lt;meta name="author" content="sri"&gt;'</span><span class="operator">);</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'hello'</span><span class="operator">,</span> <span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'world'</span><span class="operator">)</span>
+    <span class="operator">}</span>
+  <span class="operator">);</span>
+</code></pre>
+
+<p>Callbacks can be used for representations that are too complex to fit into a single render call.</p>
+
+<pre><code>  <span class="comment"># /hello (Accept: application/json) -&gt; "json"</span>
+  <span class="comment"># /hello (Accept: text/html)        -&gt; "html"</span>
+  <span class="comment"># /hello (Accept: image/png)        -&gt; "any"</span>
+  <span class="comment"># /hello.json                       -&gt; "json"</span>
+  <span class="comment"># /hello.html                       -&gt; "html"</span>
+  <span class="comment"># /hello.png                        -&gt; "any"</span>
+  <span class="comment"># /hello?format=json                -&gt; "json"</span>
+  <span class="comment"># /hello?format=html                -&gt; "html"</span>
+  <span class="comment"># /hello?format=png                 -&gt; "any"</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">respond_to</span><span class="operator">(</span>
+    <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">hello</span> <span class="operator">=&gt;</span> <span class="string">'world'</span><span class="operator">}}</span><span class="operator">,</span>
+    <span class="string">html</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'hello'</span><span class="operator">,</span> <span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'world'</span><span class="operator">}</span><span class="operator">,</span>
+    <span class="string">any</span>  <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">''</span><span class="operator">,</span> <span class="string">status</span> <span class="operator">=&gt;</span> <span class="number">204</span><span class="operator">}</span>
+  <span class="operator">);</span>
+</code></pre>
+
+<p>And if no viable representation could be found, the <code>any</code> fallback will be used or an empty <code>204</code> response rendered automatically.</p>
+
+<pre><code>  <span class="comment"># /hello                      -&gt; "html"</span>
+  <span class="comment"># /hello (Accept: text/html)  -&gt; "html"</span>
+  <span class="comment"># /hello (Accept: text/xml)   -&gt; "xml"</span>
+  <span class="comment"># /hello (Accept: text/plain) -&gt; undef</span>
+  <span class="comment"># /hello.html                 -&gt; "html"</span>
+  <span class="comment"># /hello.xml                  -&gt; "xml"</span>
+  <span class="comment"># /hello.txt                  -&gt; undef</span>
+  <span class="comment"># /hello?format=html          -&gt; "html"</span>
+  <span class="comment"># /hello?format=xml           -&gt; "xml"</span>
+  <span class="comment"># /hello?format=txt           -&gt; undef</span>
+  <span class="keyword">if</span> <span class="operator">(</span><span class="keyword">my</span> <span class="variable">$format</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">(</span><span class="string">'html'</span><span class="operator">,</span> <span class="string">'xml'</span><span class="operator">))</span> <span class="operator">{</span>
+    <span class="operator">...</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<p>For even more advanced negotiation logic you can also use the helper <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#accepts">&quot;accepts&quot; in Mojolicious::Plugin::DefaultHelpers</a>.</p>
+
+<h2 id="Rendering-exception-and-not_found-pages">Rendering <code>exception</code> and <code>not_found</code> pages</h2>
+
+<p>By now you&#39;ve probably already encountered the built-in <code>404</code> (Not Found) and <code>500</code> (Server Error) pages, that get rendered automatically when you make a mistake. Those are fallbacks for when your own exception handling fails, which can be especially helpful during development. You can also render them manually with the helpers <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#reply--exception">&quot;reply-&gt;exception&quot; in Mojolicious::Plugin::DefaultHelpers</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#reply--not_found">&quot;reply-&gt;not_found&quot; in Mojolicious::Plugin::DefaultHelpers</a>.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Scalar::Util</span> <span class="string">'looks_like_number'</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/divide/:dividend/by/:divisor'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="keyword">my</span> <span class="variable">$dividend</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'dividend'</span><span class="operator">);</span>
+    <span class="keyword">my</span> <span class="variable">$divisor</span>  <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'divisor'</span><span class="operator">);</span>
+  
+    <span class="comment"># 404</span>
+    <span class="keyword">return</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">not_found</span>
+      <span class="keyword">unless</span> <span class="variable">looks_like_number</span> <span class="variable">$dividend</span> <span class="operator">&amp;&amp;</span> <span class="variable">looks_like_number</span> <span class="variable">$divisor</span><span class="operator">;</span>
+  
+    <span class="comment"># 500</span>
+    <span class="keyword">return</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">exception</span><span class="operator">(</span><span class="string">'Division by zero!'</span><span class="operator">)</span> <span class="keyword">if</span> <span class="variable">$divisor</span> <span class="operator">==</span> <span class="number">0</span><span class="operator">;</span>
+  
+    <span class="comment"># 200</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="variable">$dividend</span> <span class="operator">/</span> <span class="variable">$divisor</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>You can also change the templates of those pages, since you most likely want to show your users something more closely related to your application in production. The renderer will always try to find <code>exception.$mode.$format.*</code> or <code>not_found.$mode.$format.*</code> before falling back to the built-in default templates.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/dies'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">die</span> <span class="string">'Intentional error'</span> <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ exception.production.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;&lt;title&gt;Server error&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Exception&lt;/h1&gt;
+      &lt;p&gt;&lt;%= $exception-&gt;message %&gt;&lt;/p&gt;
+      &lt;h1&gt;Stash&lt;/h1&gt;
+      &lt;pre&gt;&lt;%= dumper $snapshot %&gt;&lt;/pre&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+  </span>
+</code></pre>
+
+<p>The hook <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#before_render">&quot;before_render&quot; in Mojolicious</a> makes even more advanced customizations possible by allowing you to intercept and modify the arguments passed to the renderer.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">hook</span> <span class="string">before_render</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Make sure we are rendering the exception template</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> <span class="keyword">my</span> <span class="variable">$template</span> <span class="operator">=</span> <span class="variable">$args</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">template</span><span class="operator">}</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> <span class="variable">$template</span> <span class="keyword">eq</span> <span class="string">'exception'</span><span class="operator">;</span>
+  
+    <span class="comment"># Switch to JSON rendering if content negotiation allows it</span>
+    <span class="variable">$args</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">json</span><span class="operator">}</span> <span class="operator">=</span> <span class="operator">{</span><span class="string">exception</span> <span class="operator">=&gt;</span> <span class="variable">$args</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">exception</span><span class="operator">}}</span> <span class="keyword">if</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">(</span><span class="string">'json'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">die</span> <span class="string">"This sho...ALL GLORY TO THE HYPNOTOAD!\n"</span> <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="Layouts">Layouts</h2>
+
+<p>Most of the time when using <code>ep</code> templates you will want to wrap your generated content in an HTML skeleton, thanks to layouts that&#39;s absolutely trivial.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/bar'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ foo/bar.html.ep
+  % layout 'mylayout';
+  Hello World!
+  
+  @@ layouts/mylayout.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;&lt;title&gt;MyApp&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;&lt;%= content %&gt;&lt;/body&gt;
+  &lt;/html&gt;
+  </span>
+</code></pre>
+
+<p>You just select the right layout template with the helper <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#layout">&quot;layout&quot; in Mojolicious::Plugin::DefaultHelpers</a> and place the result of the current template with the helper <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#content">&quot;content&quot; in Mojolicious::Plugin::DefaultHelpers</a>. You can also pass along normal stash values to the <code>layout</code> helper.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/bar'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ foo/bar.html.ep
+  % layout 'mylayout', title =&gt; 'Hi there';
+  Hello World!
+  
+  @@ layouts/mylayout.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;&lt;title&gt;&lt;%= $title %&gt;&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;&lt;%= content %&gt;&lt;/body&gt;
+  &lt;/html&gt;
+  </span>
+</code></pre>
+
+<p>Instead of the <code>layout</code> helper you could also just use the <code>layout</code> stash value, or call <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#render">&quot;render&quot; in Mojolicious::Controller</a> with the <code>layout</code> argument.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'mytemplate'</span><span class="operator">,</span> <span class="string">layout</span> <span class="operator">=&gt;</span> <span class="string">'mylayout'</span><span class="operator">);</span>
+</code></pre>
+
+<p>To set a <code>layout</code> stash value application-wide you can use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#defaults">&quot;defaults&quot; in Mojolicious</a>.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">(</span><span class="string">layout</span> <span class="operator">=&gt;</span> <span class="string">'mylayout'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Layouts can also be used with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#render_to_string">&quot;render_to_string&quot; in Mojolicious::Controller</a>, but the <code>layout</code> value needs to be passed as a render argument (not a stash value).</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$html</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_to_string</span><span class="operator">(</span><span class="string">'reminder'</span><span class="operator">,</span> <span class="string">layout</span> <span class="operator">=&gt;</span> <span class="string">'mail'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Partial-templates">Partial templates</h2>
+
+<p>You can break up bigger templates into smaller, more manageable chunks. These partial templates can also be shared with other templates. Just use the helper <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#include">&quot;include&quot; in Mojolicious::Plugin::DefaultHelpers</a> to include one template into another.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/bar'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ foo/bar.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    %= include 'header', title =&gt; 'Howdy'
+    &lt;body&gt;Bar&lt;/body&gt;
+  &lt;/html&gt;
+  
+  @@ header.html.ep
+  &lt;head&gt;&lt;title&gt;&lt;%= $title %&gt;&lt;/title&gt;&lt;/head&gt;
+  </span>
+</code></pre>
+
+<h2 id="Reusable-template-blocks">Reusable template blocks</h2>
+
+<p>It&#39;s never fun to repeat yourself, that&#39;s why you can build reusable template blocks in <code>ep</code> that work very similar to normal Perl functions, with the <code>begin</code> and <code>end</code> keywords. Just be aware that both keywords are part of the surrounding tag and not actual Perl code, so there can only be whitespace after <code>begin</code> and before <code>end</code>.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="string">'welcome'</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ welcome.html.ep
+  &lt;% my $block = begin %&gt;
+    % my $name = shift;
+    Hello &lt;%= $name %&gt;.
+  &lt;% end %&gt;
+  &lt;%= $block-&gt;('Sebastian') %&gt;
+  &lt;%= $block-&gt;('Sara') %&gt;
+  </span>
+</code></pre>
+
+<p>A naive translation of the template to Perl code could look like this.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="string">''</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$block</span>  <span class="operator">=</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$name</span>   <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="string">''</span><span class="operator">;</span>
+    <span class="variable">$output</span> <span class="operator">.=</span> <span class="string">'Hello '</span><span class="operator">;</span>
+    <span class="variable">$output</span> <span class="operator">.=</span> <span class="variable">xml_escape</span> <span class="keyword">scalar</span> <span class="operator">+</span> <span class="variable">$name</span><span class="operator">;</span>
+    <span class="variable">$output</span> <span class="operator">.=</span> <span class="string">'.'</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="variable">Mojo::ByteStream</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="variable">$output</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  <span class="variable">$output</span> <span class="operator">.=</span> <span class="variable">xml_escape</span> <span class="keyword">scalar</span> <span class="operator">+</span> <span class="variable">$block</span><span class="operator">-&gt;(</span><span class="string">'Sebastian'</span><span class="operator">);</span>
+  <span class="variable">$output</span> <span class="operator">.=</span> <span class="variable">xml_escape</span> <span class="keyword">scalar</span> <span class="operator">+</span> <span class="variable">$block</span><span class="operator">-&gt;(</span><span class="string">'Sara'</span><span class="operator">);</span>
+  <span class="keyword">return</span> <span class="variable">$output</span><span class="operator">;</span>
+</code></pre>
+
+<p>While template blocks cannot be shared between templates, they are most commonly used to pass parts of a template to helpers.</p>
+
+<h2 id="Adding-helpers">Adding helpers</h2>
+
+<p>You should always try to keep your actions small and reuse as much code as possible. Helpers make this very easy, they get passed the current controller object as first argument, and you can use them to do pretty much anything an action could do.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">helper</span> <span class="string">debug</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$str</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="variable">$str</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">'Hello from an action!'</span><span class="operator">);</span>
+  <span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'index'</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ index.html.ep
+  % debug 'Hello from a template!';
+  </span>
+</code></pre>
+
+<p>Helpers can also accept template blocks as last argument, this for example, allows very pleasant to use tag helpers and filters. Wrapping the helper result into a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> object can prevent accidental double escaping.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::ByteStream</span><span class="operator">;</span>
+  
+  <span class="variable">helper</span> <span class="string">trim_newline</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$block</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$result</span> <span class="operator">=</span> <span class="variable">$block</span><span class="operator">-&gt;();</span>
+    <span class="variable">$result</span> <span class="operator">=~</span> <span class="regex">s/\n//g</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="variable">Mojo::ByteStream</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="variable">$result</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="string">'index'</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ index.html.ep
+  %= trim_newline begin
+    Some text.
+    %= 1 + 1
+    More text.
+  % end
+  </span>
+</code></pre>
+
+<p>Similar to stash values, you can use a prefix like <code>myapp.*</code> to keep helpers from getting exposed in templates as functions, and to organize them into namespaces as your application grows. Every prefix automatically becomes a helper that returns a proxy object containing the current controller object and on which you can call the nested helpers.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">helper</span> <span class="string">'cache_control.no_caching'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">cache_control</span><span class="operator">(</span><span class="string">'private, max-age=0, no-cache'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">helper</span> <span class="string">'cache_control.five_minutes'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">cache_control</span><span class="operator">(</span><span class="string">'public, max-age=300'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">get</span> <span class="string">'/news'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">cache_control</span><span class="operator">-&gt;</span><span class="variable">no_caching</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Always up to date.'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">get</span> <span class="string">'/some_older_story'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">cache_control</span><span class="operator">-&gt;</span><span class="variable">five_minutes</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'This one can be cached for a bit.'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>While helpers can also be redefined, this should only be done very carefully to avoid conflicts.</p>
+
+<h2 id="Content-blocks">Content blocks</h2>
+
+<p>The helper <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#content_for">&quot;content_for&quot; in Mojolicious::Plugin::DefaultHelpers</a> allows you to pass whole blocks of content from one template to another. This can be very useful when your layout has distinct sections, such as sidebars, where content should be inserted by the template.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ foo.html.ep
+  % layout 'mylayout';
+  % content_for header =&gt; begin
+    &lt;meta http-equiv="Content-Type" content="text/html"&gt;
+  % end
+  &lt;div&gt;Hello World!&lt;/div&gt;
+  % content_for header =&gt; begin
+    &lt;meta http-equiv="Pragma" content="no-cache"&gt;
+  % end
+  
+  @@ layouts/mylayout.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;&lt;%= content 'header' %&gt;&lt;/head&gt;
+    &lt;body&gt;&lt;%= content %&gt;&lt;/body&gt;
+  &lt;/html&gt;
+  </span>
+</code></pre>
+
+<h2 id="Forms">Forms</h2>
+
+<p>To build HTML forms more efficiently you can use tag helpers like <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html#form_for">&quot;form_for&quot; in Mojolicious::Plugin::TagHelpers</a>, which can automatically select a request method for you if a route name is provided. And since most browsers only allow forms to be submitted with <code>GET</code> and <code>POST</code>, but not request methods like <code>PUT</code> or <code>DELETE</code>, they are spoofed with an <code>_method</code> query parameter.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="string">'form'</span><span class="operator">;</span>
+  
+  <span class="comment"># PUT  /nothing</span>
+  <span class="comment"># POST /nothing?_method=PUT</span>
+  <span class="variable">put</span> <span class="string">'/nothing'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="comment"># Prevent double form submission with redirect</span>
+    <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'whatever'</span><span class="operator">);</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">flash</span><span class="operator">(</span><span class="string">confirmation</span> <span class="operator">=&gt;</span> <span class="string">"We did nothing with your value (</span><span class="variable">$value</span><span class="string">)."</span><span class="operator">);</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'form'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ form.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;body&gt;
+      % if (my $confirmation = flash 'confirmation') {
+        &lt;p&gt;&lt;%= $confirmation %&gt;&lt;/p&gt;
+      % }
+      %= form_for nothing =&gt; begin
+        %= text_field whatever =&gt; 'I â¥ Mojolicious!'
+        %= submit_button
+      % end
+    &lt;/body&gt;
+  &lt;/html&gt;
+  </span>
+</code></pre>
+
+<p>The methods <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#flash">&quot;flash&quot; in Mojolicious::Controller</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#redirect_to">&quot;redirect_to&quot; in Mojolicious::Controller</a> are often used together to prevent double form submission, allowing users to receive a confirmation message that will vanish if they decide to reload the page they&#39;ve been redirected to.</p>
+
+<h2 id="Form-validation">Form validation</h2>
+
+<p>You can use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#validation">&quot;validation&quot; in Mojolicious::Controller</a> to validate <code>GET</code> and <code>POST</code> parameters submitted to your application. All unknown fields will be ignored by default, so you have to decide which should be required or optional before you can perform checks on their values. Every check is performed right away, so you can use the results immediately to build more advanced validation logic with methods like <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator/Validation.html#is_valid">&quot;is_valid&quot; in Mojolicious::Validator::Validation</a>.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="comment"># Check if parameters have been submitted</span>
+    <span class="keyword">my</span> <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">validation</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span> <span class="keyword">unless</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">has_data</span><span class="operator">;</span>
+  
+    <span class="comment"># Validate parameters ("pass_again" depends on "pass")</span>
+    <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">)-&gt;</span><span class="variable">size</span><span class="operator">(</span><span class="number">1</span><span class="operator">,</span> <span class="number">20</span><span class="operator">)-&gt;</span><span class="variable">like</span><span class="operator">(</span><span class="string">qr/^[e-t]+$/</span><span class="operator">);</span>
+    <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'pass_again'</span><span class="operator">)-&gt;</span><span class="variable">equal_to</span><span class="operator">(</span><span class="string">'pass'</span><span class="operator">)</span>
+      <span class="keyword">if</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">optional</span><span class="operator">(</span><span class="string">'pass'</span><span class="operator">)-&gt;</span><span class="variable">size</span><span class="operator">(</span><span class="number">7</span><span class="operator">,</span> <span class="number">500</span><span class="operator">)-&gt;</span><span class="variable">is_valid</span><span class="operator">;</span>
+  
+    <span class="comment"># Render confirmation if validation was successful</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'thanks'</span><span class="operator">)</span> <span class="keyword">unless</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">has_error</span><span class="operator">;</span>
+  <span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'index'</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ index.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;style&gt;
+        label.field-with-error { color: #dd7e5e }
+        input.field-with-error { background-color: #fd9e7e }
+      &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      %= form_for index =&gt; begin
+        %= label_for user =&gt; 'Username (required, 1-20 characters, only e-t)'
+        &lt;br&gt;
+        %= text_field 'user', id =&gt; 'user'
+        %= submit_button
+        &lt;br&gt;
+        %= label_for pass =&gt; 'Password (optional, 7-500 characters)'
+        &lt;br&gt;
+        %= password_field 'pass', id =&gt; 'pass'
+        &lt;br&gt;
+        %= label_for pass_again =&gt; 'Password again (equal to the value above)'
+        &lt;br&gt;
+        %= password_field 'pass_again', id =&gt; 'pass_again'
+      % end
+    &lt;/body&gt;
+  &lt;/html&gt;
+  
+  @@ thanks.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;&lt;body&gt;Thank you &lt;%= validation-&gt;param('user') %&gt;.&lt;/body&gt;&lt;/html&gt;
+  </span>
+</code></pre>
+
+<p>Form elements generated with tag helpers from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a> will automatically remember their previous values and add the class <code>field-with-error</code> for fields that failed validation to make styling with CSS easier.</p>
+
+<pre><code>  &lt;label class=&quot;field-with-error&quot; for=&quot;user&quot;&gt;
+    Username (required, only characters e-t)
+  &lt;/label&gt;
+  &lt;input class=&quot;field-with-error&quot; type=&quot;text&quot; name=&quot;user&quot; value=&quot;sri&quot;&gt;</code></pre>
+
+<p>For a full list of available checks see also <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator.html#CHECKS">&quot;CHECKS&quot; in Mojolicious::Validator</a>.</p>
+
+<h2 id="Adding-form-validation-checks">Adding form validation checks</h2>
+
+<p>Validation checks can be registered with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator.html#add_check">&quot;add_check&quot; in Mojolicious::Validator</a> and return a false value if they were successful. A true value may be used to pass along additional information which can then be retrieved with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator/Validation.html#error">&quot;error&quot; in Mojolicious::Validator::Validation</a>.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="comment"># Add "range" check</span>
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">validator</span><span class="operator">-&gt;</span><span class="variable">add_check</span><span class="operator">(</span><span class="string">range</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$validation</span><span class="operator">,</span> <span class="variable">$name</span><span class="operator">,</span> <span class="variable">$value</span><span class="operator">,</span> <span class="variable">$min</span><span class="operator">,</span> <span class="variable">$max</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="variable">$value</span> <span class="operator">&lt;</span> <span class="variable">$min</span> <span class="operator">||</span> <span class="variable">$value</span> <span class="operator">&gt;</span> <span class="variable">$max</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="string">'form'</span><span class="operator">;</span>
+  
+  <span class="variable">post</span> <span class="string">'/test'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="comment"># Validate parameters with custom check</span>
+    <span class="keyword">my</span> <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">validation</span><span class="operator">;</span>
+    <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'number'</span><span class="operator">)-&gt;</span><span class="variable">range</span><span class="operator">(</span><span class="number">3</span><span class="operator">,</span> <span class="number">23</span><span class="operator">);</span>
+  
+    <span class="comment"># Render form again if validation failed</span>
+    <span class="keyword">return</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'form'</span><span class="operator">)</span> <span class="keyword">if</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">has_error</span><span class="operator">;</span>
+  
+    <span class="comment"># Prevent double form submission with redirect</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">flash</span><span class="operator">(</span><span class="string">number</span> <span class="operator">=&gt;</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'number'</span><span class="operator">));</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'form'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ form.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;body&gt;
+      % if (my $number = flash 'number') {
+        &lt;p&gt;Thanks, the number &lt;%= $number %&gt; was valid.&lt;/p&gt;
+      % }
+      %= form_for test =&gt; begin
+        % if (my $err = validation-&gt;error('number')) {
+          &lt;p&gt;
+            %= 'Value is required.' if $err-&gt;[0] eq 'required'
+            %= 'Value needs to be between 3 and 23.' if $err-&gt;[0] eq 'range'
+          &lt;/p&gt;
+        % }
+        %= text_field 'number'
+        %= submit_button
+      % end
+    &lt;/body&gt;
+  &lt;/html&gt;
+  </span>
+</code></pre>
+
+<h2 id="Cross-site-request-forgery">Cross-site request forgery</h2>
+
+<p>CSRF is a very common attack on web applications that trick your logged in users to submit forms they did not intend to send, with something as mundane as a link. All you have to do, to protect your users from this, is to add an additional hidden field to your forms with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html#csrf_field">&quot;csrf_field&quot; in Mojolicious::Plugin::TagHelpers</a>, and validate it with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator/Validation.html#csrf_protect">&quot;csrf_protect&quot; in Mojolicious::Validator::Validation</a>.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'target'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="variable">post</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="comment"># Check CSRF token</span>
+    <span class="keyword">my</span> <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">validation</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Bad CSRF token!'</span><span class="operator">,</span> <span class="string">status</span> <span class="operator">=&gt;</span> <span class="number">403</span><span class="operator">)</span>
+      <span class="keyword">if</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">csrf_protect</span><span class="operator">-&gt;</span><span class="variable">has_error</span><span class="operator">(</span><span class="string">'csrf_token'</span><span class="operator">);</span>
+  
+    <span class="keyword">my</span> <span class="variable">$city</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'city'</span><span class="operator">)-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'city'</span><span class="operator">);</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">"Low orbit ion cannon pointed at </span><span class="variable">$city</span><span class="string">!"</span><span class="operator">)</span>
+      <span class="keyword">unless</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">has_error</span><span class="operator">;</span>
+  <span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'target'</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ target.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;body&gt;
+      %= form_for target =&gt; begin
+        %= csrf_field
+        %= label_for city =&gt; 'Which city to point low orbit ion cannon at?'
+        %= text_field 'city', id =&gt; 'city'
+        %= submit_button
+      %= end
+    &lt;/body&gt;
+  &lt;/html&gt;
+  </span>
+</code></pre>
+
+<p>For Ajax requests and the like, you can also generate a token directly with the helper <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#csrf_token">&quot;csrf_token&quot; in Mojolicious::Plugin::DefaultHelpers</a>, and then pass it along with the <code>X-CSRF-Token</code> request header.</p>
+
+<h1 id="ADVANCED">ADVANCED</h1>
+
+<p>Less commonly used and more powerful features.</p>
+
+<h2 id="Template-inheritance">Template inheritance</h2>
+
+<p>Inheritance takes the layout concept above one step further, the helpers <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#content">&quot;content&quot; in Mojolicious::Plugin::DefaultHelpers</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#extends">&quot;extends&quot; in Mojolicious::Plugin::DefaultHelpers</a> allow you to build skeleton templates with named blocks that child templates can override.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="comment"># first &gt; mylayout</span>
+  <span class="variable">get</span> <span class="string">'/first'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'first'</span><span class="operator">,</span> <span class="string">layout</span> <span class="operator">=&gt;</span> <span class="string">'mylayout'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># third &gt; second &gt; first &gt; mylayout</span>
+  <span class="variable">get</span> <span class="string">'/third'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'third'</span><span class="operator">,</span> <span class="string">layout</span> <span class="operator">=&gt;</span> <span class="string">'mylayout'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ layouts/mylayout.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;&lt;title&gt;Hello&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;&lt;%= content %&gt;&lt;/body&gt;
+  &lt;/html&gt;
+  
+  @@ first.html.ep
+  %= content header =&gt; begin
+    Default header
+  % end
+  &lt;div&gt;Hello World!&lt;/div&gt;
+  %= content footer =&gt; begin
+    Default footer
+  % end
+  
+  @@ second.html.ep
+  % extends 'first';
+  % content header =&gt; begin
+    New header
+  % end
+  
+  @@ third.html.ep
+  % extends 'second';
+  % content footer =&gt; begin
+    New footer
+  % end
+  </span>
+</code></pre>
+
+<p>This chain could go on and on to allow a very high level of template reuse.</p>
+
+<h2 id="Serving-static-files">Serving static files</h2>
+
+<p>Static files are automatically served from the <code>public</code> directories of the application, which can be customized with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Static.html#paths">&quot;paths&quot; in Mojolicious::Static</a>, or one of the <code>DATA</code> sections from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Static.html#classes">&quot;classes&quot; in Mojolicious::Static</a>. And if that&#39;s not enough you can also serve them manually with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#reply--static">&quot;reply-&gt;static&quot; in Mojolicious::Plugin::DefaultHelpers</a>.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">(</span><span class="string">'index.html'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">get</span> <span class="string">'/some_download'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_disposition</span><span class="operator">(</span><span class="string">'attachment; filename=bar.png;'</span><span class="operator">);</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">(</span><span class="string">'foo/bar.png'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="Custom-responses">Custom responses</h2>
+
+<p>Most response content, static as well as dynamic, gets served through <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/File.html">Mojo::Asset::File</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/Memory.html">Mojo::Asset::Memory</a> objects. For somewhat static content, like cached JSON data or temporary files, you can create your own and use the helper <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#reply--asset">&quot;reply-&gt;asset&quot; in Mojolicious::Plugin::DefaultHelpers</a> to serve them while allowing content negotiation to be performed with <code>Range</code>, <code>If-Modified-Since</code> and <code>If-None-Match</code> headers.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/leak'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">asset</span><span class="operator">(</span><span class="variable">Mojo::Asset::File</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">path</span> <span class="operator">=&gt;</span> <span class="string">'/etc/passwd'</span><span class="operator">));</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>For even more control you can also just skip the helper and use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#rendered">&quot;rendered&quot; in Mojolicious::Controller</a> to tell the renderer when you&#39;re done generating a response.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/leak'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">-&gt;</span><span class="variable">asset</span><span class="operator">(</span><span class="variable">Mojo::Asset::File</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">path</span> <span class="operator">=&gt;</span> <span class="string">'/etc/passwd'</span><span class="operator">));</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">rendered</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="Helper-plugins">Helper plugins</h2>
+
+<p>Some helpers might be useful enough for you to share them between multiple applications, plugins make that very simple.</p>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Mojolicious::Plugin::DebugHelper</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious::Plugin'</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> register </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">helper</span><span class="operator">(</span><span class="string">debug</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$str</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="variable">$str</span><span class="operator">);</span>
+    <span class="operator">});</span>
+  <span class="operator">}</span>
+  
+  <span class="number">1</span><span class="operator">;</span>
+</code></pre>
+
+<p>The <code>register</code> method will be called when you load the plugin. And to add your helper to the application, you can use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#helper">&quot;helper&quot; in Mojolicious</a>.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">plugin</span> <span class="string">'DebugHelper'</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">'It works!'</span><span class="operator">);</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Hello!'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>A skeleton for a full CPAN compatible plugin distribution can be automatically generated.</p>
+
+<pre><code>  $ mojo generate plugin DebugHelper</code></pre>
+
+<p>And if you have a <code>PAUSE</code> account (which can be requested at <a href="http://pause.perl.org">http://pause.perl.org</a>), you are only a few commands away from releasing it to CPAN.</p>
+
+<pre><code>  $ perl Makefile.PL
+  $ make test
+  $ make manifest
+  $ make dist
+  $ mojo cpanify -u USER -p PASS Mojolicious-Plugin-DebugHelper-0.01.tar.gz</code></pre>
+
+<h2 id="Bundling-assets-with-plugins">Bundling assets with plugins</h2>
+
+<p>Assets such as templates and static files can be easily bundled with your plugins, even if you plan to release them to CPAN.</p>
+
+<pre><code>  <span class="operator">$ </span><span class="variable">mojo</span> <span class="variable">generate</span> <span class="variable">plugin</span> <span class="variable">AlertAssets</span>
+  <span class="operator">$ </span><span class="keyword">mkdir</span> <span class="variable">Mojolicious</span><span class="operator">-</span><span class="variable">Plugin</span><span class="operator">-</span><span class="variable">AlertAssets</span><span class="operator">/</span><span class="variable">lib</span><span class="operator">/</span><span class="variable">Mojolicious</span><span class="operator">/</span><span class="variable">Plugin</span><span class="operator">/</span><span class="variable">AlertAssets</span>
+  <span class="operator">$ </span><span class="variable">cd</span> <span class="variable">Mojolicious</span><span class="operator">-</span><span class="variable">Plugin</span><span class="operator">-</span><span class="variable">AlertAssets</span><span class="operator">/</span><span class="variable">lib</span><span class="operator">/</span><span class="variable">Mojolicious</span><span class="operator">/</span><span class="variable">Plugin</span><span class="operator">/</span><span class="variable">AlertAssets</span>
+  <span class="operator">$ </span><span class="keyword">mkdir</span> <span class="variable">public</span>
+  <span class="operator">$ </span><span class="variable">echo</span> <span class="string">'alert("Hello World!");'</span> <span class="operator">&gt;</span> <span class="variable">public</span><span class="operator">/</span><span class="variable">alertassets</span><span class="operator">.</span><span class="variable">js</span>
+  <span class="operator">$ </span><span class="keyword">mkdir</span> <span class="variable">templates</span>
+  <span class="operator">$ </span><span class="variable">echo</span> <span class="string">'%= javascript "/alertassets.js"'</span> <span class="operator">&gt;</span> <span class="variable">templates</span><span class="operator">/</span><span class="variable">alertassets</span><span class="operator">.</span><span class="variable">html</span><span class="operator">.</span><span class="variable">ep</span>
+</code></pre>
+
+<p>Just give them reasonably unique names, ideally based on the name of your plugin, and append their respective directories to the list of search paths when <code>register</code> is called.</p>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Mojolicious::Plugin::AlertAssets</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious::Plugin'</span><span class="operator">;</span>
+  
+  <span class="keyword">use</span> <span class="variable">File::Basename</span> <span class="string">'dirname'</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">File::Spec::Functions</span> <span class="string">'catdir'</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> register </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Append "templates" and "public" directories</span>
+    <span class="keyword">my</span> <span class="variable">$base</span> <span class="operator">=</span> <span class="variable">catdir</span> <span class="variable">dirname</span><span class="operator">(</span><span class="keyword">__FILE__</span><span class="operator">),</span> <span class="string">'AlertAssets'</span><span class="operator">;</span>
+    <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="variable">catdir</span><span class="operator">(</span><span class="variable">$base</span><span class="operator">,</span> <span class="string">'templates'</span><span class="operator">);</span>
+    <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span>   <span class="variable">catdir</span><span class="operator">(</span><span class="variable">$base</span><span class="operator">,</span> <span class="string">'public'</span><span class="operator">);</span>
+  <span class="operator">}</span>
+  
+  <span class="number">1</span><span class="operator">;</span>
+</code></pre>
+
+<p>Both will work just like normal <code>templates</code> and <code>public</code> directories once you&#39;ve installed and loaded the plugin, with slightly lower precedence.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">plugin</span> <span class="string">'AlertAssets'</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/alert_me'</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ alert_me.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;Alert me!&lt;/title&gt;
+      %= include 'alertassets'
+    &lt;/head&gt;
+    &lt;body&gt;You've been alerted.&lt;/body&gt;
+  &lt;/html&gt;
+  </span>
+</code></pre>
+
+<p>And it works just the same for assets bundled in the <code>DATA</code> section of your plugin.</p>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Mojolicious::Plugin::AlertAssets</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious::Plugin'</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> register </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Append class</span>
+    <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">}</span><span class="operator">,</span> <span class="keyword">__PACKAGE__</span><span class="operator">;</span>
+    <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">}</span><span class="operator">,</span>   <span class="keyword">__PACKAGE__</span><span class="operator">;</span>
+  <span class="operator">}</span>
+  
+  <span class="number">1</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ alertassets.js
+  alert("Hello World!");
+  
+  @@ alertassets.html.ep
+  %= javascript "/alertassets.js"
+  </span>
+</code></pre>
+
+<h2 id="Post-processing-dynamic-content">Post-processing dynamic content</h2>
+
+<p>While post-processing tasks are generally very easy with the hook <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#after_dispatch">&quot;after_dispatch&quot; in Mojolicious</a>, for content generated by the renderer it is a lot more efficient to use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#after_render">&quot;after_render&quot; in Mojolicious</a>.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">IO::Compress::Gzip</span> <span class="string">'gzip'</span><span class="operator">;</span>
+  
+  <span class="variable">hook</span> <span class="string">after_render</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$output</span><span class="operator">,</span> <span class="variable">$format</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Check if "gzip =&gt; 1" has been set in the stash</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">gzip</span><span class="operator">}</span><span class="operator">;</span>
+  
+    <span class="comment"># Check if user agent accepts gzip compression</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">accept_encoding</span> <span class="operator">//</span> <span class="string">''</span><span class="operator">)</span> <span class="operator">=~</span> <span class="regex">/gzip/i</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">Vary</span> <span class="operator">=&gt;</span> <span class="string">'Accept-Encoding'</span><span class="operator">);</span>
+  
+    <span class="comment"># Compress content with gzip</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_encoding</span><span class="operator">(</span><span class="string">'gzip'</span><span class="operator">);</span>
+    <span class="variable">gzip</span> <span class="variable">$output</span><span class="operator">,</span> <span class="operator">\</span><span class="keyword">my</span> <span class="variable">$compressed</span><span class="operator">;</span>
+    <span class="variable">$$output</span> <span class="operator">=</span> <span class="variable">$compressed</span><span class="operator">;</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'hello'</span><span class="operator">,</span> <span class="string">title</span> <span class="operator">=&gt;</span> <span class="string">'Hello'</span><span class="operator">,</span> <span class="string">gzip</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ hello.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;&lt;title&gt;&lt;%= title %&gt;&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;Compressed content.&lt;/body&gt;
+  &lt;/html&gt;
+  </span>
+</code></pre>
+
+<h2 id="Streaming">Streaming</h2>
+
+<p>You don&#39;t have to render all content at once, the method <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#write">&quot;write&quot; in Mojolicious::Controller</a> can also be used to stream a series of smaller chunks.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="comment"># Prepare body</span>
+    <span class="keyword">my</span> <span class="variable">$body</span> <span class="operator">=</span> <span class="string">'Hello World!'</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_length</span><span class="operator">(</span><span class="keyword">length</span> <span class="variable">$body</span><span class="operator">);</span>
+  
+    <span class="comment"># Start writing directly with a drain callback</span>
+    <span class="keyword">my</span> <span class="variable">$drain</span><span class="operator">;</span>
+    <span class="variable">$drain</span> <span class="operator">=</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="keyword">my</span> <span class="variable">$chunk</span> <span class="operator">=</span> <span class="keyword">substr</span> <span class="variable">$body</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="string">''</span><span class="operator">;</span>
+      <span class="variable">$drain</span> <span class="operator">=</span> <span class="keyword">undef</span> <span class="keyword">unless</span> <span class="keyword">length</span> <span class="variable">$body</span><span class="operator">;</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="variable">$chunk</span><span class="operator">,</span> <span class="variable">$drain</span><span class="operator">);</span>
+    <span class="operator">};</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">$drain</span><span class="operator">;</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>The drain callback will be executed whenever the entire previous chunk of data has actually been written.</p>
+
+<pre><code>  HTTP/1.1 200 OK
+  Date: Sat, 13 Sep 2014 16:48:29 GMT
+  Content-Length: 12
+  Server: Mojolicious (Perl)
+
+  Hello World!</code></pre>
+
+<h2 id="Chunked-transfer-encoding">Chunked transfer encoding</h2>
+
+<p>For very dynamic content you might not know the response content length in advance, that&#39;s where the chunked transfer encoding and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#write_chunk">&quot;write_chunk&quot; in Mojolicious::Controller</a> come in handy. A common use would be to send the <code>head</code> section of an HTML document to the browser in advance and speed up preloading of referenced images and stylesheets.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="string">'&lt;html&gt;&lt;head&gt;&lt;title&gt;Example&lt;/title&gt;&lt;/head&gt;'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">(</span><span class="string">'&lt;body&gt;Example&lt;/body&gt;&lt;/html&gt;'</span><span class="operator">);</span>
+    <span class="operator">});</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>The optional drain callback ensures that all previous chunks have been written before processing continues. To end the stream you can call <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#finish">&quot;finish&quot; in Mojolicious::Controller</a> or write an empty chunk of data.</p>
+
+<pre><code>  HTTP/1.1 200 OK
+  Date: Sat, 13 Sep 2014 16:48:29 GMT
+  Transfer-Encoding: chunked
+  Server: Mojolicious (Perl)
+
+  29
+  &lt;html&gt;&lt;head&gt;&lt;title&gt;Example&lt;/title&gt;&lt;/head&gt;
+  1b
+  &lt;body&gt;Example&lt;/body&gt;&lt;/html&gt;
+  0</code></pre>
+
+<p>Especially in combination with long inactivity timeouts this can be very useful for Comet (long polling). Due to limitations in some web servers this might not work perfectly in all deployment environments.</p>
+
+<h2 id="Encoding">Encoding</h2>
+
+<p>Templates stored in files are expected to be <code>UTF-8</code> by default, but that can be easily changed with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html#encoding">&quot;encoding&quot; in Mojolicious::Renderer</a>.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">-&gt;</span><span class="variable">encoding</span><span class="operator">(</span><span class="string">'koi8-r'</span><span class="operator">);</span>
+</code></pre>
+
+<p>All templates from the <code>DATA</code> section are bound to the encoding of the Perl script.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/heart'</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ heart.html.ep
+  I â¥ Mojolicious!
+  </span>
+</code></pre>
+
+<h2 id="Base64-encoded-DATA-files">Base64 encoded DATA files</h2>
+
+<p>Base64 encoded static files such as images can be easily stored in the <code>DATA</code> section of your application, similar to templates.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ favicon.ico (base64)
+  ...base64 encoded image...
+  </span>
+</code></pre>
+
+<h2 id="Inflating-DATA-templates">Inflating DATA templates</h2>
+
+<p>Templates stored in files get preferred over files from the <code>DATA</code> section, this allows you to include a default set of templates in your application that the user can later customize. The command <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/inflate.html">Mojolicious::Command::inflate</a> will write all templates and static files from the <code>DATA</code> section into actual files in the <code>templates</code> and <code>public</code> directories.</p>
+
+<pre><code>  $ ./myapp.pl inflate</code></pre>
+
+<h2 id="Customizing-the-template-syntax">Customizing the template syntax</h2>
+
+<p>You can easily change the whole template syntax by loading <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/EPRenderer.html">Mojolicious::Plugin::EPRenderer</a> with a custom configuration.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">plugin</span> <span class="string">EPRenderer</span> <span class="operator">=&gt;</span> <span class="operator">{</span>
+    <span class="string">name</span>     <span class="operator">=&gt;</span> <span class="string">'mustache'</span><span class="operator">,</span>
+    <span class="string">template</span> <span class="operator">=&gt;</span> <span class="operator">{</span>
+      <span class="string">tag_start</span> <span class="operator">=&gt;</span> <span class="string">'{{'</span><span class="operator">,</span>
+      <span class="string">tag_end</span>   <span class="operator">=&gt;</span> <span class="string">'}}'</span>
+    <span class="operator">}</span>
+  <span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/:name'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'Anonymous'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'index'</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ index.html.mustache
+  Hello {{= $name }}.
+  </span>
+</code></pre>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> contains the whole list of available options.</p>
+
+<h2 id="Adding-your-favorite-template-system">Adding your favorite template system</h2>
+
+<p>Maybe you would prefer a different template system than <code>ep</code>, and there is not already a plugin on CPAN for your favorite one. All you have to do, is to add a new <code>handler</code> with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html#add_handler">&quot;add_handler&quot; in Mojolicious::Renderer</a> when <code>register</code> is called.</p>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Mojolicious::Plugin::MyRenderer</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious::Plugin'</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> register </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Add "mine" handler</span>
+    <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">-&gt;</span><span class="variable">add_handler</span><span class="operator">(</span><span class="string">mine</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$renderer</span><span class="operator">,</span> <span class="variable">$c</span><span class="operator">,</span> <span class="variable">$output</span><span class="operator">,</span> <span class="variable">$options</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+      <span class="comment"># Check for one-time use inline template</span>
+      <span class="keyword">my</span> <span class="variable">$inline_template</span> <span class="operator">=</span> <span class="variable">$options</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">inline</span><span class="operator">}</span><span class="operator">;</span>
+  
+      <span class="comment"># Check for appropriate template in "templates" directories</span>
+      <span class="keyword">my</span> <span class="variable">$template_path</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">template_path</span><span class="operator">(</span><span class="variable">$options</span><span class="operator">);</span>
+  
+      <span class="comment"># Check for appropriate template in DATA sections</span>
+      <span class="keyword">my</span> <span class="variable">$data_template</span> <span class="operator">=</span> <span class="variable">$renderer</span><span class="operator">-&gt;</span><span class="variable">get_data_template</span><span class="operator">(</span><span class="variable">$options</span><span class="operator">);</span>
+  
+      <span class="comment"># This part is up to you and your template system :)</span>
+      <span class="operator">...</span>
+  
+      <span class="comment"># Pass the rendered result back to the renderer</span>
+      <span class="variable">$$output</span> <span class="operator">=</span> <span class="string">'Hello World!'</span><span class="operator">;</span>
+  
+      <span class="comment"># Or just die if an error occurs</span>
+      <span class="keyword">die</span> <span class="string">'Something went wrong with the template'</span><span class="operator">;</span>
+    <span class="operator">});</span>
+  <span class="operator">}</span>
+  
+  <span class="number">1</span><span class="operator">;</span>
+</code></pre>
+
+<p>An <code>inline</code> template, if provided by the user, will be passed along with the options. You can use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html#template_path">&quot;template_path&quot; in Mojolicious::Renderer</a> to search the <code>templates</code> directories of the application, and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html#get_data_template">&quot;get_data_template&quot; in Mojolicious::Renderer</a> to search the <code>DATA</code> sections.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">plugin</span> <span class="string">'MyRenderer'</span><span class="operator">;</span>
+  
+  <span class="comment"># Render an inline template</span>
+  <span class="variable">get</span> <span class="string">'/inline'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">inline</span> <span class="operator">=&gt;</span> <span class="string">'...'</span><span class="operator">,</span> <span class="string">handler</span> <span class="operator">=&gt;</span> <span class="string">'mine'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Render a template from the DATA section</span>
+  <span class="variable">get</span> <span class="string">'/data'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'test'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ test.html.mine
+  ...
+  </span>
+</code></pre>
+
+<h2 id="Adding-a-handler-to-generate-binary-data">Adding a handler to generate binary data</h2>
+
+<p>By default the renderer assumes that every <code>handler</code> generates characters that need to be automatically encoded, but this can be easily disabled if you&#39;re generating bytes instead.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Storable</span> <span class="string">'nfreeze'</span><span class="operator">;</span>
+  
+  <span class="comment"># Add "storable" handler</span>
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">-&gt;</span><span class="variable">add_handler</span><span class="operator">(</span><span class="string">storable</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$renderer</span><span class="operator">,</span> <span class="variable">$c</span><span class="operator">,</span> <span class="variable">$output</span><span class="operator">,</span> <span class="variable">$options</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Disable automatic encoding</span>
+    <span class="keyword">delete</span> <span class="variable">$options</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">encoding</span><span class="operator">}</span><span class="operator">;</span>
+  
+    <span class="comment"># Encode data from stash value</span>
+    <span class="variable">$$output</span> <span class="operator">=</span> <span class="variable">nfreeze</span> <span class="keyword">delete</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">storable</span><span class="operator">}</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Set "handler" value automatically if "storable" value is set already</span>
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">before_render</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="variable">$args</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">handler</span><span class="operator">}</span> <span class="operator">=</span> <span class="string">'storable'</span>
+      <span class="keyword">if</span> <span class="keyword">exists</span> <span class="variable">$args</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">storable</span><span class="operator">}</span> <span class="operator">||</span> <span class="keyword">exists</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">storable</span><span class="operator">}</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">storable</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">i</span> <span class="operator">=&gt;</span> <span class="string">'â¥ mojolicious'</span><span class="operator">}}</span><span class="operator">;</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>The hook <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#before_render">&quot;before_render&quot; in Mojolicious</a> can be used to make stash values like <code>storable</code> special, so that they no longer require a <code>handler</code> value to be set explicitly.</p>
+
+<pre><code>  <span class="comment"># Explicit "handler" value</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">storable</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">i</span> <span class="operator">=&gt;</span> <span class="string">'â¥ mojolicious'</span><span class="operator">}</span><span class="operator">,</span> <span class="string">handler</span> <span class="operator">=&gt;</span> <span class="string">'storable'</span><span class="operator">);</span>
+  
+  <span class="comment"># Implicit "handler" value (with "before_render" hook)</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">storable</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">i</span> <span class="operator">=&gt;</span> <span class="string">'â¥ mojolicious'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="MORE">MORE</h1>
+
+<p>You can continue with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a> now or take a look at the <a href="http://github.com/kraih/mojo/wiki">Mojolicious wiki</a>, which contains a lot more documentation and examples by many different authors.</p>
+
+<h1 id="SUPPORT">SUPPORT</h1>
+
+<p>If you have any questions the documentation might not yet answer, don&#39;t hesitate to ask on the <a href="http://groups.google.com/group/mojolicious">mailing-list</a> or the official IRC channel <code><span class="comment">#mojo</span>
+</code> on <code>irc.perl.org</code>.</p>
+
+
+</body>
+
+</html>
+
+

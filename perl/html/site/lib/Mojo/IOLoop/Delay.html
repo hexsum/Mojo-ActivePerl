@@ -1,0 +1,259 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#error">error</a></li>
+      <li><a href="#finish">finish</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#ioloop">ioloop</a></li>
+      <li><a href="#remaining">remaining</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#begin">begin</a></li>
+      <li><a href="#data">data</a></li>
+      <li><a href="#pass">pass</a></li>
+      <li><a href="#steps">steps</a></li>
+      <li><a href="#wait">wait</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::IOLoop::Delay - Manage callbacks and control the flow of events</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::IOLoop::Delay</span><span class="operator">;</span>
+  
+  <span class="comment"># Synchronize multiple non-blocking operations</span>
+  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop::Delay</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">steps</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="string">'BOOM!'</span> <span class="operator">});</span>
+  <span class="keyword">for</span> <span class="keyword">my</span> <span class="variable">$i</span> <span class="operator">(</span><span class="number">1</span> <span class="operator">..</span> <span class="number">10</span><span class="operator">)</span> <span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$end</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">;</span>
+    <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="variable">$i</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">say</span> <span class="number">10</span> <span class="operator">-</span> <span class="variable">$i</span><span class="operator">;</span>
+      <span class="variable">$end</span><span class="operator">-&gt;();</span>
+    <span class="operator">});</span>
+  <span class="operator">}</span>
+  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+  
+  <span class="comment"># Sequentialize multiple non-blocking operations</span>
+  <span class="variable">Mojo::IOLoop::Delay</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">-&gt;</span><span class="variable">steps</span><span class="operator">(</span>
+  
+    <span class="comment"># First step (simple timer)</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">2</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+      <span class="keyword">say</span> <span class="string">'Second step in 2 seconds.'</span><span class="operator">;</span>
+    <span class="operator">},</span>
+  
+    <span class="comment"># Second step (concurrent timers)</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">1</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+      <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">3</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+      <span class="keyword">say</span> <span class="string">'Third step in 3 seconds.'</span><span class="operator">;</span>
+    <span class="operator">},</span>
+  
+    <span class="comment"># Third step (the end)</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="keyword">say</span> <span class="string">'And done after 5 seconds total.'</span><span class="operator">;</span>
+    <span class="operator">}</span>
+  <span class="operator">)-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+  
+  <span class="comment"># Handle exceptions in all steps</span>
+  <span class="variable">Mojo::IOLoop::Delay</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">-&gt;</span><span class="variable">steps</span><span class="operator">(</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="keyword">die</span> <span class="string">'Intentional error'</span><span class="operator">;</span>
+    <span class="operator">},</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="keyword">say</span> <span class="string">'Never actually reached.'</span><span class="operator">;</span>
+    <span class="operator">}</span>
+  <span class="operator">)-&gt;</span><span class="variable">catch</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Something went wrong: </span><span class="variable">$err</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">})-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Delay.html">Mojo::IOLoop::Delay</a> manages callbacks and controls the flow of events for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a>, which can help you avoid deep nested closures that often result from continuation-passing style.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Delay.html">Mojo::IOLoop::Delay</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones.</p>
+
+<h2 id="error">error</h2>
+
+<pre><code>  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">error</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted if an exception gets thrown in one of the steps, breaking the chain, fatal if unhandled.</p>
+
+<h2 id="finish">finish</h2>
+
+<pre><code>  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted once the event counter reaches zero and there are no more steps.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Delay.html">Mojo::IOLoop::Delay</a> implements the following attributes.</p>
+
+<h2 id="ioloop">ioloop</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">ioloop</span><span class="operator">;</span>
+  <span class="variable">$delay</span>   <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">ioloop</span><span class="operator">(</span><span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Event loop object to control, defaults to the global <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> singleton.</p>
+
+<h2 id="remaining">remaining</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$remaining</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">remaining</span><span class="operator">;</span>
+  <span class="variable">$delay</span>        <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">remaining</span><span class="operator">(</span><span class="operator">[</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Remaining <a href="#steps">&quot;steps&quot;</a> in chain.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Delay.html">Mojo::IOLoop::Delay</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="begin">begin</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cb</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$cb</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">(</span><span class="variable">$offset</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$cb</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">(</span><span class="variable">$offset</span><span class="operator">,</span> <span class="variable">$len</span><span class="operator">);</span>
+</code></pre>
+
+<p>Indicate an active event by incrementing the event counter, the returned callback needs to be executed when the event has completed, to decrement the event counter again. When all callbacks have been executed and the event counter reached zero, <a href="#steps">&quot;steps&quot;</a> will continue.</p>
+
+<pre><code>  <span class="comment"># Capture all arguments except for the first one (invocant)</span>
+  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">,</span> <span class="variable">$stream</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">client</span><span class="operator">(</span><span class="operator">{</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+</code></pre>
+
+<p>Arguments passed to the returned callback are spliced with the given offset and length, defaulting to an offset of <code>1</code> with no default length. The arguments are then combined in the same order <a href="#begin">&quot;begin&quot;</a> was called, and passed together to the next step or <a href="#finish">&quot;finish&quot;</a> event.</p>
+
+<pre><code>  <span class="comment"># Capture all arguments</span>
+  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">$loop</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">,</span> <span class="variable">$stream</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">client</span><span class="operator">(</span><span class="operator">{</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">(</span><span class="number">0</span><span class="operator">));</span>
+  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+  
+  <span class="comment"># Capture only the second argument</span>
+  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">client</span><span class="operator">(</span><span class="operator">{</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">(</span><span class="number">1</span><span class="operator">,</span> <span class="number">1</span><span class="operator">));</span>
+  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+  
+  <span class="comment"># Capture and combine arguments</span>
+  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">$three_err</span><span class="operator">,</span> <span class="variable">$three_stream</span><span class="operator">,</span> <span class="variable">$four_err</span><span class="operator">,</span> <span class="variable">$four_stream</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">client</span><span class="operator">(</span><span class="operator">{</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">client</span><span class="operator">(</span><span class="operator">{</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">4000</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="data">data</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">data</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span>  <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">data</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$delay</span>   <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">data</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$delay</span>   <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">data</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+</code></pre>
+
+<p>Data shared between all <a href="#steps">&quot;steps&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Remove value</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="keyword">delete</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">data</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Assign multiple values at once</span>
+  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">data</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'test'</span><span class="operator">,</span> <span class="string">bar</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="pass">pass</h2>
+
+<pre><code>  <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">pass</span><span class="operator">;</span>
+  <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">pass</span><span class="operator">(</span><span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<p>Increment event counter and decrement it again right away to pass values to the next step.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">(</span><span class="number">0</span><span class="operator">)-&gt;(</span><span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="steps">steps</h2>
+
+<pre><code>  <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">steps</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...},</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Sequentialize multiple events, every time the event counter reaches zero a callback will run, the first one automatically runs during the next reactor tick unless it is delayed by incrementing the event counter. This chain will continue until there are no <a href="#remaining">&quot;remaining&quot;</a> callbacks, a callback does not increment the event counter or an exception gets thrown in a callback.</p>
+
+<h2 id="wait">wait</h2>
+
+<pre><code>  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+</code></pre>
+
+<p>Start <a href="#ioloop">&quot;ioloop&quot;</a> and stop it again once an <a href="#error">&quot;error&quot;</a> or <a href="#finish">&quot;finish&quot;</a> event gets emitted, does nothing when <a href="#ioloop">&quot;ioloop&quot;</a> is already running.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

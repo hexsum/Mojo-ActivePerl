@@ -1,0 +1,258 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#csrf_token">csrf_token</a></li>
+      <li><a href="#input">input</a></li>
+      <li><a href="#output">output</a></li>
+      <li><a href="#topic">topic</a></li>
+      <li><a href="#validator">validator</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#check">check</a></li>
+      <li><a href="#csrf_protect">csrf_protect</a></li>
+      <li><a href="#error">error</a></li>
+      <li><a href="#every_param">every_param</a></li>
+      <li><a href="#failed">failed</a></li>
+      <li><a href="#has_data">has_data</a></li>
+      <li><a href="#has_error">has_error</a></li>
+      <li><a href="#is_valid">is_valid</a></li>
+      <li><a href="#optional">optional</a></li>
+      <li><a href="#param">param</a></li>
+      <li><a href="#passed">passed</a></li>
+      <li><a href="#required">required</a></li>
+    </ul>
+  </li>
+  <li><a href="#AUTOLOAD">AUTOLOAD</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Validator::Validation - Perform validations</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Validator</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojolicious::Validator::Validation</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$validator</span> <span class="operator">=</span> <span class="variable">Mojolicious::Validator</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$validation</span>
+    <span class="operator">=</span> <span class="variable">Mojolicious::Validator::Validation</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">validator</span> <span class="operator">=&gt;</span> <span class="variable">$validator</span><span class="operator">);</span>
+  <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">input</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="variable">in</span><span class="operator">(</span><span class="string">'bar'</span><span class="operator">,</span> <span class="string">'baz'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator/Validation.html">Mojolicious::Validator::Validation</a> performs <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator.html">Mojolicious::Validator</a> validation checks.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator/Validation.html">Mojolicious::Validator::Validation</a> implements the following attributes.</p>
+
+<h2 id="csrf_token">csrf_token</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$token</span>   <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">csrf_token</span><span class="operator">;</span>
+  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">csrf_token</span><span class="operator">(</span><span class="string">'fa6a08...'</span><span class="operator">);</span>
+</code></pre>
+
+<p>CSRF token.</p>
+
+<h2 id="input">input</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$input</span>   <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">input</span><span class="operator">;</span>
+  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">input</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">123</span><span class="operator">,</span> <span class="string">'yada'</span><span class="operator">]}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Data to be validated.</p>
+
+<h2 id="output">output</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$output</span>  <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">output</span><span class="operator">;</span>
+  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">output</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">123</span><span class="operator">,</span> <span class="string">'yada'</span><span class="operator">]}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Validated data.</p>
+
+<h2 id="topic">topic</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$topic</span>   <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">topic</span><span class="operator">;</span>
+  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">topic</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Name of field currently being validated.</p>
+
+<h2 id="validator">validator</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$validator</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">validator</span><span class="operator">;</span>
+  <span class="variable">$validation</span>   <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">validator</span><span class="operator">(</span><span class="variable">Mojolicious::Validator</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator.html">Mojolicious::Validator</a> object this validation belongs to.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator/Validation.html">Mojolicious::Validator::Validation</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="check">check</h2>
+
+<pre><code>  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">check</span><span class="operator">(</span><span class="string">'size'</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">7</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform validation check on all values of the current <a href="#topic">&quot;topic&quot;</a>, no more checks will be performed on them after the first one failed. All checks from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator.html#CHECKS">&quot;CHECKS&quot; in Mojolicious::Validator</a> are supported.</p>
+
+<h2 id="csrf_protect">csrf_protect</h2>
+
+<pre><code>  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">csrf_protect</span><span class="operator">;</span>
+</code></pre>
+
+<p>Validate <code>csrf_token</code> and protect from cross-site request forgery.</p>
+
+<h2 id="error">error</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$err</span>     <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'custom_check'</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="variable">$check</span><span class="operator">,</span> <span class="variable">$result</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or set details for failed validation check, at any given time there can only be one per field.</p>
+
+<pre><code>  <span class="comment"># Details about failed validation</span>
+  <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$check</span><span class="operator">,</span> <span class="variable">$result</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="every_param">every_param</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$values</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">every_param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Similar to <a href="#param">&quot;param&quot;</a>, but returns all values sharing the same name as an array reference.</p>
+
+<pre><code>  <span class="comment"># Get first value</span>
+  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">every_param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="failed">failed</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$names</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">failed</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return an array reference with all names for values that failed validation.</p>
+
+<pre><code>  <span class="comment"># Names of all values that failed</span>
+  <span class="keyword">say</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">failed</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="has_data">has_data</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">has_data</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if <a href="#input">&quot;input&quot;</a> is available for validation.</p>
+
+<h2 id="has_error">has_error</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">has_error</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">has_error</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if validation resulted in errors, defaults to checking all fields.</p>
+
+<h2 id="is_valid">is_valid</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">is_valid</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">is_valid</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if validation was successful and field has a value, defaults to checking the current <a href="#topic">&quot;topic&quot;</a>.</p>
+
+<h2 id="optional">optional</h2>
+
+<pre><code>  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">optional</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">optional</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">,</span> <span class="string">'filter1'</span><span class="operator">,</span> <span class="string">'filter2'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Change validation <a href="#topic">&quot;topic&quot;</a> and apply filters. All filters from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator.html#FILTERS">&quot;FILTERS&quot; in Mojolicious::Validator</a> are supported.</p>
+
+<pre><code>  <span class="comment"># Trim value and check size</span>
+  <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">optional</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">,</span> <span class="string">'trim'</span><span class="operator">)-&gt;</span><span class="variable">size</span><span class="operator">(</span><span class="number">1</span><span class="operator">,</span> <span class="number">15</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="param">param</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Access validated values. If there are multiple values sharing the same name, and you want to access more than just the last one, you can use <a href="#every_param">&quot;every_param&quot;</a>.</p>
+
+<h2 id="passed">passed</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$names</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">passed</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return an array reference with all names for values that passed validation.</p>
+
+<pre><code>  <span class="comment"># Names of all values that passed</span>
+  <span class="keyword">say</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">passed</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="required">required</h2>
+
+<pre><code>  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">,</span> <span class="string">'filter1'</span><span class="operator">,</span> <span class="string">'filter2'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Change validation <a href="#topic">&quot;topic&quot;</a>, apply filters, and make sure a value is present and not an empty string. All filters from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator.html#FILTERS">&quot;FILTERS&quot; in Mojolicious::Validator</a> are supported.All filters from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator.html#FILTERS">&quot;FILTERS&quot; in Mojolicious::Validator</a> are supported.</p>
+
+<pre><code>  <span class="comment"># Trim value and check size</span>
+  <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">,</span> <span class="string">'trim'</span><span class="operator">)-&gt;</span><span class="variable">size</span><span class="operator">(</span><span class="number">1</span><span class="operator">,</span> <span class="number">15</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="AUTOLOAD">AUTOLOAD</h1>
+
+<p>In addition to the <a href="#ATTRIBUTES">&quot;ATTRIBUTES&quot;</a> and <a href="#METHODS">&quot;METHODS&quot;</a> above, you can also call validation checks provided by <a href="#validator">&quot;validator&quot;</a> on <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator/Validation.html">Mojolicious::Validator::Validation</a> objects, similar to <a href="#check">&quot;check&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Call validation checks</span>
+  <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="variable">size</span><span class="operator">(</span><span class="number">2</span><span class="operator">,</span> <span class="number">5</span><span class="operator">)-&gt;</span><span class="variable">like</span><span class="operator">(</span><span class="string">qr/^[A-Z]/</span><span class="operator">);</span>
+  <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">optional</span><span class="operator">(</span><span class="string">'bar'</span><span class="operator">)-&gt;</span><span class="variable">equal_to</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">optional</span><span class="operator">(</span><span class="string">'baz'</span><span class="operator">)-&gt;</span><span class="variable">in</span><span class="operator">(</span><span class="string">'test'</span><span class="operator">,</span> <span class="string">'123'</span><span class="operator">);</span>
+  
+  <span class="comment"># Longer version</span>
+  <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="variable">check</span><span class="operator">(</span><span class="string">'size'</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">5</span><span class="operator">)-&gt;</span><span class="variable">check</span><span class="operator">(</span><span class="string">'like'</span><span class="operator">,</span> <span class="string">qr/^[A-Z]/</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

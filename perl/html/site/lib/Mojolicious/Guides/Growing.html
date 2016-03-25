@@ -1,0 +1,801 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#OVERVIEW">OVERVIEW</a></li>
+  <li><a href="#CONCEPTS">CONCEPTS</a>
+    <ul>
+      <li><a href="#Model-View-Controller">Model View Controller</a></li>
+      <li><a href="#REpresentational-State-Transfer">REpresentational State Transfer</a></li>
+      <li><a href="#Sessions">Sessions</a></li>
+      <li><a href="#Test-Driven-Development">Test-Driven Development</a></li>
+    </ul>
+  </li>
+  <li><a href="#PROTOTYPE">PROTOTYPE</a>
+    <ul>
+      <li><a href="#Differences">Differences</a></li>
+      <li><a href="#Foundation">Foundation</a></li>
+      <li><a href="#A-birds-eye-view">A bird&#39;s-eye view</a></li>
+      <li><a href="#Model">Model</a></li>
+      <li><a href="#Testing">Testing</a></li>
+      <li><a href="#State-keeping">State keeping</a></li>
+      <li><a href="#Final-prototype">Final prototype</a></li>
+    </ul>
+  </li>
+  <li><a href="#WELL-STRUCTURED-APPLICATION">WELL-STRUCTURED APPLICATION</a>
+    <ul>
+      <li><a href="#Inflating-templates">Inflating templates</a></li>
+      <li><a href="#Simplified-application-class">Simplified application class</a></li>
+      <li><a href="#Simplified-application-script">Simplified application script</a></li>
+      <li><a href="#Controller-class">Controller class</a></li>
+      <li><a href="#Application-class">Application class</a></li>
+      <li><a href="#Templates">Templates</a></li>
+      <li><a href="#Script">Script</a></li>
+      <li><a href="#Simplified-tests">Simplified tests</a></li>
+    </ul>
+  </li>
+  <li><a href="#MORE">MORE</a></li>
+  <li><a href="#SUPPORT">SUPPORT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Guides::Growing - Growing Mojolicious applications</p>
+
+<h1 id="OVERVIEW">OVERVIEW</h1>
+
+<p>This document explains the process of starting a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> prototype from scratch and growing it into a well-structured <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application.</p>
+
+<h1 id="CONCEPTS">CONCEPTS</h1>
+
+<p>Essentials every <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> developer should know.</p>
+
+<h2 id="Model-View-Controller">Model View Controller</h2>
+
+<p>MVC is a software architectural pattern for graphical user interface programming originating in Smalltalk-80, that separates application logic, presentation and input.</p>
+
+<pre><code>           +------------+    +-------+    +------+
+  Input -&gt; | Controller | -&gt; | Model | -&gt; | View | -&gt; Output
+           +------------+    +-------+    +------+</code></pre>
+
+<p>A slightly modified version of the pattern moving some application logic into the <i>controller</i> is the foundation of pretty much every web framework these days, including <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+<pre><code>              +----------------+     +-------+
+  Request  -&gt; |                | &lt;-&gt; | Model |
+              |                |     +-------+
+              |   Controller   |
+              |                |     +-------+
+  Response &lt;- |                | &lt;-&gt; | View  |
+              +----------------+     +-------+</code></pre>
+
+<p>The <i>controller</i> receives a request from a user, passes incoming data to the <i>model</i> and retrieves data from it, which then gets turned into an actual response by the <i>view</i>. But note that this pattern is just a guideline that most of the time results in cleaner more maintainable code, not a rule that should be followed at all costs.</p>
+
+<h2 id="REpresentational-State-Transfer">REpresentational State Transfer</h2>
+
+<p>REST is a software architectural style for distributed hypermedia systems such as the web. While it can be applied to many protocols it is most commonly used with HTTP these days. In REST terms, when you are opening a URL like <code>http://mojolicious.org/foo</code> with your browser, you are basically asking the web server for the HTML <i>representation</i> of the <code>http://mojolicious.org/foo</code> <i>resource</i>.</p>
+
+<pre><code>  +--------+                                  +--------+
+  |        | -&gt; http://mojolicious.org/foo -&gt; |        |
+  | Client |                                  | Server |
+  |        | &lt;-  &lt;html&gt;Mojo rocks!&lt;/html&gt;  &lt;- |        |
+  +--------+                                  +--------+</code></pre>
+
+<p>The fundamental idea here is that all resources are uniquely addressable with URLs and every resource can have different representations such as HTML, RSS or JSON. User interface concerns are separated from data storage concerns and all session state is kept client-side.</p>
+
+<pre><code>  +---------+                        +------------+
+  |         | -&gt;    PUT /foo      -&gt; |            |
+  |         | -&gt;    Hello World!  -&gt; |            |
+  |         |                        |            |
+  |         | &lt;-    201 CREATED   &lt;- |            |
+  |         |                        |            |
+  |         | -&gt;    GET /foo      -&gt; |            |
+  | Browser |                        | Web Server |
+  |         | &lt;-    200 OK        &lt;- |            |
+  |         | &lt;-    Hello World!  &lt;- |            |
+  |         |                        |            |
+  |         | -&gt;    DELETE /foo   -&gt; |            |
+  |         |                        |            |
+  |         | &lt;-    200 OK        &lt;- |            |
+  +---------+                        +------------+</code></pre>
+
+<p>While HTTP methods such as <code>PUT</code>, <code>GET</code> and <code>DELETE</code> are not directly part of REST they go very well with it and are commonly used to manipulate <i>resources</i>.</p>
+
+<h2 id="Sessions">Sessions</h2>
+
+<p>HTTP was designed as a stateless protocol, web servers don&#39;t know anything about previous requests, which makes user-friendly login systems very tricky. Sessions solve this problem by allowing web applications to keep stateful information across several HTTP requests.</p>
+
+<pre><code>  GET /login?user=sebastian&amp;pass=s3cret HTTP/1.1
+  Host: mojolicious.org
+
+  HTTP/1.1 200 OK
+  Set-Cookie: sessionid=987654321
+  Content-Length: 10
+  Hello sebastian.
+
+  GET /protected HTTP/1.1
+  Host: mojolicious.org
+  Cookie: sessionid=987654321
+
+  HTTP/1.1 200 OK
+  Set-Cookie: sessionid=987654321
+  Content-Length: 16
+  Hello again sebastian.</code></pre>
+
+<p>Traditionally all session data was stored on the server-side and only session ids were exchanged between browser and web server in the form of cookies.</p>
+
+<pre><code>  Set-Cookie: session=hmac-sha1(base64(json($session)))</code></pre>
+
+<p>In <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> however we are taking this concept one step further by storing everything JSON serialized and Base64 encoded in HMAC-SHA1 signed cookies, which is more compatible with the REST philosophy and reduces infrastructure requirements.</p>
+
+<h2 id="Test-Driven-Development">Test-Driven Development</h2>
+
+<p>TDD is a software development process where the developer starts writing failing test cases that define the desired functionality and then moves on to producing code that passes these tests. There are many advantages such as always having good test coverage and code being designed for testability, which will in turn often prevent future changes from breaking old code. Much of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> was developed using TDD.</p>
+
+<h1 id="PROTOTYPE">PROTOTYPE</h1>
+
+<p>One of the main differences between <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> and other web frameworks is that it also includes <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a>, a micro web framework optimized for rapid prototyping.</p>
+
+<h2 id="Differences">Differences</h2>
+
+<p>You likely know the feeling, you&#39;ve got a really cool idea and want to try it as quickly as possible, that&#39;s exactly why <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> applications don&#39;t need more than a single file.</p>
+
+<pre><code>  myapp.pl   # Templates and even static files can be inlined</code></pre>
+
+<p>Full <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> applications on the other hand are much closer to a well organized CPAN distribution to maximize maintainability.</p>
+
+<pre><code>  myapp                      # Application directory
+  |- script                  # Script directory
+  |  +- my_app               # Application script
+  |- lib                     # Library directory
+  |  |- MyApp.pm             # Application class
+  |  +- MyApp                # Application namespace
+  |     +- Controller        # Controller namespace
+  |        +- Example.pm     # Controller class
+  |- t                       # Test directory
+  |  +- basic.t              # Random test
+  |- log                     # Log directory
+  |  +- development.log      # Development mode log file
+  |- public                  # Static file directory (served automatically)
+  |  +- index.html           # Static HTML file
+  +- templates               # Template directory
+     |- layouts              # Template directory for layouts
+     |  +- default.html.ep   # Layout template
+     +- example              # Template directory for &quot;Example&quot; controller
+        +- welcome.html.ep   # Template for &quot;welcome&quot; action</code></pre>
+
+<p>Both application skeletons can be automatically generated with the commands <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate/lite_app.html">Mojolicious::Command::generate::lite_app</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate/app.html">Mojolicious::Command::generate::app</a>.</p>
+
+<pre><code>  $ mojo generate lite_app myapp.pl
+  $ mojo generate app MyApp</code></pre>
+
+<p>Feature-wise both are almost equal, the only real differences are organizational, so each one can be gradually transformed into the other.</p>
+
+<h2 id="Foundation">Foundation</h2>
+
+<p>We start our new application with a single executable Perl script.</p>
+
+<pre><code>  $ mkdir myapp
+  $ cd myapp
+  $ touch myapp.pl
+  $ chmod 744 myapp.pl</code></pre>
+
+<p>This will be the foundation for our login manager example application.</p>
+
+<pre><code>  <span class="comment">#!/usr/bin/env perl</span>
+  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="variable">get</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Hello World!'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>The built-in development web server makes working on your application a lot of fun thanks to automatic reloading.</p>
+
+<pre><code>  $ morbo ./myapp.pl
+  Server available at http://127.0.0.1:3000</code></pre>
+
+<p>Just save your changes and they will be automatically in effect the next time you refresh your browser.</p>
+
+<h2 id="A-birds-eye-view">A bird&#39;s-eye view</h2>
+
+<p>It all starts with an HTTP request like this, sent by your browser.</p>
+
+<pre><code>  GET / HTTP/1.1
+  Host: localhost:3000</code></pre>
+
+<p>Once the request has been received by the web server through the event loop, it will be passed on to <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, where it will be handled in a few simple steps.</p>
+
+<ol>
+
+<li><p>Check if a static file exists that would meet the requirements.</p>
+
+</li>
+<li><p>Try to find a route that would meet the requirements.</p>
+
+</li>
+<li><p>Dispatch the request to this route, usually reaching one or more actions.</p>
+
+</li>
+<li><p>Process the request, maybe generating a response with the renderer.</p>
+
+</li>
+<li><p>Return control to the web server, and if no response has been generated yet, wait for a non-blocking operation to do so through the event loop.</p>
+
+</li>
+</ol>
+
+<p>With our application the router would have found an action in step 2, and rendered some text in step 4, resulting in an HTTP response like this being sent back to the browser.</p>
+
+<pre><code>  HTTP/1.1 200 OK
+  Content-Length: 12
+  Hello World!</code></pre>
+
+<h2 id="Model">Model</h2>
+
+<p>In <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> we consider web applications simple frontends for existing business logic, that means <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> is by design entirely <i>model</i> layer agnostic and you just use whatever Perl modules you like most.</p>
+
+<pre><code>  $ mkdir -p lib/MyApp/Model
+  $ touch lib/MyApp/Model/Users.pm
+  $ chmod 644 lib/MyApp/Model/Users.pm</code></pre>
+
+<p>Our login manager will simply use a plain old Perl module abstracting away all logic related to matching usernames and passwords. The name <code>MyApp::Model::Users</code> is an arbitrary choice, and is simply used to make the separation of concerns more visible.</p>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">MyApp::Model::Users</span><span class="operator">;</span>
+  
+  <span class="keyword">use</span> <span class="variable">strict</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">warnings</span><span class="operator">;</span>
+  
+  <span class="keyword">use</span> <span class="variable">Mojo::Util</span> <span class="string">'secure_compare'</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$USERS</span> <span class="operator">=</span> <span class="operator">{</span>
+    <span class="string">joel</span>      <span class="operator">=&gt;</span> <span class="string">'las3rs'</span><span class="operator">,</span>
+    <span class="string">marcus</span>    <span class="operator">=&gt;</span> <span class="string">'lulz'</span><span class="operator">,</span>
+    <span class="string">sebastian</span> <span class="operator">=&gt;</span> <span class="string">'secr3t'</span>
+  <span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> new </span><span class="operator">{</span> <span class="keyword">bless</span> <span class="operator">{}</span><span class="operator">,</span> <span class="keyword">shift</span> <span class="operator">}</span>
+  
+  <span class="keyword">sub</span><span class="variable"> check </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$user</span><span class="operator">,</span> <span class="variable">$pass</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Success</span>
+    <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">if</span> <span class="variable">$USERS</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="variable">$user</span><span class="operator">}</span> <span class="operator">&amp;&amp;</span> <span class="variable">secure_compare</span> <span class="variable">$USERS</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="variable">$user</span><span class="operator">}</span><span class="operator">,</span> <span class="variable">$pass</span><span class="operator">;</span>
+  
+    <span class="comment"># Fail</span>
+    <span class="keyword">return</span> <span class="keyword">undef</span><span class="operator">;</span>
+  <span class="operator">}</span>
+  
+  <span class="number">1</span><span class="operator">;</span>
+</code></pre>
+
+<p>A simple helper can be registered with the function <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html#helper">&quot;helper&quot; in Mojolicious::Lite</a> to make our model available to all actions and templates.</p>
+
+<pre><code>  <span class="comment">#!/usr/bin/env perl</span>
+  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="keyword">use</span> <span class="variable">lib</span> <span class="string">'lib'</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">MyApp::Model::Users</span><span class="operator">;</span>
+  
+  <span class="comment"># Helper to lazy initialize and store our model object</span>
+  <span class="variable">helper</span> <span class="string">users</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">state</span> <span class="variable">$users</span> <span class="operator">=</span> <span class="variable">MyApp::Model::Users</span><span class="operator">-&gt;</span><span class="variable">new</span> <span class="operator">};</span>
+  
+  <span class="comment"># /?user=sebastian&amp;pass=secr3t</span>
+  <span class="variable">any</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="comment"># Query parameters</span>
+    <span class="keyword">my</span> <span class="variable">$user</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">)</span> <span class="operator">||</span> <span class="string">''</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$pass</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'pass'</span><span class="operator">)</span> <span class="operator">||</span> <span class="string">''</span><span class="operator">;</span>
+  
+    <span class="comment"># Check password</span>
+    <span class="keyword">return</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">"Welcome </span><span class="variable">$user</span><span class="string">."</span><span class="operator">)</span>
+      <span class="keyword">if</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">users</span><span class="operator">-&gt;</span><span class="variable">check</span><span class="operator">(</span><span class="variable">$user</span><span class="operator">,</span> <span class="variable">$pass</span><span class="operator">);</span>
+  
+    <span class="comment"># Failed</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Wrong username or password.'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>The method <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#param">&quot;param&quot; in Mojolicious::Controller</a> is used to access query parameters, <code>POST</code> parameters, file uploads and route placeholders, all at once.</p>
+
+<h2 id="Testing">Testing</h2>
+
+<p>In <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> we take testing very serious and try to make it a pleasant experience.</p>
+
+<pre><code>  $ mkdir t
+  $ touch t/login.t
+  $ chmod 644 t/login.t</code></pre>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Test/Mojo.html">Test::Mojo</a> is a scriptable HTTP user agent designed specifically for testing, with many fun state of the art features such as CSS selectors based on <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a>.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Test::More</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Test::Mojo</span><span class="operator">;</span>
+  
+  <span class="comment"># Include application</span>
+  <span class="keyword">use</span> <span class="variable">FindBin</span><span class="operator">;</span>
+  <span class="keyword">require</span> <span class="string">"</span><span class="variable">$FindBin</span><span class="string">::Bin/../myapp.pl"</span><span class="operator">;</span>
+  
+  <span class="comment"># Allow 302 redirect responses</span>
+  <span class="keyword">my</span> <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">Test::Mojo</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">max_redirects</span><span class="operator">(</span><span class="number">1</span><span class="operator">);</span>
+  
+  <span class="comment"># Test if the HTML login form exists</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[name="user"]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[name="pass"]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[type="submit"]'</span><span class="operator">);</span>
+  
+  <span class="comment"># Test login with valid credentials</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">user</span> <span class="operator">=&gt;</span> <span class="string">'sebastian'</span><span class="operator">,</span> <span class="string">pass</span> <span class="operator">=&gt;</span> <span class="string">'secr3t'</span><span class="operator">}</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">text_like</span><span class="operator">(</span><span class="string">'html body'</span> <span class="operator">=&gt;</span> <span class="string">qr/Welcome sebastian/</span><span class="operator">);</span>
+  
+  <span class="comment"># Test accessing a protected page</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/protected'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">text_like</span><span class="operator">(</span><span class="string">'a'</span> <span class="operator">=&gt;</span> <span class="string">qr/Logout/</span><span class="operator">);</span>
+  
+  <span class="comment"># Test if HTML login form shows up again after logout</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/logout'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[name="user"]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[name="pass"]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[type="submit"]'</span><span class="operator">);</span>
+  
+  <span class="variable">done_testing</span><span class="operator">();</span>
+</code></pre>
+
+<p>Your application won&#39;t pass these tests, but from now on you can use them to check your progress with the command <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/test.html">Mojolicious::Command::test</a>.</p>
+
+<pre><code>  $ ./myapp.pl test
+  $ ./myapp.pl test t/login.t
+  $ ./myapp.pl test -v t/login.t</code></pre>
+
+<p>Or perform quick requests right from the command line with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/get.html">Mojolicious::Command::get</a>.</p>
+
+<pre><code>  $ ./myapp.pl get /
+  Wrong username or password.
+
+  $ ./myapp.pl get -v &#39;/?user=sebastian&amp;pass=secr3t&#39;
+  GET /?user=sebastian&amp;pass=secr3t HTTP/1.1
+  User-Agent: Mojolicious (Perl)
+  Accept-Encoding: gzip
+  Content-Length: 0
+  Host: localhost:59472
+
+  HTTP/1.1 200 OK
+  Date: Sun, 18 Jul 2010 13:09:58 GMT
+  Server: Mojolicious (Perl)
+  Content-Length: 12
+  Content-Type: text/plain
+
+  Welcome sebastian.</code></pre>
+
+<h2 id="State-keeping">State keeping</h2>
+
+<p>Sessions in <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> pretty much just work out of the box once you start using the method <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#session">&quot;session&quot; in Mojolicious::Controller</a>, there is no setup required, but we suggest setting a more secure passphrase with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#secrets">&quot;secrets&quot; in Mojolicious</a>.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">secrets</span><span class="operator">(</span><span class="operator">[</span><span class="string">'Mojolicious rocks'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>This passphrase is used by the HMAC-SHA1 algorithm to make signed cookies tamper resistant and can be changed at any time to invalidate all existing sessions.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">user</span> <span class="operator">=&gt;</span> <span class="string">'sebastian'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$user</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">);</span>
+</code></pre>
+
+<p>By default all sessions expire after one hour, for more control you can use the <code>expiration</code> session value to set an expiration date in seconds from now.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expiration</span> <span class="operator">=&gt;</span> <span class="number">3600</span><span class="operator">);</span>
+</code></pre>
+
+<p>And the whole session can be deleted by using the <code>expires</code> session value to set an absolute expiration date in the past.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expires</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<p>For data that should only be visible on the next request, like a confirmation message after a <code>302</code> redirect performed with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#redirect_to">&quot;redirect_to&quot; in Mojolicious::Controller</a>, you can use the flash, accessible through the method <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#flash">&quot;flash&quot; in Mojolicious::Controller</a>.</p>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">flash</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'Everything is fine.'</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'goodbye'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Just remember that all session data gets serialized with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a> and stored in HMAC-SHA1 signed cookies, which usually have a <code>4096</code> byte (4KB) limit, depending on browser.</p>
+
+<h2 id="Final-prototype">Final prototype</h2>
+
+<p>A final <code>myapp.pl</code> prototype passing all of the tests above could look like this.</p>
+
+<pre><code>  <span class="comment">#!/usr/bin/env perl</span>
+  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="keyword">use</span> <span class="variable">lib</span> <span class="string">'lib'</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">MyApp::Model::Users</span><span class="operator">;</span>
+  
+  <span class="comment"># Make signed cookies tamper resistant</span>
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">secrets</span><span class="operator">(</span><span class="operator">[</span><span class="string">'Mojolicious rocks'</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="variable">helper</span> <span class="string">users</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">state</span> <span class="variable">$users</span> <span class="operator">=</span> <span class="variable">MyApp::Model::Users</span><span class="operator">-&gt;</span><span class="variable">new</span> <span class="operator">};</span>
+  
+  <span class="comment"># Main login action</span>
+  <span class="variable">any</span> <span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="comment"># Query or POST parameters</span>
+    <span class="keyword">my</span> <span class="variable">$user</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">)</span> <span class="operator">||</span> <span class="string">''</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$pass</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'pass'</span><span class="operator">)</span> <span class="operator">||</span> <span class="string">''</span><span class="operator">;</span>
+  
+    <span class="comment"># Check password and render "index.html.ep" if necessary</span>
+    <span class="keyword">return</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span> <span class="keyword">unless</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">users</span><span class="operator">-&gt;</span><span class="variable">check</span><span class="operator">(</span><span class="variable">$user</span><span class="operator">,</span> <span class="variable">$pass</span><span class="operator">);</span>
+  
+    <span class="comment"># Store username in session</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">user</span> <span class="operator">=&gt;</span> <span class="variable">$user</span><span class="operator">);</span>
+  
+    <span class="comment"># Store a friendly message for the next page in flash</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">flash</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'Thanks for logging in.'</span><span class="operator">);</span>
+  
+    <span class="comment"># Redirect to protected page with a 302 response</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'protected'</span><span class="operator">);</span>
+  <span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'index'</span><span class="operator">;</span>
+  
+  <span class="comment"># Make sure user is logged in for actions in this group</span>
+  <span class="variable">group</span> <span class="operator">{</span>
+    <span class="variable">under</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+      <span class="comment"># Redirect to main page with a 302 response if user is not logged in</span>
+      <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">if</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">);</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'index'</span><span class="operator">);</span>
+      <span class="keyword">return</span> <span class="keyword">undef</span><span class="operator">;</span>
+    <span class="operator">};</span>
+  
+    <span class="comment"># A protected page auto rendering "protected.html.ep"</span>
+    <span class="variable">get</span> <span class="string">'/protected'</span><span class="operator">;</span>
+  <span class="operator">};</span>
+  
+  <span class="comment"># Logout action</span>
+  <span class="variable">get</span> <span class="string">'/logout'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="comment"># Expire and in turn clear session automatically</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expires</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+  
+    <span class="comment"># Redirect to main page with a 302 response</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'index'</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ index.html.ep
+  % layout 'default';
+  %= form_for index =&gt; begin
+    % if (param 'user') {
+      &lt;b&gt;Wrong name or password, please try again.&lt;/b&gt;&lt;br&gt;
+    % }
+    Name:&lt;br&gt;
+    %= text_field 'user'
+    &lt;br&gt;Password:&lt;br&gt;
+    %= password_field 'pass'
+    &lt;br&gt;
+    %= submit_button 'Login'
+  % end
+  
+  @@ protected.html.ep
+  % layout 'default';
+  % if (my $msg = flash 'message') {
+    &lt;b&gt;&lt;%= $msg %&gt;&lt;/b&gt;&lt;br&gt;
+  % }
+  Welcome &lt;%= session 'user' %&gt;.&lt;br&gt;
+  %= link_to Logout =&gt; 'logout'
+  
+  @@ layouts/default.html.ep
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;&lt;title&gt;Login Manager&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;&lt;%= content %&gt;&lt;/body&gt;
+  &lt;/html&gt;
+  </span>
+</code></pre>
+
+<p>And the directory structure should be looking like this now.</p>
+
+<pre><code>  myapp
+  |- myapp.pl
+  |- lib
+  |  +- MyApp
+  |     +- Model
+  |        +- Users.pm
+  +- t
+     +- login.t</code></pre>
+
+<p>Our templates are using quite a few features of the renderer, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Rendering.html">Mojolicious::Guides::Rendering</a> explains them all in great detail.</p>
+
+<h1 id="WELL-STRUCTURED-APPLICATION">WELL-STRUCTURED APPLICATION</h1>
+
+<p>Due to the flexibility of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> there are many variations of the actual growing process, but this should give you a good overview of the possibilities.</p>
+
+<h2 id="Inflating-templates">Inflating templates</h2>
+
+<p>All templates and static files inlined in the <code>DATA</code> section can be automatically turned into separate files in the <code>templates</code> and <code>public</code> directories with the command <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/inflate.html">Mojolicious::Command::inflate</a>.</p>
+
+<pre><code>  $ ./myapp.pl inflate</code></pre>
+
+<p>Those directories have a higher precedence, so inflating can also be a great way to allow your users to customize their applications.</p>
+
+<h2 id="Simplified-application-class">Simplified application class</h2>
+
+<p>This is the heart of every full <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application and always gets instantiated during server startup.</p>
+
+<pre><code>  $ touch lib/MyApp.pm
+  $ chmod 644 lib/MyApp.pm</code></pre>
+
+<p>We will start by extracting all actions from <code>myapp.pl</code> and turn them into simplified hybrid routes in the <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes.html">Mojolicious::Routes</a> router, none of the actual action code needs to be changed.</p>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">MyApp</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious'</span><span class="operator">;</span>
+  
+  <span class="keyword">use</span> <span class="variable">MyApp::Model::Users</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> startup </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">secrets</span><span class="operator">(</span><span class="operator">[</span><span class="string">'Mojolicious rocks'</span><span class="operator">]</span><span class="operator">);</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">helper</span><span class="operator">(</span><span class="string">users</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">state</span> <span class="variable">$users</span> <span class="operator">=</span> <span class="variable">MyApp::Model::Users</span><span class="operator">-&gt;</span><span class="variable">new</span> <span class="operator">});</span>
+  
+    <span class="keyword">my</span> <span class="variable">$r</span> <span class="operator">=</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">routes</span><span class="operator">;</span>
+  
+    <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">any</span><span class="operator">(</span><span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+      <span class="keyword">my</span> <span class="variable">$user</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">)</span> <span class="operator">||</span> <span class="string">''</span><span class="operator">;</span>
+      <span class="keyword">my</span> <span class="variable">$pass</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'pass'</span><span class="operator">)</span> <span class="operator">||</span> <span class="string">''</span><span class="operator">;</span>
+      <span class="keyword">return</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span> <span class="keyword">unless</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">users</span><span class="operator">-&gt;</span><span class="variable">check</span><span class="operator">(</span><span class="variable">$user</span><span class="operator">,</span> <span class="variable">$pass</span><span class="operator">);</span>
+  
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">user</span> <span class="operator">=&gt;</span> <span class="variable">$user</span><span class="operator">);</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">flash</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'Thanks for logging in.'</span><span class="operator">);</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'protected'</span><span class="operator">);</span>
+    <span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'index'</span><span class="operator">);</span>
+  
+    <span class="keyword">my</span> <span class="variable">$logged_in</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">under</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">if</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">);</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'index'</span><span class="operator">);</span>
+      <span class="keyword">return</span> <span class="keyword">undef</span><span class="operator">;</span>
+    <span class="operator">});</span>
+    <span class="variable">$logged_in</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/protected'</span><span class="operator">);</span>
+  
+    <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/logout'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expires</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'index'</span><span class="operator">);</span>
+    <span class="operator">});</span>
+  <span class="operator">}</span>
+  
+  <span class="number">1</span><span class="operator">;</span>
+</code></pre>
+
+<p>The <code>startup</code> method gets called right after instantiation and is the place where the whole application gets set up. Since full <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> applications can use nested routes they have no need for <code>group</code> blocks.</p>
+
+<h2 id="Simplified-application-script">Simplified application script</h2>
+
+<p><code>myapp.pl</code> itself can now be turned into a simplified application script to allow running tests again.</p>
+
+<pre><code>  <span class="comment">#!/usr/bin/env perl</span>
+  
+  <span class="keyword">use</span> <span class="variable">strict</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">warnings</span><span class="operator">;</span>
+  
+  <span class="keyword">use</span> <span class="variable">lib</span> <span class="string">'lib'</span><span class="operator">;</span>
+  
+  <span class="comment"># Start command line interface for application</span>
+  <span class="keyword">require</span> <span class="variable">Mojolicious::Commands</span><span class="operator">;</span>
+  <span class="variable">Mojolicious::Commands</span><span class="operator">-&gt;</span><span class="variable">start_app</span><span class="operator">(</span><span class="string">'MyApp'</span><span class="operator">);</span>
+</code></pre>
+
+<p>And the directory structure of our hybrid application should be looking like this.</p>
+
+<pre><code>  myapp
+  |- myapp.pl
+  |- lib
+  |  |- MyApp.pm
+  |  +- MyApp
+  |     +- Model
+  |        +- Users.pm
+  |- t
+  |  +- login.t
+  +- templates
+     |- layouts
+     |  +- default.html.ep
+     |- index.html.ep
+     +- protected.html.ep</code></pre>
+
+<h2 id="Controller-class">Controller class</h2>
+
+<p>Hybrid routes are a nice intermediate step, but to maximize maintainability it makes sense to split our action code from its routing information.</p>
+
+<pre><code>  $ mkdir lib/MyApp/Controller
+  $ touch lib/MyApp/Controller/Login.pm
+  $ chmod 644 lib/MyApp/Controller/Login.pm</code></pre>
+
+<p>Once again the actual action code does not need to change, we just rename <code>$c</code> to <code>$self</code> since the controller is now the invocant.</p>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">MyApp::Controller::Login</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious::Controller'</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> index </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="keyword">my</span> <span class="variable">$user</span> <span class="operator">=</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">)</span> <span class="operator">||</span> <span class="string">''</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$pass</span> <span class="operator">=</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'pass'</span><span class="operator">)</span> <span class="operator">||</span> <span class="string">''</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">render</span> <span class="keyword">unless</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">users</span><span class="operator">-&gt;</span><span class="variable">check</span><span class="operator">(</span><span class="variable">$user</span><span class="operator">,</span> <span class="variable">$pass</span><span class="operator">);</span>
+  
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">user</span> <span class="operator">=&gt;</span> <span class="variable">$user</span><span class="operator">);</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">flash</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'Thanks for logging in.'</span><span class="operator">);</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'protected'</span><span class="operator">);</span>
+  <span class="operator">}</span>
+  
+  <span class="keyword">sub</span><span class="variable"> logged_in </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">if</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">'user'</span><span class="operator">);</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'index'</span><span class="operator">);</span>
+    <span class="keyword">return</span> <span class="keyword">undef</span><span class="operator">;</span>
+  <span class="operator">}</span>
+  
+  <span class="keyword">sub</span><span class="variable"> logout </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expires</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'index'</span><span class="operator">);</span>
+  <span class="operator">}</span>
+  
+  <span class="number">1</span><span class="operator">;</span>
+</code></pre>
+
+<p>All <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a> controllers are plain old Perl classes and get instantiated on demand.</p>
+
+<h2 id="Application-class">Application class</h2>
+
+<p>The application class <code>lib/MyApp.pm</code> can now be reduced to model and routing information.</p>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">MyApp</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious'</span><span class="operator">;</span>
+  
+  <span class="keyword">use</span> <span class="variable">MyApp::Model::Users</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> startup </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">secrets</span><span class="operator">(</span><span class="operator">[</span><span class="string">'Mojolicious rocks'</span><span class="operator">]</span><span class="operator">);</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">helper</span><span class="operator">(</span><span class="string">users</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">state</span> <span class="variable">$users</span> <span class="operator">=</span> <span class="variable">MyApp::Model::Users</span><span class="operator">-&gt;</span><span class="variable">new</span> <span class="operator">});</span>
+  
+    <span class="keyword">my</span> <span class="variable">$r</span> <span class="operator">=</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">routes</span><span class="operator">;</span>
+    <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">any</span><span class="operator">(</span><span class="string">'/'</span><span class="operator">)-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">'login#index'</span><span class="operator">)-&gt;</span><span class="variable">name</span><span class="operator">(</span><span class="string">'index'</span><span class="operator">);</span>
+  
+    <span class="keyword">my</span> <span class="variable">$logged_in</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">under</span><span class="operator">(</span><span class="string">'/'</span><span class="operator">)-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">'login#logged_in'</span><span class="operator">);</span>
+    <span class="variable">$logged_in</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/protected'</span><span class="operator">)-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">'login#protected'</span><span class="operator">);</span>
+  
+    <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/logout'</span><span class="operator">)-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">'login#logout'</span><span class="operator">);</span>
+  <span class="operator">}</span>
+  
+  <span class="number">1</span><span class="operator">;</span>
+</code></pre>
+
+<p>The router allows many different route variations, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Routing.html">Mojolicious::Guides::Routing</a> explains them all in great detail.</p>
+
+<h2 id="Templates">Templates</h2>
+
+<p>Templates are our views, and usually bound to controllers, so they need to be moved into the appropriate directories.</p>
+
+<pre><code>  $ mkdir templates/login
+  $ mv templates/index.html.ep templates/login/index.html.ep
+  $ mv templates/protected.html.ep templates/login/protected.html.ep</code></pre>
+
+<h2 id="Script">Script</h2>
+
+<p>Finally <code>myapp.pl</code> can be moved into a <code>script</code> directory and renamed to <code>my_app</code> to follow the CPAN standard.</p>
+
+<pre><code>  $ mkdir script
+  $ mv myapp.pl script/my_app</code></pre>
+
+<p>Just a few small details change, instead of <a href="../../../../lib/lib.html">lib</a> we now use <a href="../../../../lib/FindBin.html">FindBin</a> and <code>@INC</code>, allowing us to start the application from outside its home directory.</p>
+
+<pre><code>  <span class="comment">#!/usr/bin/env perl</span>
+  
+  <span class="keyword">use</span> <span class="variable">strict</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">warnings</span><span class="operator">;</span>
+  
+  <span class="keyword">use</span> <span class="variable">FindBin</span><span class="operator">;</span>
+  <span class="keyword">BEGIN</span> <span class="operator">{</span> <span class="keyword">unshift</span> <span class="variable">@INC</span><span class="operator">,</span> <span class="string">"</span><span class="variable">$FindBin</span><span class="string">::Bin/../lib"</span> <span class="operator">}</span>
+  
+  <span class="comment"># Start command line interface for application</span>
+  <span class="keyword">require</span> <span class="variable">Mojolicious::Commands</span><span class="operator">;</span>
+  <span class="variable">Mojolicious::Commands</span><span class="operator">-&gt;</span><span class="variable">start_app</span><span class="operator">(</span><span class="string">'MyApp'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Simplified-tests">Simplified tests</h2>
+
+<p>Full <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> applications are a little easier to test, so <code>t/login.t</code> can be simplified.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Test::More</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Test::Mojo</span><span class="operator">;</span>
+  
+  <span class="comment"># Load application class</span>
+  <span class="keyword">my</span> <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">Test::Mojo</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'MyApp'</span><span class="operator">);</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">max_redirects</span><span class="operator">(</span><span class="number">1</span><span class="operator">);</span>
+  
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[name="user"]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[name="pass"]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[type="submit"]'</span><span class="operator">);</span>
+  
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">user</span> <span class="operator">=&gt;</span> <span class="string">'sebastian'</span><span class="operator">,</span> <span class="string">pass</span> <span class="operator">=&gt;</span> <span class="string">'secr3t'</span><span class="operator">}</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">text_like</span><span class="operator">(</span><span class="string">'html body'</span> <span class="operator">=&gt;</span> <span class="string">qr/Welcome sebastian/</span><span class="operator">);</span>
+  
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/protected'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">text_like</span><span class="operator">(</span><span class="string">'a'</span> <span class="operator">=&gt;</span> <span class="string">qr/Logout/</span><span class="operator">);</span>
+  
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/logout'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[name="user"]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[name="pass"]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'form input[type="submit"]'</span><span class="operator">);</span>
+  
+  <span class="variable">done_testing</span><span class="operator">();</span>
+</code></pre>
+
+<p>And our final directory structure should be looking like this.</p>
+
+<pre><code>  myapp
+  |- script
+  |  +- my_app
+  |- lib
+  |  |- MyApp.pm
+  |  +- MyApp
+  |     |- Controller
+  |     |  +- Login.pm
+  |     +- Model
+  |        +- Users.pm
+  |- t
+  |  +- login.t
+  +- templates
+     |- layouts
+     |  +- default.html.ep
+     +- login
+        |- index.html.ep
+        +- protected.html.ep</code></pre>
+
+<p>Test-driven development takes a little getting used to, but can be a very powerful tool.</p>
+
+<h1 id="MORE">MORE</h1>
+
+<p>You can continue with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a> now or take a look at the <a href="http://github.com/kraih/mojo/wiki">Mojolicious wiki</a>, which contains a lot more documentation and examples by many different authors.</p>
+
+<h1 id="SUPPORT">SUPPORT</h1>
+
+<p>If you have any questions the documentation might not yet answer, don&#39;t hesitate to ask on the <a href="http://groups.google.com/group/mojolicious">mailing-list</a> or the official IRC channel <code><span class="comment">#mojo</span>
+</code> on <code>irc.perl.org</code>.</p>
+
+
+</body>
+
+</html>
+
+

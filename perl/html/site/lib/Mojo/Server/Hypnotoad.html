@@ -1,0 +1,275 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#MANAGER-SIGNALS">MANAGER SIGNALS</a>
+    <ul>
+      <li><a href="#INT-TERM">INT, TERM</a></li>
+      <li><a href="#QUIT">QUIT</a></li>
+      <li><a href="#TTIN">TTIN</a></li>
+      <li><a href="#TTOU">TTOU</a></li>
+      <li><a href="#USR2">USR2</a></li>
+    </ul>
+  </li>
+  <li><a href="#WORKER-SIGNALS">WORKER SIGNALS</a>
+    <ul>
+      <li><a href="#QUIT1">QUIT</a></li>
+    </ul>
+  </li>
+  <li><a href="#SETTINGS">SETTINGS</a>
+    <ul>
+      <li><a href="#accepts">accepts</a></li>
+      <li><a href="#backlog">backlog</a></li>
+      <li><a href="#clients">clients</a></li>
+      <li><a href="#graceful_timeout">graceful_timeout</a></li>
+      <li><a href="#heartbeat_interval">heartbeat_interval</a></li>
+      <li><a href="#heartbeat_timeout">heartbeat_timeout</a></li>
+      <li><a href="#inactivity_timeout">inactivity_timeout</a></li>
+      <li><a href="#listen">listen</a></li>
+      <li><a href="#pid_file">pid_file</a></li>
+      <li><a href="#proxy">proxy</a></li>
+      <li><a href="#requests">requests</a></li>
+      <li><a href="#upgrade_timeout">upgrade_timeout</a></li>
+      <li><a href="#workers">workers</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#prefork">prefork</a></li>
+      <li><a href="#upgrade_timeout1">upgrade_timeout</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#configure">configure</a></li>
+      <li><a href="#run">run</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Server::Hypnotoad - A production web serv...ALL GLORY TO THE HYPNOTOAD!</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Server::Hypnotoad</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$hypnotoad</span> <span class="operator">=</span> <span class="variable">Mojo::Server::Hypnotoad</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$hypnotoad</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">(</span><span class="string">'/home/sri/myapp.pl'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Hypnotoad.html">Mojo::Server::Hypnotoad</a> is a full featured, UNIX optimized, preforking non-blocking I/O HTTP and WebSocket server, built around the very well tested and reliable <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a>, with IPv6, TLS, SNI, Comet (long polling), keep-alive, multiple event loop and hot deployment support that just works. Note that the server uses signals for process management, so you should avoid modifying signal handlers in your applications.</p>
+
+<p>To start applications with it you can use the <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/script/hypnotoad.html">hypnotoad</a> script, which listens on port <code>8080</code>, automatically daemonizes the server process and defaults to <code>production</code> mode for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> applications.</p>
+
+<pre><code>  $ hypnotoad ./myapp.pl</code></pre>
+
+<p>You can run the same command again for automatic hot deployment.</p>
+
+<pre><code>  $ hypnotoad ./myapp.pl
+  Starting hot deployment for Hypnotoad server 31841.</code></pre>
+
+<p>This second invocation will load the application again, detect the process id file with it, and send a <a href="#USR2">&quot;USR2&quot;</a> signal to the already running server.</p>
+
+<p>For better scalability (epoll, kqueue) and to provide non-blocking name resolution, SOCKS5 as well as TLS support, the optional modules <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">EV</a> (4.0+), <a>Net::DNS::Native</a> (0.15+), <a>IO::Socket::Socks</a> (0.64+) and <a href="../../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> (1.94+) will be used automatically if possible. Individual features can also be disabled with the <code>MOJO_NO_NDN</code>, <code>MOJO_NO_SOCKS</code> and <code>MOJO_NO_TLS</code> environment variables.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Cookbook.html#DEPLOYMENT">&quot;DEPLOYMENT&quot; in Mojolicious::Guides::Cookbook</a> for more.</p>
+
+<h1 id="MANAGER-SIGNALS">MANAGER SIGNALS</h1>
+
+<p>The <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Hypnotoad.html">Mojo::Server::Hypnotoad</a> manager process can be controlled at runtime with the following signals.</p>
+
+<h2 id="INT-TERM">INT, TERM</h2>
+
+<p>Shut down server immediately.</p>
+
+<h2 id="QUIT">QUIT</h2>
+
+<p>Shut down server gracefully.</p>
+
+<h2 id="TTIN">TTIN</h2>
+
+<p>Increase worker pool by one.</p>
+
+<h2 id="TTOU">TTOU</h2>
+
+<p>Decrease worker pool by one.</p>
+
+<h2 id="USR2">USR2</h2>
+
+<p>Attempt zero downtime software upgrade (hot deployment) without losing any incoming connections.</p>
+
+<pre><code>  Manager (old)
+  |- Worker [1]
+  |- Worker [2]
+  |- Worker [3]
+  |- Worker [4]
+  +- Manager (new)
+     |- Worker [1]
+     |- Worker [2]
+     |- Worker [3]
+     +- Worker [4]</code></pre>
+
+<p>The new manager will automatically send a <a href="#QUIT">&quot;QUIT&quot;</a> signal to the old manager and take over serving requests after starting up successfully.</p>
+
+<h1 id="WORKER-SIGNALS">WORKER SIGNALS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Hypnotoad.html">Mojo::Server::Hypnotoad</a> worker processes can be controlled at runtime with the following signals.</p>
+
+<h2 id="QUIT1">QUIT</h2>
+
+<p>Stop worker gracefully.</p>
+
+<h1 id="SETTINGS">SETTINGS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Hypnotoad.html">Mojo::Server::Hypnotoad</a> can be configured with the following settings, see <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Cookbook.html#Hypnotoad">&quot;Hypnotoad&quot; in Mojolicious::Guides::Cookbook</a> for examples.</p>
+
+<h2 id="accepts">accepts</h2>
+
+<pre><code>  accepts =&gt; 100</code></pre>
+
+<p>Maximum number of connections a worker is allowed to accept, before stopping gracefully and then getting replaced with a newly started worker, defaults to the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html#accepts">&quot;accepts&quot; in Mojo::Server::Prefork</a>. Setting the value to <code>0</code> will allow workers to accept new connections indefinitely. Note that up to half of this value can be subtracted randomly to improve load balancing.</p>
+
+<h2 id="backlog">backlog</h2>
+
+<pre><code>  backlog =&gt; 128</code></pre>
+
+<p>Listen backlog size, defaults to the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html#backlog">&quot;backlog&quot; in Mojo::Server::Daemon</a>.</p>
+
+<h2 id="clients">clients</h2>
+
+<pre><code>  clients =&gt; 100</code></pre>
+
+<p>Maximum number of accepted connections each worker process is allowed to handle concurrently, before stopping to accept new incoming connections, defaults to the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html#max_connections">&quot;max_connections&quot; in Mojo::IOLoop</a>. Note that high concurrency works best with applications that perform mostly non-blocking operations, to optimize for blocking operations you can decrease this value and increase <a href="#workers">&quot;workers&quot;</a> instead for better performance.</p>
+
+<h2 id="graceful_timeout">graceful_timeout</h2>
+
+<pre><code>  graceful_timeout =&gt; 15</code></pre>
+
+<p>Maximum amount of time in seconds stopping a worker gracefully may take before being forced, defaults to the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html#graceful_timeout">&quot;graceful_timeout&quot; in Mojo::Server::Prefork</a>.</p>
+
+<h2 id="heartbeat_interval">heartbeat_interval</h2>
+
+<pre><code>  heartbeat_interval =&gt; 3</code></pre>
+
+<p>Heartbeat interval in seconds, defaults to the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html#heartbeat_interval">&quot;heartbeat_interval&quot; in Mojo::Server::Prefork</a>.</p>
+
+<h2 id="heartbeat_timeout">heartbeat_timeout</h2>
+
+<pre><code>  heartbeat_timeout =&gt; 2</code></pre>
+
+<p>Maximum amount of time in seconds before a worker without a heartbeat will be stopped gracefully, defaults to the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html#heartbeat_timeout">&quot;heartbeat_timeout&quot; in Mojo::Server::Prefork</a>.</p>
+
+<h2 id="inactivity_timeout">inactivity_timeout</h2>
+
+<pre><code>  inactivity_timeout =&gt; 10</code></pre>
+
+<p>Maximum amount of time in seconds a connection can be inactive before getting closed, defaults to the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html#inactivity_timeout">&quot;inactivity_timeout&quot; in Mojo::Server::Daemon</a>. Setting the value to <code>0</code> will allow connections to be inactive indefinitely.</p>
+
+<h2 id="listen">listen</h2>
+
+<pre><code>  listen =&gt; [&#39;http://*:80&#39;]</code></pre>
+
+<p>Array reference with one or more locations to listen on, defaults to <code>http://*:8080</code>. See also <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html#listen">&quot;listen&quot; in Mojo::Server::Daemon</a> for more examples.</p>
+
+<h2 id="pid_file">pid_file</h2>
+
+<pre><code>  pid_file =&gt; &#39;/var/run/hypnotoad.pid&#39;</code></pre>
+
+<p>Full path to process id file, defaults to <code>hypnotoad.pid</code> in the same directory as the application. Note that this value can only be changed after the server has been stopped.</p>
+
+<h2 id="proxy">proxy</h2>
+
+<pre><code>  proxy =&gt; 1</code></pre>
+
+<p>Activate reverse proxy support, which allows for the <code>X-Forwarded-For</code> and <code>X-Forwarded-Proto</code> headers to be picked up automatically, defaults to the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html#reverse_proxy">&quot;reverse_proxy&quot; in Mojo::Server</a>.</p>
+
+<h2 id="requests">requests</h2>
+
+<pre><code>  requests =&gt; 50</code></pre>
+
+<p>Number of keep-alive requests per connection, defaults to the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html#max_requests">&quot;max_requests&quot; in Mojo::Server::Daemon</a>.</p>
+
+<h2 id="upgrade_timeout">upgrade_timeout</h2>
+
+<pre><code>  upgrade_timeout =&gt; 45</code></pre>
+
+<p>Maximum amount of time in seconds a zero downtime software upgrade may take before getting canceled, defaults to <code>60</code>.</p>
+
+<h2 id="workers">workers</h2>
+
+<pre><code>  workers =&gt; 10</code></pre>
+
+<p>Number of worker processes, defaults to the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html#workers">&quot;workers&quot; in Mojo::Server::Prefork</a>. A good rule of thumb is two worker processes per CPU core for applications that perform mostly non-blocking operations, blocking operations often require more and benefit from decreasing concurrency with <a href="#clients">&quot;clients&quot;</a> (often as low as <code>1</code>). Note that during zero downtime software upgrades there will be twice as many workers active for a short amount of time.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Hypnotoad.html">Mojo::Server::Hypnotoad</a> implements the following attributes.</p>
+
+<h2 id="prefork">prefork</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$prefork</span> <span class="operator">=</span> <span class="variable">$hypnotoad</span><span class="operator">-&gt;</span><span class="variable">prefork</span><span class="operator">;</span>
+  <span class="variable">$hypnotoad</span>  <span class="operator">=</span> <span class="variable">$hypnotoad</span><span class="operator">-&gt;</span><span class="variable">prefork</span><span class="operator">(</span><span class="variable">Mojo::Server::Prefork</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a> object this server manages.</p>
+
+<h2 id="upgrade_timeout1">upgrade_timeout</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$timeout</span> <span class="operator">=</span> <span class="variable">$hypnotoad</span><span class="operator">-&gt;</span><span class="variable">upgrade_timeout</span><span class="operator">;</span>
+  <span class="variable">$hypnotoad</span>  <span class="operator">=</span> <span class="variable">$hypnotoad</span><span class="operator">-&gt;</span><span class="variable">upgrade_timeout</span><span class="operator">(</span><span class="number">15</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum amount of time in seconds a zero downtime software upgrade may take before getting canceled, defaults to <code>60</code>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Hypnotoad.html">Mojo::Server::Hypnotoad</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="configure">configure</h2>
+
+<pre><code>  <span class="variable">$hypnotoad</span><span class="operator">-&gt;</span><span class="variable">configure</span><span class="operator">(</span><span class="string">'hypnotoad'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Configure server from application settings.</p>
+
+<h2 id="run">run</h2>
+
+<pre><code>  <span class="variable">$hypnotoad</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">(</span><span class="string">'script/my_app'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Run server for application and wait for <a href="#MANAGER-SIGNALS">&quot;MANAGER SIGNALS&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

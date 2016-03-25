@@ -1,0 +1,210 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#PLUGINS">PLUGINS</a></li>
+  <li><a href="#EVENTS">EVENTS</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#namespaces">namespaces</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#emit_chain">emit_chain</a></li>
+      <li><a href="#emit_hook">emit_hook</a></li>
+      <li><a href="#emit_hook_reverse">emit_hook_reverse</a></li>
+      <li><a href="#load_plugin">load_plugin</a></li>
+      <li><a href="#register_plugin">register_plugin</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Plugins - Plugin manager</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Plugins</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$plugins</span> <span class="operator">=</span> <span class="variable">Mojolicious::Plugins</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'MyApp::Plugin'</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html">Mojolicious::Plugins</a> is the plugin manager of <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+<h1 id="PLUGINS">PLUGINS</h1>
+
+<p>The following plugins are included in the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> distribution as examples.</p>
+
+<dl>
+
+<dt id="Mojolicious::Plugin::Charset"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Charset.html">Mojolicious::Plugin::Charset</a></dt>
+<dd>
+
+<p>Change the application charset.</p>
+
+</dd>
+<dt id="Mojolicious::Plugin::Config"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Config.html">Mojolicious::Plugin::Config</a></dt>
+<dd>
+
+<p>Perl-ish configuration files.</p>
+
+</dd>
+<dt id="Mojolicious::Plugin::DefaultHelpers"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html">Mojolicious::Plugin::DefaultHelpers</a></dt>
+<dd>
+
+<p>General purpose helper collection, loaded automatically.</p>
+
+</dd>
+<dt id="Mojolicious::Plugin::EPLRenderer"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/EPLRenderer.html">Mojolicious::Plugin::EPLRenderer</a></dt>
+<dd>
+
+<p>Renderer for plain embedded Perl templates, loaded automatically.</p>
+
+</dd>
+<dt id="Mojolicious::Plugin::EPRenderer"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/EPRenderer.html">Mojolicious::Plugin::EPRenderer</a></dt>
+<dd>
+
+<p>Renderer for more sophisticated embedded Perl templates, loaded automatically.</p>
+
+</dd>
+<dt id="Mojolicious::Plugin::HeaderCondition"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/HeaderCondition.html">Mojolicious::Plugin::HeaderCondition</a></dt>
+<dd>
+
+<p>Route condition for all kinds of headers, loaded automatically.</p>
+
+</dd>
+<dt id="Mojolicious::Plugin::JSONConfig"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/JSONConfig.html">Mojolicious::Plugin::JSONConfig</a></dt>
+<dd>
+
+<p>JSON configuration files.</p>
+
+</dd>
+<dt id="Mojolicious::Plugin::Mount"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Mount.html">Mojolicious::Plugin::Mount</a></dt>
+<dd>
+
+<p>Mount whole <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> applications.</p>
+
+</dd>
+<dt id="Mojolicious::Plugin::PODRenderer"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/PODRenderer.html">Mojolicious::Plugin::PODRenderer</a></dt>
+<dd>
+
+<p>Renderer for turning POD into HTML and documentation browser for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>.</p>
+
+</dd>
+<dt id="Mojolicious::Plugin::TagHelpers"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a></dt>
+<dd>
+
+<p>Template specific helper collection, loaded automatically.</p>
+
+</dd>
+</dl>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html">Mojolicious::Plugins</a> inherits all events from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html">Mojolicious::Plugins</a> implements the following attributes.</p>
+
+<h2 id="namespaces">namespaces</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$namespaces</span> <span class="operator">=</span> <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">;</span>
+  <span class="variable">$plugins</span>       <span class="operator">=</span> <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">(</span><span class="operator">[</span><span class="string">'Mojolicious::Plugin'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Namespaces to load plugins from, defaults to <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin.html">Mojolicious::Plugin</a>.</p>
+
+<pre><code>  <span class="comment"># Add another namespace to load plugins from</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'MyApp::Plugin'</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html">Mojolicious::Plugins</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="emit_chain">emit_chain</h2>
+
+<pre><code>  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">emit_chain</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">emit_chain</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">123</span><span class="operator">);</span>
+</code></pre>
+
+<p>Emit events as chained hooks.</p>
+
+<h2 id="emit_hook">emit_hook</h2>
+
+<pre><code>  <span class="variable">$plugins</span> <span class="operator">=</span> <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">emit_hook</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$plugins</span> <span class="operator">=</span> <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">emit_hook</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">123</span><span class="operator">);</span>
+</code></pre>
+
+<p>Emit events as hooks.</p>
+
+<h2 id="emit_hook_reverse">emit_hook_reverse</h2>
+
+<pre><code>  <span class="variable">$plugins</span> <span class="operator">=</span> <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">emit_hook_reverse</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$plugins</span> <span class="operator">=</span> <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">emit_hook_reverse</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">123</span><span class="operator">);</span>
+</code></pre>
+
+<p>Emit events as hooks in reverse order.</p>
+
+<h2 id="load_plugin">load_plugin</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$plugin</span> <span class="operator">=</span> <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">load_plugin</span><span class="operator">(</span><span class="string">'some_thing'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$plugin</span> <span class="operator">=</span> <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">load_plugin</span><span class="operator">(</span><span class="string">'SomeThing'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$plugin</span> <span class="operator">=</span> <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">load_plugin</span><span class="operator">(</span><span class="string">'MyApp::Plugin::SomeThing'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Load a plugin from the configured namespaces or by full module name.</p>
+
+<h2 id="register_plugin">register_plugin</h2>
+
+<pre><code>  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">register_plugin</span><span class="operator">(</span><span class="string">'some_thing'</span><span class="operator">,</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">register_plugin</span><span class="operator">(</span><span class="string">'some_thing'</span><span class="operator">,</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">register_plugin</span><span class="operator">(</span><span class="string">'some_thing'</span><span class="operator">,</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">register_plugin</span><span class="operator">(</span><span class="string">'SomeThing'</span><span class="operator">,</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">register_plugin</span><span class="operator">(</span><span class="string">'SomeThing'</span><span class="operator">,</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">register_plugin</span><span class="operator">(</span><span class="string">'SomeThing'</span><span class="operator">,</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">register_plugin</span><span class="operator">(</span><span class="string">'MyApp::Plugin::SomeThing'</span><span class="operator">,</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">register_plugin</span><span class="operator">(</span>
+    <span class="string">'MyApp::Plugin::SomeThing'</span><span class="operator">,</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+  <span class="variable">$plugins</span><span class="operator">-&gt;</span><span class="variable">register_plugin</span><span class="operator">(</span>
+    <span class="string">'MyApp::Plugin::SomeThing'</span><span class="operator">,</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Load a plugin from the configured namespaces or by full module name and run <code>register</code>, optional arguments are passed through.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

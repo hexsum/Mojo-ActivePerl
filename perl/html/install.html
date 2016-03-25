@@ -1,0 +1,546 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="./displayToc.js"></script>
+<script language="JavaScript" src="./tocParas.js"></script>
+<script language="JavaScript" src="./tocTab.js"></script>
+
+<TITLE>ActivePerl 5.22.1.2201 -- Installation Guide</TITLE>
+
+<LINK REL="stylesheet" HREF="Active.css" TYPE="text/css">
+</HEAD>
+
+<BODY>
+
+<script>writelinks('__top__');</script>
+
+<h1>Installing ActivePerl 5.22.1.2201</h1>
+
+
+<A NAME="__index__"></A>
+<!-- INDEX BEGIN -->
+<UL>
+  <LI><A HREF="#general_install_notes">General Installation Notes</A></LI>
+
+
+  <LI><A HREF="#installing activeperl on windows (x86)">Installing ActivePerl on
+  Windows (x86)</A></LI>
+  <UL>
+    <LI><A HREF="#windows prerequisites">Windows Prerequisites</A></LI>
+    <li><a href="#upgrade">Upgrading from ActivePerl 5.16</a></li>
+    <LI><A HREF="#windows installers">Windows Installers</A></LI>
+    <LI><A HREF="#windows configuration">Windows Configuration</A></LI>
+    <LI><A HREF="#uninstalling activeperl on windows">Uninstalling ActivePerl on
+    Windows</A></LI>
+  </UL>
+
+  <LI><A HREF="#installing activeperl on mac os x (x86)">Installing
+  ActivePerl on Mac OS X (x86)</A></LI>
+  <UL>
+    <LI><A HREF="#os x prerequisites">OS X Prerequisites</A></LI>
+    <LI><A HREF="#os x installers">OS X Installer</A></LI>
+    <LI><A HREF="#os x configuration">OS X Configuration</A></LI>
+    <LI><A HREF="#uninstalling activeperl on os x">Uninstalling ActivePerl on
+    OS X</A></LI>
+  </UL>
+  
+  <LI><A HREF="#installing activeperl on linux (x86)">Installing ActivePerl on
+  Linux (x86)</A></LI>
+  <UL>
+    <LI><A HREF="#linux prerequisites">Linux Prerequisites</A></LI>
+    <LI><A HREF="#linux installers">Linux Installers</A></LI>
+    <LI><A HREF="#linux configuration">Linux Configuration</A></LI>
+    <LI><A HREF="#uninstalling activeperl on linux">Uninstalling ActivePerl on
+    Linux</A></LI>
+  </UL>
+
+  <LI><A HREF="#installing activeperl on solaris (sparc, x86)">Installing ActivePerl
+  on Solaris (sparc, x86)</A></LI>
+  <UL>
+    <LI><A HREF="#solaris prerequisites">Solaris Prerequisites</A></LI>
+    <LI><A HREF="#solaris installers">Solaris Installers</A></LI>
+    <LI><A HREF="#solaris configuration">Solaris Configuration</A></LI>
+    <LI><A HREF="#uninstalling activeperl on solaris">Uninstalling ActivePerl on
+    Solaris</A></LI>
+  </UL>
+
+
+</UL>
+<!-- INDEX END -->
+
+<h2><a name="general_install_notes">General Installation Notes</a></h2>
+
+<P>Welcome, and thank you for choosing ActivePerl.</P>
+
+<ul>
+  <li><strong>Version Numbers</strong>:The first three numbers of an ActivePerl
+  release correspond to the core Perl version. The fourth number is the
+  ActivePerl build number, which may be followed by a fifth number that
+  specifies a modified build for ActivePerl Enterprise.  For example, this release of ActivePerl
+  is 5.22.1.2201, which corresponds to Perl
+  5.22.1.</li>
+
+  <li><strong>Binary Incompatibility</strong>: ActivePerl 2200 series builds
+  (Perl 5.22) are <em>not</em> binary-compatible with the 2000 (Perl 5.20),
+  and older series builds. In particular, do not attempt to use
+  extensions or PPM packages built for an older series builds with ActivePerl
+  2200 series builds and vice versa.</li>
+  
+  <li><strong>Side-by-Side x64 and x86 Installation</strong>: On 64 bit
+  operating systems which support 32 bit compatibility, both x86 and x64
+  versions of ActivePerl can be installed on the same system as long as they are
+  installed in separate directories. The Windows MSI installer will suggest the
+  following default directories to keep them separate:
+  <ul>
+    <li>Windows x64: <code>C:\Perl64</code></li>
+    <li>Windows x86: <code>C:\Perl</code></li>
+  </ul>
+  Other installers will <em>not</em> suggest a platform-specific default
+  install directory. You must specify a unique installation directory
+  manually. 
+  </li>
+</ul>
+
+
+<H2><A NAME="installing activeperl on windows (x86)">Installing ActivePerl on Windows (x86)</A></H2>
+
+<H3><A NAME="windows prerequisites">Windows Prerequisites</A></H3>
+<UL>
+  <LI><STRONG>Hardware</STRONG>: 200 MB hard disk space for typical install</LI>
+  <LI><STRONG>Perl for ISAPI</STRONG>: requires an ISAPI-compatible web server,
+    such as IIS</LI>
+  <LI><STRONG>PerlScript</STRONG>: requires an ActiveX scripting host such as
+    Internet Explorer or Windows Scripting Host</LI>
+  <LI><STRONG>Perl Environment Variables</STRONG>: if Perl environment variables
+    such as <CODE>PERLLIB</CODE>, <CODE>PERL5LIB</CODE> or <CODE>PERL5OPT</CODE>
+    have been set on your system, you should unset them before installing
+    ActivePerl.  Otherwise, these variables may cause incompatible versions of
+    Perl modules to be used during the installation process.</LI>
+  <LI><STRONG>System Account</STRONG>: (MSI Installer only) Do not launch the
+    installation package from a directory for which the "System" account does
+    not have read permission.  If you do, the Windows Installer Service will not
+    be able to access the MSI file in order to perform the installation.  You
+    may get an error message to this effect, or it may fail mysteriously.</LI>
+  <LI><STRONG>Administrative Privileges</STRONG>:  On Windows 2003/Vista
+    systems ActivePerl installations must be performed by a privileged user
+    only. If you install ActivePerl without full administrator privileges, the
+    following problems occur:
+    <UL>
+      <LI>Environment variables are set only for the current user</LI>
+      <li>PerlScript file associations are not created</li>
+      <LI>The PerlScript feature will be unavailable</LI>
+      <LI>Registry entries are created under HKEY_CURRENT_USER and not under
+        HKEY_LOCAL_MACHINE</LI>
+      <li>IIS script mappings are not set</li>
+      <LI>ActivePerl applications will not write messages to the event log</LI>
+      <li>ActivePerl only appears in the <strong>Add/Remove Programs</strong>
+      list for the current user</li>
+    </UL></LI>
+</UL>
+<P>
+
+<h3><a name="upgrade">Upgrading from ActivePerl 5.20</a></h3>
+
+<p>Upgrading from earlier ActivePerl versions requires that you delete the old
+version of ActivePerl, and then install the 5.22 version.  This means that any
+additional packages that were installed using PPM must be manually reinstalled
+after the ActivePerl 5.22 installation, so creating a list of these packages
+is an important first step.</p>
+
+<p>
+You can use <strong>ppm profile</strong> to help save
+and restore your locally installed PPM packages.
+For example, to save a profile before you upgrade, you can type:
+</p>
+
+<pre>
+  ppm profile save C:\profile.xml
+</pre>
+
+<p>Once you have saved this profile, you can proceed with the new install.
+Once done, you can use the profile you saved to reinstall the same set of
+PPM packages in your new installation by typing:
+</p>
+
+<pre>
+  ppm profile restore C:\profile.xml
+</pre>
+
+<p>
+
+</p>
+
+<H3><A NAME="windows installers">Windows Installers</A></H3>
+
+<p>If you are using ActivePerl to serve CGI / ASP scripts using IIS or another
+Web server, stop the Web server before installing ActivePerl.</p>
+
+<DL>
+  <DT><STRONG><A NAME="item_MSI_Installer_Package">MSI Installer Package</A></STRONG><BR>
+    <DD>To install the MSI package double-click on the MSI file in Windows
+    Explorer.
+    <P>Do not install over a 2000 or older series build of ActivePerl.  This
+    package must be installed into a separate directory.</P>
+    <DL>
+      <DT><STRONG><A NAME="item_MSI_Package_Installation_from_the_Command_Line">MSI Package Installation from the Command Line</A></STRONG><BR>
+        <DD>You can install ActivePerl from the command line using the 'msiexec'
+          program. For example:
+        <PRE>    msiexec /i msi_file.msi</PRE>
+        <P>The ADDLOCAL command line property is used to specify which features
+        should be installed. (If ADDLOCAL is not specified, all features are
+        installed.)  For example:</P>
+        <PRE>    msiexec /i msi_file.msi ADDLOCAL=&quot;PERL_FEATURE,PERLIS&quot;</PRE>
+        <P>The following features may be specified with the ADDLOCAL switch:</P>
+        <UL>
+          <LI>PERL_FEATURE (the Perl core)</LI>
+          <LI>PPM (the Programmer's Package Manager)</LI>
+          <LI>PERLIS (the Perl for ISAPI interpreter)</LI>
+          <LI>PERLSE (the Perl ActiveX Scripting Engine)</LI>
+          <LI>EXAMPLES (some simple examples)</LI>
+        </UL>
+        <P>A set of command-line properties can be used to configure the
+        installation.  For example:</P>
+        <PRE>    msiexec /i msi_file.msi TARGETDIR=&quot;c:\&quot; PERL_PATH=&quot;Yes&quot;</PRE>
+        <UL>
+          <LI>TARGETDIR: Used to specify the absolute path where ActivePerl will
+          be installed. If not specified, ActivePerl will be installed in a
+          default location on the same drive as the Windows operating system.
+          If this option is used, a value is required.<br>
+          <b>Note:</b> Ensure that the NT 'SYSTEM' user account that actually
+          runs the MSI installer has full access to the target directory.<br>
+          Also, don't select a directory with spaces in its name. Perl will
+          likely work, but many scripts will not.</LI>
+          <li>PERL_EXT: If set to 'No', the installer will not create the
+          default '.pl' file extension association with <code>perl</code>.</li>
+          <LI>PL_IISMAP: If is set to 'No', the installer will not
+          create a global IIS script mapping for '.pl' and Perl.</LI>
+          <LI>PLEX_IISMAP: If set to 'No', the installer will not
+          create a global IIS script mapping for '.plex' and PerlIS.</LI>
+          <LI>PLX_IISMAP: If set to 'No', the installer will not
+          create a global IIS script mapping for '.plx' and PerlIS.</LI>
+          <LI>PERL_PATH: If set to 'No', the Perl/bin directory
+          will not be added to the system PATH environment variable.</LI>
+          <li>CREATE_SAMPLE_DIR: If set to 'No', the PerlEx sample virtual
+          directory in IIS is not created.</li>
+        </UL>
+        <P>The following command-line switches can be used:</P>
+        <DL>
+          <DT><STRONG><A NAME="item_Silent_Mode">Silent Mode</A></STRONG><BR>
+            <DD>To run in silent mode, specify the '/q' command line option. The
+            installer will run with no UI.
+          <DT><STRONG><A NAME="item_Logging">Logging</A></STRONG><BR>
+            <DD>To log the installation process, specify the '/l' command line
+            option and the name of the log file.  For example:
+          <PRE>    msiexec /i msi_file.msi /l log.txt</PRE>
+          <P>To enable verbose logging, use the <code>*v</code> modifier with
+          the <code>/l</code> command line option.  For example:</P>
+          <PRE>    msiexec /i msi_file.msi /l*v log.txt</PRE>
+        </DL>
+    </DL>
+      <DT><STRONG><A NAME="item_AS_Installer_Package">AS Installer Package</A></STRONG><BR>
+        <DD>The AS package is a generic installation package that can be used on
+        systems where the MSI package is not supported. The AS package provides
+        no uninstall functionality. To install using the AS package, double-click
+        the installer file and follow the prompts.
+</DL>
+
+<H3><A NAME="windows configuration">Windows Configuration</A></H3>
+<P>If you run Perl at the command prompt, the script will be executed by the
+first <code>Perl.exe</code> it encounters in the list of paths in the PATH
+environment variable. To ensure the script is executed by the Perl interpreter
+of your choice, specify the complete path to the <code>Perl.exe</code> you want
+to use. (Typing <code>perl -v</code> at the command prompt will tell you which
+version of Perl is currently first in your PATH)</P>
+
+<P>Installing ActivePerl will change your Path environment variable and may
+change registry settings, such as file associations, which may affect your Web
+server. If you want to use a previously installed copy of Perl, you will need to
+modify these settings.</P>
+    <pre>
+    ftype PerlScript=perl.exe %1 %*
+    assoc .pl=PerlScript
+    </pre>
+    </DD>
+
+<H3><A NAME="uninstalling activeperl on windows">Uninstalling ActivePerl on Windows</A></H3>
+<DL>
+  <DT><STRONG><A NAME="item_MSI_Package">MSI Package</A></STRONG><BR>
+    <DD>If you installed ActivePerl using the MSI installer, uninstall using the
+    Windows <STRONG>Add / Remove Programs</STRONG> applet.</DD>
+  <DT><STRONG><A NAME="item_AS_Package2">AS Package</A></STRONG><BR>
+    <DD>If you installed ActivePerl using the AS installer, uninstall by
+    deleting the directory in which ActivePerl was installed.</DD>
+  <DT><STRONG><A NAME="item_Manual_Uninstall">Manual Uninstall</A></STRONG><BR>
+    <DD>If you must uninstall ActivePerl manually, delete the Perl directory,
+    including all sub-directories, and the following registry entries:
+    <ol>
+      <li>HKEY_LOCAL_MACHINE/Software/ActiveState/ActivePerl</li>
+      <li>HKEY_LOCAL_MACHINE/Software/ActiveState/PerlScript</li>
+      <li>HKEY_LOCAL_MACHINE/Software/Microsoft/Windows/CurrentVersion/Uninstall/ActivePerl</li>
+    </ol>
+    </DD>
+</DL>
+
+<h2><a name="installing activeperl on mac os x (x86)">Installing ActivePerl on Mac OS X (x86)</a></h2>
+
+  <h3><a name="os x prerequisites">OS X Prerequisites</a></h3>
+
+  <ul>
+    <li>Hardware: 200 MB hard disk space for typical install</li>
+
+    <li>Operating System: OS X 10.6 or later</li>
+  </ul>
+
+  <h3><a name="os x installers">OS X Installer</a></h3>
+
+  <dl>
+    <dt><strong><a name="dmg">Installing the OS X Package</a></strong><br></dt>
+<dd>
+<p>ActivePerl is distributed on Mac OS X as a disk image (<code>.dmg</code>
+file). The disk image contains an installer package (<code>.pkg</code> bundle)
+that installs ActivePerl.</p>
+
+<ul>
+	<li><a href="http://www.activestate.com/Products/ActivePerl/">Download</a> the
+	ActivePerl disk image
+	(<code>ActivePerl-<em>&lt;version&gt;-&lt;platform&gt;</em>.dmg</code>).</li>
+	
+	<li>If the browser does not automatically mount the disk image and open the
+	mounted folder in Finder, double-click
+	<code>ActivePerl-<em>&lt;version&gt;-&lt;platform&gt;</em>.dmg</code> to do so.</li>
+	
+  <li>Double-click the ActivePerl installer package
+  (<em>ActivePerl-&lt;version&gt;.pkg</em>) to	start the installation.</li>
+	
+	<li>Follow the Installer prompts. The installer will ask for administrative
+	authentication if the current user does not have administrative
+	priviledges.</li>
+	
+	<li>After installation is complete, you may eject the ActivePerl disk image and
+	move ActivePerl-version.dmg to the Trash.</li>
+</ul>
+
+<p>OS X includes a non-interactive command line interface to Apple's
+Installer. To install the ActivePerl Apple installer from the command
+line:</p>
+
+<pre>
+    $ sudo installer -pkg /Users/&lt;username&gt;/ActivePerl-&lt;version&gt;.pkg -target /
+</pre>
+
+<p>More information on the command line interface to Installer can be
+found in its <code>man</code> page.</p>
+</dd>
+<!--XXX not yet <DT><STRONG><A NAME="tar.gz">ActivePerl Gzipped Tarball</A></STRONG><BR>
+    <DD>The gzipped TAR archive contains a generic installer which allows
+    installation as an unprivileged user into a user-specified path. GNU tar is
+    required for extracting the files. See
+    <a href="./release.html#known_issues">Known Issues</a> in the ActivePerl 
+    Release Notes for details.
+    <P>Download the distribution to a temporary directory or the Desktop. If
+    Stuffit Expander does not automatically extract the bundled files into an
+    ActivePerl distribution directory, extract the files manually using
+    <code>tar</code>:</p>
+    <pre>
+    $ tar -zxf ActivePerl-&lt;version&gt;-&lt;platform&gt;.tar.gz
+    </pre>
+    Change directory (<code>cd</code>) to the ActivePerl distribution directory
+    and run <code>install.sh</code>:</P>
+    <PRE>    
+    $ cd ActivePerl-&lt;version&gt;
+    $ ./install.sh
+    </PRE>
+    <p>The installation script will prompt you for the target directory. If you
+    share the system with other people, or if you do not have root access, it is
+    recommended that you install ActivePerl in your own user directory. For
+    example:</p>
+    <pre>
+    /Users/&lt;username&gt;/ActivePerl-5.22/
+    </pre>
+    </DD> -->
+  </dl>
+
+  <h3><a name="os x configuration">OS X Configuration</a></h3>
+
+  <p>The Apple Installer package installs ActivePerl in
+  <em>/usr/local/ActivePerl-5.22</em>. To run the perl interpreter and PPM
+  package manager (without having to enter the full path), add
+  <em>/usr/local/ActivePerl-5.22/bin</em> to your PATH environment variable. For
+  example:</p>
+  <pre>
+    $ export PATH=/usr/local/ActivePerl-5.22/bin:$PATH
+    $ export PATH=/usr/local/ActivePerl-5.22/site/bin:$PATH
+  
+</pre>
+<!--XXX not yet <P>The ActivePerl installer in the tar.gz download
+allows you to install the package anywhere that the user has write permission.
+If you installed in your user's home directory, add the <em>bin</em>
+sub-directory of the installation to your PATH environment variable. For
+example:</P>
+
+  <PRE>
+    $ export PATH /Users/&lt;username&gt;/ActivePerl-5.22/bin:$PATH
+  </PRE>
+-->
+  <p>To permanently add the directory to your PATH, add it to the
+  <code>.profile</code> or <code>.bash_profile</code> file in the user's home
+  directory. For example:</p>
+  <pre>
+    PATH=/usr/local/ActivePerl-5.22/bin:$PATH
+    PATH=/usr/local/ActivePerl-5.22/site/bin:$PATH
+    export PATH
+    
+</pre>
+
+  <p>Alternatively, symbolic links to the binaries can be created in any
+  <em>bin</em> directory currently in the PATH. For example:</p>
+  <pre>
+    PATH=/Users/&lt;username&gt;/bin:$PATH
+
+    $ ln -s /usr/local/ActivePerl-5.22/bin/perl /Users/&lt;username&gt;/bin/perl
+    $ ln -s /usr/local/ActivePerl-5.22/bin/ppm /Users/&lt;username&gt;/bin/ppm
+    
+</pre>
+
+  <h3><a name="uninstalling activeperl on os x">Uninstalling ActivePerl on OS
+  X</a></h3>
+
+  <p>To uninstall ActivePerl, run the uninstall script:
+  <pre>
+    $ sudo /usr/local/ActivePerl-5.22/bin/ap-uninstall
+</pre>
+  
+  <p>Removing ActivePerl will also remove perl modules manually installed using
+  PPM.</p>
+  
+  <p>If neccessary, remove any symbolic links created during configuration. For
+  example:</p>
+  <pre>
+    $ rm /Users/&lt;username&gt;/bin/perl
+</pre>
+
+<H3><A NAME="linux prerequisites">Linux Prerequisites</A></H3>
+<UL>
+  <LI>Hardware: 200 MB hard disk space for typical install</LI>
+  <LI>Operating System: Linux distribution using glibc 2.15 or later (e.g. Ubuntu 12.04)</LI>
+  <LI>Online Help: Web browser</LI>
+</UL>
+
+<H2><A NAME="installing activeperl on linux">Installing ActivePerl on
+Linux</A></H2>
+
+    <P>The installer allows installation as an unprivileged user into a
+    user-specified path. GNU tar is required for extracting the files.  See
+    <a href="./release.html#known_issues">Known Issues</a> in the ActivePerl 
+    Release Notes for details.</P>
+    <P>Download the distribution to a temporary directory, extract the files,
+    chdir to the ActivePerl directory and then run the script <code>install.sh</code>.
+    The installation script will prompt you for the target installation
+    directory.</P>
+    <PRE>    % tar zxf ActivePerl-5.22.1.2201-i686-linux.tar.gz
+    % cd ActivePerl-5.22.1.2201
+    % ./install.sh</PRE>
+    <P>If you share the system with other people, or if you do not have root access, 
+    it is recommended that you install ActivePerl in your own user directory. For
+    example:</p>
+    <pre>    /home/&lt;username&gt;/ActivePerl-5.22</pre>
+    <P>We suggest adding the following line to your .bash_profile file:</p>
+    <pre>    PATH=$PATH:/home/&lt;username&gt;/bin</pre>
+    <P>Also, we suggest that you create symbolic links to the binaries:</p>
+    <pre>    ln -s /home/&lt;username&gt;/ActivePerl-5.22/bin/perl /home/&lt;username&gt;/bin/perl
+    ln -s /home/&lt;username&gt;/ActivePerl-5.22/bin/ppm /home/&lt;username&gt;/bin/ppm</pre>
+    <P>This will allow you to call ActivePerl with a command like:</p>
+    <pre>    perl -le "Hello World!;"</pre>
+
+<H3><A NAME="linux configuration">Linux Configuration</A></H3>
+<P>The installer allows you to install the package anywhere
+that the user has write permission.  Add the bin directory to your PATH
+environment variable to conveniently access it.  For example, in the C shell
+(assuming you installed into <em>/home/&lt;username&gt;/ActivePerl-5.22</em>):</P>
+<PRE>    % setenv PATH /home/&lt;username&gt;/ActivePerl-5.22/bin:$PATH</PRE>
+
+<H3><A NAME="uninstalling activeperl on linux">Uninstalling ActivePerl on Linux</A></H3>
+    <P>If you installed ActivePerl using the AS format installer, remove the
+    directory into which ActivePerl was installed. For example:
+    <PRE>    /bin/rm -rf /opt/ActivePerl-5.22</PRE>
+</P>
+
+
+<h2><a name="installing activeperl on solaris (sparc, x86)">Installing ActivePerl on
+Solaris (sparc, x86)</a></h2>
+
+  <h3><a name="solaris prerequisites">Solaris Prerequisites</a></h3>
+
+  <ul>
+    <li>Hardware: 200 MB hard disk space for typical install</li>
+
+    <li>Operating System: Solaris 10 or later for sparc 32/64, or x86</li>
+
+    <li>Online Help: Web browser</li>
+  </ul>
+  
+<H3><A NAME="solaris installers">Solaris Installers</A></H3>
+<DL>
+  <DT><STRONG><A NAME="item_PKGADD_Package">PKGADD Package</A></STRONG><BR>
+    <DD>The Solaris package is in pkgadd format.  This should be installed as
+    root, using the following commands:
+    <PRE>    % gunzip ActivePerl-5.22.1.2201-sun4-solaris.pkg.gz
+    % pkgadd -d ActivePerl-5.22.1.2201-sun4-solaris.pkg</PRE>
+    <P>This will install ActivePerl into /opt/ActivePerl-5.22.</P>
+    <P>To uninstall ActivePerl, run:</P>
+    <PRE>    % pkgrm ASperl</PRE>
+    <P>This package has only been tested with Solaris 2.6, but is expected to be
+    compatible with other Solaris 2.6 compatible installations as well,
+    including Solaris 7 and Solaris 8.</P>
+
+  <DT><STRONG><A NAME="item_tarball_for_Solaris">Gzipped Tarball for Solaris</A></STRONG><BR>
+    <DD>The generic installer allows installation as an unprivileged user, and
+    into a user-specified path. GNU tar is required for extracting the files.
+    See <a href="./release.html#known_issues">Known Issues</a> in the ActivePerl
+    Release Notes for details.
+    <P>Download the distribution to a temporary directory, extract the files,
+    <code>chdir</code> to the ActivePerl directory and then run the script
+    <code>install.sh</code>.  The installation script will prompt you for the
+    target installation directory.</P>
+    <PRE>    % tar zxf ActivePerl-5.22.1.2201-sun4-solaris.tar.gz
+    % cd ActivePerl-5.22.1.2201
+    % ./install.sh</PRE>
+    
+    <p>If GNU tar is installed as 'gtar', substitute that executable name in the
+    first command above.</p>
+</DL>
+
+<H3><A NAME="solaris configuration">Solaris Configuration</A></H3>
+<P>The Solaris package is installed into the <em>/opt/ActivePerl-5.22</em>
+directory.  Add the <em>/opt/ActivePerl-5.22/bin</em> directory to your
+PATH environment variable to conveniently access it. For example, in the C
+shell:</P>
+<PRE>    % setenv PATH /opt/ActivePerl-5.22/bin:$PATH</PRE>
+
+<P>The generic installer allows you to install the package anywhere
+that the user has write permission.  Add the <em>bin</em> directory to your PATH
+environment variable to conveniently access it.  For example, in the C shell
+(assuming you installed into /home/&lt;username&gt;/ActivePerl-5.22):</P>
+<PRE>    % setenv PATH /home/&lt;username&gt;/ActivePerl-5.22/bin:$PATH</PRE>
+
+<H3><A NAME="uninstalling activeperl on solaris">Uninstalling ActivePerl on Solaris</A></H3>
+<DL>
+  <DT><STRONG>PKGADD Package</STRONG><BR>
+    <DD>If you installed ActivePerl using the PKGADD format installer, uninstall
+    as follows:
+    <PRE>    pkgrm -d ASperl</PRE>
+
+  <DT><STRONG>Gzipped Tarball Package</STRONG><BR>
+    <DD>If you installed ActivePerl using the AS format installer, remove the
+    directory into which ActivePerl was installed. For example:
+    <PRE>    /bin/rm -rf /opt/ActivePerl-5.22</PRE>
+</DL>
+
+
+
+<p>&nbsp;</p>
+
+</BODY>
+</HTML>

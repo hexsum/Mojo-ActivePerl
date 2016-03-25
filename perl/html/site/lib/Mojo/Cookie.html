@@ -1,0 +1,127 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#name">name</a></li>
+      <li><a href="#value">value</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#to_string">to_string</a></li>
+    </ul>
+  </li>
+  <li><a href="#OPERATORS">OPERATORS</a>
+    <ul>
+      <li><a href="#bool">bool</a></li>
+      <li><a href="#stringify">stringify</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Cookie - HTTP cookie base class</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Mojo::Cookie::MyCookie</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojo::Cookie'</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> parse     </span><span class="operator">{...}</span>
+  <span class="keyword">sub</span><span class="variable"> to_string </span><span class="operator">{...}</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie.html">Mojo::Cookie</a> is an abstract base class for HTTP cookie containers, based on <a href="http://tools.ietf.org/html/rfc6265">RFC 6265</a>, like <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie/Request.html">Mojo::Cookie::Request</a> and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie/Response.html">Mojo::Cookie::Response</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie.html">Mojo::Cookie</a> implements the following attributes.</p>
+
+<h2 id="name">name</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$name</span> <span class="operator">=</span> <span class="variable">$cookie</span><span class="operator">-&gt;</span><span class="variable">name</span><span class="operator">;</span>
+  <span class="variable">$cookie</span>  <span class="operator">=</span> <span class="variable">$cookie</span><span class="operator">-&gt;</span><span class="variable">name</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Cookie name.</p>
+
+<h2 id="value">value</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$cookie</span><span class="operator">-&gt;</span><span class="variable">value</span><span class="operator">;</span>
+  <span class="variable">$cookie</span>   <span class="operator">=</span> <span class="variable">$cookie</span><span class="operator">-&gt;</span><span class="variable">value</span><span class="operator">(</span><span class="string">'/test'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Cookie value.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie.html">Mojo::Cookie</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cookies</span> <span class="operator">=</span> <span class="variable">$cookie</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="variable">$str</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse cookies. Meant to be overloaded in a subclass.</p>
+
+<h2 id="to_string">to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$cookie</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render cookie. Meant to be overloaded in a subclass.</p>
+
+<h1 id="OPERATORS">OPERATORS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie.html">Mojo::Cookie</a> overloads the following operators.</p>
+
+<h2 id="bool">bool</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="operator">!!</span><span class="variable">$cookie</span><span class="operator">;</span>
+</code></pre>
+
+<p>Always true.</p>
+
+<h2 id="stringify">stringify</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="string">"</span><span class="variable">$cookie</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#to_string">&quot;to_string&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

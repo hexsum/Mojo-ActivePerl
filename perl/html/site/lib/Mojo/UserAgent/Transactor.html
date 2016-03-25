@@ -1,0 +1,288 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#GENERATORS">GENERATORS</a>
+    <ul>
+      <li><a href="#form">form</a></li>
+      <li><a href="#json">json</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#generators">generators</a></li>
+      <li><a href="#name">name</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#add_generator">add_generator</a></li>
+      <li><a href="#endpoint">endpoint</a></li>
+      <li><a href="#peer">peer</a></li>
+      <li><a href="#proxy_connect">proxy_connect</a></li>
+      <li><a href="#redirect">redirect</a></li>
+      <li><a href="#tx">tx</a></li>
+      <li><a href="#upgrade">upgrade</a></li>
+      <li><a href="#websocket">websocket</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::UserAgent::Transactor - User agent transactor</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::UserAgent::Transactor</span><span class="operator">;</span>
+  
+  <span class="comment"># GET request with Accept header</span>
+  <span class="keyword">my</span> <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">Mojo::UserAgent::Transactor</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">GET</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span><span class="operator">)-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+  
+  <span class="comment"># POST request with form-data</span>
+  <span class="keyword">say</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">)-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+  
+  <span class="comment"># PUT request with JSON data</span>
+  <span class="keyword">say</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">PUT</span> <span class="operator">=&gt;</span> <span class="string">'example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">)-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html">Mojo::UserAgent::Transactor</a> is the transaction building and manipulation framework used by <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>.</p>
+
+<h1 id="GENERATORS">GENERATORS</h1>
+
+<p>These content generators are available by default.</p>
+
+<h2 id="form">form</h2>
+
+<pre><code>  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Generate query string, <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code> content.</p>
+
+<h2 id="json">json</h2>
+
+<pre><code>  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">PATCH</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Generate JSON content with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html">Mojo::UserAgent::Transactor</a> implements the following attributes.</p>
+
+<h2 id="generators">generators</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$generators</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">generators</span><span class="operator">;</span>
+  <span class="variable">$t</span>             <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">generators</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Registered content generators, by default only <code>form</code> and <code>json</code> are already defined.</p>
+
+<h2 id="name">name</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$name</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">name</span><span class="operator">;</span>
+  <span class="variable">$t</span>       <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">name</span><span class="operator">(</span><span class="string">'Mojolicious'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Value for <code>User-Agent</code> request header of generated transactions, defaults to <code>Mojolicious (Perl)</code>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html">Mojo::UserAgent::Transactor</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="add_generator">add_generator</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">add_generator</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Register a content generator.</p>
+
+<pre><code>  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">add_generator</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$t</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="endpoint">endpoint</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$proto</span><span class="operator">,</span> <span class="variable">$host</span><span class="operator">,</span> <span class="variable">$port</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">endpoint</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Actual endpoint for transaction.</p>
+
+<h2 id="peer">peer</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$proto</span><span class="operator">,</span> <span class="variable">$host</span><span class="operator">,</span> <span class="variable">$port</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">peer</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Actual peer for transaction.</p>
+
+<h2 id="proxy_connect">proxy_connect</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">proxy_connect</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Build <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> proxy <code>CONNECT</code> request for transaction if possible.</p>
+
+<h2 id="redirect">redirect</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">redirect</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Build <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> follow-up request for <code>301</code>, <code>302</code>, <code>303</code>, <code>307</code> or <code>308</code> redirect response if possible.</p>
+
+<h2 id="tx">tx</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">GET</span>  <span class="operator">=&gt;</span> <span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">GET</span>  <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">PUT</span>  <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">PUT</span>  <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">PUT</span>  <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span>
+    <span class="string">PUT</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span>
+    <span class="string">PUT</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Versatile general purpose <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> transaction builder for requests, with support for <a href="#GENERATORS">&quot;GENERATORS&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Generate and inspect custom GET request with DNT header and content</span>
+  <span class="keyword">say</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">GET</span> <span class="operator">=&gt;</span> <span class="string">'example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">DNT</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Bye!'</span><span class="operator">)-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+  
+  <span class="comment"># Stream response content to STDOUT</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">GET</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">-&gt;</span><span class="variable">unsubscribe</span><span class="operator">(</span><span class="string">'read'</span><span class="operator">)-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">read</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="variable">$_</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span> <span class="operator">});</span>
+  
+  <span class="comment"># PUT request with content streamed from file</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">PUT</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">-&gt;</span><span class="variable">asset</span><span class="operator">(</span><span class="variable">Mojo::Asset::File</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">path</span> <span class="operator">=&gt;</span> <span class="string">'/foo.txt'</span><span class="operator">));</span>
+</code></pre>
+
+<p>The <code>json</code> content generator uses <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a> for encoding and sets the content type to <code>application/json</code>.</p>
+
+<pre><code>  <span class="comment"># POST request with "application/json" content</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span>
+    <span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">,</span> <span class="string">c</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]}</span><span class="operator">);</span>
+</code></pre>
+
+<p>The <code>form</code> content generator will automatically use query parameters for <code>GET</code> and <code>HEAD</code> requests.</p>
+
+<pre><code>  <span class="comment"># GET request with query parameters</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">GET</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>For all other request methods the <code>application/x-www-form-urlencoded</code> content type is used.</p>
+
+<pre><code>  <span class="comment"># POST request with "application/x-www-form-urlencoded" content</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span>
+    <span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">,</span> <span class="string">c</span> <span class="operator">=&gt;</span> <span class="string">'d'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parameters may be encoded with the <code>charset</code> option.</p>
+
+<pre><code>  <span class="comment"># PUT request with Shift_JIS encoded form values</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span>
+    <span class="string">PUT</span> <span class="operator">=&gt;</span> <span class="string">'example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">charset</span> <span class="operator">=&gt;</span> <span class="string">'Shift_JIS'</span><span class="operator">);</span>
+</code></pre>
+
+<p>An array reference can be used for multiple form values sharing the same name.</p>
+
+<pre><code>  <span class="comment"># POST request with form values sharing the same name</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span>
+    <span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'b'</span><span class="operator">,</span> <span class="string">'c'</span><span class="operator">,</span> <span class="string">'d'</span><span class="operator">]}</span><span class="operator">);</span>
+</code></pre>
+
+<p>A hash reference with a <code>content</code> or <code>file</code> value can be used to switch to the <code>multipart/form-data</code> content type for file uploads.</p>
+
+<pre><code>  <span class="comment"># POST request with "multipart/form-data" content</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span>
+    <span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">mytext</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">content</span> <span class="operator">=&gt;</span> <span class="string">'lala'</span><span class="operator">}}</span><span class="operator">);</span>
+  
+  <span class="comment"># POST request with multiple files sharing the same name</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span>
+    <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">mytext</span> <span class="operator">=&gt;</span> <span class="operator">[{</span><span class="string">content</span> <span class="operator">=&gt;</span> <span class="string">'first'</span><span class="operator">}</span><span class="operator">,</span> <span class="operator">{</span><span class="string">content</span> <span class="operator">=&gt;</span> <span class="string">'second'</span><span class="operator">}]}</span><span class="operator">);</span>
+</code></pre>
+
+<p>The <code>file</code> value should contain the path to the file you want to upload or an asset object, like <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/File.html">Mojo::Asset::File</a> or <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/Memory.html">Mojo::Asset::Memory</a>.</p>
+
+<pre><code>  <span class="comment"># POST request with upload streamed from file</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span>
+    <span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">mytext</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">file</span> <span class="operator">=&gt;</span> <span class="string">'/foo.txt'</span><span class="operator">}}</span><span class="operator">);</span>
+  
+  <span class="comment"># POST request with upload streamed from asset</span>
+  <span class="keyword">my</span> <span class="variable">$asset</span> <span class="operator">=</span> <span class="variable">Mojo::Asset::Memory</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">-&gt;</span><span class="variable">add_chunk</span><span class="operator">(</span><span class="string">'lalala'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span>    <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span>
+    <span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">mytext</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">file</span> <span class="operator">=&gt;</span> <span class="variable">$asset</span><span class="operator">}}</span><span class="operator">);</span>
+</code></pre>
+
+<p>A <code>filename</code> value will be generated automatically, but can also be set manually if necessary. All remaining values in the hash reference get merged into the <code>multipart/form-data</code> content as headers.</p>
+
+<pre><code>  <span class="comment"># POST request with form values and customized upload (filename and header)</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span>
+    <span class="string">a</span>      <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">,</span>
+    <span class="string">c</span>      <span class="operator">=&gt;</span> <span class="string">'d'</span><span class="operator">,</span>
+    <span class="string">mytext</span> <span class="operator">=&gt;</span> <span class="operator">{</span>
+      <span class="string">content</span>        <span class="operator">=&gt;</span> <span class="string">'lalala'</span><span class="operator">,</span>
+      <span class="string">filename</span>       <span class="operator">=&gt;</span> <span class="string">'foo.txt'</span><span class="operator">,</span>
+      <span class="string">'Content-Type'</span> <span class="operator">=&gt;</span> <span class="string">'text/plain'</span>
+    <span class="operator">}</span>
+  <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>The <code>multipart/form-data</code> content type can also be enforced by setting the <code>Content-Type</code> header manually.</p>
+
+<pre><code>  <span class="comment"># Force "multipart/form-data"</span>
+  <span class="keyword">my</span> <span class="variable">$headers</span> <span class="operator">=</span> <span class="operator">{</span><span class="string">'Content-Type'</span> <span class="operator">=&gt;</span> <span class="string">'multipart/form-data'</span><span class="operator">}</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="string">POST</span> <span class="operator">=&gt;</span> <span class="string">'example.com'</span> <span class="operator">=&gt;</span> <span class="variable">$headers</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="upgrade">upgrade</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">upgrade</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Build <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> follow-up transaction for WebSocket handshake if possible.</p>
+
+<h2 id="websocket">websocket</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">websocket</span><span class="operator">(</span><span class="string">'ws://example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">websocket</span><span class="operator">(</span><span class="string">'ws://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">DNT</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'v1.proto'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Versatile <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> transaction builder for WebSocket handshake requests.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

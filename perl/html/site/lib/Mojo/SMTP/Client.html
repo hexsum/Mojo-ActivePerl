@@ -1,0 +1,580 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#start">start</a></li>
+      <li><a href="#response">response</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#address">address</a></li>
+      <li><a href="#port">port</a></li>
+      <li><a href="#tls">tls</a></li>
+      <li><a href="#tls_ca">tls_ca</a></li>
+      <li><a href="#tls_cert">tls_cert</a></li>
+      <li><a href="#tls_key">tls_key</a></li>
+      <li><a href="#hello">hello</a></li>
+      <li><a href="#connect_timeout">connect_timeout</a></li>
+      <li><a href="#inactivity_timeout">inactivity_timeout</a></li>
+      <li><a href="#ioloop">ioloop</a></li>
+      <li><a href="#autodie">autodie</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#send">send</a></li>
+      <li><a href="#prepend_cmd">prepend_cmd</a></li>
+    </ul>
+  </li>
+  <li><a href="#CONSTANTS">CONSTANTS</a></li>
+  <li><a href="#VARIABLES">VARIABLES</a></li>
+  <li><a href="#COOKBOOK">COOKBOOK</a>
+    <ul>
+      <li><a href="#How-to-send-simple-ASCII-message">How to send simple ASCII message</a></li>
+      <li><a href="#How-to-send-text-message-with-possible-non-ASCII-characters">How to send text message with possible non-ASCII characters</a></li>
+      <li><a href="#How-to-send-message-with-attachment">How to send message with attachment</a></li>
+      <li><a href="#How-to-send-message-with-BIG-attachment">How to send message with BIG attachment</a></li>
+      <li><a href="#How-to-send-message-using-public-email-services-like-Gmail">How to send message using public email services like Gmail</a></li>
+      <li><a href="#How-to-send-message-directly-without-using-of-MTAs-such-as-sendmail-postfix-exim">How to send message directly, without using of MTAs such as sendmail, postfix, exim, ...</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::SMTP::Client - non-blocking SMTP client based on Mojo::IOLoop</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<ul>
+
+<pre><code>        <span class="comment"># blocking</span>
+        <span class="keyword">my</span> <span class="variable">$smtp</span> <span class="operator">=</span> <span class="variable">Mojo::SMTP::Client</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">address</span> <span class="operator">=&gt;</span> <span class="string">'10.54.17.28'</span><span class="operator">,</span> <span class="string">autodie</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="string">'me@from.org'</span><span class="operator">,</span>
+                <span class="string">to</span> <span class="operator">=&gt;</span> <span class="string">'you@to.org'</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="keyword">join</span><span class="operator">(</span><span class="string">"\r\n"</span><span class="operator">,</span> <span class="string">'From: me@from.org'</span><span class="operator">,</span>
+                                     <span class="string">'To: you@to.org'</span><span class="operator">,</span>
+                                     <span class="string">'Subject: Hello world!'</span><span class="operator">,</span>
+                                     <span class="string">''</span><span class="operator">,</span>
+                                     <span class="string">'This is my first message!'</span>
+                        <span class="operator">),</span>
+                <span class="string">quit</span> <span class="operator">=&gt;</span> <span class="number">1</span>
+        <span class="operator">);</span>
+        <span class="keyword">warn</span> <span class="string">"Sent successfully"</span><span class="operator">;</span> <span class="comment"># else will throw exception because of `autodie'</span>
+</code></pre>
+
+</ul>
+
+<ul>
+
+<pre><code>        <span class="comment"># non-blocking</span>
+        <span class="keyword">my</span> <span class="variable">$smtp</span> <span class="operator">=</span> <span class="variable">Mojo::SMTP::Client</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">address</span> <span class="operator">=&gt;</span> <span class="string">'10.54.17.28'</span><span class="operator">);</span>
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="string">'me@from.org'</span><span class="operator">,</span>
+                <span class="string">to</span> <span class="operator">=&gt;</span> <span class="string">'you@to.org'</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="keyword">join</span><span class="operator">(</span><span class="string">"\r\n"</span><span class="operator">,</span> <span class="string">'From: me@from.org'</span><span class="operator">,</span>
+                                     <span class="string">'To: you@to.org'</span><span class="operator">,</span>
+                                     <span class="string">'Subject: Hello world!'</span><span class="operator">,</span>
+                                     <span class="string">''</span><span class="operator">,</span>
+                                     <span class="string">'This is my first message!'</span>
+                    <span class="operator">),</span>
+                <span class="string">quit</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span>
+                <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+                        <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$smtp</span><span class="operator">,</span> <span class="variable">$resp</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+                        <span class="keyword">warn</span> <span class="variable">$resp</span><span class="operator">-&gt;</span><span class="variable">error</span> <span class="operator">?</span> <span class="string">'Failed to send: '</span><span class="operator">.</span><span class="variable">$resp</span><span class="operator">-&gt;</span><span class="variable">error</span> <span class="operator">:</span> <span class="string">'Sent successfully'</span><span class="operator">;</span>
+                        <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">stop</span><span class="operator">;</span>
+                <span class="operator">}</span>
+        <span class="operator">);</span>
+        
+        <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+</ul>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>With <code>Mojo::SMTP::Client</code> you can easily send emails from your Mojolicious application without blocking of <code>Mojo::IOLoop</code>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><code>Mojo::SMTP::Client</code> inherits all events from <a href="../../../../site/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones</p>
+
+<h2 id="start">start</h2>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">start</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+                <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$smtp</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+                <span class="comment"># some servers delays first response to prevent SPAM</span>
+                <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">inactivity_timeout</span><span class="operator">(</span><span class="number">5</span><span class="operator">*</span><span class="number">60</span><span class="operator">);</span>
+        <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted whenever a new connection is about to start.</p>
+
+<h2 id="response">response</h2>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">response</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+                <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$smtp</span><span class="operator">,</span> <span class="variable">$cmd</span><span class="operator">,</span> <span class="variable">$resp</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+                <span class="keyword">if</span> <span class="operator">(</span><span class="variable">$cmd</span> <span class="operator">==</span> <span class="variable">Mojo::SMTP::Client::CMD_CONNECT</span><span class="operator">)</span> <span class="operator">{</span>
+                        <span class="comment"># and after first response others should be fast enough</span>
+                        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">inactivity_timeout</span><span class="operator">(</span><span class="number">10</span><span class="operator">);</span>
+                <span class="operator">}</span>
+        <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted for each SMTP response from the server. <code>$cmd</code> is a command <a href="#CONSTANTS">constant</a> for which this response was sent. <code>$resp</code> is <a href="../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Response.html">Mojo::SMTP::Client::Response</a> object.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><code>Mojo::SMTP::Client</code> implements the following attributes, which you can set in the constructor or get/set later with object method call</p>
+
+<h2 id="address">address</h2>
+
+<p>Address of SMTP server (ip or domain name). Default is <code>localhost</code></p>
+
+<h2 id="port">port</h2>
+
+<p>Port of SMTP server. Default is <code>25</code> for plain connection and <code>465</code> if TLS is enabled.</p>
+
+<h2 id="tls">tls</h2>
+
+<p>Enable TLS. Should be true if SMTP server expects encrypted connection. Default is false. Proper version of <a href="../../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> should be installed for TLS support in <a href="../../../../site/lib/Mojo/IOLoop/Client.html">Mojo::IOLoop::Client</a>, which you can find with <code>mojo version</code> command.</p>
+
+<h2 id="tls_ca">tls_ca</h2>
+
+<p>Path to TLS certificate authority file. Also activates hostname verification.</p>
+
+<h2 id="tls_cert">tls_cert</h2>
+
+<p>Path to the TLS certificate file.</p>
+
+<h2 id="tls_key">tls_key</h2>
+
+<p>Path to the TLS key file.</p>
+
+<h2 id="hello">hello</h2>
+
+<p>SMTP requires that you identify yourself. This option specifies a string to pass as your mail domain. Default is <code>localhost.localdomain</code></p>
+
+<h2 id="connect_timeout">connect_timeout</h2>
+
+<p>Maximum amount of time in seconds establishing a connection may take before getting canceled, defaults to the value of the <code>MOJO_CONNECT_TIMEOUT</code> environment variable or <code>10</code></p>
+
+<h2 id="inactivity_timeout">inactivity_timeout</h2>
+
+<p>Maximum amount of time in seconds a connection can be inactive before getting closed, defaults to the value of the <code>MOJO_INACTIVITY_TIMEOUT</code> environment variable or <code>20</code>. Setting the value to <code>0</code> will allow connections to be inactive indefinitely</p>
+
+<h2 id="ioloop">ioloop</h2>
+
+<p>Event loop object to use for blocking I/O operations, defaults to a <a href="../../../../site/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> object</p>
+
+<h2 id="autodie">autodie</h2>
+
+<p>Defines should or not <code>Mojo::SMTP::Client</code> throw exceptions for any type of errors. This only usable for blocking usage of <code>Mojo::SMTP::Client</code>, because non-blocking one should never die. Throwed exception will be one of the specified in <a href="../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Exception.html">Mojo::SMTP::Client::Exception</a>. When autodie attribute has false value you should check <code>$resp&gt;error</code> yourself. Default is false.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><code>Mojo::SMTP::Client</code> inherits all methods from <a href="../../../../site/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones</p>
+
+<h2 id="send">send</h2>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="variable">$mail_from</span><span class="operator">,</span>
+                <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="variable">$rcpt_to</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$data</span><span class="operator">,</span>
+                <span class="string">quit</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span>
+                <span class="variable">$nonblocking</span> <span class="operator">?</span> <span class="variable">$cb</span> <span class="operator">:</span> <span class="operator">()</span>
+        <span class="operator">);</span>
+</code></pre>
+
+<p>Send specified commands to SMTP server. Arguments should be <code>key =&gt; value</code> pairs where <code>key</code> is a command and <code>value</code> is a value for this command. <code>send</code> understands the following commands:</p>
+
+<dl>
+
+<dt id="hello1">hello</dt>
+<dd>
+
+<p>Send greeting to the server. Argument to this command should contain your domain name. Keep in mind, that <code>Mojo::SMTP::Client</code> will automatically send greeting to the server right after connection if you not specified <code>hello</code> as first command for <code>send</code>. <code>Mojo::SMTP::Client</code> first tries <code>EHLO</code> command for greeting and if server doesn&#39;t accept it <code>Mojo::SMTP::Client</code> retries with <code>HELO</code> command.</p>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">hello</span> <span class="operator">=&gt;</span> <span class="string">'mymail.me'</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+<dt id="starttls">starttls</dt>
+<dd>
+
+<p>Upgrades connection from plain to encrypted. Some servers requires this before sending any other commands. <a href="../../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> 0.98+ should be installed for this to work. See also <a href="#tls_ca">&quot;tls_ca&quot;</a>, <a href="#tls_cert">&quot;tls_cert&quot;</a>, <a href="#tls_key">&quot;tls_key&quot;</a> attributes</p>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">tls_ca</span><span class="operator">(</span><span class="string">'/etc/ssl/certs/ca-certificates.crt'</span><span class="operator">);</span>
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">starttls</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+<dt id="auth">auth</dt>
+<dd>
+
+<p>Authorize on SMTP server. Argument to this command should be reference to a hash with <code>login</code> and <code>password</code> keys. Only PLAIN authorization supported for now. You should authorize only once per session</p>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">auth</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">login</span> <span class="operator">=&gt;</span> <span class="string">'oleg'</span><span class="operator">,</span> <span class="string">password</span> <span class="operator">=&gt;</span> <span class="string">'qwerty'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+<dt id="from">from</dt>
+<dd>
+
+<p>From which email this message was sent. Value for this cammand should be a string with email</p>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">from</span> <span class="operator">=&gt;</span> <span class="string">'root@cpan.org'</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+<dt id="to">to</dt>
+<dd>
+
+<p>To which email(s) this message should be sent. Value for this cammand should be a string with email or reference to array with email strings (for more than one recipient)</p>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">to</span> <span class="operator">=&gt;</span> <span class="string">'oleg@cpan.org'</span><span class="operator">);</span>
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">to</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'oleg@cpan.org'</span><span class="operator">,</span> <span class="string">'do_not_reply@cpantesters.org'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+<dt id="reset">reset</dt>
+<dd>
+
+<p>After this command server should forget about any started mail transaction and reset it status as it was after response to <code>EHLO</code>/<code>HELO</code>. Note: transaction considered started after <code>MAIL FROM</code> (<code>from</code>) command.</p>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">reset</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+<dt id="data">data</dt>
+<dd>
+
+<p>Email body to be sent. Value for this command should be a string (or reference to a string) with email body or reference to subroutine each call of which should return some chunk of the email as string (or reference to a string) and empty string (or reference to empty string) at the end (useful to send big emails in memory-efficient way)</p>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">data</span> <span class="operator">=&gt;</span> <span class="string">"Subject: This is my first message\r\n\r\nSent from Mojolicious app"</span><span class="operator">);</span>
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">data</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">sysread</span><span class="operator">(</span><span class="variable">DATA</span><span class="operator">,</span> <span class="keyword">my</span> <span class="variable">$buf</span><span class="operator">,</span> <span class="number">1024</span><span class="operator">);</span> <span class="variable">$buf</span> <span class="operator">});</span>
+</code></pre>
+
+</dd>
+<dt id="quit">quit</dt>
+<dd>
+
+<p>Send <code>QUIT</code> command to SMTP server which will close the connection. So for the next use of this server connection will be reestablished. If you want to send several emails with this server it will be more efficient to not quit the connection until last email will be sent.</p>
+
+</dd>
+</dl>
+
+<p>For non-blocking usage last argument to <code>send</code> should be reference to subroutine which will be called when result will be available. Subroutine arguments will be <code>($smtp, $resp)</code>. Where <code>$resp</code> is object of <a href="../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Response.html">Mojo::SMTP::Client::Response</a> class. First you should check <code>$resp-&gt;error</code> - if it has true value this means that it was error somewhere while sending. If <code>error</code> has false value you can get code and message for response to last command with <code>$resp-&gt;code</code> (number) and <code>$resp-&gt;message</code> (string).</p>
+
+<p>For blocking usage <code>$resp</code> will be returned as result of <code>$smtp-&gt;send</code> call. <code>$resp</code> is the same as for non-blocking result. If <a href="#autodie">&quot;autodie&quot;</a> attribute has true value <code>send</code> will throw an exception on any error. Which will be one of <code>Mojo::SMTP::Client::Exception::*</code>.</p>
+
+<p><b>Note</b>. For SMTP protocol it is important to send commands in certain order. Also <code>send</code> will send all commands in order you are specified. So, it is important to pass arguments to <code>send</code> in right order. For basic usage this will always be: <code>from -&gt; to -&gt; data -&gt; quit</code>. You should also know that it is absolutely correct to specify several non-unique commands. For example you can send several emails with one <code>send</code> call:</p>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="string">'someone@somewhere.com'</span><span class="operator">,</span>
+                <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="string">'somebody@somewhere.net'</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$mail_1</span><span class="operator">,</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="string">'frodo@somewhere.com'</span><span class="operator">,</span>
+                <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="string">'garry@somewhere.net'</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$mail_2</span><span class="operator">,</span>
+                <span class="string">quit</span> <span class="operator">=&gt;</span> <span class="number">1</span>
+        <span class="operator">);</span>
+</code></pre>
+
+<p><b>Note</b>. Connection to SMTP server will be made on first <code>send</code> or for each <code>send</code> when socket connection not already estabilished (was closed by <code>QUIT</code> command or errors in the stream). It is error to make several simultaneous non-blocking <code>send</code> calls on the same <code>Mojo::SMTP::Client</code>, because each client has one global stream per client. So, you need to create several clients to make simultaneous sending.</p>
+
+<h2 id="prepend_cmd">prepend_cmd</h2>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">prepend_cmd</span><span class="operator">(</span><span class="string">reset</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span> <span class="string">starttls</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<p>Prepend specified commands to the queue, so the next command sent to the server will be the first you specified in <code>prepend_cmd</code>. You can prepend commands only when sending already in progress and there are commands in the queue. So, the most common place to call <code>prepend_cmd</code> is inside <code>response</code> event handler. For example this is how we can say &quot;start SSL session if server supports it&quot;:</p>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">response</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+                <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$smtp</span><span class="operator">,</span> <span class="variable">$cmd</span><span class="operator">,</span> <span class="variable">$resp</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+                <span class="keyword">if</span> <span class="operator">(</span><span class="variable">$cmd</span> <span class="operator">==</span> <span class="variable">Mojo::SMTP::Client::CMD_EHLO</span> <span class="operator">&amp;&amp;</span> <span class="variable">$resp</span><span class="operator">-&gt;</span><span class="variable">message</span> <span class="operator">=~</span> <span class="regex">/STARTTLS/i</span><span class="operator">)</span> <span class="operator">{</span>
+                        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">prepend_cmd</span><span class="operator">(</span><span class="string">starttls</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+                <span class="operator">}</span>
+        <span class="operator">});</span>
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="variable">$from</span><span class="operator">,</span>
+                <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="variable">$to</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$data</span><span class="operator">,</span>
+                <span class="string">quit</span> <span class="operator">=&gt;</span> <span class="number">1</span>
+        <span class="operator">);</span>
+</code></pre>
+
+<p><code>prepend_cmd</code> accepts same commands as <a href="#send">&quot;send&quot;</a>.</p>
+
+<h1 id="CONSTANTS">CONSTANTS</h1>
+
+<p><code>Mojo::SMTP::Client</code> has this non-importable constants</p>
+
+<pre><code>        CMD_CONNECT  # client connected to SMTP server
+        CMD_EHLO     # client sent EHLO command
+        CMD_HELO     # client sent HELO command
+        CMD_STARTTLS # client sent STARTTLS command
+        CMD_AUTH     # client sent AUTH command
+        CMD_FROM     # client sent MAIL FROM command
+        CMD_TO       # client sent RCPT TO command
+        CMD_DATA     # client sent DATA command
+        CMD_DATA_END # client sent . command
+        CMD_RESET    # client sent RSET command
+        CMD_QUIT     # client sent QUIT command</code></pre>
+
+<h1 id="VARIABLES">VARIABLES</h1>
+
+<p><code>Mojo::SMTP::Client</code> has this non-importable variables</p>
+
+<dl>
+
+<dt id="CMD">%CMD</dt>
+<dd>
+
+<p>Get human readable command by it constant</p>
+
+<pre><code>        <span class="keyword">print</span> <span class="variable">$Mojo::SMTP::Client::CMD</span><span class="operator">{</span> <span class="variable">Mojo::SMTP::Client::CMD_EHLO</span> <span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="COOKBOOK">COOKBOOK</h1>
+
+<h2 id="How-to-send-simple-ASCII-message">How to send simple ASCII message</h2>
+
+<p>ASCII message is simple enough, so you can generate it by hand</p>
+
+<pre><code>        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="string">'me@home.org'</span><span class="operator">,</span>
+                <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="string">'you@work.org'</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="keyword">join</span><span class="operator">(</span>
+                        <span class="string">"\r\n"</span><span class="operator">,</span>
+                        <span class="string">'MIME-Version: 1.0'</span><span class="operator">,</span>
+                        <span class="string">'Subject: Subject of the message'</span><span class="operator">,</span>
+                        <span class="string">'From: me@home.org'</span><span class="operator">,</span>
+                        <span class="string">'To: you@work.org'</span><span class="operator">,</span>
+                        <span class="string">'Content-Type: text/plain; charset=UTF-8'</span><span class="operator">,</span>
+                        <span class="string">''</span><span class="operator">,</span>
+                        <span class="string">'Text of the message'</span>
+                <span class="operator">)</span>
+        <span class="operator">);</span>
+</code></pre>
+
+<p>However it is not recommended to generate emails by hand if you are not familar with MIME standard. For more convenient approaches see below.</p>
+
+<h2 id="How-to-send-text-message-with-possible-non-ASCII-characters">How to send text message with possible non-ASCII characters</h2>
+
+<p>For more convinient way to generate emails we can use some email generators available on CPAN. <a>MIME::Lite</a> for example. With such modules we can get email as a string and send it with <code>Mojo::SMTP::Client</code></p>
+
+<pre><code>        <span class="keyword">use</span> <span class="variable">MIME::Lite</span><span class="operator">;</span>
+        <span class="keyword">use</span> <span class="variable">Encode</span> <span class="string">qw(encode decode)</span><span class="operator">;</span>
+        
+        <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+                <span class="string">Type</span>    <span class="operator">=&gt;</span> <span class="string">'text'</span><span class="operator">,</span>
+                <span class="string">From</span>    <span class="operator">=&gt;</span> <span class="string">'me@home.org'</span><span class="operator">,</span>
+                <span class="string">To</span>      <span class="operator">=&gt;</span> <span class="string">'you@work.org'</span><span class="operator">,</span>
+                <span class="string">Subject</span> <span class="operator">=&gt;</span> <span class="variable">encode</span><span class="operator">(</span><span class="string">'MIME-Header'</span><span class="operator">,</span> <span class="variable">decode</span><span class="operator">(</span><span class="string">'utf-8'</span><span class="operator">,</span> <span class="string">'ä¸ç, å´å, 5æ!'</span><span class="operator">)),</span>
+                <span class="string">Data</span>    <span class="operator">=&gt;</span> <span class="string">'Novosibirsk (Russian: ÐÐ¾Ð²Ð¾ÑÐ¸Ð±Ð¸ÑÑÐº; IPA: [nÉvÉsÊ²ÉªËbÊ²irsk]) is the third most populous '</span><span class="operator">.</span>
+                           <span class="string">'city in Russia after Moscow and St. Petersburg and the most populous city in Asian Russia'</span>
+        <span class="operator">);</span>
+        <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">'content-type.charset'</span> <span class="operator">=&gt;</span> <span class="string">'UTF-8'</span><span class="operator">);</span>
+        
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="string">'me@home.org'</span><span class="operator">,</span>
+                <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="string">'you@work.org'</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">as_string</span>
+        <span class="operator">);</span>
+</code></pre>
+
+<h2 id="How-to-send-message-with-attachment">How to send message with attachment</h2>
+
+<p>This is also simple with help of <a>MIME::Lite</a></p>
+
+<pre><code>        <span class="keyword">use</span> <span class="variable">MIME::Lite</span><span class="operator">;</span>
+        
+        <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+                <span class="string">Type</span>    <span class="operator">=&gt;</span> <span class="string">'multipart/mixed'</span><span class="operator">,</span>
+                <span class="string">From</span>    <span class="operator">=&gt;</span> <span class="string">'me@home.org'</span><span class="operator">,</span>
+                <span class="string">To</span>      <span class="operator">=&gt;</span> <span class="string">'you@work.org'</span><span class="operator">,</span>
+                <span class="string">Subject</span> <span class="operator">=&gt;</span> <span class="string">'statistic for 10.03.2015'</span>
+        <span class="operator">);</span>
+        <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span><span class="string">Path</span> <span class="operator">=&gt;</span> <span class="string">'/home/kate/stat/10032015.xlsx'</span><span class="operator">,</span> <span class="string">Disposition</span> <span class="operator">=&gt;</span> <span class="string">'attachment'</span><span class="operator">,</span> <span class="string">Type</span> <span class="operator">=&gt;</span> <span class="string">"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"</span><span class="operator">);</span>
+        
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="string">'me@home.org'</span><span class="operator">,</span>
+                <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="string">'you@work.org'</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">as_string</span>
+        <span class="operator">);</span>
+</code></pre>
+
+<h2 id="How-to-send-message-with-BIG-attachment">How to send message with BIG attachment</h2>
+
+<p>It will be not cool to get message with 50 mb attachment into memory before sending. Fortunately with help of <a>MIME::Lite</a> and <a>MIME::Lite::Generator</a> we can generate our email by small portions. As you remember <code>data</code> command accepts subroutine reference as argument, so it will be super easy to send our big email in memory-efficient way</p>
+
+<pre><code>        <span class="keyword">use</span> <span class="variable">MIME::Lite</span><span class="operator">;</span>
+        
+        <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+                <span class="string">Type</span>    <span class="operator">=&gt;</span> <span class="string">'multipart/mixed'</span><span class="operator">,</span>
+                <span class="string">From</span>    <span class="operator">=&gt;</span> <span class="string">'me@home.org'</span><span class="operator">,</span>
+                <span class="string">To</span>      <span class="operator">=&gt;</span> <span class="string">'you@work.org'</span><span class="operator">,</span>
+                <span class="string">Subject</span> <span class="operator">=&gt;</span> <span class="string">'my home video'</span>
+        <span class="operator">);</span>
+        <span class="comment"># Note: MIME::Lite will not load this file into memory</span>
+        <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span><span class="string">Path</span> <span class="operator">=&gt;</span> <span class="string">'/home/kate/videos/beach.avi'</span><span class="operator">,</span> <span class="string">Disposition</span> <span class="operator">=&gt;</span> <span class="string">'attachment'</span><span class="operator">,</span> <span class="string">Type</span> <span class="operator">=&gt;</span> <span class="string">"video/msvideo"</span><span class="operator">);</span>
+        
+        <span class="keyword">my</span> <span class="variable">$generator</span> <span class="operator">=</span> <span class="variable">MIME::Lite::Generator</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="variable">$msg</span><span class="operator">);</span>
+        
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="string">'me@home.org'</span><span class="operator">,</span>
+                <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="string">'you@work.org'</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$generator</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">()</span> <span class="operator">}</span>
+        <span class="operator">);</span>
+</code></pre>
+
+<h2 id="How-to-send-message-using-public-email-services-like-Gmail">How to send message using public email services like Gmail</h2>
+
+<p>Most such services provides access via SMTP in addition to web interface, but needs authorization. To protect your login and password most of them requires to start encrypted session (by upgrading plain connection with <code>starttls</code> or by initial <code>tls</code> connection). For example Gmail supports both this ways:</p>
+
+<pre><code>        <span class="comment"># make plain connection to port 25</span>
+        <span class="keyword">my</span> <span class="variable">$smtp</span> <span class="operator">=</span> <span class="variable">Mojo::SMTP::Client</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">address</span> <span class="operator">=&gt;</span> <span class="string">'smtp.gmail.com'</span><span class="operator">);</span>
+        <span class="comment"># and upgrade it to TLS with starttls</span>
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">starttls</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span>
+                <span class="string">auth</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">login</span> <span class="operator">=&gt;</span> <span class="variable">$login</span><span class="operator">,</span> <span class="string">password</span> <span class="operator">=&gt;</span> <span class="variable">$password</span><span class="operator">}</span><span class="operator">,</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="variable">$from</span><span class="operator">,</span>
+                <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="variable">$to</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$msg</span><span class="operator">,</span>
+                <span class="string">quit</span> <span class="operator">=&gt;</span> <span class="number">1</span>
+        <span class="operator">);</span>
+        
+        <span class="comment"># or make initial TLS connection to port 465</span>
+        <span class="keyword">my</span> <span class="variable">$smtp</span> <span class="operator">=</span> <span class="variable">Mojo::SMTP::Client</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">address</span> <span class="operator">=&gt;</span> <span class="string">'smtp.gmail.com'</span><span class="operator">,</span> <span class="string">tls</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+        <span class="comment"># no need to use starttls</span>
+        <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                <span class="string">auth</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">login</span> <span class="operator">=&gt;</span> <span class="variable">$login</span><span class="operator">,</span> <span class="string">password</span> <span class="operator">=&gt;</span> <span class="variable">$password</span><span class="operator">}</span><span class="operator">,</span>
+                <span class="string">from</span> <span class="operator">=&gt;</span> <span class="variable">$from</span><span class="operator">,</span>
+                <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="variable">$to</span><span class="operator">,</span>
+                <span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$msg</span><span class="operator">,</span>
+                <span class="string">quit</span> <span class="operator">=&gt;</span> <span class="number">1</span>
+        <span class="operator">);</span>
+</code></pre>
+
+<h2 id="How-to-send-message-directly-without-using-of-MTAs-such-as-sendmail-postfix-exim">How to send message directly, without using of MTAs such as sendmail, postfix, exim, ...</h2>
+
+<p>Sometimes it is more suitable to send message directly to SMTP server of recipient. For example if you haven&#39;t any MTA available or want to check recipient&#39;s server responses (e.g. to know is such user exists on this server [see <a>Mojo::Email::Checker::SMTP</a>]). First you need to know address of necessary SMTP server. We&#39;ll get it with help of <a>Net::DNS</a>. Then we&#39;ll send it as usual</p>
+
+<pre><code>        <span class="comment"># will use non-blocking approach in this example</span>
+        <span class="keyword">use</span> <span class="variable">strict</span><span class="operator">;</span>
+        <span class="keyword">use</span> <span class="variable">MIME::Lite</span><span class="operator">;</span>
+        <span class="keyword">use</span> <span class="variable">Net::DNS</span><span class="operator">;</span>
+        <span class="keyword">use</span> <span class="variable">Mojo::SMTP::Client</span><span class="operator">;</span>
+        <span class="keyword">use</span> <span class="variable">Mojo::IOLoop</span><span class="operator">;</span>
+        
+        <span class="keyword">use</span> <span class="variable">constant</span> <span class="string">TO</span> <span class="operator">=&gt;</span> <span class="string">'oleg@cpan.org'</span><span class="operator">;</span>
+        
+        <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">singleton</span><span class="operator">;</span>
+        <span class="keyword">my</span> <span class="variable">$resolver</span> <span class="operator">=</span> <span class="variable">Net::DNS::Resolver</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">();</span>
+        <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$domain</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">TO</span> <span class="operator">=~</span> <span class="regex">/@(.+)/</span><span class="operator">;</span>
+        
+        <span class="comment"># Get MX records</span>
+        <span class="keyword">my</span> <span class="variable">$sock</span> <span class="operator">=</span> <span class="variable">$resolver</span><span class="operator">-&gt;</span><span class="variable">bgsend</span><span class="operator">(</span><span class="variable">$domain</span><span class="operator">,</span> <span class="string">'MX'</span><span class="operator">);</span>
+        <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">io</span><span class="operator">(</span><span class="variable">$sock</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+                <span class="keyword">my</span> <span class="variable">$packet</span> <span class="operator">=</span> <span class="variable">$resolver</span><span class="operator">-&gt;</span><span class="variable">bgread</span><span class="operator">(</span><span class="variable">$sock</span><span class="operator">);</span>
+                <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$sock</span><span class="operator">);</span>
+                
+                <span class="keyword">my</span> <span class="variable">@mx</span><span class="operator">;</span>
+                <span class="keyword">if</span> <span class="operator">(</span><span class="variable">$packet</span><span class="operator">)</span> <span class="operator">{</span>
+                        <span class="keyword">for</span> <span class="keyword">my</span> <span class="variable">$rec</span> <span class="operator">(</span><span class="variable">$packet</span><span class="operator">-&gt;</span><span class="variable">answer</span><span class="operator">)</span> <span class="operator">{</span>
+                                <span class="keyword">push</span> <span class="variable">@mx</span><span class="operator">,</span> <span class="variable">$rec</span><span class="operator">-&gt;</span><span class="variable">exchange</span> <span class="keyword">if</span> <span class="variable">$rec</span><span class="operator">-&gt;</span><span class="variable">type</span> <span class="keyword">eq</span> <span class="string">'MX'</span><span class="operator">;</span>
+                        <span class="operator">}</span>
+                <span class="operator">}</span>
+                
+                <span class="comment"># Will try with first or plain domain name if no mx records found</span>
+                <span class="keyword">my</span> <span class="variable">$address</span> <span class="operator">=</span> <span class="variable">@mx</span> <span class="operator">?</span> <span class="variable">$mx</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">:</span> <span class="variable">$domain</span><span class="operator">;</span>
+                
+                <span class="keyword">my</span> <span class="variable">$smtp</span> <span class="operator">=</span> <span class="variable">Mojo::SMTP::Client</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+                        <span class="string">address</span> <span class="operator">=&gt;</span> <span class="variable">$address</span><span class="operator">,</span>
+                        <span class="comment"># it is important to properly identify yourself</span>
+                        <span class="string">hello</span>   <span class="operator">=&gt;</span> <span class="string">'home.org'</span>
+                <span class="operator">);</span>
+                
+                <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+                        <span class="string">Type</span>    <span class="operator">=&gt;</span> <span class="string">'text'</span><span class="operator">,</span>
+                        <span class="string">From</span>    <span class="operator">=&gt;</span> <span class="string">'me@home.org'</span><span class="operator">,</span>
+                        <span class="string">To</span>      <span class="operator">=&gt;</span> <span class="variable">TO</span><span class="operator">,</span>
+                        <span class="string">Subject</span> <span class="operator">=&gt;</span> <span class="string">'Direct email'</span><span class="operator">,</span>
+                        <span class="string">Data</span>    <span class="operator">=&gt;</span> <span class="string">'Get it!'</span>
+                <span class="operator">);</span>
+                
+                <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">response</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+                        <span class="comment"># some debug</span>
+                        <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$smtp</span><span class="operator">,</span> <span class="variable">$cmd</span><span class="operator">,</span> <span class="variable">$resp</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+                        
+                        <span class="keyword">print</span> <span class="string">"&gt;&gt;"</span><span class="operator">,</span> <span class="variable">$Mojo::SMTP::Client::CMD</span><span class="operator">{</span><span class="variable">$cmd</span><span class="operator">}</span><span class="operator">,</span> <span class="string">"\n"</span><span class="operator">;</span>
+                        <span class="keyword">print</span> <span class="string">"&lt;&lt;"</span><span class="operator">,</span> <span class="variable">$resp</span><span class="operator">,</span> <span class="string">"\n"</span><span class="operator">;</span>
+                <span class="operator">});</span>
+                
+                <span class="variable">$smtp</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span>
+                        <span class="string">from</span> <span class="operator">=&gt;</span> <span class="string">'me@home.org'</span><span class="operator">,</span>
+                        <span class="string">to</span>   <span class="operator">=&gt;</span> <span class="variable">TO</span><span class="operator">,</span>
+                        <span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">as_string</span><span class="operator">,</span>
+                        <span class="string">quit</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span>
+                        <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+                                <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$smtp</span><span class="operator">,</span> <span class="variable">$resp</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+                                
+                                <span class="keyword">warn</span> <span class="variable">$resp</span><span class="operator">-&gt;</span><span class="variable">error</span> <span class="operator">?</span> <span class="string">'Failed to send: '</span><span class="operator">.</span><span class="variable">$resp</span><span class="operator">-&gt;</span><span class="variable">error</span> <span class="operator">:</span>
+                                                      <span class="string">'Sent successfully with code: '</span><span class="operator">,</span> <span class="variable">$resp</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">;</span>
+                                
+                                <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">stop</span><span class="operator">;</span>
+                        <span class="operator">}</span>
+                <span class="operator">);</span>
+        <span class="operator">});</span>
+        <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="variable">$sock</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">);</span>
+        
+        <span class="variable">$loop</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>Note: some servers may check your PTR record, availability of SMTP server on your domain and so on.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Response.html">Mojo::SMTP::Client::Response</a>, <a href="../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Exception.html">Mojo::SMTP::Client::Exception</a>, <a href="../../../../site/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../site/lib/Mojo/IOLoop.html">Mojo::IOLoop</a>, <a href="https://tools.ietf.org/html/rfc5321">RFC5321 (SMTP)</a>, <a href="https://tools.ietf.org/html/rfc3207">RFC3207 (STARTTLS)</a>, <a href="https://tools.ietf.org/html/rfc4616">RFC4616 (AUTH PLAIN)</a></p>
+
+<h1 id="COPYRIGHT">COPYRIGHT</h1>
+
+<p>Copyright Oleg G &lt;oleg@cpan.org&gt;.</p>
+
+<p>This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.</p>
+
+
+</body>
+
+</html>
+
+

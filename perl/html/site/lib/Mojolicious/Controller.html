@@ -1,0 +1,730 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#app">app</a></li>
+      <li><a href="#match">match</a></li>
+      <li><a href="#tx">tx</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#continue">continue</a></li>
+      <li><a href="#cookie">cookie</a></li>
+      <li><a href="#every_cookie">every_cookie</a></li>
+      <li><a href="#every_param">every_param</a></li>
+      <li><a href="#every_signed_cookie">every_signed_cookie</a></li>
+      <li><a href="#finish">finish</a></li>
+      <li><a href="#flash">flash</a></li>
+      <li><a href="#helpers">helpers</a></li>
+      <li><a href="#on">on</a></li>
+      <li><a href="#param">param</a></li>
+      <li><a href="#redirect_to">redirect_to</a></li>
+      <li><a href="#render">render</a></li>
+      <li><a href="#render_later">render_later</a></li>
+      <li><a href="#render_maybe">render_maybe</a></li>
+      <li><a href="#render_to_string">render_to_string</a></li>
+      <li><a href="#rendered">rendered</a></li>
+      <li><a href="#req">req</a></li>
+      <li><a href="#res">res</a></li>
+      <li><a href="#respond_to">respond_to</a></li>
+      <li><a href="#send">send</a></li>
+      <li><a href="#session">session</a></li>
+      <li><a href="#signed_cookie">signed_cookie</a></li>
+      <li><a href="#stash">stash</a></li>
+      <li><a href="#url_for">url_for</a></li>
+      <li><a href="#validation">validation</a></li>
+      <li><a href="#write">write</a></li>
+      <li><a href="#write_chunk">write_chunk</a></li>
+    </ul>
+  </li>
+  <li><a href="#AUTOLOAD">AUTOLOAD</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Controller - Controller base class</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="comment"># Controller</span>
+  <span class="keyword">package</span> <span class="variable">MyApp::Controller::Foo</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious::Controller'</span><span class="operator">;</span>
+  
+  <span class="comment"># Action</span>
+  <span class="keyword">sub</span><span class="variable"> bar </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$name</span> <span class="operator">=</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'name'</span><span class="operator">);</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">cache_control</span><span class="operator">(</span><span class="string">'max-age=1, no-cache'</span><span class="operator">);</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">hello</span> <span class="operator">=&gt;</span> <span class="variable">$name</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a> is the base class for your <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> controllers. It is also the default controller class unless you set <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#controller_class">&quot;controller_class&quot; in Mojolicious</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a> inherits all attributes from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="app">app</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">;</span>
+  <span class="variable">$c</span>      <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>A reference back to the application that dispatched to this controller, usually a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> object.</p>
+
+<pre><code>  <span class="comment"># Use application logger</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">'Hello Mojo'</span><span class="operator">);</span>
+  
+  <span class="comment"># Generate path</span>
+  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">home</span><span class="operator">-&gt;</span><span class="variable">rel_file</span><span class="operator">(</span><span class="string">'templates/foo/bar.html.ep'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="match">match</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$m</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">match</span><span class="operator">;</span>
+  <span class="variable">$c</span>    <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">match</span><span class="operator">(</span><span class="variable">Mojolicious::Routes::Match</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Router results for the current request, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Match.html">Mojolicious::Routes::Match</a> object.</p>
+
+<pre><code>  <span class="comment"># Introspect</span>
+  <span class="keyword">my</span> <span class="variable">$name</span>   <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">match</span><span class="operator">-&gt;</span><span class="variable">endpoint</span><span class="operator">-&gt;</span><span class="variable">name</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span>    <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">match</span><span class="operator">-&gt;</span><span class="variable">endpoint</span><span class="operator">-&gt;</span><span class="variable">pattern</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$action</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">match</span><span class="operator">-&gt;</span><span class="variable">stack</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="operator">-</span><span class="number">1</span><span class="operator">]{</span><span class="string">action</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="tx">tx</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">;</span>
+  <span class="variable">$c</span>     <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>The transaction that is currently being processed, usually a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> or <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> object. Note that this reference is usually weakened, so the object needs to be referenced elsewhere as well when you&#39;re performing non-blocking operations and the underlying connection might get closed early.</p>
+
+<pre><code>  <span class="comment"># Check peer information</span>
+  <span class="keyword">my</span> <span class="variable">$address</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">remote_address</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$port</span>    <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">remote_port</span><span class="operator">;</span>
+  
+  <span class="comment"># Increase size limit for WebSocket messages to 16MB</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">max_websocket_size</span><span class="operator">(</span><span class="number">16777216</span><span class="operator">)</span> <span class="keyword">if</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">is_websocket</span><span class="operator">;</span>
+  
+  <span class="comment"># Perform non-blocking operation without knowing the connection status</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">;</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">2</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">is_finished</span> <span class="operator">?</span> <span class="string">'Finished'</span> <span class="operator">:</span> <span class="string">'In progress'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="continue">continue</h2>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">continue</span><span class="operator">;</span>
+</code></pre>
+
+<p>Continue dispatch chain from an intermediate destination with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes.html#continue">&quot;continue&quot; in Mojolicious::Routes</a>.</p>
+
+<h2 id="cookie">cookie</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">cookie</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$c</span>        <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">cookie</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+  <span class="variable">$c</span>        <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">cookie</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">path</span> <span class="operator">=&gt;</span> <span class="string">'/'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Access request cookie values and create new response cookies. If there are multiple values sharing the same name, and you want to access more than just the last one, you can use <a href="#every_cookie">&quot;every_cookie&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Create response cookie with domain and expiration date</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">cookie</span><span class="operator">(</span><span class="string">user</span> <span class="operator">=&gt;</span> <span class="string">'sri'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">domain</span> <span class="operator">=&gt;</span> <span class="string">'example.com'</span><span class="operator">,</span> <span class="string">expires</span> <span class="operator">=&gt;</span> <span class="keyword">time</span> <span class="operator">+</span> <span class="number">60</span><span class="operator">}</span><span class="operator">);</span>
+  
+  <span class="comment"># Create secure response cookie</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">cookie</span><span class="operator">(</span><span class="string">secret</span> <span class="operator">=&gt;</span> <span class="string">'I &lt;3 Mojolicious'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">secure</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span> <span class="string">httponly</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="every_cookie">every_cookie</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$values</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">every_cookie</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Similar to <a href="#cookie">&quot;cookie&quot;</a>, but returns all request cookie values sharing the same name as an array reference.</p>
+
+<pre><code>  <span class="operator">$ </span><span class="variable">Get</span> <span class="variable">first</span> <span class="variable">cookie</span> <span class="variable">value</span>
+  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">every_cookie</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="every_param">every_param</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$values</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">every_param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Similar to <a href="#param">&quot;param&quot;</a>, but returns all values sharing the same name as an array reference.</p>
+
+<pre><code>  <span class="comment"># Get first value</span>
+  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">every_param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="every_signed_cookie">every_signed_cookie</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$values</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">every_signed_cookie</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Similar to <a href="#signed_cookie">&quot;signed_cookie&quot;</a>, but returns all signed request cookie values sharing the same name as an array reference.</p>
+
+<pre><code>  <span class="comment"># Get first signed cookie value</span>
+  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">every_signed_cookie</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="finish">finish</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">;</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">(</span><span class="number">1000</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">(</span><span class="number">1003</span> <span class="operator">=&gt;</span> <span class="string">'Cannot accept data!'</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">(</span><span class="string">'Bye!'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Close WebSocket connection or long poll stream gracefully. This method will automatically respond to WebSocket handshake requests with a <code>101</code> response status, to establish the WebSocket connection.</p>
+
+<h2 id="flash">flash</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">flash</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$c</span>      <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">flash</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$c</span>      <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">flash</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Data storage persistent only for the next request, stored in the <a href="#session">&quot;session&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Show message after redirect</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">flash</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'User created successfully!'</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'show_user'</span><span class="operator">,</span> <span class="string">id</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="helpers">helpers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$helpers</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">helpers</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return a proxy object containing the current controller object and on which helpers provided by <a href="#app">&quot;app&quot;</a> can be called. This includes all helpers from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html">Mojolicious::Plugin::DefaultHelpers</a> and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a>.</p>
+
+<pre><code>  <span class="comment"># Make sure to use the "title" helper and not the controller method</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">helpers</span><span class="operator">-&gt;</span><span class="variable">title</span><span class="operator">(</span><span class="string">'Welcome!'</span><span class="operator">);</span>
+  
+  <span class="comment"># Use a nested helper instead of the "reply" controller method</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">helpers</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">not_found</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="on">on</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cb</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Subscribe to events of <a href="#tx">&quot;tx&quot;</a>, which is usually a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> or <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> object. This method will automatically respond to WebSocket handshake requests with a <code>101</code> response status, to establish the WebSocket connection.</p>
+
+<pre><code>  <span class="comment"># Do something after the transaction has been finished</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">'We are done'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Receive WebSocket message</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$msg</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">"Message: </span><span class="variable">$msg</span><span class="string">"</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Receive JSON object via WebSocket message</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$hash</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">"Test: </span><span class="variable">$hash</span><span class="string">-&gt;{test}"</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Receive WebSocket "Binary" message</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$len</span> <span class="operator">=</span> <span class="keyword">length</span> <span class="variable">$bytes</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">"Received </span><span class="variable">$len</span><span class="string"> bytes"</span><span class="operator">);</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="param">param</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$c</span>        <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'ba;r'</span><span class="operator">);</span>
+  <span class="variable">$c</span>        <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'ba;r'</span><span class="operator">,</span> <span class="string">'baz'</span><span class="operator">);</span>
+  <span class="variable">$c</span>        <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'ba;r'</span><span class="operator">,</span> <span class="string">'baz'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Access route placeholder values that are not reserved stash values, file uploads as well as <code>GET</code> and <code>POST</code> parameters extracted from the query string and <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code> message body, in that order. If there are multiple values sharing the same name, and you want to access more than just the last one, you can use <a href="#every_param">&quot;every_param&quot;</a>. Parts of the request body need to be loaded into memory to parse <code>POST</code> parameters, so you have to make sure it is not excessively large, there&#39;s a 16MB limit by default.</p>
+
+<pre><code>  <span class="comment"># Get first value</span>
+  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">every_param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+</code></pre>
+
+<p>For more control you can also access request information directly.</p>
+
+<pre><code>  <span class="comment"># Only GET parameters</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">query_params</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  
+  <span class="comment"># Only POST parameters</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">body_params</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  
+  <span class="comment"># Only GET and POST parameters</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  
+  <span class="comment"># Only file uploads</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">upload</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="redirect_to">redirect_to</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'named'</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'named'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'/index.html'</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'http://example.com/index.html'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Prepare a <code>302</code> redirect response, takes the same arguments as <a href="#url_for">&quot;url_for&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Moved permanently</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="number">301</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">redirect_to</span><span class="operator">(</span><span class="string">'some_route'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="render">render</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/index'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'index'</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'html'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Hello!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">handler</span> <span class="operator">=&gt;</span> <span class="string">'something'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'foo/index'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Render content with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#renderer">&quot;renderer&quot; in Mojolicious</a> and emit hooks <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#before_render">&quot;before_render&quot; in Mojolicious</a> as well as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#after_render">&quot;after_render&quot; in Mojolicious</a>, or call <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#reply--not_found">&quot;reply-&gt;not_found&quot; in Mojolicious::Plugin::DefaultHelpers</a> if no response could be generated, all additional key/value pairs get merged into the <a href="#stash">&quot;stash&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Render characters</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">);</span>
+  
+  <span class="comment"># Render characters (alternative)</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">)-&gt;</span><span class="variable">render</span><span class="operator">;</span>
+  
+  <span class="comment"># Render binary data</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::JSON</span> <span class="string">'encode_json'</span><span class="operator">;</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">data</span> <span class="operator">=&gt;</span> <span class="variable">encode_json</span><span class="operator">(</span><span class="operator">{</span><span class="string">test</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">}</span><span class="operator">));</span>
+  
+  <span class="comment"># Render JSON</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">test</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">}</span><span class="operator">);</span>
+  
+  <span class="comment"># Render inline template</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">inline</span> <span class="operator">=&gt;</span> <span class="string">'&lt;%= 1 + 1 %&gt;'</span><span class="operator">);</span>
+  
+  <span class="comment"># Render template "foo/bar.html.ep"</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo/bar'</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'html'</span><span class="operator">,</span> <span class="string">handler</span> <span class="operator">=&gt;</span> <span class="string">'ep'</span><span class="operator">);</span>
+  
+  <span class="comment"># Render template "test.*.*" with arbitrary values "foo" and "bar"</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'test'</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'test'</span><span class="operator">,</span> <span class="string">bar</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+  
+  <span class="comment"># Render template "test.xml.*"</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'test'</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'xml'</span><span class="operator">);</span>
+  
+  <span class="comment"># Render template "test.xml.*" (alternative)</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'test'</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'xml'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="render_later">render_later</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_later</span><span class="operator">;</span>
+</code></pre>
+
+<p>Disable automatic rendering to delay response generation, only necessary if automatic rendering would result in a response.</p>
+
+<pre><code>  <span class="comment"># Delayed rendering</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_later</span><span class="operator">;</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">2</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Delayed by 2 seconds!'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="render_maybe">render_maybe</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_maybe</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_maybe</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_maybe</span><span class="operator">(</span><span class="string">'foo/index'</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'html'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Try to render content, but do not call <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#reply--not_found">&quot;reply-&gt;not_found&quot; in Mojolicious::Plugin::DefaultHelpers</a> if no response could be generated, takes the same arguments as <a href="#render">&quot;render&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Render template "index_local" only if it exists</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_maybe</span><span class="operator">(</span><span class="string">'index_local'</span><span class="operator">)</span> <span class="keyword">or</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">'index'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="render_to_string">render_to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$output</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_to_string</span><span class="operator">(</span><span class="string">'foo/index'</span><span class="operator">,</span> <span class="string">format</span> <span class="operator">=&gt;</span> <span class="string">'pdf'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Try to render content and return it wrapped in a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> object or return <code>undef</code>, all arguments get localized automatically and are only available during this render operation, takes the same arguments as <a href="#render">&quot;render&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Render inline template</span>
+  <span class="keyword">my</span> <span class="variable">$two</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_to_string</span><span class="operator">(</span><span class="string">inline</span> <span class="operator">=&gt;</span> <span class="string">'&lt;%= 1 + 1 %&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="rendered">rendered</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">rendered</span><span class="operator">;</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">rendered</span><span class="operator">(</span><span class="number">302</span><span class="operator">);</span>
+</code></pre>
+
+<p>Finalize response and emit hook <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#after_dispatch">&quot;after_dispatch&quot; in Mojolicious</a>, defaults to using a <code>200</code> response code.</p>
+
+<pre><code>  <span class="comment"># Custom response</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">(</span><span class="string">'Hello World!'</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">rendered</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="req">req</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$req</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">;</span>
+</code></pre>
+
+<p>Get <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Request.html">Mojo::Message::Request</a> object from <a href="#tx">&quot;tx&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="keyword">my</span> <span class="variable">$req</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">;</span>
+  
+  <span class="comment"># Extract request information</span>
+  <span class="keyword">my</span> <span class="variable">$url</span>    <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$info</span>   <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">-&gt;</span><span class="variable">userinfo</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$host</span>   <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">-&gt;</span><span class="variable">host</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$agent</span>  <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">user_agent</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$custom</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">header</span><span class="operator">(</span><span class="string">'Custom-Header'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bytes</span>  <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$str</span>    <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$hash</span>   <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">params</span><span class="operator">-&gt;</span><span class="variable">to_hash</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$value</span>  <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">json</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span>    <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">json</span><span class="operator">(</span><span class="string">'/23/foo'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$dom</span>    <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$bar</span>    <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">(</span><span class="string">'div.bar'</span><span class="operator">)-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="res">res</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$res</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">;</span>
+</code></pre>
+
+<p>Get <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Response.html">Mojo::Message::Response</a> object from <a href="#tx">&quot;tx&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="keyword">my</span> <span class="variable">$res</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">;</span>
+  
+  <span class="comment"># Force file download by setting a response header</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_disposition</span><span class="operator">(</span><span class="string">'attachment; filename=foo.png;'</span><span class="operator">);</span>
+  
+  <span class="comment"># Use a custom response header</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">header</span><span class="operator">(</span><span class="string">'Custom-Header'</span> <span class="operator">=&gt;</span> <span class="string">'whatever'</span><span class="operator">);</span>
+  
+  <span class="comment"># Make sure response is cached correctly</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">cache_control</span><span class="operator">(</span><span class="string">'public, max-age=300'</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">Vary</span> <span class="operator">=&gt;</span> <span class="string">'Accept-Encoding'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="respond_to">respond_to</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">respond_to</span><span class="operator">(</span>
+    <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'Welcome!'</span><span class="operator">}}</span><span class="operator">,</span>
+    <span class="string">html</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'welcome'</span><span class="operator">}</span><span class="operator">,</span>
+    <span class="string">any</span>  <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span>
+  <span class="operator">);</span>
+</code></pre>
+
+<p>Automatically select best possible representation for resource from <code>Accept</code> request header, <code>format</code> stash value or <code>format</code> <code>GET</code>/<code>POST</code> parameter, defaults to <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html#default_format">&quot;default_format&quot; in Mojolicious::Renderer</a> or rendering an empty <code>204</code> response. Each representation can be handled with a callback or a hash reference containing arguments to be passed to <a href="#render">&quot;render&quot;</a>. Since browsers often don&#39;t really know what they actually want, unspecific <code>Accept</code> request headers with more than one MIME type will be ignored, unless the <code>X-Requested-With</code> header is set to the value <code>XMLHttpRequest</code>.</p>
+
+<pre><code>  <span class="comment"># Everything else than "json" and "xml" gets a 204 response</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">respond_to</span><span class="operator">(</span>
+    <span class="string">json</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">just</span> <span class="operator">=&gt;</span> <span class="string">'works'</span><span class="operator">}</span><span class="operator">)</span> <span class="operator">},</span>
+    <span class="string">xml</span>  <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'&lt;just&gt;works&lt;/just&gt;'</span><span class="operator">}</span><span class="operator">,</span>
+    <span class="string">any</span>  <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">data</span> <span class="operator">=&gt;</span> <span class="string">''</span><span class="operator">,</span> <span class="string">status</span> <span class="operator">=&gt;</span> <span class="number">204</span><span class="operator">}</span>
+  <span class="operator">);</span>
+</code></pre>
+
+<p>For more advanced negotiation logic you can also use the helper <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#accepts">&quot;accepts&quot; in Mojolicious::Plugin::DefaultHelpers</a>.</p>
+
+<h2 id="send">send</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">{</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">{</span><span class="string">text</span>   <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">{</span><span class="string">json</span>   <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">test</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]}}</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">[</span><span class="variable">$fin</span><span class="operator">,</span> <span class="variable">$rsv1</span><span class="operator">,</span> <span class="variable">$rsv2</span><span class="operator">,</span> <span class="variable">$rsv3</span><span class="operator">,</span> <span class="variable">$op</span><span class="operator">,</span> <span class="variable">$payload</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="variable">$chars</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="variable">$chars</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Send message or frame non-blocking via WebSocket, the optional drain callback will be executed once all data has been written. This method will automatically respond to WebSocket handshake requests with a <code>101</code> response status, to establish the WebSocket connection.</p>
+
+<pre><code>  <span class="comment"># Send "Text" message</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'I â¥ Mojolicious!'</span><span class="operator">);</span>
+  
+  <span class="comment"># Send JSON object as "Text" message</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">{</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">test</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">}}</span><span class="operator">);</span>
+  
+  <span class="comment"># Send JSON object as "Binary" message</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::JSON</span> <span class="string">'encode_json'</span><span class="operator">;</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">{</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="variable">encode_json</span><span class="operator">(</span><span class="operator">{</span><span class="string">test</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">}</span><span class="operator">)</span><span class="operator">}</span><span class="operator">);</span>
+  
+  <span class="comment"># Send "Ping" frame</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::WebSocket</span> <span class="string">'WS_PING'</span><span class="operator">;</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="variable">WS_PING</span><span class="operator">,</span> <span class="string">'Hello World!'</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Make sure the first message has been written before continuing</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'First message!'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'Second message!'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>For mostly idle WebSockets you might also want to increase the inactivity timeout with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#inactivity_timeout">&quot;inactivity_timeout&quot; in Mojolicious::Plugin::DefaultHelpers</a>, which usually defaults to <code>15</code> seconds.</p>
+
+<pre><code>  <span class="comment"># Increase inactivity timeout for connection to 300 seconds</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">inactivity_timeout</span><span class="operator">(</span><span class="number">300</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="session">session</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$session</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span>     <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$c</span>          <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$c</span>          <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Persistent data storage for the next few requests, all session data gets serialized with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a> and stored Base64 encoded in HMAC-SHA1 signed cookies, to prevent tampering. Note that cookies usually have a <code>4096</code> byte (4KB) limit, depending on browser.</p>
+
+<pre><code>  <span class="comment"># Manipulate session</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span> <span class="operator">=</span> <span class="string">'bar'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  <span class="keyword">delete</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Expiration date in seconds from now (persists between requests)</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expiration</span> <span class="operator">=&gt;</span> <span class="number">604800</span><span class="operator">);</span>
+  
+  <span class="comment"># Expiration date as absolute epoch time (only valid for one request)</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expires</span> <span class="operator">=&gt;</span> <span class="keyword">time</span> <span class="operator">+</span> <span class="number">604800</span><span class="operator">);</span>
+  
+  <span class="comment"># Delete whole session by setting an expiration date in the past</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expires</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="signed_cookie">signed_cookie</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">signed_cookie</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$c</span>        <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">signed_cookie</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+  <span class="variable">$c</span>        <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">signed_cookie</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">path</span> <span class="operator">=&gt;</span> <span class="string">'/'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Access signed request cookie values and create new signed response cookies. If there are multiple values sharing the same name, and you want to access more than just the last one, you can use <a href="#every_signed_cookie">&quot;every_signed_cookie&quot;</a>. Cookies are cryptographically signed with HMAC-SHA1, to prevent tampering, and the ones failing signature verification will be automatically discarded.</p>
+
+<h2 id="stash">stash</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span>  <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$c</span>       <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$c</span>       <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+</code></pre>
+
+<p>Non-persistent data storage and exchange for the current request, application wide default values can be set with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#defaults">&quot;defaults&quot; in Mojolicious</a>. Some stash values have a special meaning and are reserved, the full list is currently <code>action</code>, <code>app</code>, <code>cb</code>, <code>controller</code>, <code>data</code>, <code>extends</code>, <code>format</code>, <code>handler</code>, <code>inline</code>, <code>json</code>, <code>layout</code>, <code>namespace</code>, <code>path</code>, <code>status</code>, <code>template</code>, <code>text</code> and <code>variant</code>. Note that all stash values with a <code>mojo.*</code> prefix are reserved for internal use.</p>
+
+<pre><code>  <span class="comment"># Remove value</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="keyword">delete</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Assign multiple values at once</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">stash</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'test'</span><span class="operator">,</span> <span class="string">bar</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="url_for">url_for</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'sebastian'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'sebastian'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'test'</span><span class="operator">,</span> <span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'sebastian'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'test'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'sebastian'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'/index.html'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'//example.com/index.html'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'http://example.com/index.html'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'mailto:sri@example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'#whatever'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Generate a portable <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a> object with base for a path, URL or route.</p>
+
+<pre><code>  <span class="comment"># "http://127.0.0.1:3000/index.html" if application was started with Morbo</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'/index.html'</span><span class="operator">)-&gt;</span><span class="variable">to_abs</span><span class="operator">;</span>
+  
+  <span class="comment"># "https://127.0.0.1:443/index.html" if application was started with Morbo</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'/index.html'</span><span class="operator">)-&gt;</span><span class="variable">to_abs</span><span class="operator">-&gt;</span><span class="variable">scheme</span><span class="operator">(</span><span class="string">'https'</span><span class="operator">)-&gt;</span><span class="variable">port</span><span class="operator">(</span><span class="number">443</span><span class="operator">);</span>
+  
+  <span class="comment"># "/index.html?foo=bar" if application is deployed under "/"</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'/index.html'</span><span class="operator">)-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+  
+  <span class="comment"># "/myapp/index.html?foo=bar" if application is deployed under "/myapp"</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_for</span><span class="operator">(</span><span class="string">'/index.html'</span><span class="operator">)-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>You can also use the helper <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#url_with">&quot;url_with&quot; in Mojolicious::Plugin::DefaultHelpers</a> to inherit query parameters from the current request.</p>
+
+<pre><code>  <span class="comment"># "/list?q=mojo&amp;page=2" if current request was for "/list?q=mojo&amp;page=1"</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">url_with</span><span class="operator">-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="operator">[</span><span class="string">page</span> <span class="operator">=&gt;</span> <span class="number">2</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="validation">validation</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">validation</span><span class="operator">;</span>
+</code></pre>
+
+<p>Get <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator/Validation.html">Mojolicious::Validator::Validation</a> object for current request to validate file uploads as well as <code>GET</code> and <code>POST</code> parameters extracted from the query string and <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code> message body. Parts of the request body need to be loaded into memory to parse <code>POST</code> parameters, so you have to make sure it is not excessively large, there&#39;s a 16MB limit by default.</p>
+
+<pre><code>  <span class="comment"># Validate GET/POST parameter</span>
+  <span class="keyword">my</span> <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">validation</span><span class="operator">;</span>
+  <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">,</span> <span class="string">'trim'</span><span class="operator">)-&gt;</span><span class="variable">size</span><span class="operator">(</span><span class="number">3</span><span class="operator">,</span> <span class="number">50</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$title</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">);</span>
+  
+  <span class="comment"># Validate file upload</span>
+  <span class="keyword">my</span> <span class="variable">$validation</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">validation</span><span class="operator">;</span>
+  <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">required</span><span class="operator">(</span><span class="string">'tarball'</span><span class="operator">)-&gt;</span><span class="variable">upload</span><span class="operator">-&gt;</span><span class="variable">size</span><span class="operator">(</span><span class="number">1</span><span class="operator">,</span> <span class="number">1048576</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tarball</span> <span class="operator">=</span> <span class="variable">$validation</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'tarball'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="write">write</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">;</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">''</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="variable">$bytes</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="variable">$bytes</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Write dynamic content non-blocking, the optional drain callback will be executed once all data has been written. Calling this method without a chunk of data will finalize the response headers and allow for dynamic content to be written later.</p>
+
+<pre><code>  <span class="comment"># Keep connection alive (with Content-Length header)</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_length</span><span class="operator">(</span><span class="number">6</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">'Hel'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">'lo!'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Close connection when finished (without Content-Length header)</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">'Hel'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">'lo!'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">;</span>
+    <span class="operator">});</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>You can call <a href="#finish">&quot;finish&quot;</a> or write an empty chunk of data at any time to end the stream.</p>
+
+<pre><code>  HTTP/1.1 200 OK
+  Date: Sat, 13 Sep 2014 16:48:29 GMT
+  Content-Length: 6
+  Server: Mojolicious (Perl)
+
+  Hello!
+
+  HTTP/1.1 200 OK
+  Connection: close
+  Date: Sat, 13 Sep 2014 16:48:29 GMT
+  Server: Mojolicious (Perl)
+
+  Hello!</code></pre>
+
+<p>For Comet (long polling) you might also want to increase the inactivity timeout with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#inactivity_timeout">&quot;inactivity_timeout&quot; in Mojolicious::Plugin::DefaultHelpers</a>, which usually defaults to <code>15</code> seconds.</p>
+
+<pre><code>  <span class="comment"># Increase inactivity timeout for connection to 300 seconds</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">inactivity_timeout</span><span class="operator">(</span><span class="number">300</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="write_chunk">write_chunk</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">;</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="string">''</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="variable">$bytes</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="variable">$bytes</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Write dynamic content non-blocking with chunked transfer encoding, the optional drain callback will be executed once all data has been written. Calling this method without a chunk of data will finalize the response headers and allow for dynamic content to be written later.</p>
+
+<pre><code>  <span class="comment"># Make sure previous chunk has been written before continuing</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="string">'H'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="string">'ell'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">(</span><span class="string">'o!'</span><span class="operator">);</span>
+    <span class="operator">});</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>You can call <a href="#finish">&quot;finish&quot;</a> or write an empty chunk of data at any time to end the stream.</p>
+
+<pre><code>  HTTP/1.1 200 OK
+  Date: Sat, 13 Sep 2014 16:48:29 GMT
+  Transfer-Encoding: chunked
+  Server: Mojolicious (Perl)
+
+  1
+  H
+  3
+  ell
+  2
+  o!
+  0</code></pre>
+
+<h1 id="AUTOLOAD">AUTOLOAD</h1>
+
+<p>In addition to the <a href="#ATTRIBUTES">&quot;ATTRIBUTES&quot;</a> and <a href="#METHODS">&quot;METHODS&quot;</a> above you can also call helpers provided by <a href="#app">&quot;app&quot;</a> on <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a> objects. This includes all helpers from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html">Mojolicious::Plugin::DefaultHelpers</a> and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a>.</p>
+
+<pre><code>  <span class="comment"># Call helpers</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">layout</span><span class="operator">(</span><span class="string">'green'</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">title</span><span class="operator">(</span><span class="string">'Welcome!'</span><span class="operator">);</span>
+  
+  <span class="comment"># Longer version</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">helpers</span><span class="operator">-&gt;</span><span class="variable">layout</span><span class="operator">(</span><span class="string">'green'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

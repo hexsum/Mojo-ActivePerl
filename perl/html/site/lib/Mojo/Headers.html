@@ -1,0 +1,684 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#max_line_size">max_line_size</a></li>
+      <li><a href="#max_lines">max_lines</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#accept">accept</a></li>
+      <li><a href="#accept_charset">accept_charset</a></li>
+      <li><a href="#accept_encoding">accept_encoding</a></li>
+      <li><a href="#accept_language">accept_language</a></li>
+      <li><a href="#accept_ranges">accept_ranges</a></li>
+      <li><a href="#access_control_allow_origin">access_control_allow_origin</a></li>
+      <li><a href="#add">add</a></li>
+      <li><a href="#allow">allow</a></li>
+      <li><a href="#append">append</a></li>
+      <li><a href="#authorization">authorization</a></li>
+      <li><a href="#cache_control">cache_control</a></li>
+      <li><a href="#clone">clone</a></li>
+      <li><a href="#connection">connection</a></li>
+      <li><a href="#content_disposition">content_disposition</a></li>
+      <li><a href="#content_encoding">content_encoding</a></li>
+      <li><a href="#content_language">content_language</a></li>
+      <li><a href="#content_length">content_length</a></li>
+      <li><a href="#content_location">content_location</a></li>
+      <li><a href="#content_range">content_range</a></li>
+      <li><a href="#content_security_policy">content_security_policy</a></li>
+      <li><a href="#content_type">content_type</a></li>
+      <li><a href="#cookie">cookie</a></li>
+      <li><a href="#date">date</a></li>
+      <li><a href="#dnt">dnt</a></li>
+      <li><a href="#etag">etag</a></li>
+      <li><a href="#expect">expect</a></li>
+      <li><a href="#expires">expires</a></li>
+      <li><a href="#from_hash">from_hash</a></li>
+      <li><a href="#header">header</a></li>
+      <li><a href="#host">host</a></li>
+      <li><a href="#if_modified_since">if_modified_since</a></li>
+      <li><a href="#if_none_match">if_none_match</a></li>
+      <li><a href="#is_finished">is_finished</a></li>
+      <li><a href="#is_limit_exceeded">is_limit_exceeded</a></li>
+      <li><a href="#last_modified">last_modified</a></li>
+      <li><a href="#leftovers">leftovers</a></li>
+      <li><a href="#link">link</a></li>
+      <li><a href="#location">location</a></li>
+      <li><a href="#names">names</a></li>
+      <li><a href="#origin">origin</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#proxy_authenticate">proxy_authenticate</a></li>
+      <li><a href="#proxy_authorization">proxy_authorization</a></li>
+      <li><a href="#range">range</a></li>
+      <li><a href="#referrer">referrer</a></li>
+      <li><a href="#remove">remove</a></li>
+      <li><a href="#sec_websocket_accept">sec_websocket_accept</a></li>
+      <li><a href="#sec_websocket_extensions">sec_websocket_extensions</a></li>
+      <li><a href="#sec_websocket_key">sec_websocket_key</a></li>
+      <li><a href="#sec_websocket_protocol">sec_websocket_protocol</a></li>
+      <li><a href="#sec_websocket_version">sec_websocket_version</a></li>
+      <li><a href="#server">server</a></li>
+      <li><a href="#set_cookie">set_cookie</a></li>
+      <li><a href="#status">status</a></li>
+      <li><a href="#strict_transport_security">strict_transport_security</a></li>
+      <li><a href="#te">te</a></li>
+      <li><a href="#to_hash">to_hash</a></li>
+      <li><a href="#to_string">to_string</a></li>
+      <li><a href="#trailer">trailer</a></li>
+      <li><a href="#transfer_encoding">transfer_encoding</a></li>
+      <li><a href="#upgrade">upgrade</a></li>
+      <li><a href="#user_agent">user_agent</a></li>
+      <li><a href="#vary">vary</a></li>
+      <li><a href="#www_authenticate">www_authenticate</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Headers - HTTP headers</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Headers</span><span class="operator">;</span>
+  
+  <span class="comment"># Parse</span>
+  <span class="keyword">my</span> <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">Mojo::Headers</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Length: 42\x0d\x0a"</span><span class="operator">);</span>
+  <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Type: text/html\x0d\x0a\x0d\x0a"</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_length</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">;</span>
+  
+  <span class="comment"># Build</span>
+  <span class="keyword">my</span> <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">Mojo::Headers</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_length</span><span class="operator">(</span><span class="number">42</span><span class="operator">);</span>
+  <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Headers.html">Mojo::Headers</a> is a container for HTTP headers, based on <a href="http://tools.ietf.org/html/rfc7230">RFC 7230</a> and <a href="http://tools.ietf.org/html/rfc7231">RFC 7231</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Headers.html">Mojo::Headers</a> implements the following attributes.</p>
+
+<h2 id="max_line_size">max_line_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">max_line_size</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">max_line_size</span><span class="operator">(</span><span class="number">1024</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum header line size in bytes, defaults to the value of the <code>MOJO_MAX_LINE_SIZE</code> environment variable or <code>8192</code> (8KB).</p>
+
+<h2 id="max_lines">max_lines</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$num</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">max_lines</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">max_lines</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum number of header lines, defaults to the value of the <code>MOJO_MAX_LINES</code> environment variable or <code>100</code>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Headers.html">Mojo::Headers</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="accept">accept</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$accept</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">accept</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">accept</span><span class="operator">(</span><span class="string">'application/json'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Accept</code> header.</p>
+
+<h2 id="accept_charset">accept_charset</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$charset</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">accept_charset</span><span class="operator">;</span>
+  <span class="variable">$headers</span>    <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">accept_charset</span><span class="operator">(</span><span class="string">'UTF-8'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Accept-Charset</code> header.</p>
+
+<h2 id="accept_encoding">accept_encoding</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$encoding</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">accept_encoding</span><span class="operator">;</span>
+  <span class="variable">$headers</span>     <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">accept_encoding</span><span class="operator">(</span><span class="string">'gzip'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Accept-Encoding</code> header.</p>
+
+<h2 id="accept_language">accept_language</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$language</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">accept_language</span><span class="operator">;</span>
+  <span class="variable">$headers</span>     <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">accept_language</span><span class="operator">(</span><span class="string">'de, en'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Accept-Language</code> header.</p>
+
+<h2 id="accept_ranges">accept_ranges</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$ranges</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">accept_ranges</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">accept_ranges</span><span class="operator">(</span><span class="string">'bytes'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Accept-Ranges</code> header.</p>
+
+<h2 id="access_control_allow_origin">access_control_allow_origin</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$origin</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">access_control_allow_origin</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">access_control_allow_origin</span><span class="operator">(</span><span class="string">'*'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Access-Control-Allow-Origin</code> header from <a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a>.</p>
+
+<h2 id="add">add</h2>
+
+<pre><code>  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">add</span><span class="operator">(</span><span class="string">Foo</span> <span class="operator">=&gt;</span> <span class="string">'one value'</span><span class="operator">);</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">add</span><span class="operator">(</span><span class="string">Foo</span> <span class="operator">=&gt;</span> <span class="string">'first value'</span><span class="operator">,</span> <span class="string">'second value'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Add header with one or more lines.</p>
+
+<pre><code>  <span class="comment"># "Vary: Accept</span>
+  <span class="comment">#  Vary: Accept-Encoding"</span>
+  <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">add</span><span class="operator">(</span><span class="string">Vary</span> <span class="operator">=&gt;</span> <span class="string">'Accept'</span><span class="operator">)-&gt;</span><span class="variable">add</span><span class="operator">(</span><span class="string">Vary</span> <span class="operator">=&gt;</span> <span class="string">'Accept-Encoding'</span><span class="operator">)-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="allow">allow</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$allow</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">allow</span><span class="operator">;</span>
+  <span class="variable">$headers</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">allow</span><span class="operator">(</span><span class="string">'GET, POST'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Allow</code> header.</p>
+
+<h2 id="append">append</h2>
+
+<pre><code>  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">Vary</span> <span class="operator">=&gt;</span> <span class="string">'Accept-Encoding'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Append value to header and flatten it if necessary.</p>
+
+<pre><code>  <span class="comment"># "Vary: Accept"</span>
+  <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">Vary</span> <span class="operator">=&gt;</span> <span class="string">'Accept'</span><span class="operator">)-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+  
+  <span class="comment"># "Vary: Accept, Accept-Encoding"</span>
+  <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">vary</span><span class="operator">(</span><span class="string">'Accept'</span><span class="operator">)-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">Vary</span> <span class="operator">=&gt;</span> <span class="string">'Accept-Encoding'</span><span class="operator">)-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="authorization">authorization</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$authorization</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">authorization</span><span class="operator">;</span>
+  <span class="variable">$headers</span>          <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">authorization</span><span class="operator">(</span><span class="string">'Basic Zm9vOmJhcg=='</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Authorization</code> header.</p>
+
+<h2 id="cache_control">cache_control</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cache_control</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">cache_control</span><span class="operator">;</span>
+  <span class="variable">$headers</span>          <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">cache_control</span><span class="operator">(</span><span class="string">'max-age=1, no-cache'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Cache-Control</code> header.</p>
+
+<h2 id="clone">clone</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$clone</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">clone</span><span class="operator">;</span>
+</code></pre>
+
+<p>Clone headers.</p>
+
+<h2 id="connection">connection</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$connection</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">connection</span><span class="operator">;</span>
+  <span class="variable">$headers</span>       <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">connection</span><span class="operator">(</span><span class="string">'close'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Connection</code> header.</p>
+
+<h2 id="content_disposition">content_disposition</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$disposition</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_disposition</span><span class="operator">;</span>
+  <span class="variable">$headers</span>        <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_disposition</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Content-Disposition</code> header.</p>
+
+<h2 id="content_encoding">content_encoding</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$encoding</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_encoding</span><span class="operator">;</span>
+  <span class="variable">$headers</span>     <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_encoding</span><span class="operator">(</span><span class="string">'gzip'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Content-Encoding</code> header.</p>
+
+<h2 id="content_language">content_language</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$language</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_language</span><span class="operator">;</span>
+  <span class="variable">$headers</span>     <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_language</span><span class="operator">(</span><span class="string">'en'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Content-Language</code> header.</p>
+
+<h2 id="content_length">content_length</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$len</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_length</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_length</span><span class="operator">(</span><span class="number">4000</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Content-Length</code> header.</p>
+
+<h2 id="content_location">content_location</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$location</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_location</span><span class="operator">;</span>
+  <span class="variable">$headers</span>     <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_location</span><span class="operator">(</span><span class="string">'http://127.0.0.1/foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Content-Location</code> header.</p>
+
+<h2 id="content_range">content_range</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$range</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_range</span><span class="operator">;</span>
+  <span class="variable">$headers</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_range</span><span class="operator">(</span><span class="string">'bytes 2-8/100'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Content-Range</code> header.</p>
+
+<h2 id="content_security_policy">content_security_policy</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$policy</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_security_policy</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_security_policy</span><span class="operator">(</span><span class="string">'default-src https:'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Content-Security-Policy</code> header from <a href="http://www.w3.org/TR/CSP/">Content Security Policy 1.0</a>.</p>
+
+<h2 id="content_type">content_type</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$type</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Content-Type</code> header.</p>
+
+<h2 id="cookie">cookie</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cookie</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">cookie</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">cookie</span><span class="operator">(</span><span class="string">'f=b'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Cookie</code> header from <a href="http://tools.ietf.org/html/rfc6265">RFC 6265</a>.</p>
+
+<h2 id="date">date</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">date</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">date</span><span class="operator">(</span><span class="string">'Sun, 17 Aug 2008 16:27:35 GMT'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Date</code> header.</p>
+
+<h2 id="dnt">dnt</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$dnt</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">dnt</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">dnt</span><span class="operator">(</span><span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>DNT</code> (Do Not Track) header, which has no specification yet, but is very commonly used.</p>
+
+<h2 id="etag">etag</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$etag</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">etag</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">etag</span><span class="operator">(</span><span class="string">'"abc321"'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>ETag</code> header.</p>
+
+<h2 id="expect">expect</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$expect</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">expect</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">expect</span><span class="operator">(</span><span class="string">'100-continue'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Expect</code> header.</p>
+
+<h2 id="expires">expires</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$expires</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">expires</span><span class="operator">;</span>
+  <span class="variable">$headers</span>    <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">expires</span><span class="operator">(</span><span class="string">'Thu, 01 Dec 1994 16:00:00 GMT'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Expires</code> header.</p>
+
+<h2 id="from_hash">from_hash</h2>
+
+<pre><code>  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">from_hash</span><span class="operator">(</span><span class="operator">{</span><span class="string">'Cookie'</span> <span class="operator">=&gt;</span> <span class="string">'a=b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">from_hash</span><span class="operator">(</span><span class="operator">{</span><span class="string">'Cookie'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'a=b'</span><span class="operator">,</span> <span class="string">'c=d'</span><span class="operator">]}</span><span class="operator">);</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">from_hash</span><span class="operator">(</span><span class="operator">{}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse headers from a hash reference, an empty hash removes all headers.</p>
+
+<h2 id="header">header</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">header</span><span class="operator">(</span><span class="string">'Foo'</span><span class="operator">);</span>
+  <span class="variable">$headers</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">header</span><span class="operator">(</span><span class="string">Foo</span> <span class="operator">=&gt;</span> <span class="string">'one value'</span><span class="operator">);</span>
+  <span class="variable">$headers</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">header</span><span class="operator">(</span><span class="string">Foo</span> <span class="operator">=&gt;</span> <span class="string">'first value'</span><span class="operator">,</span> <span class="string">'second value'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace the current header values.</p>
+
+<h2 id="host">host</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$host</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">host</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">host</span><span class="operator">(</span><span class="string">'127.0.0.1'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Host</code> header.</p>
+
+<h2 id="if_modified_since">if_modified_since</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">if_modified_since</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">if_modified_since</span><span class="operator">(</span><span class="string">'Sun, 17 Aug 2008 16:27:35 GMT'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>If-Modified-Since</code> header.</p>
+
+<h2 id="if_none_match">if_none_match</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$etag</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">if_none_match</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">if_none_match</span><span class="operator">(</span><span class="string">'"abc321"'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>If-None-Match</code> header.</p>
+
+<h2 id="is_finished">is_finished</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">is_finished</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if header parser is finished.</p>
+
+<h2 id="is_limit_exceeded">is_limit_exceeded</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">is_limit_exceeded</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if headers have exceeded <a href="#max_line_size">&quot;max_line_size&quot;</a> or <a href="#max_lines">&quot;max_lines&quot;</a>.</p>
+
+<h2 id="last_modified">last_modified</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">last_modified</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">last_modified</span><span class="operator">(</span><span class="string">'Sun, 17 Aug 2008 16:27:35 GMT'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Last-Modified</code> header.</p>
+
+<h2 id="leftovers">leftovers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">leftovers</span><span class="operator">;</span>
+</code></pre>
+
+<p>Get and remove leftover data from header parser.</p>
+
+<h2 id="link">link</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$link</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">link</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">link</span><span class="operator">(</span><span class="string">'&lt;http://127.0.0.1/foo/3&gt;; rel="next"'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Link</code> header from <a href="http://tools.ietf.org/html/rfc5988">RFC 5988</a>.</p>
+
+<h2 id="location">location</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$location</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">location</span><span class="operator">;</span>
+  <span class="variable">$headers</span>     <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">location</span><span class="operator">(</span><span class="string">'http://127.0.0.1/foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Location</code> header.</p>
+
+<h2 id="names">names</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$names</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">names</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return an array reference with all currently defined headers.</p>
+
+<pre><code>  <span class="comment"># Names of all headers</span>
+  <span class="keyword">say</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">names</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="origin">origin</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$origin</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">origin</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">origin</span><span class="operator">(</span><span class="string">'http://example.com'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Origin</code> header from <a href="http://tools.ietf.org/html/rfc6454">RFC 6454</a>.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Type: text/plain\x0d\x0a\x0d\x0a"</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse formatted headers.</p>
+
+<h2 id="proxy_authenticate">proxy_authenticate</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$authenticate</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">proxy_authenticate</span><span class="operator">;</span>
+  <span class="variable">$headers</span>         <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">proxy_authenticate</span><span class="operator">(</span><span class="string">'Basic "realm"'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Proxy-Authenticate</code> header.</p>
+
+<h2 id="proxy_authorization">proxy_authorization</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$authorization</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">proxy_authorization</span><span class="operator">;</span>
+  <span class="variable">$headers</span>          <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">proxy_authorization</span><span class="operator">(</span><span class="string">'Basic Zm9vOmJhcg=='</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Proxy-Authorization</code> header.</p>
+
+<h2 id="range">range</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$range</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">range</span><span class="operator">;</span>
+  <span class="variable">$headers</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">range</span><span class="operator">(</span><span class="string">'bytes=2-8'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Range</code> header.</p>
+
+<h2 id="referrer">referrer</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$referrer</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">referrer</span><span class="operator">;</span>
+  <span class="variable">$headers</span>     <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">referrer</span><span class="operator">(</span><span class="string">'http://example.com'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Referer</code> header, there was a typo in <a href="http://tools.ietf.org/html/rfc2068">RFC 2068</a> which resulted in <code>Referer</code> becoming an official header.</p>
+
+<h2 id="remove">remove</h2>
+
+<pre><code>  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="string">'Foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Remove a header.</p>
+
+<h2 id="sec_websocket_accept">sec_websocket_accept</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$accept</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">sec_websocket_accept</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">sec_websocket_accept</span><span class="operator">(</span><span class="string">'s3pPLMBiTxaQ9kYGzzhZRbK+xOo='</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Sec-WebSocket-Accept</code> header from <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>.</p>
+
+<h2 id="sec_websocket_extensions">sec_websocket_extensions</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$extensions</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">sec_websocket_extensions</span><span class="operator">;</span>
+  <span class="variable">$headers</span>       <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">sec_websocket_extensions</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Sec-WebSocket-Extensions</code> header from <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>.</p>
+
+<h2 id="sec_websocket_key">sec_websocket_key</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$key</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">sec_websocket_key</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">sec_websocket_key</span><span class="operator">(</span><span class="string">'dGhlIHNhbXBsZSBub25jZQ=='</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Sec-WebSocket-Key</code> header from <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>.</p>
+
+<h2 id="sec_websocket_protocol">sec_websocket_protocol</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$proto</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">sec_websocket_protocol</span><span class="operator">;</span>
+  <span class="variable">$headers</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">sec_websocket_protocol</span><span class="operator">(</span><span class="string">'sample'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Sec-WebSocket-Protocol</code> header from <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>.</p>
+
+<h2 id="sec_websocket_version">sec_websocket_version</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$version</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">sec_websocket_version</span><span class="operator">;</span>
+  <span class="variable">$headers</span>    <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">sec_websocket_version</span><span class="operator">(</span><span class="number">13</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Sec-WebSocket-Version</code> header from <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>.</p>
+
+<h2 id="server">server</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">(</span><span class="string">'Mojo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Server</code> header.</p>
+
+<h2 id="set_cookie">set_cookie</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cookie</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">set_cookie</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">set_cookie</span><span class="operator">(</span><span class="string">'f=b; path=/'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Set-Cookie</code> header from <a href="http://tools.ietf.org/html/rfc6265">RFC 6265</a>.</p>
+
+<h2 id="status">status</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$status</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">status</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">status</span><span class="operator">(</span><span class="string">'200 OK'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Status</code> header from <a href="http://tools.ietf.org/html/rfc3875">RFC 3875</a>.</p>
+
+<h2 id="strict_transport_security">strict_transport_security</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$policy</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">strict_transport_security</span><span class="operator">;</span>
+  <span class="variable">$headers</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">strict_transport_security</span><span class="operator">(</span><span class="string">'max-age=31536000'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Strict-Transport-Security</code> header from <a href="http://tools.ietf.org/html/rfc6797">RFC 6797</a>.</p>
+
+<h2 id="te">te</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$te</span>   <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">te</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">te</span><span class="operator">(</span><span class="string">'chunked'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>TE</code> header.</p>
+
+<h2 id="to_hash">to_hash</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$single</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">to_hash</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$multi</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">to_hash</span><span class="operator">(</span><span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<p>Turn headers into hash reference, array references to represent multiple headers with the same name are disabled by default.</p>
+
+<pre><code>  <span class="keyword">say</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">to_hash</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">DNT</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="to_string">to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Turn headers into a string, suitable for HTTP messages.</p>
+
+<h2 id="trailer">trailer</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$trailer</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">trailer</span><span class="operator">;</span>
+  <span class="variable">$headers</span>    <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">trailer</span><span class="operator">(</span><span class="string">'X-Foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Trailer</code> header.</p>
+
+<h2 id="transfer_encoding">transfer_encoding</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$encoding</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">transfer_encoding</span><span class="operator">;</span>
+  <span class="variable">$headers</span>     <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">transfer_encoding</span><span class="operator">(</span><span class="string">'chunked'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Transfer-Encoding</code> header.</p>
+
+<h2 id="upgrade">upgrade</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$upgrade</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">upgrade</span><span class="operator">;</span>
+  <span class="variable">$headers</span>    <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">upgrade</span><span class="operator">(</span><span class="string">'websocket'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Upgrade</code> header.</p>
+
+<h2 id="user_agent">user_agent</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$agent</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">user_agent</span><span class="operator">;</span>
+  <span class="variable">$headers</span>  <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">user_agent</span><span class="operator">(</span><span class="string">'Mojo/1.0'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>User-Agent</code> header.</p>
+
+<h2 id="vary">vary</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$vary</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">vary</span><span class="operator">;</span>
+  <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">vary</span><span class="operator">(</span><span class="string">'*'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>Vary</code> header.</p>
+
+<h2 id="www_authenticate">www_authenticate</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$authenticate</span> <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">www_authenticate</span><span class="operator">;</span>
+  <span class="variable">$headers</span>         <span class="operator">=</span> <span class="variable">$headers</span><span class="operator">-&gt;</span><span class="variable">www_authenticate</span><span class="operator">(</span><span class="string">'Basic realm="realm"'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or replace current header value, shortcut for the <code>WWW-Authenticate</code> header.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

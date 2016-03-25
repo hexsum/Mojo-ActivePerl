@@ -1,0 +1,806 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#NODES-AND-ELEMENTS">NODES AND ELEMENTS</a></li>
+  <li><a href="#CASE-SENSITIVITY">CASE-SENSITIVITY</a></li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#all_text">all_text</a></li>
+      <li><a href="#ancestors">ancestors</a></li>
+      <li><a href="#append">append</a></li>
+      <li><a href="#append_content">append_content</a></li>
+      <li><a href="#at">at</a></li>
+      <li><a href="#attr">attr</a></li>
+      <li><a href="#child_nodes">child_nodes</a></li>
+      <li><a href="#children">children</a></li>
+      <li><a href="#content">content</a></li>
+      <li><a href="#descendant_nodes">descendant_nodes</a></li>
+      <li><a href="#find">find</a></li>
+      <li><a href="#following">following</a></li>
+      <li><a href="#following_nodes">following_nodes</a></li>
+      <li><a href="#matches">matches</a></li>
+      <li><a href="#namespace">namespace</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#next">next</a></li>
+      <li><a href="#next_node">next_node</a></li>
+      <li><a href="#parent">parent</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#preceding">preceding</a></li>
+      <li><a href="#preceding_nodes">preceding_nodes</a></li>
+      <li><a href="#prepend">prepend</a></li>
+      <li><a href="#prepend_content">prepend_content</a></li>
+      <li><a href="#previous">previous</a></li>
+      <li><a href="#previous_node">previous_node</a></li>
+      <li><a href="#remove">remove</a></li>
+      <li><a href="#replace">replace</a></li>
+      <li><a href="#root">root</a></li>
+      <li><a href="#strip">strip</a></li>
+      <li><a href="#tag">tag</a></li>
+      <li><a href="#tap">tap</a></li>
+      <li><a href="#text">text</a></li>
+      <li><a href="#to_string">to_string</a></li>
+      <li><a href="#tree">tree</a></li>
+      <li><a href="#type">type</a></li>
+      <li><a href="#val">val</a></li>
+      <li><a href="#wrap">wrap</a></li>
+      <li><a href="#wrap_content">wrap_content</a></li>
+      <li><a href="#xml">xml</a></li>
+    </ul>
+  </li>
+  <li><a href="#OPERATORS">OPERATORS</a>
+    <ul>
+      <li><a href="#array">array</a></li>
+      <li><a href="#bool">bool</a></li>
+      <li><a href="#hash">hash</a></li>
+      <li><a href="#stringify">stringify</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::DOM - Minimalistic HTML/XML DOM parser with CSS selectors</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::DOM</span><span class="operator">;</span>
+  
+  <span class="comment"># Parse</span>
+  <span class="keyword">my</span> <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">Mojo::DOM</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;p id="a"&gt;Test&lt;/p&gt;&lt;p id="b"&gt;123&lt;/p&gt;&lt;/div&gt;'</span><span class="operator">);</span>
+  
+  <span class="comment"># Find</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'#b'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'text'</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'[id]'</span><span class="operator">)-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">attr</span> <span class="operator">=&gt;</span> <span class="string">'id'</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+  
+  <span class="comment"># Iterate</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'p[id]'</span><span class="operator">)-&gt;</span><span class="variable">reverse</span><span class="operator">-&gt;</span><span class="variable">each</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">id</span><span class="operator">}</span> <span class="operator">});</span>
+  
+  <span class="comment"># Loop</span>
+  <span class="keyword">for</span> <span class="keyword">my</span> <span class="variable">$e</span> <span class="operator">(</span><span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'p[id]'</span><span class="operator">)-&gt;</span><span class="variable">each</span><span class="operator">)</span> <span class="operator">{</span>
+    <span class="keyword">say</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">id</span><span class="operator">}</span><span class="operator">,</span> <span class="string">':'</span><span class="operator">,</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+  <span class="operator">}</span>
+  
+  <span class="comment"># Modify</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'div p'</span><span class="operator">)-&gt;</span><span class="variable">last</span><span class="operator">-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">'&lt;p id="c"&gt;456&lt;/p&gt;'</span><span class="operator">);</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">':not(p)'</span><span class="operator">)-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'strip'</span><span class="operator">);</span>
+  
+  <span class="comment"># Render</span>
+  <span class="keyword">say</span> <span class="string">"</span><span class="variable">$dom</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> is a minimalistic and relaxed HTML/XML DOM parser with CSS selector support. It will even try to interpret broken HTML and XML, so you should not use it for validation.</p>
+
+<h1 id="NODES-AND-ELEMENTS">NODES AND ELEMENTS</h1>
+
+<p>When we parse an HTML/XML fragment, it gets turned into a tree of nodes.</p>
+
+<pre><code>  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;&lt;title&gt;Hello&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;World!&lt;/body&gt;
+  &lt;/html&gt;</code></pre>
+
+<p>There are currently eight different kinds of nodes, <code>cdata</code>, <code>comment</code>, <code>doctype</code>, <code>pi</code>, <code>raw</code>, <code>root</code>, <code>tag</code> and <code>text</code>. Elements are nodes of the type <code>tag</code>.</p>
+
+<pre><code>  root
+  |- doctype (html)
+  +- tag (html)
+     |- tag (head)
+     |  +- tag (title)
+     |     +- raw (Hello)
+     +- tag (body)
+        +- text (World!)</code></pre>
+
+<p>While all node types are represented as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> objects, some methods like <a href="#attr">&quot;attr&quot;</a> and <a href="#namespace">&quot;namespace&quot;</a> only apply to elements.</p>
+
+<h1 id="CASE-SENSITIVITY">CASE-SENSITIVITY</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> defaults to HTML semantics, that means all tags and attribute names are lowercased and selectors need to be lowercase as well.</p>
+
+<pre><code>  <span class="comment"># HTML semantics</span>
+  <span class="keyword">my</span> <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">Mojo::DOM</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'&lt;P ID="greeting"&gt;Hi!&lt;/P&gt;'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p[id]'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+</code></pre>
+
+<p>If an XML declaration is found, the parser will automatically switch into XML mode and everything becomes case-sensitive.</p>
+
+<pre><code>  <span class="comment"># XML semantics</span>
+  <span class="keyword">my</span> <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">Mojo::DOM</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'&lt;?xml version="1.0"?&gt;&lt;P ID="greeting"&gt;Hi!&lt;/P&gt;'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'P[ID]'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+</code></pre>
+
+<p>XML detection can also be disabled with the <a href="#xml">&quot;xml&quot;</a> method.</p>
+
+<pre><code>  <span class="comment"># Force XML semantics</span>
+  <span class="keyword">my</span> <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">Mojo::DOM</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">-&gt;</span><span class="variable">xml</span><span class="operator">(</span><span class="number">1</span><span class="operator">)-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;P ID="greeting"&gt;Hi!&lt;/P&gt;'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'P[ID]'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+  
+  <span class="comment"># Force HTML semantics</span>
+  <span class="keyword">my</span> <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">Mojo::DOM</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">-&gt;</span><span class="variable">xml</span><span class="operator">(</span><span class="number">0</span><span class="operator">)-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;P ID="greeting"&gt;Hi!&lt;/P&gt;'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p[id]'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> implements the following methods.</p>
+
+<h2 id="all_text">all_text</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$trimmed</span>   <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">all_text</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$untrimmed</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">all_text</span><span class="operator">(</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<p>Extract text content from all descendant nodes of this element, smart whitespace trimming is enabled by default.</p>
+
+<pre><code>  <span class="comment"># "foo bar baz"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"&lt;div&gt;foo\n&lt;p&gt;bar&lt;/p&gt;baz\n&lt;/div&gt;"</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'div'</span><span class="operator">)-&gt;</span><span class="variable">all_text</span><span class="operator">;</span>
+  
+  <span class="comment"># "foo\nbarbaz\n"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"&lt;div&gt;foo\n&lt;p&gt;bar&lt;/p&gt;baz\n&lt;/div&gt;"</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'div'</span><span class="operator">)-&gt;</span><span class="variable">all_text</span><span class="operator">(</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="ancestors">ancestors</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">ancestors</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">ancestors</span><span class="operator">(</span><span class="string">'div ~ p'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Find all ancestor elements of this node matching the CSS selector and return a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object containing these elements as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> objects. All selectors from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html#SELECTORS">&quot;SELECTORS&quot; in Mojo::DOM::CSS</a> are supported.</p>
+
+<pre><code>  <span class="comment"># List tag names of ancestor elements</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">ancestors</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'tag'</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="append">append</h2>
+
+<pre><code>  <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">'&lt;p&gt;I â¥ Mojolicious!&lt;/p&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Append HTML/XML fragment to this node (for all node types other than <code>root</code>).</p>
+
+<pre><code>  <span class="comment"># "&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;h2&gt;123&lt;/h2&gt;&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/div&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h1'</span><span class="operator">)-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">'&lt;h2&gt;123&lt;/h2&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;p&gt;Test 123&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">' 123'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="append_content">append_content</h2>
+
+<pre><code>  <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">append_content</span><span class="operator">(</span><span class="string">'&lt;p&gt;I â¥ Mojolicious!&lt;/p&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Append HTML/XML fragment (for <code>root</code> and <code>tag</code> nodes) or raw content to this node&#39;s content.</p>
+
+<pre><code>  <span class="comment"># "&lt;div&gt;&lt;h1&gt;Test123&lt;/h1&gt;&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/div&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h1'</span><span class="operator">)-&gt;</span><span class="variable">append_content</span><span class="operator">(</span><span class="string">'123'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;!-- Test 123 --&gt;&lt;br&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;!-- Test --&gt;&lt;br&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">append_content</span><span class="operator">(</span><span class="string">'123 '</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;p&gt;Test&lt;i&gt;123&lt;/i&gt;&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">append_content</span><span class="operator">(</span><span class="string">'&lt;i&gt;123&lt;/i&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="at">at</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$result</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'div ~ p'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Find first descendant element of this element matching the CSS selector and return it as a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> object, or <code>undef</code> if none could be found. All selectors from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html#SELECTORS">&quot;SELECTORS&quot; in Mojo::DOM::CSS</a> are supported.</p>
+
+<pre><code>  <span class="comment"># Find first element with "svg" namespace definition</span>
+  <span class="keyword">my</span> <span class="variable">$namespace</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'[xmlns\:svg]'</span><span class="operator">)-&gt;</span><span class="operator">{</span><span class="string">'xmlns:svg'</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="attr">attr</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span>  <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$dom</span>     <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$dom</span>     <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>This element&#39;s attributes.</p>
+
+<pre><code>  <span class="comment"># Remove an attribute</span>
+  <span class="keyword">delete</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">id</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Attribute without value</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">selected</span> <span class="operator">=&gt;</span> <span class="keyword">undef</span><span class="operator">);</span>
+  
+  <span class="comment"># List id attributes</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'*'</span><span class="operator">)-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">attr</span> <span class="operator">=&gt;</span> <span class="string">'id'</span><span class="operator">)-&gt;</span><span class="variable">compact</span><span class="operator">-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="child_nodes">child_nodes</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">child_nodes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object containing all child nodes of this element as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> objects.</p>
+
+<pre><code>  <span class="comment"># "&lt;p&gt;&lt;b&gt;123&lt;/b&gt;&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;b&gt;123&lt;/b&gt;&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;!DOCTYPE html&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;!DOCTYPE html&gt;&lt;b&gt;123&lt;/b&gt;'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">;</span>
+  
+  <span class="comment"># " Test "</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;b&gt;123&lt;/b&gt;&lt;!-- Test --&gt;'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">last</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="children">children</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">children</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">children</span><span class="operator">(</span><span class="string">'div ~ p'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Find all child elements of this element matching the CSS selector and return a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object containing these elements as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> objects. All selectors from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html#SELECTORS">&quot;SELECTORS&quot; in Mojo::DOM::CSS</a> are supported.</p>
+
+<pre><code>  <span class="comment"># Show tag name of random child element</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">children</span><span class="operator">-&gt;</span><span class="variable">shuffle</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">tag</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="content">content</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+  <span class="variable">$dom</span>    <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">(</span><span class="string">'&lt;p&gt;I â¥ Mojolicious!&lt;/p&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Return this node&#39;s content or replace it with HTML/XML fragment (for <code>root</code> and <code>tag</code> nodes) or raw content.</p>
+
+<pre><code>  <span class="comment"># "&lt;b&gt;Test&lt;/b&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;b&gt;Test&lt;/b&gt;&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'div'</span><span class="operator">)-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;div&gt;&lt;h1&gt;123&lt;/h1&gt;&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h1'</span><span class="operator">)-&gt;</span><span class="variable">content</span><span class="operator">(</span><span class="string">'123'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;p&gt;&lt;i&gt;123&lt;/i&gt;&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">content</span><span class="operator">(</span><span class="string">'&lt;i&gt;123&lt;/i&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;div&gt;&lt;h1&gt;&lt;/h1&gt;&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h1'</span><span class="operator">)-&gt;</span><span class="variable">content</span><span class="operator">(</span><span class="string">''</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># " Test "</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;!-- Test --&gt;&lt;br&gt;'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;div&gt;&lt;!-- 123 --&gt;456&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;!-- Test --&gt;456&lt;/div&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'div'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">(</span><span class="string">' 123 '</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="descendant_nodes">descendant_nodes</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">descendant_nodes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object containing all descendant nodes of this element as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> objects.</p>
+
+<pre><code>  <span class="comment"># "&lt;p&gt;&lt;b&gt;123&lt;/b&gt;&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;&lt;!-- Test --&gt;&lt;b&gt;123&lt;!-- 456 --&gt;&lt;/b&gt;&lt;/p&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">descendant_nodes</span><span class="operator">-&gt;</span><span class="variable">grep</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">type</span> <span class="keyword">eq</span> <span class="string">'comment'</span> <span class="operator">})</span>
+    <span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'remove'</span><span class="operator">)-&gt;</span><span class="variable">first</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;p&gt;&lt;b&gt;test&lt;/b&gt;test&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;&lt;b&gt;123&lt;/b&gt;456&lt;/p&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">descendant_nodes</span><span class="operator">-&gt;</span><span class="variable">grep</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">type</span> <span class="keyword">eq</span> <span class="string">'text'</span> <span class="operator">})</span>
+    <span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">content</span> <span class="operator">=&gt;</span> <span class="string">'test'</span><span class="operator">)-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="find">find</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'div ~ p'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Find all descendant elements of this element matching the CSS selector and return a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object containing these elements as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> objects. All selectors from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html#SELECTORS">&quot;SELECTORS&quot; in Mojo::DOM::CSS</a> are supported.</p>
+
+<pre><code>  <span class="comment"># Find a specific element and extract information</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'div'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">23</span><span class="operator">]{</span><span class="string">id</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Extract information from multiple elements</span>
+  <span class="keyword">my</span> <span class="variable">@headers</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'h1, h2, h3'</span><span class="operator">)-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'text'</span><span class="operator">)-&gt;</span><span class="variable">each</span><span class="operator">;</span>
+  
+  <span class="comment"># Count all the different tags</span>
+  <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'*'</span><span class="operator">)-&gt;</span><span class="variable">reduce</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$a</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="variable">$b</span><span class="operator">-&gt;</span><span class="variable">tag</span><span class="operator">}</span><span class="operator">++;</span> <span class="variable">$a</span> <span class="operator">},</span> <span class="operator">{}</span><span class="operator">);</span>
+  
+  <span class="comment"># Find elements with a class that contains dots</span>
+  <span class="keyword">my</span> <span class="variable">@divs</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'div.foo\.bar'</span><span class="operator">)-&gt;</span><span class="variable">each</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="following">following</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">following</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">following</span><span class="operator">(</span><span class="string">'div ~ p'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Find all sibling elements after this node matching the CSS selector and return a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object containing these elements as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> objects. All selectors from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html#SELECTORS">&quot;SELECTORS&quot; in Mojo::DOM::CSS</a> are supported.</p>
+
+<pre><code>  <span class="comment"># List tags of sibling elements after this node</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">following</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'tag'</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="following_nodes">following_nodes</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">following_nodes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object containing all sibling nodes after this node as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> objects.</p>
+
+<pre><code>  <span class="comment"># "C"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;A&lt;/p&gt;&lt;!-- B --&gt;C'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">following_nodes</span><span class="operator">-&gt;</span><span class="variable">last</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="matches">matches</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">matches</span><span class="operator">(</span><span class="string">'div ~ p'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if this element matches the CSS selector. All selectors from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html#SELECTORS">&quot;SELECTORS&quot; in Mojo::DOM::CSS</a> are supported.</p>
+
+<pre><code>  <span class="comment"># True</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p class="a"&gt;A&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">matches</span><span class="operator">(</span><span class="string">'.a'</span><span class="operator">);</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p class="a"&gt;A&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">matches</span><span class="operator">(</span><span class="string">'p[class]'</span><span class="operator">);</span>
+  
+  <span class="comment"># False</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p class="a"&gt;A&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">matches</span><span class="operator">(</span><span class="string">'.b'</span><span class="operator">);</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p class="a"&gt;A&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">matches</span><span class="operator">(</span><span class="string">'p[id]'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="namespace">namespace</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$namespace</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">namespace</span><span class="operator">;</span>
+</code></pre>
+
+<p>Find this element&#39;s namespace, or return <code>undef</code> if none could be found.</p>
+
+<pre><code>  <span class="comment"># Find namespace for an element with namespace prefix</span>
+  <span class="keyword">my</span> <span class="variable">$namespace</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'svg &gt; svg\:circle'</span><span class="operator">)-&gt;</span><span class="variable">namespace</span><span class="operator">;</span>
+  
+  <span class="comment"># Find namespace for an element that may or may not have a namespace prefix</span>
+  <span class="keyword">my</span> <span class="variable">$namespace</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'svg &gt; circle'</span><span class="operator">)-&gt;</span><span class="variable">namespace</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">Mojo::DOM</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">Mojo::DOM</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'&lt;foo bar="baz"&gt;I â¥ Mojolicious!&lt;/foo&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new scalar-based <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> object and <a href="#parse">&quot;parse&quot;</a> HTML/XML fragment if necessary.</p>
+
+<h2 id="next">next</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$sibling</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">next</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> object for next sibling element, or <code>undef</code> if there are no more siblings.</p>
+
+<pre><code>  <span class="comment"># "&lt;h2&gt;123&lt;/h2&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;h2&gt;123&lt;/h2&gt;&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h1'</span><span class="operator">)-&gt;</span><span class="variable">next</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="next_node">next_node</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$sibling</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">next_node</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> object for next sibling node, or <code>undef</code> if there are no more siblings.</p>
+
+<pre><code>  <span class="comment"># "456"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;&lt;b&gt;123&lt;/b&gt;&lt;!-- Test --&gt;456&lt;/p&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'b'</span><span class="operator">)-&gt;</span><span class="variable">next_node</span><span class="operator">-&gt;</span><span class="variable">next_node</span><span class="operator">;</span>
+  
+  <span class="comment"># " Test "</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;&lt;b&gt;123&lt;/b&gt;&lt;!-- Test --&gt;456&lt;/p&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'b'</span><span class="operator">)-&gt;</span><span class="variable">next_node</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="parent">parent</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$parent</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parent</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> object for parent of this node, or <code>undef</code> if this node has no parent.</p>
+
+<pre><code>  <span class="comment"># "&lt;b&gt;&lt;i&gt;Test&lt;/i&gt;&lt;/b&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;&lt;b&gt;&lt;i&gt;Test&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'i'</span><span class="operator">)-&gt;</span><span class="variable">parent</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;foo bar="baz"&gt;I â¥ Mojolicious!&lt;/foo&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse HTML/XML fragment with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/HTML.html">Mojo::DOM::HTML</a>.</p>
+
+<pre><code>  <span class="comment"># Parse XML</span>
+  <span class="keyword">my</span> <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">Mojo::DOM</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">-&gt;</span><span class="variable">xml</span><span class="operator">(</span><span class="number">1</span><span class="operator">)-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;foo&gt;I â¥ Mojolicious!&lt;/foo&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="preceding">preceding</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">preceding</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">preceding</span><span class="operator">(</span><span class="string">'div ~ p'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Find all sibling elements before this node matching the CSS selector and return a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object containing these elements as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> objects. All selectors from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html#SELECTORS">&quot;SELECTORS&quot; in Mojo::DOM::CSS</a> are supported.</p>
+
+<pre><code>  <span class="comment"># List tags of sibling elements before this node</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">preceding</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'tag'</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="preceding_nodes">preceding_nodes</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">preceding_nodes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object containing all sibling nodes before this node as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> objects.</p>
+
+<pre><code>  <span class="comment"># "A"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'A&lt;!-- B --&gt;&lt;p&gt;C&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">preceding_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="prepend">prepend</h2>
+
+<pre><code>  <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">prepend</span><span class="operator">(</span><span class="string">'&lt;p&gt;I â¥ Mojolicious!&lt;/p&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Prepend HTML/XML fragment to this node (for all node types other than <code>root</code>).</p>
+
+<pre><code>  <span class="comment"># "&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;h2&gt;123&lt;/h2&gt;&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h2&gt;123&lt;/h2&gt;&lt;/div&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h2'</span><span class="operator">)-&gt;</span><span class="variable">prepend</span><span class="operator">(</span><span class="string">'&lt;h1&gt;Test&lt;/h1&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;p&gt;Test 123&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;123&lt;/p&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">prepend</span><span class="operator">(</span><span class="string">'Test '</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="prepend_content">prepend_content</h2>
+
+<pre><code>  <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">prepend_content</span><span class="operator">(</span><span class="string">'&lt;p&gt;I â¥ Mojolicious!&lt;/p&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Prepend HTML/XML fragment (for <code>root</code> and <code>tag</code> nodes) or raw content to this node&#39;s content.</p>
+
+<pre><code>  <span class="comment"># "&lt;div&gt;&lt;h2&gt;Test123&lt;/h2&gt;&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h2&gt;123&lt;/h2&gt;&lt;/div&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h2'</span><span class="operator">)-&gt;</span><span class="variable">prepend_content</span><span class="operator">(</span><span class="string">'Test'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;!-- Test 123 --&gt;&lt;br&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;!-- 123 --&gt;&lt;br&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">prepend_content</span><span class="operator">(</span><span class="string">' Test'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;p&gt;&lt;i&gt;123&lt;/i&gt;Test&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">prepend_content</span><span class="operator">(</span><span class="string">'&lt;i&gt;123&lt;/i&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="previous">previous</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$sibling</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">previous</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> object for previous sibling element, or <code>undef</code> if there are no more siblings.</p>
+
+<pre><code>  <span class="comment"># "&lt;h1&gt;Test&lt;/h1&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;h2&gt;123&lt;/h2&gt;&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h2'</span><span class="operator">)-&gt;</span><span class="variable">previous</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="previous_node">previous_node</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$sibling</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">previous_node</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> object for previous sibling node, or <code>undef</code> if there are no more siblings.</p>
+
+<pre><code>  <span class="comment"># "123"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;123&lt;!-- Test --&gt;&lt;b&gt;456&lt;/b&gt;&lt;/p&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'b'</span><span class="operator">)-&gt;</span><span class="variable">previous_node</span><span class="operator">-&gt;</span><span class="variable">previous_node</span><span class="operator">;</span>
+  
+  <span class="comment"># " Test "</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;123&lt;!-- Test --&gt;&lt;b&gt;456&lt;/b&gt;&lt;/p&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'b'</span><span class="operator">)-&gt;</span><span class="variable">previous_node</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="remove">remove</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$parent</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">;</span>
+</code></pre>
+
+<p>Remove this node and return <a href="#root">&quot;root&quot;</a> (for <code>root</code> nodes) or <a href="#parent">&quot;parent&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># "&lt;div&gt;&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h1'</span><span class="operator">)-&gt;</span><span class="variable">remove</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;p&gt;&lt;b&gt;456&lt;/b&gt;&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;123&lt;b&gt;456&lt;/b&gt;&lt;/p&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="replace">replace</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$parent</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">replace</span><span class="operator">(</span><span class="string">'&lt;div&gt;I â¥ Mojolicious!&lt;/div&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Replace this node with HTML/XML fragment and return <a href="#root">&quot;root&quot;</a> (for <code>root</code> nodes) or <a href="#parent">&quot;parent&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># "&lt;div&gt;&lt;h2&gt;123&lt;/h2&gt;&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h1'</span><span class="operator">)-&gt;</span><span class="variable">replace</span><span class="operator">(</span><span class="string">'&lt;h2&gt;123&lt;/h2&gt;'</span><span class="operator">);</span>
+  
+  <span class="comment"># "&lt;p&gt;&lt;b&gt;123&lt;/b&gt;&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;/p&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">-&gt;</span><span class="variable">replace</span><span class="operator">(</span><span class="string">'&lt;b&gt;123&lt;/b&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="root">root</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$root</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> object for <code>root</code> node.</p>
+
+<h2 id="strip">strip</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$parent</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">strip</span><span class="operator">;</span>
+</code></pre>
+
+<p>Remove this element while preserving its content and return <a href="#parent">&quot;parent&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># "&lt;div&gt;Test&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'h1'</span><span class="operator">)-&gt;</span><span class="variable">strip</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="tag">tag</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tag</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">tag</span><span class="operator">;</span>
+  <span class="variable">$dom</span>    <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">tag</span><span class="operator">(</span><span class="string">'div'</span><span class="operator">);</span>
+</code></pre>
+
+<p>This element&#39;s tag name.</p>
+
+<pre><code>  <span class="comment"># List tag names of child elements</span>
+  <span class="keyword">say</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">children</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'tag'</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="tap">tap</h2>
+
+<pre><code>  <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">tap</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Alias for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html#tap">&quot;tap&quot; in Mojo::Base</a>.</p>
+
+<h2 id="text">text</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$trimmed</span>   <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$untrimmed</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">text</span><span class="operator">(</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<p>Extract text content from this element only (not including child elements), smart whitespace trimming is enabled by default.</p>
+
+<pre><code>  <span class="comment"># "foo baz"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"&lt;div&gt;foo\n&lt;p&gt;bar&lt;/p&gt;baz\n&lt;/div&gt;"</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'div'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+  
+  <span class="comment"># "foo\nbaz\n"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"&lt;div&gt;foo\n&lt;p&gt;bar&lt;/p&gt;baz\n&lt;/div&gt;"</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'div'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">(</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="to_string">to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render this node and its content to HTML/XML.</p>
+
+<pre><code>  <span class="comment"># "&lt;b&gt;Test&lt;/b&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;b&gt;Test&lt;/b&gt;&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'div b'</span><span class="operator">)-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="tree">tree</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tree</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">;</span>
+  <span class="variable">$dom</span>     <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">(</span><span class="operator">[</span><span class="string">'root'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Document Object Model. Note that this structure should only be used very carefully since it is very dynamic.</p>
+
+<h2 id="type">type</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$type</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">;</span>
+</code></pre>
+
+<p>This node&#39;s type, usually <code>cdata</code>, <code>comment</code>, <code>doctype</code>, <code>pi</code>, <code>raw</code>, <code>root</code>, <code>tag</code> or <code>text</code>.</p>
+
+<pre><code>  <span class="comment"># "cdata"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;![CDATA[Test]]&gt;'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">;</span>
+  
+  <span class="comment"># "comment"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;!-- Test --&gt;'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">;</span>
+  
+  <span class="comment"># "doctype"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;!DOCTYPE html&gt;'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">;</span>
+  
+  <span class="comment"># "pi"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;?xml version="1.0"?&gt;'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">;</span>
+  
+  <span class="comment"># "raw"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;title&gt;Test&lt;/title&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">;</span>
+  
+  <span class="comment"># "root"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">type</span><span class="operator">;</span>
+  
+  <span class="comment"># "tag"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">type</span><span class="operator">;</span>
+  
+  <span class="comment"># "text"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="val">val</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">val</span><span class="operator">;</span>
+</code></pre>
+
+<p>Extract value from form element (such as <code>button</code>, <code>input</code>, <code>option</code>, <code>select</code> and <code>textarea</code>), or return <code>undef</code> if this element has no value. In the case of <code>select</code> with <code>multiple</code> attribute, find <code>option</code> elements with <code>selected</code> attribute and return an array reference with all values, or <code>undef</code> if none could be found.</p>
+
+<pre><code>  <span class="comment"># "a"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;input name=test value=a&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'input'</span><span class="operator">)-&gt;</span><span class="variable">val</span><span class="operator">;</span>
+  
+  <span class="comment"># "b"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;textarea&gt;b&lt;/textarea&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'textarea'</span><span class="operator">)-&gt;</span><span class="variable">val</span><span class="operator">;</span>
+  
+  <span class="comment"># "c"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;option value="c"&gt;Test&lt;/option&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'option'</span><span class="operator">)-&gt;</span><span class="variable">val</span><span class="operator">;</span>
+  
+  <span class="comment"># "d"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;select&gt;&lt;option selected&gt;d&lt;/option&gt;&lt;/select&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'select'</span><span class="operator">)-&gt;</span><span class="variable">val</span><span class="operator">;</span>
+  
+  <span class="comment"># "e"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;select multiple&gt;&lt;option selected&gt;e&lt;/option&gt;&lt;/select&gt;'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'select'</span><span class="operator">)-&gt;</span><span class="variable">val</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+  
+  <span class="comment"># "on"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;input name=test type=checkbox&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'input'</span><span class="operator">)-&gt;</span><span class="variable">val</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="wrap">wrap</h2>
+
+<pre><code>  <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">wrap</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;/div&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Wrap HTML/XML fragment around this node (for all node types other than <code>root</code>), placing it as the last child of the first innermost element.</p>
+
+<pre><code>  <span class="comment"># "&lt;p&gt;123&lt;b&gt;Test&lt;/b&gt;&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;b&gt;Test&lt;/b&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'b'</span><span class="operator">)-&gt;</span><span class="variable">wrap</span><span class="operator">(</span><span class="string">'&lt;p&gt;123&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;div&gt;&lt;p&gt;&lt;b&gt;Test&lt;/b&gt;&lt;/p&gt;123&lt;/div&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;b&gt;Test&lt;/b&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'b'</span><span class="operator">)-&gt;</span><span class="variable">wrap</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;p&gt;&lt;/p&gt;123&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;p&gt;&lt;b&gt;Test&lt;/b&gt;&lt;/p&gt;&lt;p&gt;123&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;b&gt;Test&lt;/b&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'b'</span><span class="operator">)-&gt;</span><span class="variable">wrap</span><span class="operator">(</span><span class="string">'&lt;p&gt;&lt;/p&gt;&lt;p&gt;123&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;p&gt;&lt;b&gt;Test&lt;/b&gt;&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;/p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">child_nodes</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">-&gt;</span><span class="variable">wrap</span><span class="operator">(</span><span class="string">'&lt;b&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="wrap_content">wrap_content</h2>
+
+<pre><code>  <span class="variable">$dom</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">wrap_content</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;/div&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Wrap HTML/XML fragment around this node&#39;s content (for <code>root</code> and <code>tag</code> nodes), placing it as the last children of the first innermost element.</p>
+
+<pre><code>  <span class="comment"># "&lt;p&gt;&lt;b&gt;123Test&lt;/b&gt;&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;p&gt;Test&lt;p&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'p'</span><span class="operator">)-&gt;</span><span class="variable">wrap_content</span><span class="operator">(</span><span class="string">'&lt;b&gt;123&lt;/b&gt;'</span><span class="operator">)-&gt;</span><span class="variable">root</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;p&gt;&lt;b&gt;Test&lt;/b&gt;&lt;/p&gt;&lt;p&gt;123&lt;/p&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;b&gt;Test&lt;/b&gt;'</span><span class="operator">)-&gt;</span><span class="variable">wrap_content</span><span class="operator">(</span><span class="string">'&lt;p&gt;&lt;/p&gt;&lt;p&gt;123&lt;/p&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="xml">xml</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">xml</span><span class="operator">;</span>
+  <span class="variable">$dom</span>     <span class="operator">=</span> <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">xml</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Disable HTML semantics in parser and activate case-sensitivity, defaults to auto-detection based on XML declarations.</p>
+
+<h1 id="OPERATORS">OPERATORS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> overloads the following operators.</p>
+
+<h2 id="array">array</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">@nodes</span> <span class="operator">=</span> <span class="variable">@$dom</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#child_nodes">&quot;child_nodes&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># "&lt;!-- Test --&gt;"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;!-- Test --&gt;&lt;b&gt;123&lt;/b&gt;'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="bool">bool</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="operator">!!</span><span class="variable">$dom</span><span class="operator">;</span>
+</code></pre>
+
+<p>Always true.</p>
+
+<h2 id="hash">hash</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">%attrs</span> <span class="operator">=</span> <span class="variable">%$dom</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#attr">&quot;attr&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># "test"</span>
+  <span class="variable">$dom</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div id="test"&gt;Test&lt;/div&gt;'</span><span class="operator">)-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'div'</span><span class="operator">)-&gt;</span><span class="operator">{</span><span class="string">id</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="stringify">stringify</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="string">"</span><span class="variable">$dom</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#to_string">&quot;to_string&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

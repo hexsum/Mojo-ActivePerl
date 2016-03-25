@@ -1,0 +1,165 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#upgrade">upgrade</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#asset">asset</a></li>
+      <li><a href="#auto_upgrade">auto_upgrade</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#body_contains">body_contains</a></li>
+      <li><a href="#body_size">body_size</a></li>
+      <li><a href="#clone">clone</a></li>
+      <li><a href="#get_body_chunk">get_body_chunk</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#parse">parse</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Content::Single - HTTP content</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Content::Single</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$single</span> <span class="operator">=</span> <span class="variable">Mojo::Content::Single</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Length: 12\x0d\x0a\x0d\x0aHello World!"</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_length</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/Single.html">Mojo::Content::Single</a> is a container for HTTP content, based on <a href="http://tools.ietf.org/html/rfc7230">RFC 7230</a> and <a href="http://tools.ietf.org/html/rfc7231">RFC 7231</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/Single.html">Mojo::Content::Single</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html">Mojo::Content</a> and can emit the following new ones.</p>
+
+<h2 id="upgrade">upgrade</h2>
+
+<pre><code>  <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">upgrade</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$single</span><span class="operator">,</span> <span class="variable">$multi</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when content gets upgraded to a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/MultiPart.html">Mojo::Content::MultiPart</a> object.</p>
+
+<pre><code>  <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">upgrade</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$single</span><span class="operator">,</span> <span class="variable">$multi</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> <span class="variable">$multi</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span> <span class="operator">=~</span> <span class="regex">/multipart\/([^;]+)/i</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Multipart: </span><span class="variable">$1</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/Single.html">Mojo::Content::Single</a> inherits all attributes from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html">Mojo::Content</a> and implements the following new ones.</p>
+
+<h2 id="asset">asset</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$asset</span> <span class="operator">=</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">asset</span><span class="operator">;</span>
+  <span class="variable">$single</span>   <span class="operator">=</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">asset</span><span class="operator">(</span><span class="variable">Mojo::Asset::Memory</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>The actual content, defaults to a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/Memory.html">Mojo::Asset::Memory</a> object with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/Memory.html#auto_upgrade">&quot;auto_upgrade&quot; in Mojo::Asset::Memory</a> enabled.</p>
+
+<h2 id="auto_upgrade">auto_upgrade</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">auto_upgrade</span><span class="operator">;</span>
+  <span class="variable">$single</span>  <span class="operator">=</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">auto_upgrade</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Try to detect multipart content and automatically upgrade to a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/MultiPart.html">Mojo::Content::MultiPart</a> object, defaults to a true value.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/Single.html">Mojo::Content::Single</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html">Mojo::Content</a> and implements the following new ones.</p>
+
+<h2 id="body_contains">body_contains</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">body_contains</span><span class="operator">(</span><span class="string">'1234567'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if content contains a specific string.</p>
+
+<h2 id="body_size">body_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">body_size</span><span class="operator">;</span>
+</code></pre>
+
+<p>Content size in bytes.</p>
+
+<h2 id="clone">clone</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$clone</span> <span class="operator">=</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">clone</span><span class="operator">;</span>
+</code></pre>
+
+<p>Clone content if possible, otherwise return <code>undef</code>.</p>
+
+<h2 id="get_body_chunk">get_body_chunk</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">get_body_chunk</span><span class="operator">(</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get a chunk of content starting from a specific position. Note that it might not be possible to get the same chunk twice if content was generated dynamically.</p>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$single</span> <span class="operator">=</span> <span class="variable">Mojo::Content::Single</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$single</span> <span class="operator">=</span> <span class="variable">Mojo::Content::Single</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">asset</span> <span class="operator">=&gt;</span> <span class="variable">Mojo::Asset::File</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$single</span> <span class="operator">=</span> <span class="variable">Mojo::Content::Single</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">asset</span> <span class="operator">=&gt;</span> <span class="variable">Mojo::Asset::File</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/Single.html">Mojo::Content::Single</a> object and subscribe to <a href="#read">&quot;read&quot;</a> event with default content parser.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$single</span> <span class="operator">=</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Length: 12\x0d\x0a\x0d\x0aHello World!"</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$multi</span>
+    <span class="operator">=</span> <span class="variable">$single</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Type: multipart/form-data\x0d\x0a\x0d\x0a"</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse content chunk and upgrade to <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/MultiPart.html">Mojo::Content::MultiPart</a> object if necessary.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

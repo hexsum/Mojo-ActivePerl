@@ -1,0 +1,295 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OVERLOADED">OVERLOADED</a></li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#Initiation">Initiation</a></li>
+      <li><a href="#Attributes">Attributes</a></li>
+      <li><a href="#Knowledge">Knowledge</a></li>
+    </ul>
+  </li>
+  <li><a href="#DIAGNOSTICS">DIAGNOSTICS</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#LICENSE">LICENSE</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>MIME::Type - description of one MIME type</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> <span class="keyword">use</span> <span class="variable">MIME::Types</span><span class="operator">;</span>
+ <span class="keyword">my</span> <span class="variable">$mimetypes</span> <span class="operator">=</span> <span class="variable">MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+ <span class="keyword">my</span> <span class="variable">MIME::Type</span> <span class="variable">$plaintext</span> <span class="operator">=</span> <span class="variable">$mimetypes</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+ <span class="keyword">print</span> <span class="variable">$plaintext</span><span class="operator">-&gt;</span><span class="variable">mediaType</span><span class="operator">;</span>   <span class="comment"># text</span>
+ <span class="keyword">print</span> <span class="variable">$plaintext</span><span class="operator">-&gt;</span><span class="variable">subType</span><span class="operator">;</span>     <span class="comment"># plain</span>
+ 
+ <span class="keyword">my</span> <span class="variable">@ext</span> <span class="operator">=</span> <span class="variable">$plaintext</span><span class="operator">-&gt;</span><span class="variable">extensions</span><span class="operator">;</span>
+ <span class="keyword">print</span> <span class="string">"</span><span class="variable">@ext</span><span class="string">"</span>                   <span class="comment"># txt asc c cc h hh cpp</span>
+ 
+ <span class="keyword">print</span> <span class="variable">$plaintext</span><span class="operator">-&gt;</span><span class="variable">encoding</span>     <span class="comment"># 8bit</span>
+ <span class="keyword">if</span><span class="operator">(</span><span class="variable">$plaintext</span><span class="operator">-&gt;</span><span class="variable">isBinary</span><span class="operator">)</span>       <span class="comment"># false</span>
+ <span class="keyword">if</span><span class="operator">(</span><span class="variable">$plaintext</span><span class="operator">-&gt;</span><span class="variable">isAscii</span><span class="operator">)</span>        <span class="comment"># true</span>
+ <span class="keyword">if</span><span class="operator">(</span><span class="variable">$plaintext</span><span class="operator">-&gt;</span><span class="variable">equals</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">)</span> <span class="operator">{...}</span>
+ <span class="keyword">if</span><span class="operator">(</span><span class="variable">$plaintext</span> <span class="keyword">eq</span> <span class="string">'text/plain'</span><span class="operator">)</span> <span class="comment"># same</span>
+ 
+ <span class="keyword">print</span> <span class="variable">MIME::Type</span><span class="operator">-&gt;</span><span class="variable">simplified</span><span class="operator">(</span><span class="string">'x-appl/x-zip'</span><span class="operator">)</span> <span class="comment">#  'appl/zip'</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>MIME types are used in MIME entities, for instance as part of e-mail and HTTP traffic. Sometimes real knowledge about a mime-type is need. Objects of <code>MIME::Type</code> store the information on one such type.</p>
+
+<h1 id="OVERLOADED">OVERLOADED</h1>
+
+<dl>
+
+<dt id="overload:-string-comparison">overload: <b>string comparison</b></dt>
+<dd>
+
+<p>When a MIME::Type object is compared to either a string or another MIME::TYpe, the <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Type.html#Knowledge">equals()</a> method is called. Comparison is smart, which means that it extends common string comparison with some features which are defined in the related RFCs.</p>
+
+</dd>
+<dt id="overload:-stringification">overload: <b>stringification</b></dt>
+<dd>
+
+<p>The stringification (use of the object in a place where a string is required) will result in the type name, the same as <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Type.html#Attributes">type()</a> returns.</p>
+
+<p>example: use of stringification</p>
+
+<pre><code> <span class="keyword">my</span> <span class="variable">$mime</span> <span class="operator">=</span> <span class="variable">MIME::Type</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'text/html'</span><span class="operator">);</span>
+ <span class="keyword">print</span> <span class="string">"</span><span class="variable">$mime</span><span class="string">\n"</span><span class="operator">;</span>   <span class="comment"># explicit stringification</span>
+ <span class="keyword">print</span> <span class="variable">$mime</span><span class="operator">;</span>       <span class="comment"># implicit stringification</span>
+</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="METHODS">METHODS</h1>
+
+<h2 id="Initiation">Initiation</h2>
+
+<dl>
+
+<dt id="MIME::Type-new-options">MIME::Type-&gt;<b>new</b>(%options)</dt>
+<dd>
+
+<p>Create (<i>instantiate</i>) a new MIME::Type object which manages one mime type.</p>
+
+<pre><code> -Option    --Default
+  encoding    &lt;depends on type&gt;
+  extensions  []
+  simplified  &lt;derived from type&gt;
+  system      undef
+  type        &lt;required&gt;</code></pre>
+
+<dl>
+
+<dt id="encoding-7bit-8bit-base64-quoted-printable">encoding =&gt; &#39;7bit&#39;|&#39;8bit&#39;|&#39;base64&#39;|&#39;quoted-printable&#39;</dt>
+<dd>
+
+<p>How must this data be encoded to be transported safely. The default depends on the type: mimes with as main type <code>text/</code> will default to <code>quoted-printable</code> and all other to <code>base64</code>.</p>
+
+</dd>
+<dt id="extensions-REF-ARRAY">extensions =&gt; REF-ARRAY</dt>
+<dd>
+
+<p>An array of extensions which are using this mime.</p>
+
+</dd>
+<dt id="simplified-STRING">simplified =&gt; STRING</dt>
+<dd>
+
+<p>The mime types main- and sub-label can both start with <code>x-</code>, to indicate that is a non-registered name. Of course, after registration this flag can disappear which adds to the confusion. The simplified string has the <code>x-</code> thingies removed and are translated to lower-case.</p>
+
+</dd>
+<dt id="system-REGEX">system =&gt; REGEX</dt>
+<dd>
+
+<p>Regular expression which defines for which systems this rule is valid. The REGEX is matched on <code>$^O</code>.</p>
+
+</dd>
+<dt id="type-STRING">type =&gt; STRING</dt>
+<dd>
+
+<p>The type which is defined here. It consists of a <i>type</i> and a <i>sub-type</i>, both case-insensitive. This module will return lower-case, but accept upper-case.</p>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+<h2 id="Attributes">Attributes</h2>
+
+<dl>
+
+<dt id="obj-encoding">$obj-&gt;<b>encoding</b>()</dt>
+<dd>
+
+<p>Returns the type of encoding which is required to transport data of this type safely.</p>
+
+</dd>
+<dt id="obj-extensions">$obj-&gt;<b>extensions</b>()</dt>
+<dd>
+
+<p>Returns a list of extensions which are known to be used for this mime type.</p>
+
+</dd>
+<dt id="obj-simplified-string">$obj-&gt;<b>simplified</b>( [$string] )</dt>
+<dd>
+
+</dd>
+<dt id="MIME::Type-simplified-string">MIME::Type-&gt;<b>simplified</b>( [$string] )</dt>
+<dd>
+
+<p>Returns the simplified mime type for this object or the specified STRING. Mime type names can get officially registered. Until then, they have to carry an <code>x-</code> preamble to indicate that. Of course, after recognition, the <code>x-</code> can disappear. In many cases, we prefer the simplified version of the type.</p>
+
+<p>example: results of simplified()</p>
+
+<pre><code> <span class="keyword">my</span> <span class="variable">$mime</span> <span class="operator">=</span> <span class="variable">MIME::Type</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">type</span> <span class="operator">=&gt;</span> <span class="string">'x-appl/x-zip'</span><span class="operator">);</span>
+ <span class="keyword">print</span> <span class="variable">$mime</span><span class="operator">-&gt;</span><span class="variable">simplified</span><span class="operator">;</span>                     <span class="comment"># 'appl/zip'</span>
+ 
+ <span class="keyword">print</span> <span class="variable">$mime</span><span class="operator">-&gt;</span><span class="variable">simplified</span><span class="operator">(</span><span class="string">'text/PLAIN'</span><span class="operator">);</span>       <span class="comment"># 'text/plain'</span>
+ <span class="keyword">print</span> <span class="variable">MIME::Type</span><span class="operator">-&gt;</span><span class="variable">simplified</span><span class="operator">(</span><span class="string">'x-xyz/x-abc'</span><span class="operator">);</span> <span class="comment"># 'xyz/abc'</span>
+</code></pre>
+
+</dd>
+<dt id="obj-system">$obj-&gt;<b>system</b>()</dt>
+<dd>
+
+<p>Returns the regular expression which can be used to determine whether this type is active on the system where you are working on.</p>
+
+</dd>
+<dt id="obj-type">$obj-&gt;<b>type</b>()</dt>
+<dd>
+
+<p>Returns the long type of this object, for instance <code>&#39;text/plain&#39;</code></p>
+
+</dd>
+</dl>
+
+<h2 id="Knowledge">Knowledge</h2>
+
+<dl>
+
+<dt id="obj-equals-string-mime">$obj-&gt;<b>equals</b>($string|$mime)</dt>
+<dd>
+
+<p>Compare this mime-type object with a STRING or other object. In case of a STRING, simplification will take place.</p>
+
+</dd>
+<dt id="obj-isAscii">$obj-&gt;<b>isAscii</b>()</dt>
+<dd>
+
+<p>Old name for <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Type.html#Knowledge">isText()</a>.</p>
+
+</dd>
+<dt id="obj-isBinary">$obj-&gt;<b>isBinary</b>()</dt>
+<dd>
+
+<p>Returns true when the type is not known to be text. See <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Type.html#Knowledge">isText()</a>.</p>
+
+</dd>
+<dt id="obj-isExperimental">$obj-&gt;<b>isExperimental</b>()</dt>
+<dd>
+
+<p>[2.00] Return <code>true</code> when the type is defined for experimental use; the subtype starts with <code>x.</code></p>
+
+</dd>
+<dt id="obj-isPersonal">$obj-&gt;<b>isPersonal</b>()</dt>
+<dd>
+
+<p>[2.00] Return <code>true</code> when the type is defined by a person for private use; the subtype starts with <code>prs.</code></p>
+
+</dd>
+<dt id="obj-isRegistered">$obj-&gt;<b>isRegistered</b>()</dt>
+<dd>
+
+<p>Mime-types which are not registered by IANA nor defined in RFCs shall start with an <code>x-</code>. This counts for as well the media-type as the sub-type. In case either one of the types starts with <code>x-</code> this method will return false.</p>
+
+</dd>
+<dt id="obj-isSignature">$obj-&gt;<b>isSignature</b>()</dt>
+<dd>
+
+<p>Returns true when the type is in the list of known signatures.</p>
+
+</dd>
+<dt id="obj-isText">$obj-&gt;<b>isText</b>()</dt>
+<dd>
+
+<p>[2.05] All types which may have the charset attribute, are text. However, there is currently no record of attributes in this module... so we guess.</p>
+
+</dd>
+<dt id="obj-isVendor">$obj-&gt;<b>isVendor</b>()</dt>
+<dd>
+
+<p>[2.00] Return <code>true</code> when the type is defined by a vendor; the subtype starts with <code>vnd.</code></p>
+
+</dd>
+<dt id="obj-mediaType">$obj-&gt;<b>mediaType</b>()</dt>
+<dd>
+
+<p>The media type of the simplified mime. For <code>&#39;text/plain&#39;</code> it will return <code>&#39;text&#39;</code>.</p>
+
+<p>For historical reasons, the <code>&#39;mainType&#39;</code> method still can be used to retrieve the same value. However, that method is deprecated.</p>
+
+</dd>
+<dt id="obj-subType">$obj-&gt;<b>subType</b>()</dt>
+<dd>
+
+<p>The sub type of the simplified mime. For <code>&#39;text/plain&#39;</code> it will return <code>&#39;plain&#39;</code>.</p>
+
+</dd>
+</dl>
+
+<h1 id="DIAGNOSTICS">DIAGNOSTICS</h1>
+
+<dl>
+
+<dt id="Error:-Type-parameter-is-obligatory">Error: Type parameter is obligatory.</dt>
+<dd>
+
+<p>When a <a href="../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Type.html">MIME::Type</a> object is created, the type itself must be specified with the <code>type</code> option flag.</p>
+
+</dd>
+</dl>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p>This module is part of MIME-Types distribution version 2.13, built on March 07, 2016. Website: <i>http://perl.overmeer.net/mimetypes/</i></p>
+
+<h1 id="LICENSE">LICENSE</h1>
+
+<p>Copyrights 1999,2001-2016 by [Mark Overmeer]. For other contributors see ChangeLog.</p>
+
+<p>This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself. See <i>http://www.perl.com/perl/misc/Artistic.html</i></p>
+
+
+</body>
+
+</html>
+
+

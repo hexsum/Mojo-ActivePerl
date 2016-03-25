@@ -1,0 +1,379 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#SELECTORS">SELECTORS</a>
+    <ul>
+      <li><a href="#pod">*</a></li>
+      <li><a href="#E">E</a></li>
+      <li><a href="#E-foo">E[foo]</a></li>
+      <li><a href="#E-foo-bar">E[foo=&quot;bar&quot;]</a></li>
+      <li><a href="#E-foo-bar-i">E[foo=&quot;bar&quot; i]</a></li>
+      <li><a href="#E-foo-bar1">E[foo~=&quot;bar&quot;]</a></li>
+      <li><a href="#E-foo-bar2">E[foo^=&quot;bar&quot;]</a></li>
+      <li><a href="#E-foo-bar3">E[foo$=&quot;bar&quot;]</a></li>
+      <li><a href="#E-foo-bar4">E[foo*=&quot;bar&quot;]</a></li>
+      <li><a href="#E:root">E:root</a></li>
+      <li><a href="#E:nth-child-n">E:nth-child(n)</a></li>
+      <li><a href="#E:nth-last-child-n">E:nth-last-child(n)</a></li>
+      <li><a href="#E:nth-of-type-n">E:nth-of-type(n)</a></li>
+      <li><a href="#E:nth-last-of-type-n">E:nth-last-of-type(n)</a></li>
+      <li><a href="#E:first-child">E:first-child</a></li>
+      <li><a href="#E:last-child">E:last-child</a></li>
+      <li><a href="#E:first-of-type">E:first-of-type</a></li>
+      <li><a href="#E:last-of-type">E:last-of-type</a></li>
+      <li><a href="#E:only-child">E:only-child</a></li>
+      <li><a href="#E:only-of-type">E:only-of-type</a></li>
+      <li><a href="#E:empty">E:empty</a></li>
+      <li><a href="#E:checked">E:checked</a></li>
+      <li><a href="#E.warning">E.warning</a></li>
+      <li><a href="#E-myid">E#myid</a></li>
+      <li><a href="#E:not-s">E:not(s)</a></li>
+      <li><a href="#E-F">E F</a></li>
+      <li><a href="#E-F1">E &gt; F</a></li>
+      <li><a href="#E-F2">E + F</a></li>
+      <li><a href="#E-F3">E ~ F</a></li>
+      <li><a href="#E-F-G">E, F, G</a></li>
+      <li><a href="#E-foo-bar-bar-baz">E[foo=bar][bar=baz]</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#tree">tree</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#matches">matches</a></li>
+      <li><a href="#select">select</a></li>
+      <li><a href="#select_one">select_one</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::DOM::CSS - CSS selector engine</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::DOM::CSS</span><span class="operator">;</span>
+  
+  <span class="comment"># Select elements from DOM tree</span>
+  <span class="keyword">my</span> <span class="variable">$css</span> <span class="operator">=</span> <span class="variable">Mojo::DOM::CSS</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">tree</span> <span class="operator">=&gt;</span> <span class="variable">$tree</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$elements</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'h1, h2, h3'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html">Mojo::DOM::CSS</a> is the CSS selector engine used by <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a>, based on the <a href="https://html.spec.whatwg.org">HTML Living Standard</a> and <a href="http://www.w3.org/TR/css3-selectors/">Selectors Level 3</a>.</p>
+
+<h1 id="SELECTORS">SELECTORS</h1>
+
+<p>All CSS selectors that make sense for a standalone parser are supported.</p>
+
+<h2 id="pod">*</h2>
+
+<p>Any element.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$all</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'*'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E">E</h2>
+
+<p>An element of type <code>E</code>.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$title</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-foo">E[foo]</h2>
+
+<p>An <code>E</code> element with a <code>foo</code> attribute.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$links</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'a[href]'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-foo-bar">E[foo=&quot;bar&quot;]</h2>
+
+<p>An <code>E</code> element whose <code>foo</code> attribute value is exactly equal to <code>bar</code>.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$case_sensitive</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[type="hidden"]'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$case_sensitive</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[type=hidden]'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-foo-bar-i">E[foo=&quot;bar&quot; i]</h2>
+
+<p>An <code>E</code> element whose <code>foo</code> attribute value is exactly equal to any (ASCII-range) case-permutation of <code>bar</code>. Note that this selector is EXPERIMENTAL and might change without warning!</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$case_insensitive</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[type="hidden" i]'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$case_insensitive</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[type=hidden i]'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$case_insensitive</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[class~="foo" i]'</span><span class="operator">);</span>
+</code></pre>
+
+<p>This selector is part of <a href="http://dev.w3.org/csswg/selectors-4">Selectors Level 4</a>, which is still a work in progress.</p>
+
+<h2 id="E-foo-bar1">E[foo~=&quot;bar&quot;]</h2>
+
+<p>An <code>E</code> element whose <code>foo</code> attribute value is a list of whitespace-separated values, one of which is exactly equal to <code>bar</code>.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[class~="foo"]'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[class~=foo]'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-foo-bar2">E[foo^=&quot;bar&quot;]</h2>
+
+<p>An <code>E</code> element whose <code>foo</code> attribute value begins exactly with the string <code>bar</code>.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$begins_with</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[name^="f"]'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$begins_with</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[name^=f]'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-foo-bar3">E[foo$=&quot;bar&quot;]</h2>
+
+<p>An <code>E</code> element whose <code>foo</code> attribute value ends exactly with the string <code>bar</code>.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$ends_with</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[name$="o"]'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$ends_with</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[name$=o]'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-foo-bar4">E[foo*=&quot;bar&quot;]</h2>
+
+<p>An <code>E</code> element whose <code>foo</code> attribute value contains the substring <code>bar</code>.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$contains</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[name*="fo"]'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$contains</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'input[name*=fo]'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:root">E:root</h2>
+
+<p>An <code>E</code> element, root of the document.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$root</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">':root'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:nth-child-n">E:nth-child(n)</h2>
+
+<p>An <code>E</code> element, the <code>n-th</code> child of its parent.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$third</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-child(3)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$odd</span>   <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-child(odd)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$even</span>  <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-child(even)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$top3</span>  <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-child(-n+3)'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:nth-last-child-n">E:nth-last-child(n)</h2>
+
+<p>An <code>E</code> element, the <code>n-th</code> child of its parent, counting from the last one.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$third</span>    <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-last-child(3)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$odd</span>      <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-last-child(odd)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$even</span>     <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-last-child(even)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bottom3</span>  <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-last-child(-n+3)'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:nth-of-type-n">E:nth-of-type(n)</h2>
+
+<p>An <code>E</code> element, the <code>n-th</code> sibling of its type.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$third</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-of-type(3)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$odd</span>   <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-of-type(odd)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$even</span>  <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-of-type(even)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$top3</span>  <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-of-type(-n+3)'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:nth-last-of-type-n">E:nth-last-of-type(n)</h2>
+
+<p>An <code>E</code> element, the <code>n-th</code> sibling of its type, counting from the last one.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$third</span>    <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-last-of-type(3)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$odd</span>      <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-last-of-type(odd)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$even</span>     <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-last-of-type(even)'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bottom3</span>  <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div:nth-last-of-type(-n+3)'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:first-child">E:first-child</h2>
+
+<p>An <code>E</code> element, first child of its parent.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div p:first-child'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:last-child">E:last-child</h2>
+
+<p>An <code>E</code> element, last child of its parent.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$last</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div p:last-child'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:first-of-type">E:first-of-type</h2>
+
+<p>An <code>E</code> element, first sibling of its type.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div p:first-of-type'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:last-of-type">E:last-of-type</h2>
+
+<p>An <code>E</code> element, last sibling of its type.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$last</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div p:last-of-type'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:only-child">E:only-child</h2>
+
+<p>An <code>E</code> element, only child of its parent.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$lonely</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div p:only-child'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:only-of-type">E:only-of-type</h2>
+
+<p>An <code>E</code> element, only sibling of its type.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$lonely</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div p:only-of-type'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:empty">E:empty</h2>
+
+<p>An <code>E</code> element that has no children (including text nodes).</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$empty</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">':empty'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:checked">E:checked</h2>
+
+<p>A user interface element <code>E</code> which is checked (for instance a radio-button or checkbox).</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$input</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">':checked'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E.warning">E.warning</h2>
+
+<p>An <code>E</code> element whose class is &quot;warning&quot;.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$warning</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div.warning'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-myid">E#myid</h2>
+
+<p>An <code>E</code> element with <code>ID</code> equal to &quot;myid&quot;.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div#foo'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E:not-s">E:not(s)</h2>
+
+<p>An <code>E</code> element that does not match simple selector <code>s</code>.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$others</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div p:not(:first-child)'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-F">E F</h2>
+
+<p>An <code>F</code> element descendant of an <code>E</code> element.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$headlines</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'div h1'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-F1">E &gt; F</h2>
+
+<p>An <code>F</code> element child of an <code>E</code> element.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$headlines</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'html &gt; body &gt; div &gt; h1'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-F2">E + F</h2>
+
+<p>An <code>F</code> element immediately preceded by an <code>E</code> element.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$second</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'h1 + h2'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-F3">E ~ F</h2>
+
+<p>An <code>F</code> element preceded by an <code>E</code> element.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$second</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'h1 ~ h2'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-F-G">E, F, G</h2>
+
+<p>Elements of type <code>E</code>, <code>F</code> and <code>G</code>.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$headlines</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'h1, h2, h3'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="E-foo-bar-bar-baz">E[foo=bar][bar=baz]</h2>
+
+<p>An <code>E</code> element whose attributes match all following attribute selectors.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$links</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'a[foo^=b][foo$=ar]'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html">Mojo::DOM::CSS</a> implements the following attributes.</p>
+
+<h2 id="tree">tree</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tree</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">;</span>
+  <span class="variable">$css</span>     <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">(</span><span class="operator">[</span><span class="string">'root'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Document Object Model. Note that this structure should only be used very carefully since it is very dynamic.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html">Mojo::DOM::CSS</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="matches">matches</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">matches</span><span class="operator">(</span><span class="string">'head &gt; title'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if first node in <a href="#tree">&quot;tree&quot;</a> matches the CSS selector.</p>
+
+<h2 id="select">select</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$results</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select</span><span class="operator">(</span><span class="string">'head &gt; title'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Run CSS selector against <a href="#tree">&quot;tree&quot;</a>.</p>
+
+<h2 id="select_one">select_one</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$result</span> <span class="operator">=</span> <span class="variable">$css</span><span class="operator">-&gt;</span><span class="variable">select_one</span><span class="operator">(</span><span class="string">'head &gt; title'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Run CSS selector against <a href="#tree">&quot;tree&quot;</a> and stop as soon as the first node matched.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

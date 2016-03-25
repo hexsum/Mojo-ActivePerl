@@ -1,0 +1,176 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#classes">classes</a></li>
+      <li><a href="#paths">paths</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#dispatch">dispatch</a></li>
+      <li><a href="#file">file</a></li>
+      <li><a href="#is_fresh">is_fresh</a></li>
+      <li><a href="#serve">serve</a></li>
+      <li><a href="#serve_asset">serve_asset</a></li>
+      <li><a href="#warmup">warmup</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Static - Serve static files</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Static</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$static</span> <span class="operator">=</span> <span class="variable">Mojolicious::Static</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'MyApp::Controller::Foo'</span><span class="operator">;</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'/home/sri/public'</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Static.html">Mojolicious::Static</a> is a static file server with <code>Range</code>, <code>If-Modified-Since</code> and <code>If-None-Match</code> support, based on <a href="http://tools.ietf.org/html/rfc7232">RFC 7232</a> and <a href="http://tools.ietf.org/html/rfc7233">RFC 7233</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Static.html">Mojolicious::Static</a> implements the following attributes.</p>
+
+<h2 id="classes">classes</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$classes</span> <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">;</span>
+  <span class="variable">$static</span>     <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">(</span><span class="operator">[</span><span class="string">'main'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Classes to use for finding files in <code>DATA</code> sections with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Loader.html">Mojo::Loader</a>, first one has the highest precedence, defaults to <code>main</code>. Only files with exactly one extension will be used, like <code>index.html</code>. Note that for files to be detected, these classes need to have already been loaded and added before <a href="#warmup">&quot;warmup&quot;</a> is called, which usually happens automatically during application startup.</p>
+
+<pre><code>  <span class="comment"># Add another class with static files in DATA section</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'Mojolicious::Plugin::Fun'</span><span class="operator">;</span>
+  
+  <span class="comment"># Add another class with static files in DATA section and higher precedence</span>
+  <span class="keyword">unshift</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'Mojolicious::Plugin::MoreFun'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="paths">paths</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$paths</span> <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">;</span>
+  <span class="variable">$static</span>   <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">(</span><span class="operator">[</span><span class="string">'/home/sri/public'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Directories to serve static files from, first one has the highest precedence.</p>
+
+<pre><code>  <span class="comment"># Add another "public" directory</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'/home/sri/public'</span><span class="operator">;</span>
+  
+  <span class="comment"># Add another "public" directory with higher precedence</span>
+  <span class="keyword">unshift</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'/home/sri/themes/blue/public'</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Static.html">Mojolicious::Static</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="dispatch">dispatch</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">dispatch</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Serve static file for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a> object.</p>
+
+<h2 id="file">file</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$asset</span> <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">file</span><span class="operator">(</span><span class="string">'images/logo.png'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$asset</span> <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">file</span><span class="operator">(</span><span class="string">'../lib/MyApp.pm'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Build <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/File.html">Mojo::Asset::File</a> or <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/Memory.html">Mojo::Asset::Memory</a> object for a file, relative to <a href="#paths">&quot;paths&quot;</a> or from <a href="#classes">&quot;classes&quot;</a>, or return <code>undef</code> if it doesn&#39;t exist. Note that this method does not protect from traversing to parent directories.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">file</span><span class="operator">(</span><span class="string">'foo/bar.html'</span><span class="operator">)-&gt;</span><span class="variable">slurp</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="is_fresh">is_fresh</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">is_fresh</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="operator">{</span><span class="string">etag</span> <span class="operator">=&gt;</span> <span class="string">'abc'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check freshness of request by comparing the <code>If-None-Match</code> and <code>If-Modified-Since</code> request headers to the <code>ETag</code> and <code>Last-Modified</code> response headers.</p>
+
+<p>These options are currently available:</p>
+
+<dl>
+
+<dt id="etag">etag</dt>
+<dd>
+
+<pre><code>  etag =&gt; &#39;abc&#39;</code></pre>
+
+<p>Add <code>ETag</code> header before comparing.</p>
+
+</dd>
+<dt id="last_modified">last_modified</dt>
+<dd>
+
+<pre><code>  last_modified =&gt; $epoch</code></pre>
+
+<p>Add <code>Last-Modified</code> header before comparing.</p>
+
+</dd>
+</dl>
+
+<h2 id="serve">serve</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">serve</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="string">'images/logo.png'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">serve</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="string">'../lib/MyApp.pm'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Serve a specific file, relative to <a href="#paths">&quot;paths&quot;</a> or from <a href="#classes">&quot;classes&quot;</a>. Note that this method does not protect from traversing to parent directories.</p>
+
+<h2 id="serve_asset">serve_asset</h2>
+
+<pre><code>  <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">serve_asset</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="variable">Mojo::Asset::File</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Serve a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/File.html">Mojo::Asset::File</a> or <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/Memory.html">Mojo::Asset::Memory</a> object with <code>Range</code>, <code>If-Modified-Since</code> and <code>If-None-Match</code> support.</p>
+
+<h2 id="warmup">warmup</h2>
+
+<pre><code>  <span class="variable">$static</span><span class="operator">-&gt;</span><span class="variable">warmup</span><span class="operator">;</span>
+</code></pre>
+
+<p>Prepare static files from <a href="#classes">&quot;classes&quot;</a> for future use.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

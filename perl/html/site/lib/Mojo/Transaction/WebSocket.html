@@ -1,0 +1,450 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#binary">binary</a></li>
+      <li><a href="#drain">drain</a></li>
+      <li><a href="#finish">finish</a></li>
+      <li><a href="#frame">frame</a></li>
+      <li><a href="#json">json</a></li>
+      <li><a href="#message">message</a></li>
+      <li><a href="#resume">resume</a></li>
+      <li><a href="#text">text</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#compressed">compressed</a></li>
+      <li><a href="#established">established</a></li>
+      <li><a href="#handshake">handshake</a></li>
+      <li><a href="#masked">masked</a></li>
+      <li><a href="#max_websocket_size">max_websocket_size</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#build_message">build_message</a></li>
+      <li><a href="#client_read">client_read</a></li>
+      <li><a href="#client_write">client_write</a></li>
+      <li><a href="#closed">closed</a></li>
+      <li><a href="#connection">connection</a></li>
+      <li><a href="#finish1">finish</a></li>
+      <li><a href="#is_websocket">is_websocket</a></li>
+      <li><a href="#kept_alive">kept_alive</a></li>
+      <li><a href="#local_address">local_address</a></li>
+      <li><a href="#local_port">local_port</a></li>
+      <li><a href="#parse_message">parse_message</a></li>
+      <li><a href="#protocol">protocol</a></li>
+      <li><a href="#remote_address">remote_address</a></li>
+      <li><a href="#remote_port">remote_port</a></li>
+      <li><a href="#req">req</a></li>
+      <li><a href="#res">res</a></li>
+      <li><a href="#resume1">resume</a></li>
+      <li><a href="#send">send</a></li>
+      <li><a href="#server_read">server_read</a></li>
+      <li><a href="#server_write">server_write</a></li>
+      <li><a href="#with_compression">with_compression</a></li>
+      <li><a href="#with_protocols">with_protocols</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Transaction::WebSocket - WebSocket transaction</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Transaction::WebSocket</span><span class="operator">;</span>
+  
+  <span class="comment"># Send and receive WebSocket messages</span>
+  <span class="keyword">my</span> <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">Mojo::Transaction::WebSocket</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'Hello World!'</span><span class="operator">);</span>
+  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$msg</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Message: </span><span class="variable">$msg</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$code</span><span class="operator">,</span> <span class="variable">$reason</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"WebSocket closed with status </span><span class="variable">$code</span><span class="string">."</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> is a container for WebSocket transactions, based on <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a> and <a href="http://tools.ietf.org/html/rfc7692">RFC 7692</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction.html">Mojo::Transaction</a> and can emit the following new ones.</p>
+
+<h2 id="binary">binary</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a complete WebSocket binary message has been received.</p>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Binary: </span><span class="variable">$bytes</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="drain">drain</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">drain</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$ws</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted once all data has been sent.</p>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">drain</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$ws</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="keyword">time</span><span class="operator">);</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="finish">finish</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$code</span><span class="operator">,</span> <span class="variable">$reason</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when the WebSocket connection has been closed.</p>
+
+<h2 id="frame">frame</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">frame</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$frame</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a WebSocket frame has been received.</p>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">frame</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$frame</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"FIN: </span><span class="variable">$frame</span><span class="string">-&gt;[0]"</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"RSV1: </span><span class="variable">$frame</span><span class="string">-&gt;[1]"</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"RSV2: </span><span class="variable">$frame</span><span class="string">-&gt;[2]"</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"RSV3: </span><span class="variable">$frame</span><span class="string">-&gt;[3]"</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Opcode: </span><span class="variable">$frame</span><span class="string">-&gt;[4]"</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Payload: </span><span class="variable">$frame</span><span class="string">-&gt;[5]"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="json">json</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$json</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a complete WebSocket message has been received, all text and binary messages will be automatically JSON decoded. Note that this event only gets emitted when it has at least one subscriber.</p>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$hash</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Message: </span><span class="variable">$hash</span><span class="string">-&gt;{msg}"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="message">message</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$msg</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a complete WebSocket message has been received, text messages will be automatically decoded. Note that this event only gets emitted when it has at least one subscriber.</p>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$msg</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Message: </span><span class="variable">$msg</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="resume">resume</h2>
+
+<pre><code>  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">resume</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when transaction is resumed.</p>
+
+<h2 id="text">text</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a complete WebSocket text message has been received.</p>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ws</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Text: </span><span class="variable">$bytes</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> inherits all attributes from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction.html">Mojo::Transaction</a> and implements the following new ones.</p>
+
+<h2 id="compressed">compressed</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">compressed</span><span class="operator">;</span>
+  <span class="variable">$ws</span>      <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">compressed</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Compress messages with <code>permessage-deflate</code> extension.</p>
+
+<h2 id="established">established</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">established</span><span class="operator">;</span>
+  <span class="variable">$ws</span>      <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">established</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>WebSocket connection established.</p>
+
+<h2 id="handshake">handshake</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$handshake</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">handshake</span><span class="operator">;</span>
+  <span class="variable">$ws</span>           <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">handshake</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>The original handshake transaction, usually a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object.</p>
+
+<h2 id="masked">masked</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">masked</span><span class="operator">;</span>
+  <span class="variable">$ws</span>      <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">masked</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Mask outgoing frames with XOR cipher and a random 32-bit key.</p>
+
+<h2 id="max_websocket_size">max_websocket_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">max_websocket_size</span><span class="operator">;</span>
+  <span class="variable">$ws</span>      <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">max_websocket_size</span><span class="operator">(</span><span class="number">1024</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum WebSocket message size in bytes, defaults to the value of the <code>MOJO_MAX_WEBSOCKET_SIZE</code> environment variable or <code>262144</code> (256KB).</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction.html">Mojo::Transaction</a> and implements the following new ones.</p>
+
+<h2 id="build_message">build_message</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$frame</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">build_message</span><span class="operator">(</span><span class="operator">{</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$frame</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">build_message</span><span class="operator">(</span><span class="operator">{</span><span class="string">text</span>   <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$frame</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">build_message</span><span class="operator">(</span><span class="operator">{</span><span class="string">json</span>   <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">test</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]}}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$frame</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">build_message</span><span class="operator">(</span><span class="variable">$chars</span><span class="operator">);</span>
+</code></pre>
+
+<p>Build WebSocket message.</p>
+
+<h2 id="client_read">client_read</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">client_read</span><span class="operator">(</span><span class="variable">$data</span><span class="operator">);</span>
+</code></pre>
+
+<p>Read data client-side, used to implement user agents such as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>.</p>
+
+<h2 id="client_write">client_write</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">client_write</span><span class="operator">;</span>
+</code></pre>
+
+<p>Write data client-side, used to implement user agents such as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>.</p>
+
+<h2 id="closed">closed</h2>
+
+<pre><code>  <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">closed</span><span class="operator">;</span>
+</code></pre>
+
+<p>Same as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction.html#completed">&quot;completed&quot; in Mojo::Transaction</a>, but also indicates that all transaction data has been sent.</p>
+
+<h2 id="connection">connection</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">connection</span><span class="operator">;</span>
+</code></pre>
+
+<p>Connection identifier.</p>
+
+<h2 id="finish1">finish</h2>
+
+<pre><code>  <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">;</span>
+  <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">(</span><span class="number">1000</span><span class="operator">);</span>
+  <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">(</span><span class="number">1003</span> <span class="operator">=&gt;</span> <span class="string">'Cannot accept data!'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Close WebSocket connection gracefully.</p>
+
+<h2 id="is_websocket">is_websocket</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">is_websocket</span><span class="operator">;</span>
+</code></pre>
+
+<p>True, this is a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> object.</p>
+
+<h2 id="kept_alive">kept_alive</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">kept_alive</span><span class="operator">;</span>
+</code></pre>
+
+<p>Connection has been kept alive.</p>
+
+<h2 id="local_address">local_address</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$address</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">local_address</span><span class="operator">;</span>
+</code></pre>
+
+<p>Local interface address.</p>
+
+<h2 id="local_port">local_port</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$port</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">local_port</span><span class="operator">;</span>
+</code></pre>
+
+<p>Local interface port.</p>
+
+<h2 id="parse_message">parse_message</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">parse_message</span><span class="operator">(</span><span class="operator">[</span><span class="variable">$fin</span><span class="operator">,</span> <span class="variable">$rsv1</span><span class="operator">,</span> <span class="variable">$rsv2</span><span class="operator">,</span> <span class="variable">$rsv3</span><span class="operator">,</span> <span class="variable">$op</span><span class="operator">,</span> <span class="variable">$payload</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse WebSocket message.</p>
+
+<h2 id="protocol">protocol</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$proto</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">protocol</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return negotiated subprotocol or <code>undef</code>.</p>
+
+<h2 id="remote_address">remote_address</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$address</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">remote_address</span><span class="operator">;</span>
+</code></pre>
+
+<p>Remote interface address.</p>
+
+<h2 id="remote_port">remote_port</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$port</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">remote_port</span><span class="operator">;</span>
+</code></pre>
+
+<p>Remote interface port.</p>
+
+<h2 id="req">req</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$req</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">;</span>
+</code></pre>
+
+<p>Handshake request, usually a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Request.html">Mojo::Message::Request</a> object.</p>
+
+<h2 id="res">res</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$res</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">;</span>
+</code></pre>
+
+<p>Handshake response, usually a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Response.html">Mojo::Message::Response</a> object.</p>
+
+<h2 id="resume1">resume</h2>
+
+<pre><code>  <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">resume</span><span class="operator">;</span>
+</code></pre>
+
+<p>Resume <a href="#handshake">&quot;handshake&quot;</a> transaction.</p>
+
+<h2 id="send">send</h2>
+
+<pre><code>  <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">{</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">{</span><span class="string">text</span>   <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">{</span><span class="string">json</span>   <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">test</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]}}</span><span class="operator">);</span>
+  <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">[</span><span class="variable">$fin</span><span class="operator">,</span> <span class="variable">$rsv1</span><span class="operator">,</span> <span class="variable">$rsv2</span><span class="operator">,</span> <span class="variable">$rsv3</span><span class="operator">,</span> <span class="variable">$op</span><span class="operator">,</span> <span class="variable">$payload</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="variable">$chars</span><span class="operator">);</span>
+  <span class="variable">$ws</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="variable">$chars</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Send message or frame non-blocking via WebSocket, the optional drain callback will be executed once all data has been written.</p>
+
+<pre><code>  <span class="comment"># Send "Ping" frame</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::WebSocket</span> <span class="string">'WS_PING'</span><span class="operator">;</span>
+  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="variable">WS_PING</span><span class="operator">,</span> <span class="string">'Hello World!'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="server_read">server_read</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">server_read</span><span class="operator">(</span><span class="variable">$data</span><span class="operator">);</span>
+</code></pre>
+
+<p>Read data server-side, used to implement web servers such as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a>.</p>
+
+<h2 id="server_write">server_write</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">server_write</span><span class="operator">;</span>
+</code></pre>
+
+<p>Write data server-side, used to implement web servers such as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a>.</p>
+
+<h2 id="with_compression">with_compression</h2>
+
+<pre><code>  <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">with_compression</span><span class="operator">;</span>
+</code></pre>
+
+<p>Negotiate <code>permessage-deflate</code> extension for this WebSocket connection.</p>
+
+<h2 id="with_protocols">with_protocols</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$proto</span> <span class="operator">=</span> <span class="variable">$ws</span><span class="operator">-&gt;</span><span class="variable">with_protocols</span><span class="operator">(</span><span class="string">'v2.proto'</span><span class="operator">,</span> <span class="string">'v1.proto'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Negotiate subprotocol for this WebSocket connection.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

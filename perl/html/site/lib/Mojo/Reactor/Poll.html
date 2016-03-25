@@ -1,0 +1,217 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a></li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#again">again</a></li>
+      <li><a href="#io">io</a></li>
+      <li><a href="#is_running">is_running</a></li>
+      <li><a href="#next_tick">next_tick</a></li>
+      <li><a href="#one_tick">one_tick</a></li>
+      <li><a href="#recurring">recurring</a></li>
+      <li><a href="#remove">remove</a></li>
+      <li><a href="#reset">reset</a></li>
+      <li><a href="#start">start</a></li>
+      <li><a href="#stop">stop</a></li>
+      <li><a href="#timer">timer</a></li>
+      <li><a href="#watch">watch</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Reactor::Poll - Low-level event reactor with poll support</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Reactor::Poll</span><span class="operator">;</span>
+  
+  <span class="comment"># Watch if handle becomes readable or writable</span>
+  <span class="keyword">my</span> <span class="variable">$reactor</span> <span class="operator">=</span> <span class="variable">Mojo::Reactor::Poll</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">io</span><span class="operator">(</span><span class="variable">$first</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$reactor</span><span class="operator">,</span> <span class="variable">$writable</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$writable</span> <span class="operator">?</span> <span class="string">'First handle is writable'</span> <span class="operator">:</span> <span class="string">'First handle is readable'</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Change to watching only if handle becomes writable</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="variable">$first</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">);</span>
+  
+  <span class="comment"># Turn file descriptor into handle and watch if it becomes readable</span>
+  <span class="keyword">my</span> <span class="variable">$second</span> <span class="operator">=</span> <span class="variable">IO::Handle</span><span class="operator">-&gt;</span><span class="variable">new_from_fd</span><span class="operator">(</span><span class="variable">$fd</span><span class="operator">,</span> <span class="string">'r'</span><span class="operator">);</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">io</span><span class="operator">(</span><span class="variable">$second</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$reactor</span><span class="operator">,</span> <span class="variable">$writable</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$writable</span> <span class="operator">?</span> <span class="string">'Second handle is writable'</span> <span class="operator">:</span> <span class="string">'Second handle is readable'</span><span class="operator">;</span>
+  <span class="operator">})-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="variable">$second</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">);</span>
+  
+  <span class="comment"># Add a timer</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">15</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$reactor</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$first</span><span class="operator">);</span>
+    <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$second</span><span class="operator">);</span>
+    <span class="keyword">say</span> <span class="string">'Timeout!'</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Start reactor if necessary</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/Poll.html">Mojo::Reactor::Poll</a> is a low-level event reactor based on <a href="../../../../lib/IO/Poll.html">IO::Poll</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/Poll.html">Mojo::Reactor::Poll</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor.html">Mojo::Reactor</a>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/Poll.html">Mojo::Reactor::Poll</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor.html">Mojo::Reactor</a> and implements the following new ones.</p>
+
+<h2 id="again">again</h2>
+
+<pre><code>  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">again</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+</code></pre>
+
+<p>Restart timer. Note that this method requires an active timer.</p>
+
+<h2 id="io">io</h2>
+
+<pre><code>  <span class="variable">$reactor</span> <span class="operator">=</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">io</span><span class="operator">(</span><span class="variable">$handle</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Watch handle for I/O events, invoking the callback whenever handle becomes readable or writable.</p>
+
+<pre><code>  <span class="comment"># Callback will be executed twice if handle becomes readable and writable</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">io</span><span class="operator">(</span><span class="variable">$handle</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$reactor</span><span class="operator">,</span> <span class="variable">$writable</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$writable</span> <span class="operator">?</span> <span class="string">'Handle is writable'</span> <span class="operator">:</span> <span class="string">'Handle is readable'</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="is_running">is_running</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if reactor is running.</p>
+
+<h2 id="next_tick">next_tick</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$undef</span> <span class="operator">=</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">next_tick</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Execute callback as soon as possible, but not before returning or other callbacks that have been registered with this method, always returns <code>undef</code>.</p>
+
+<h2 id="one_tick">one_tick</h2>
+
+<pre><code>  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">one_tick</span><span class="operator">;</span>
+</code></pre>
+
+<p>Run reactor until an event occurs or no events are being watched anymore. Note that this method can recurse back into the reactor, so you need to be careful.</p>
+
+<pre><code>  <span class="comment"># Don't block longer than 0.5 seconds</span>
+  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">0</span><span class="operator">.</span><span class="number">5</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{});</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">one_tick</span><span class="operator">;</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="recurring">recurring</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">recurring</span><span class="operator">(</span><span class="number">0</span><span class="operator">.</span><span class="number">25</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Create a new recurring timer, invoking the callback repeatedly after a given amount of time in seconds.</p>
+
+<h2 id="remove">remove</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">);</span>
+</code></pre>
+
+<p>Remove handle or timer.</p>
+
+<h2 id="reset">reset</h2>
+
+<pre><code>  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">reset</span><span class="operator">;</span>
+</code></pre>
+
+<p>Remove all handles and timers.</p>
+
+<h2 id="start">start</h2>
+
+<pre><code>  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>Start watching for I/O and timer events, this will block until <a href="#stop">&quot;stop&quot;</a> is called or no events are being watched anymore.</p>
+
+<pre><code>  <span class="comment"># Start reactor only if it is not running already</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="stop">stop</h2>
+
+<pre><code>  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">stop</span><span class="operator">;</span>
+</code></pre>
+
+<p>Stop watching for I/O and timer events.</p>
+
+<h2 id="timer">timer</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$id</span> <span class="operator">=</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">0</span><span class="operator">.</span><span class="number">5</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Create a new timer, invoking the callback after a given amount of time in seconds.</p>
+
+<h2 id="watch">watch</h2>
+
+<pre><code>  <span class="variable">$reactor</span> <span class="operator">=</span> <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">,</span> <span class="variable">$readable</span><span class="operator">,</span> <span class="variable">$writable</span><span class="operator">);</span>
+</code></pre>
+
+<p>Change I/O events to watch handle for with true and false values. Note that this method requires an active I/O watcher.</p>
+
+<pre><code>  <span class="comment"># Watch only for readable events</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">);</span>
+  
+  <span class="comment"># Watch only for writable events</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">);</span>
+  
+  <span class="comment"># Watch for readable and writable events</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span><span class="operator">);</span>
+  
+  <span class="comment"># Pause watching for events</span>
+  <span class="variable">$reactor</span><span class="operator">-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

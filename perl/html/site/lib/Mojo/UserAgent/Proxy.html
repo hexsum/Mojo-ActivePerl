@@ -1,0 +1,120 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#http">http</a></li>
+      <li><a href="#https">https</a></li>
+      <li><a href="#not">not</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#detect">detect</a></li>
+      <li><a href="#is_needed">is_needed</a></li>
+      <li><a href="#prepare">prepare</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::UserAgent::Proxy - User agent proxy manager</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::UserAgent::Proxy</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$proxy</span> <span class="operator">=</span> <span class="variable">Mojo::UserAgent::Proxy</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">http</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Proxy.html">Mojo::UserAgent::Proxy</a> manages proxy servers for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Proxy.html">Mojo::UserAgent::Proxy</a> implements the following attributes.</p>
+
+<h2 id="http">http</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$http</span> <span class="operator">=</span> <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">http</span><span class="operator">;</span>
+  <span class="variable">$proxy</span>   <span class="operator">=</span> <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">http</span><span class="operator">(</span><span class="string">'socks://sri:secret@127.0.0.1:8080'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Proxy server to use for HTTP and WebSocket requests.</p>
+
+<h2 id="https">https</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$https</span> <span class="operator">=</span> <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">https</span><span class="operator">;</span>
+  <span class="variable">$proxy</span>    <span class="operator">=</span> <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">https</span><span class="operator">(</span><span class="string">'http://sri:secret@127.0.0.1:8080'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Proxy server to use for HTTPS and WebSocket requests.</p>
+
+<h2 id="not">not</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$not</span> <span class="operator">=</span> <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">not</span><span class="operator">;</span>
+  <span class="variable">$proxy</span>  <span class="operator">=</span> <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">not</span><span class="operator">(</span><span class="operator">[</span><span class="string">'localhost'</span><span class="operator">,</span> <span class="string">'intranet.mojolicious.org'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Domains that don&#39;t require a proxy server to be used.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Proxy.html">Mojo::UserAgent::Proxy</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="detect">detect</h2>
+
+<pre><code>  <span class="variable">$proxy</span> <span class="operator">=</span> <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check environment variables <code>HTTP_PROXY</code>, <code>http_proxy</code>, <code>HTTPS_PROXY</code>, <code>https_proxy</code>, <code>NO_PROXY</code> and <code>no_proxy</code> for proxy information. Automatic proxy detection can be enabled with the <code>MOJO_PROXY</code> environment variable.</p>
+
+<h2 id="is_needed">is_needed</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">is_needed</span><span class="operator">(</span><span class="string">'intranet.example.com'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if request for domain would use a proxy server.</p>
+
+<h2 id="prepare">prepare</h2>
+
+<pre><code>  <span class="variable">$proxy</span><span class="operator">-&gt;</span><span class="variable">prepare</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Prepare proxy server information for transaction.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

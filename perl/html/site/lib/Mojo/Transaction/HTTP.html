@@ -1,0 +1,220 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#request">request</a></li>
+      <li><a href="#resume">resume</a></li>
+      <li><a href="#unexpected">unexpected</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#previous">previous</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#client_read">client_read</a></li>
+      <li><a href="#client_write">client_write</a></li>
+      <li><a href="#is_empty">is_empty</a></li>
+      <li><a href="#keep_alive">keep_alive</a></li>
+      <li><a href="#redirects">redirects</a></li>
+      <li><a href="#resume1">resume</a></li>
+      <li><a href="#server_read">server_read</a></li>
+      <li><a href="#server_write">server_write</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Transaction::HTTP - HTTP transaction</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Transaction::HTTP</span><span class="operator">;</span>
+  
+  <span class="comment"># Client</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">method</span><span class="operator">(</span><span class="string">'GET'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'http://example.com'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">accept</span><span class="operator">(</span><span class="string">'application/json'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">remote_address</span><span class="operator">;</span>
+  
+  <span class="comment"># Server</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">method</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">accept</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">remote_address</span><span class="operator">;</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">(</span><span class="string">'Hello World!'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> is a container for HTTP transactions, based on <a href="http://tools.ietf.org/html/rfc7230">RFC 7230</a> and <a href="http://tools.ietf.org/html/rfc7231">RFC 7231</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction.html">Mojo::Transaction</a> and can emit the following new ones.</p>
+
+<h2 id="request">request</h2>
+
+<pre><code>  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">request</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a request is ready and needs to be handled.</p>
+
+<pre><code>  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">request</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">header</span><span class="operator">(</span><span class="string">'X-Bender'</span> <span class="operator">=&gt;</span> <span class="string">'Bite my shiny metal ass!'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="resume">resume</h2>
+
+<pre><code>  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">resume</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when transaction is resumed.</p>
+
+<h2 id="unexpected">unexpected</h2>
+
+<pre><code>  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">unexpected</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$tx</span><span class="operator">,</span> <span class="variable">$res</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted for unexpected <code>1xx</code> responses that will be ignored.</p>
+
+<pre><code>  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">unexpected</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="string">'Follow-up response is finished.'</span> <span class="operator">});</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> inherits all attributes from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction.html">Mojo::Transaction</a> and implements the following new ones.</p>
+
+<h2 id="previous">previous</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$previous</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">previous</span><span class="operator">;</span>
+  <span class="variable">$tx</span>          <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">previous</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Previous transaction that triggered this follow-up transaction, usually a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object.</p>
+
+<pre><code>  <span class="comment"># Paths of previous requests</span>
+  <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">previous</span><span class="operator">-&gt;</span><span class="variable">previous</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">previous</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction.html">Mojo::Transaction</a> and implements the following new ones.</p>
+
+<h2 id="client_read">client_read</h2>
+
+<pre><code>  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">client_read</span><span class="operator">(</span><span class="variable">$bytes</span><span class="operator">);</span>
+</code></pre>
+
+<p>Read data client-side, used to implement user agents such as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>.</p>
+
+<h2 id="client_write">client_write</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">client_write</span><span class="operator">;</span>
+</code></pre>
+
+<p>Write data client-side, used to implement user agents such as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>.</p>
+
+<h2 id="is_empty">is_empty</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">is_empty</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check transaction for <code>HEAD</code> request and <code>1xx</code>, <code>204</code> or <code>304</code> response.</p>
+
+<h2 id="keep_alive">keep_alive</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">keep_alive</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if connection can be kept alive.</p>
+
+<h2 id="redirects">redirects</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$redirects</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">redirects</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return an array reference with all previous transactions that preceded this follow-up transaction.</p>
+
+<pre><code>  <span class="comment"># Paths of all previous requests</span>
+  <span class="keyword">say</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">path</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">redirects</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="resume1">resume</h2>
+
+<pre><code>  <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">resume</span><span class="operator">;</span>
+</code></pre>
+
+<p>Resume transaction.</p>
+
+<h2 id="server_read">server_read</h2>
+
+<pre><code>  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">server_read</span><span class="operator">(</span><span class="variable">$bytes</span><span class="operator">);</span>
+</code></pre>
+
+<p>Read data server-side, used to implement web servers such as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a>.</p>
+
+<h2 id="server_write">server_write</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">server_write</span><span class="operator">;</span>
+</code></pre>
+
+<p>Write data server-side, used to implement web servers such as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

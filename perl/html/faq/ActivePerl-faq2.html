@@ -1,0 +1,622 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../displayToc.js"></script>
+<script language="JavaScript" src="../tocParas.js"></script>
+<script language="JavaScript" src="../tocTab.js"></script>
+<title>Using PPM</title>
+<link rel="STYLESHEET" href="../Active.css" type="text/css" media="screen">
+</head>
+
+<body>
+
+<script>writelinks('__top__',1);</script>
+<h1>Using PPM</h1>
+
+<ul>
+    <li><a class="doc" href="#what_is_ppm">What is PPM?</a></li>
+    <ul>
+      <li><a class="doc" href="#setup">Setup</a></li>
+    </ul>
+    <li><a class="doc" href="#ppm_gui">The PPM GUI</a></li>
+    <li><a class="doc" href="#command_line">The PPM Command Line</a></li>
+    <li><a class="doc" href="#pkg_operations">Finding, Installing, Removing and Upgrading Packages</a></li>
+    <ul>
+      <li><a class="doc" href="#find_package">Find a package.</a></li>
+      <li><a class="doc" href="#install_package">Install a package.</a></li>
+      <li><a class="doc" href="#remove_package">Remove a package.</a></li>
+      <li><a class="doc" href="#upgrade_package">Upgrade a package.</a></li>
+    </ul>
+    <li><a class="doc" href="#ppm_prefs">PPM Preferences</a></li>
+    <ul>
+      <li><a class="doc" href="#install_areas">Areas</a></li>
+      <li><a class="doc" href="#ppm_repositories">Repositories</a></li>
+      <ul>
+        <li><a class="doc" href="#default_repositories">Default Repository</a></li>
+        <li><a class="doc" href="#additional_repositories">Additional Repositories</a></li>
+        <li><a class="doc" href="#additional_ppm_resources">Additional Resources</a></li>
+      </ul>
+    </ul>
+    <li><a class="doc" href="#other">Additional Information</a></li>
+    <ul>
+      <li><a class="doc" href="#create_area">Creating an Install Area</a></li>
+      <li><a class="doc" href="#ppmx_files">Using PPMX Files</a></li>
+      <li><a class="doc" href="#crypto_packages">Unavailable Packages</a></li>
+      <li><a class="doc" href="#how_to_make_ppm_distribution">Creating PPM packages</a></li>
+      <li><a class="doc" href="#ppm_and_proxies">PPM, Proxies and Firewalls</a></li>
+      <ul>
+        <li><a class="doc" href="#http_proxy">The http_proxy Environment Variable</a></li>
+        <li><a class="doc" href="#setting_http_proxy">Setting http_proxy</a></li>
+      </ul>
+      <li><a class="doc" href="#CPAN_shell">Using the CPAN shell</a></li>
+    </ul>
+</ul>
+
+
+<h2><a name="what_is_ppm">What is PPM?</a></h2>
+
+<p>PPM is the package management utility for ActivePerl. It simplifies the
+task of locating, installing, upgrading and removing Perl packages. The
+PPM client accesses PPM repositories (collections of packages) on the
+internet or on a local network. It is also used to update previously
+installed packages with the latest versions and to remove unused
+packages from your system.</p>
+
+<h3><a name="setup">Setup</a></h3>
+
+<p>PPM is installed automatically with ActivePerl.</p>
+
+<p>To use PPM, your computer must be connected to the internet or have
+access to a PPM <a class="doc" href="#ppm_repositories">repository</a> on a
+local hard drive or network share.</p> 
+
+<p>If you connect to the internet via firewall or proxy, you may need to
+set the <code>http_proxy</code> environment variable.  See <a
+class="doc" href="#ppm_and_proxies">PPM, Proxies and Firewalls</a> for
+more information.</p>
+
+<p>Access to some PPM repositories requires an <a
+href="http://www.activestate.com/business-edition">ActivePerl Business
+Edition</a> license.</p>
+
+<h2><a name="ppm_gui">The PPM GUI</a></h2>
+
+<p>To launch PPM's graphical user interface, run <code>ppm</code>
+without any command line arguments:</p>
+
+<pre>
+  ppm
+</pre>
+
+<p>The interface should look something like this:</p>
+
+<img src="../images/ppm_gui.png">
+
+<p>When launched, PPM automatically synchronizes its local database
+with the installed perl packages (including those installed manually or
+via the <a href="CPAN_shell">CPAN shell</a>). The interface is temporarily locked while this
+synchronization takes place.</p>
+
+<p>Hovering the mouse pointer over icons in the toolbar displays tool tips
+describing what each button does. These buttons are:</p>
+
+<ul>
+ <li><img class="icon" src="../images/all_packages.png"> <strong>All
+ packages</strong>: Displays all packages installed locally and
+ available in the repository.</li>
+ <li><img class="icon" src="../images/installed_pkgs.png">
+ <strong>Installed packages</strong>: Displays all installed
+ packages.</li>
+ <li><img class="icon" src="../images/upgradable_pkgs.png"> <strong>Upgradable
+ packages</strong>: Displays packages for which an upgrade is available
+ from the repository.</li>
+ <li><img class="icon" src="../images/pkgs_to_instrem.png"> <strong>Packages to
+ install/remove</strong>: Displays packages marked for installation or removal.</li>
+ <li><img class="icon" src="../images/mark_for_inst.png"> <strong>Mark
+ for install</strong>: Marks the selected packages for installation or
+ upgrade.</li>
+ <li><img class="icon" src="../images/mark_for_rem.png"> <strong>Mark
+ for remove</strong>: Marks the selected packages for removal.</li>
+ <li><img class="icon" src="../images/run.png"> <strong>Run marked
+ actions</strong>: Runs all marked actions (i.e. install, upgrade,
+ remove)</li>
+ <li><img class="icon" src="../images/refresh.png"> <strong>Refresh all
+ data</strong>: Refreshes the list view.</li>
+ <li><img class="icon" src="../images/properties.png"> <strong>PPM
+ Preferences</strong>: Opens the PPM Preferences dialog box.</li>
+</ul>
+
+<p>Use the <strong>Filter</strong> text field to limit the packages
+displayed in the Package List pane to those matching the text entered
+(case insensitive substring match).</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img class="icon" src="../images/filter.png">
+
+<p>Click the magnifying glass icon to select which package meta-data to
+match against:</p>
+
+<ul>
+ <li>Name</li>
+ <li>Abstract</li>
+ <li>Name or Abstract (default)</li>
+ <li>Author</li>
+</ul>
+
+<p>The <strong>Package List</strong> pane can display the following columns of package
+information:</p>
+
+<ul>
+ <li><strong>Package Name</strong>: The name of the package.</li>
+ <li><strong>Area</strong>: Where the package is installed. See <a
+ href="#install_areas">install areas</a> below.</li>
+ <li><strong>Installed</strong>: Version number of the installed package.</li>
+ <li><strong>Available</strong>: Version number of the package in
+ the repository.</li>
+ <li><strong>Abstract</strong>: A short description of the package.</li>
+ <li><strong>Author</strong>: Name and email address of the package's
+ author.</li>
+</ul>
+
+<p>The <strong>Status</strong> tab displays messages about the current
+status of the PPM client, marked actions, and information about the
+actions being run.</p>
+
+<p>The <strong>Details</strong> tab displays package information and,
+for installed packages, a list of all installed files.</p>
+
+<h2><a name="command_line">The PPM Command Line</a></h2>
+
+<p>All PPM operations and configuration can also be performed at the
+command line. See the <a href="../bin/ppm.html">ppm man page</a> or
+'ppm help' for more information.</p>
+
+<h2><a name="pkg_operations">Finding, Installing, Removing and Upgrading
+Packages</a></h2>
+
+<h3><a name="find_package">Find a package.</a></h3>
+
+<p>To find a package in the repository:</p>
+
+<ul>
+ <li>Click the <strong>All packages</strong> button,</li>
+ <li>Enter text from the package's name or abstract in the <strong>Filter</strong> field</li>
+</ul>
+
+<p>As text is entered in the Filter field, the list of packages is
+automatically updated as the substring match becomes more precise.
+Click the magnifying glass icon to filter on different meta-data (e.g.
+Author).</p>
+
+<p>Alternatively, just start typing the name of the package. The
+<strong>Package List</strong> will highlight the first package that
+matches the string you have typed.</p>
+
+<h3><a name="install_package">Install a package.</a></h3>
+
+<p>To install a package from the repository:</p>
+
+<ul>
+ <li>Click on the desired package in the <strong>Package List</strong> to select it.</li>
+ <li>Mark the package by:
+  <ul>
+    <li>Clicking the <strong>Mark for install</strong> button or, </li>
+    <li>Hitting the "<strong>+</strong>" key or,</li>
+    <li>Selecting <strong>Install</strong> <em>&lt;package-name&gt;</em>
+    from the <strong>Action</strong> menu or,    </li>
+    <li>Right-clicking the selection and choosing 
+    <strong>Install</strong> <em>&lt;package-name&gt;</em> from the
+    context menu.</li>
+   </ul>
+ <li>Click the <strong>Run marked actions</strong> button or select
+ <strong>Run Marked Actions (Ctrl-Enter)</strong> from the <strong>File</strong> menu.
+</ul>
+
+<h3><a name="remove_package">Remove a package.</a></h3>
+
+<p>To remove a package from your local perl installation:</p>
+
+<ul>
+ <li>Click on the Installed package in the <strong>Package List</strong>
+ to select it. You may want to use the <strong>Installed
+ packages</strong> button to filter the list.</li>
+ <li>Mark the package by:
+  <ul>
+    <li>Clicking the <strong>Mark for remove</strong> button or, </li>
+    <li>Hitting the "<strong>-</strong>" key or,</li>
+    <li>Selecting <strong>Remove</strong> <em>&lt;package-name&gt;</em>
+    from the <strong>Action</strong> menu or,    </li>
+    <li>Right-clicking the selection and choosing 
+    <strong>Remove</strong> <em>&lt;package-name&gt;</em> from the
+    context menu.</li>
+   </ul>
+ <li>Click the <strong>Run marked actions</strong> button or select
+ <strong>Run Marked Actions (Ctrl-Enter)</strong> from the <strong>File</strong> menu.
+</ul>
+
+<h3><a name="upgrade_package">Upgrade a package.</a></h3>
+
+<p>To upgrade a package to the most recent version available in the
+repository:</p>
+
+<ul>
+ <li>Click on the desired package in the <strong>Package List</strong>
+ to select it. You may want to use the <strong>Upgradable
+ packages</strong> button to filter the list.</li>
+ <li>Mark the package by:
+  <ul>
+    <li>Clicking the <strong>Mark for install</strong> button or, </li>
+    <li>Hitting the "<strong>+</strong>" key or,</li>
+    <li>Selecting <strong>Install</strong> <em>&lt;package-name&gt;</em>
+    from the <strong>Action</strong> menu or,    </li>
+    <li>Right-clicking the selection and choosing 
+    <strong>Install</strong> <em>&lt;package-name&gt;</em> from the
+    context menu.</li>
+   </ul>
+ <li>Click the <strong>Run marked actions</strong> button or select
+ <strong>Run Marked Actions (Ctrl-Enter)</strong> from the <strong>File</strong> menu.
+</ul>
+
+<h2><a name="ppm_prefs">PPM Preferences</a></h2>
+
+<p>Installation <strong>Areas</strong> can be selected and
+<strong>Repositories</strong> configured by clicking the <strong>PPM
+Preferences</strong> button or selecting <strong>Preferences</strong>
+from the <strong>Edit</strong> menu.</p>
+
+<h3><a name="install_areas">Areas</a></h3>
+
+<p>PPM allows for the addition of new install areas, which is useful for
+shared ActivePerl installations where the user does not have write
+permissions for the <em>site</em> and <em>perl</em> areas.  New install
+areas are added by simply setting up new library directories for perl to
+search, and PPM will set up install areas to match.  The easiest way to
+add library directories for perl is to specify them in the
+<code>PERL5LIB</code> environment variable, see <a
+href="../lib/pod/perlrun.html">the perlrun manpage</a> for details.  PPM
+will create <em>etc</em>, <em>bin</em>, <em>html</em> directories as
+needed when installing packages.  If the last segment of the library
+directory path is <em>lib</em> then the other directories will be
+created as siblings of the <em>lib</em> directory, otherwise they will
+be subdirectories.</p>
+
+<h3><a name="ppm_repositories">Repositories</a></h3>
+
+<p>The <strong>Repositories</strong> tab lists the repositories that PPM
+is currently configured to use and allows you to add additional ones.
+Simple PPM repositories are just a directory containing ppm packages.
+You can create your own by putting packages in an HTTP, FTP directory or
+a locally accessible mount or filesystem directory.</p>
+
+<p>To add a repository fill out the fields in the <strong>Add
+Repository</strong> pane and click <strong>Add</strong>.</p>
+
+<ul>
+ <li><strong>Name</strong>: The name you want to give the new
+ repository.</li>
+ <li><strong>Location</strong>: The URL of the repository. Enter an HTTP
+ or FTP URL, a filesystem path, or use the <strong>Browse</strong>
+ button to select a local directory. For password protected FTP sites,
+ use the format:<br/>
+ <pre>
+  ftp://<em>user</em>:<em>password</em>@<em>server</em>/<em>path</em>.</li>
+ </pre>
+</ul>
+
+<p>To remove a repository, click the <img class="icon" alt="Delete
+Repository" src="../images/delete.png"> icon next to it.</p>
+
+<p>Enabled repositories show the <img class="icon" alt="Enabled
+Repository" src="../images/pkg.png"> icon; disabled ones show the <img
+class="icon" alt="Disabled Repository" src="../images/pkg_disabled.png"> icon.
+Click these icons to toggle between states.</p>
+
+<h4><a name="default_repositories">Default Repository</a></h4>
+
+<p>The base URL of the default PPM repository is:</p>
+
+<pre>
+  http://ppm4.activestate.com/
+</pre>
+  
+<p>The full URL is platform and version-specific, for example:</p>
+
+<pre>
+  http://ppm4.activestate.com/MSWin32-x86/5.12/1202/package.xml
+</pre>
+
+<h4><a name="additional_repositories">Additional Repositories</a></h4>
+<blockquote>
+  <table cellspacing="10">
+    <tr>
+      <td valign="top" align="left" width="50%"><a
+      href="http://bioperl.org/DIST">http://bioperl.org/DIST</a></td>
+      <td valign="top" align="left" width="50%">A repository of <a href="http://www.bioperl.org/">Bioperl</a> packages</td>
+    </tr>
+    <tr>
+      <td valign="top" align="left" width="50%"><a
+      href="http://www.bribes.org/perl/ppm/">http://www.bribes.org/perl/ppm/</a></td>
+      <td valign="top" align="left" width="50%">the "Bribes de Perl" (Scraps of Perl) repository (en Fran&ccedil;ais et Anglais)</td>
+    </tr>
+  </table>
+</blockquote>
+
+<h2><a name="other">Additional Information</a></h2>
+
+<h3><a name="create_area">Creating an Install Area</a></h3>
+
+<p>On systems where ActivePerl is installed in a directory that is not writable by
+users (i.e. owned by <code>root</code>), a new perl library location can be
+defined with the PERL5LIB environment variable. PPM will recognize this library
+as an install area.</p>
+
+<p>To create a new, user-writable install area:</p>
+
+<ol>
+  <li><p>Make a directory for the library. For example:</p> 
+
+  <pre>
+    mkdir -p ~/perl/lib
+  </pre>
+  </li>
+
+  <li><p>Set or modify the <code>PERL5LIB</code> environment variable using the
+  command specific to your shell (e.g. <code>set</code> or <code>export</code>).
+  To make this change persistent, add the command to the appropriate profile file
+  for the shell. For example, in bash, add a line like the following to your
+  <em>.bash_profile</em> or <em>.bashrc</em> file:</p>
+
+  <pre>
+    PERL5LIB=~/perl/lib; export PERL5LIB
+  </pre>
+  </li>
+
+  <li>Launch PPM and click the <strong>PPM Preferences</strong> button. In the
+  <strong>Area</strong> tab, select the new install area to make it active.</li>
+</ol>
+
+<p><strong>Note</strong>: On Mac OS X, user-writable install areas
+called "ActivePerl" are created for all users during installation (in
+<em>/Users/&lt;username&gt;/Library/ActivePerl</em>).</p>
+
+<h3><a name="ppmx_files">Using PPMX Files (Business Edition)</a></h3>
+  
+<p>If you need to install packages on systems without direct access to
+repositories, you can use PPMX files. These are compressed tarballs
+containing the PPD file for the package and the blib tree to be
+installed. You can download PPMX files from <a
+href="http://ppm4.activestate.com/"> http://ppm4.activestate.com/</a>.</p>
+
+<p><strong>Note:</strong> <a
+href="https://community.activestate.com/node/8128">Access to ActiveState
+PPMX archives</a> require a <a
+href="http://www.activestate.com/business-edition">Business Edition</a>
+license.</p>
+
+<p>To use a PPMX file:</p>
+<ol>
+  <li>Download the file and/or transfer it to a convenient directory on the target system.</li>
+  <li>Install the package by specifying the ppmx file explicitly, rather than just the package name. For example<br>
+    <code>ppm install c:\tmp\Date-Calc-6.3.ppmx</code></li>
+</ol>
+
+<p>Some modules have dependencies that may cause them to fail to install
+if those packages are not available in a repository that PPM is
+connected to. You can use the ppm <code>describe</code> command to see
+what dependencies the package has, but those packages may have their own
+dependencies. The dependency chain has to be resolved manually by
+starting with the lowest common prerequisite package.</p>
+
+
+<h3><a name="crypto_packages">Unavailable Packages</a></h3>
+
+<p>Most modules available via PPM are not owned or maintained by
+ActiveState; we only pre-package those modules available from <a
+href="http://www.cpan.org">CPAN</a> that can be built automatically.</p>
+
+<p>Additionally, some packages are not available via PPM because of
+export restrictions or license incompatibility. Not all PPM packages in
+the repository are completely up-to-date or available for every
+platform.</p>
+
+<p>Check package availability and build status on the <a
+href="http://code.activestate.com/ppm/">PPM Index</a> site. If a module
+that you require is not available via PPM, try building it using the <a
+href="CPAN_shell">CPAN shell</a> as described below.</p>
+
+<h3><a name="how_to_make_ppm_distribution">Creating PPM packages</a></h3>
+
+<p>Specify the AUTHOR and ABSTRACT parameters in the Makefile.PL. However you
+should only pass them to WriteMakefile if the version of the perl is greater
+than 5.005 - older perls do not have these parameters added and do not expect to
+see them. This is an example Makefile.PL:</p>
+
+<pre>
+  use ExtUtils::MakeMaker;
+  # See lib/ExtUtils/MakeMaker.pm for details of how to influence
+  # the contents of the Makefile that is written.
+  WriteMakefile(
+      'NAME' => 'Term::Control',
+      'VERSION_FROM' => 'Control.pm', # finds $VERSION
+      ($] ge '5.005') ? (
+          'AUTHOR' => 'Johnny Doel (johnny@doel.org)',
+          'ABSTRACT' => 'Control the IO for terminals',
+      ) : (),
+  );
+</pre>
+  
+<p>Then you make the archive with the commands</p>
+
+<pre>
+  perl Makefile.PL
+  nmake
+</pre>
+
+<p>The resulting files are placed in the blib directory that is created when you
+run nmake. These files should be packed into an archive like this:</p>
+
+<pre>
+  tar cvf <i>package</i>.tar blib<br>
+  gzip --best <i>package</i>.tar
+</pre>
+
+<p>You now have an archive called <i>package</i>.tar.gz. Then you generate the
+PPD file by:</p>
+  
+<pre>
+  nmake ppd
+</pre>
+
+<p>You have to edit the resulting PPD file and add the location of the package
+archive into &lt;CODEBASE HREF="" /&gt;. The location is relative to
+the PPD file.</p>
+
+<p>You can get nmake from <a class="doc" href="http://download.microsoft.com/download/vc15/Patch/1.52/W95/EN-US/Nmake15.exe">http://download.microsoft.com/download/vc15/Patch/1.52/W95/EN-US/Nmake15.exe</a>.</p>
+
+<h3><a name="ppm_and_proxies">PPM, Proxies and Firewalls</a></h3>
+
+<p>If you use a proxy server or firewall, you may need to set the
+<code>http_proxy</code> environment variable in order for PPM to
+work.</p>
+
+<h4><a name="http_proxy">The http_proxy Environment Variable</a></h4>
+
+<p>Set the <code>http_proxy</code> variable with the hostname or IP
+address of the proxy server:</p>
+
+<pre>
+  http_proxy=http://proxy.example.org
+</pre>
+
+<p>If the proxy server requires a user name and password, include them
+in the following form:</p>
+
+<pre>
+  http_proxy=http://username:password@proxy.example.org
+</pre>
+
+<p>If the proxy server uses a port other than 80, include the port
+number:</p>
+
+<pre>
+  http_proxy=http://username:password@proxy.example.org:8080
+</pre>
+
+<h4><a name="setting_http_proxy">Setting http_proxy</a></h4>
+
+  <p><strong>Windows 2012/2008</strong></p>
+  <ol>
+    <li>From the <strong>System Manager</strong> click <strong>Change
+    System Properties</strong></li>
+    <li>Select the <strong>Advanced</strong> tab, then click the
+    <strong>Environment Variables</strong> button.</li>
+    <li>Click <strong>New</strong> in the <strong>System variables</strong>
+      panel.<br>
+    <li>Add <code>http_proxy</code> with the appropriate proxy
+    information (see examples above).</li>
+  </ol>
+  
+  <p><strong>Windows 7/8</strong></p>
+  <ol>
+    <li>Open the <strong>Advanced System Properties</strong> tab in
+    the <strong>Control Panel</strong> (<strong>Control Panel > System
+    Properties > Advanced > Environment Variables...</strong>).</li>
+    <li>Click the <strong>Environment Variables</strong> button.</li>
+    <li>Click <strong>New</strong> in the <strong>System variables</strong>
+      panel.<br>
+    <li>Add <code>http_proxy</code> with the appropriate proxy
+    information (see examples above).</li>
+  </ol>
+  
+  <p><strong>Mac OS X<br></strong></p>
+
+  <p>The <code>http_proxy</code> should be set in two places on OS
+  X:</p>
+
+<ul>
+  <li><strong>Shell</strong>: Add a line like the following in <code>.bash_profile</code> (<em>/Users/&lt;name&gt;/.bash_profile</em>):
+
+<pre>
+      http_proxy=http://<em>username</em>:<em>password</em>@<em>hostname</em>:<em>port</em>;  export http_proxy
+</pre>
+
+  <p>This setting applies to PPM when it is launched from or used at the
+  command line.</p></li>
+
+  <li><strong>Desktop</strong>: Add an entry like the following in your
+  <em>environment.plist</em> file
+  (<em>/Users/&lt;name&gt;/.MacOSX/environment.plist</em>):
+
+<pre>
+      &lt;key&gt;http_proxy&lt;/key&gt;
+      &lt;string&gt;http://<em>username</em>:<em>password</em>@<em>hostname</em>:<em>port</em>&lt;/string&gt;
+</pre>  
+
+  <p>This setting applies to PPM when it is launched by clicking the PPM
+  icon.</p></li>
+</ul>
+
+  <p><strong>Linux, Solaris or HP-UX<br></strong></p>
+
+  <p>Set the http_proxy environment variable using the command specific
+  to your shell (e.g. <code>set</code> or <code>export</code>). To make
+  this change persistent, add the command to the appropriate profile
+  file for the shell.  For example, in <code>bash</code>, add a line
+  like the following to your <em>.bash_profile</em> or <em>.bashrc</em>
+  file:</p>
+
+  <pre>
+    http_proxy=http://<em>username</em>:<em>password</em>@<em>hostname</em>:<em>port</em>;  export http_proxy
+  </pre>
+
+<h3><a name="CPAN_shell">Using the CPAN shell</a></h3>
+
+<p>If you require a module that is not available via <code>ppm</code>,
+or you require a more recent version, you can build the module from <a
+target="_blank" href="http://www.cpan.org">CPAN</a> sources. The CPAN
+shell is a command-line interface for fetching and building modules
+directly from CPAN archives. To run it, enter the following command:</p>
+
+<pre>
+    cpan
+</pre>
+
+<p>Building modules from source requires the following components:</p>
+
+<p>Windows:</p>
+
+ <ul>
+  <li>Microsoft's <code>nmake</code>, which is available from: <a
+  href="http://support.microsoft.com/default.aspx?scid=kb;en-us;Q132084">
+  http://support.microsoft.com/default.aspx?scid=kb;en-us;Q132084</a>,
+  or <code>dmake</code>, which is available from
+  <a href="http://search.cpan.org/dist/dmake/">http://search.cpan.org/dist/dmake</a>.</li>
+  <li>a C compiler (not required for 100% pure perl modules). Supported
+  compilers are MicroSoft Visual C/C++ 6.0 and <a
+  href="http://www.mingw.org/">MinGW</a> (gcc). The <a
+  href="http://code.activestate.com/ppm/MinGW/">MinGW</a> and <a
+  href="http://code.activestate.com/ppm/MinGW64/">MinGW64</a> packages
+  are available via PPM for 32-bit and 64-bit Windows systems
+  respectively.</li>
+ </ul>
+ 
+<p>Mac OS X:</p>
+
+<ul>
+ <li>Apple's Xcode tool suite, available from: <a
+ href="http://developer.apple.com/tools/xcode/index.html">
+ http://developer.apple.com/tools/xcode/index.html</a></li>
+</ul>
+
+<p>Linux and Solaris systems will normally have a compiler and a
+<code>make</code> utility installed by default.</p>
+
+<p>See <a
+href="http://www.activestate.com/blog/2010/10/how-install-cpan-modules-activeperl">How
+to install CPAN modules into ActivePerl</a> on the ActiveState blog for
+more information.</p> 
+
+</body>
+
+</html>

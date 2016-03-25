@@ -1,0 +1,187 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#error">error</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#catch">catch</a></li>
+      <li><a href="#emit">emit</a></li>
+      <li><a href="#has_subscribers">has_subscribers</a></li>
+      <li><a href="#on">on</a></li>
+      <li><a href="#once">once</a></li>
+      <li><a href="#subscribers">subscribers</a></li>
+      <li><a href="#unsubscribe">unsubscribe</a></li>
+    </ul>
+  </li>
+  <li><a href="#DEBUGGING">DEBUGGING</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::EventEmitter - Event emitter base class</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Cat</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojo::EventEmitter'</span><span class="operator">;</span>
+  
+  <span class="comment"># Emit events</span>
+  <span class="keyword">sub</span><span class="variable"> poke </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">emit</span><span class="operator">(</span><span class="string">roar</span> <span class="operator">=&gt;</span> <span class="number">3</span><span class="operator">);</span>
+  <span class="operator">}</span>
+  
+  <span class="keyword">package</span> <span class="variable">main</span><span class="operator">;</span>
+  
+  <span class="comment"># Subscribe to events</span>
+  <span class="keyword">my</span> <span class="variable">$tiger</span> <span class="operator">=</span> <span class="variable">Cat</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$tiger</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">roar</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$tiger</span><span class="operator">,</span> <span class="variable">$times</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">'RAWR!'</span> <span class="keyword">for</span> <span class="number">1</span> <span class="operator">..</span> <span class="variable">$times</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">$tiger</span><span class="operator">-&gt;</span><span class="variable">poke</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> is a simple base class for event emitting objects.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> can emit the following events.</p>
+
+<h2 id="error">error</h2>
+
+<pre><code>  <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">error</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$e</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>This is a special event for errors, it will not be emitted directly by this class but is fatal if unhandled.</p>
+
+<pre><code>  <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">error</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$e</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"This looks bad: </span><span class="variable">$err</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="catch">catch</h2>
+
+<pre><code>  <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">catch</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Subscribe to <a href="#error">&quot;error&quot;</a> event.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">error</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<h2 id="emit">emit</h2>
+
+<pre><code>  <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">emit</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">emit</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">,</span> <span class="number">123</span><span class="operator">);</span>
+</code></pre>
+
+<p>Emit event.</p>
+
+<h2 id="has_subscribers">has_subscribers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">has_subscribers</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if event has subscribers.</p>
+
+<h2 id="on">on</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cb</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Subscribe to event.</p>
+
+<pre><code>  <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$e</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="once">once</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cb</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">once</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Subscribe to event and unsubscribe again after it has been emitted once.</p>
+
+<pre><code>  <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">once</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$e</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="subscribers">subscribers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$subscribers</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">subscribers</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>All subscribers for event.</p>
+
+<pre><code>  <span class="comment"># Unsubscribe last subscriber</span>
+  <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">unsubscribe</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">subscribers</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="operator">-</span><span class="number">1</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Change order of subscribers</span>
+  <span class="variable">@</span><span class="operator">{</span><span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">subscribers</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)</span><span class="operator">}</span> <span class="operator">=</span> <span class="keyword">reverse</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">subscribers</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="unsubscribe">unsubscribe</h2>
+
+<pre><code>  <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">unsubscribe</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">unsubscribe</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="variable">$cb</span><span class="operator">);</span>
+</code></pre>
+
+<p>Unsubscribe from event.</p>
+
+<h1 id="DEBUGGING">DEBUGGING</h1>
+
+<p>You can set the <code>MOJO_EVENTEMITTER_DEBUG</code> environment variable to get some advanced diagnostics information printed to <code>STDERR</code>.</p>
+
+<pre><code>  MOJO_EVENTEMITTER_DEBUG=1</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

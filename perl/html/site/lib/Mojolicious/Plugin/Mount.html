@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#register">register</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Plugin::Mount - Application mount plugin</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="comment"># Mojolicious</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">Mount</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">'/prefix'</span> <span class="operator">=&gt;</span> <span class="string">'/home/sri/myapp.pl'</span><span class="operator">}</span><span class="operator">);</span>
+  
+  <span class="comment"># Mojolicious::Lite</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">plugin</span> <span class="string">Mount</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">'/prefix'</span> <span class="operator">=&gt;</span> <span class="string">'/home/sri/myapp.pl'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Adjust the generated route and mounted application</span>
+  <span class="keyword">my</span> <span class="variable">$example</span> <span class="operator">=</span> <span class="variable">plugin</span> <span class="string">Mount</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">'/example'</span> <span class="operator">=&gt;</span> <span class="string">'/home/sri/example.pl'</span><span class="operator">}</span><span class="operator">;</span>
+  <span class="variable">$example</span><span class="operator">-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'It works great!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">$example</span><span class="operator">-&gt;</span><span class="variable">pattern</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">app</span><span class="operator">}</span><span class="operator">;</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">config</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">(</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">);</span>
+  
+  <span class="comment"># Mount application with host</span>
+  <span class="variable">plugin</span> <span class="string">Mount</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">'example.com'</span> <span class="operator">=&gt;</span> <span class="string">'/home/sri/myapp.pl'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Host and path</span>
+  <span class="variable">plugin</span> <span class="string">Mount</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">'example.com/myapp'</span> <span class="operator">=&gt;</span> <span class="string">'/home/sri/myapp.pl'</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Or even hosts with wildcard subdomains</span>
+  <span class="variable">plugin</span> <span class="string">Mount</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">'*.example.com/myapp'</span> <span class="operator">=&gt;</span> <span class="string">'/home/sri/myapp.pl'</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Mount.html">Mojolicious::Plugin::Mount</a> is a plugin that allows you to mount whole <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> applications.</p>
+
+<p>The code of this plugin is a good example for learning to build new plugins, you&#39;re welcome to fork it.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html#PLUGINS">&quot;PLUGINS&quot; in Mojolicious::Plugins</a> for a list of plugins that are available by default.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Mount.html">Mojolicious::Plugin::Mount</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin.html">Mojolicious::Plugin</a> and implements the following new ones.</p>
+
+<h2 id="register">register</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">register</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="operator">{</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="string">'/some/app.pl'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Mount <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application and return the generated route, which is usually a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html">Mojolicious::Routes::Route</a> object.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

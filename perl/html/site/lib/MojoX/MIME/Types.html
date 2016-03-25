@@ -1,0 +1,242 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#INHERITANCE">INHERITANCE</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#Constructors">Constructors</a></li>
+      <li><a href="#Attributes">Attributes</a></li>
+      <li><a href="#Actions">Actions</a></li>
+    </ul>
+  </li>
+  <li><a href="#DETAILS">DETAILS</a>
+    <ul>
+      <li><a href="#Why">Why?</a></li>
+      <li><a href="#How-to-use-with-Mojolicious">How to use with Mojolicious</a></li>
+      <li><a href="#How-to-use-with-Mojolicious::Lite">How to use with Mojolicious::Lite</a></li>
+      <li><a href="#Differences-with-Mojolicious::Types">Differences with Mojolicious::Types</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#LICENSE">LICENSE</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>MojoX::MIME::Types - MIME Types for Mojolicious</p>
+
+<h1 id="INHERITANCE">INHERITANCE</h1>
+
+<pre><code> MojoX::MIME::Types
+   is a Mojo::Base</code></pre>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">MojoX::MIME::Types</span><span class="operator">;</span>
+  
+  <span class="comment"># set in Mojolicious as default</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">(</span><span class="variable">MojoX::MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">(</span><span class="variable">MojoX::MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>   <span class="comment"># ::Lite</span>
+  
+  <span class="comment"># basic interface translated into pure MIME::Types</span>
+  <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'text/foo'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>[Added to MIME::Types 2.07] This module is a drop-in replacement for Mojolicious::Types, but with a more correct handling plus a complete list of types... a huge list of types.</p>
+
+<p>Some methods ignore information they receive: those parameters are accepted for compatibility with the Mojolicious::Types interface, but should not contain useful information.</p>
+
+<p>Read the <a href="#DETAILS">&quot;DETAILS&quot;</a> below, about how to connect this module into Mojolicious and the differences you get.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<h2 id="Constructors">Constructors</h2>
+
+<dl>
+
+<dt id="MojoX::MIME::Types-new-options">MojoX::MIME::Types-&gt;<b>new</b>(%options)</dt>
+<dd>
+
+<p>Create the &#39;type&#39; handler for Mojolicious. When you do not specify your own MIME::Type object ($mime_type), it will be instantanted for you. You create one yourself when you would like to pass some parameter to the object constructor.</p>
+
+<pre><code> -Option    --Default
+  mime_types  &lt;created internally&gt;
+  types       undef</code></pre>
+
+<dl>
+
+<dt id="mime_types-MIME::Types-object">mime_types =&gt; MIME::Types-object</dt>
+<dd>
+
+<p>Pass your own prepared <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html">MIME::Types</a> object, when you need some instantiation parameters different from the defaults.</p>
+
+</dd>
+<dt id="types-HASH">types =&gt; HASH</dt>
+<dd>
+
+<p>Ignored.</p>
+
+</dd>
+</dl>
+
+<p>example:</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">(</span><span class="variable">MojoX::MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  
+  <span class="comment"># when you need to pass options to MIME::Types-&gt;new</span>
+  <span class="keyword">my</span> <span class="variable">$mt</span>    <span class="operator">=</span> <span class="variable">MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="variable">%opts</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$types</span> <span class="operator">=</span> <span class="variable">MojoX::MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">mime_types</span> <span class="operator">=&gt;</span> <span class="variable">$mt</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">(</span><span class="variable">$types</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+</dl>
+
+<h2 id="Attributes">Attributes</h2>
+
+<dl>
+
+<dt id="obj-mimeTypes">$obj-&gt;<b>mimeTypes</b>()</dt>
+<dd>
+
+<p>Returns the internal mime types object.</p>
+
+</dd>
+<dt id="obj-types-table">$obj-&gt;<b>types</b>( [\%table] )</dt>
+<dd>
+
+<p>In Mojolicious::Types, this attribute exposes the internal administration of types, offering to change it with using a clean abstract interface. That interface mistake bites now we have more complex internals.</p>
+
+<p><b>Avoid this method!</b> The returned HASH is expensive to construct, changes passed via <code>%table</code> are ignored: <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html">MIME::Types</a> is very complete!</p>
+
+</dd>
+</dl>
+
+<h2 id="Actions">Actions</h2>
+
+<dl>
+
+<dt id="obj-detect-accept-prio">$obj-&gt;<b>detect</b>( $accept, [$prio] )</dt>
+<dd>
+
+<p>Returns a list of filename extensions. The $accept header in HTTP can contain multiple types, with a priority indication (&#39;q&#39; attributes). The returned list contains a list with extensions, the extensions related to the highest priority type first. The <code>$prio</code>-flag is ignored. See <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html#HTTP-support">MIME::Types::httpAccept()</a>.</p>
+
+<p>This detect() function is not the correct approach for the Accept header: the &quot;Accept&quot; may contain wildcards (&#39;*&#39;) in types for globbing, which does not produce extensions. Better use <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html#HTTP-support">MIME::Types::httpAcceptBest()</a> or <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html#HTTP-support">MIME::Types::httpAcceptSelect()</a>.</p>
+
+<p>example:</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$exts</span> <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">(</span><span class="string">'application/json;q=9'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$exts</span> <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">(</span><span class="string">'text/html, application/json;q=9'</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+<dt id="obj-type-ext-type-types">$obj-&gt;<b>type</b>( $ext, [$type|\@types] )</dt>
+<dd>
+
+<p>Returns the first type name for an extension $ext, unless you specify type names.</p>
+
+<p>When a single $type or an ARRAY of @types are specified, the <code>$self</code> object is returned. Nothing is done with the provided info.</p>
+
+</dd>
+</dl>
+
+<h1 id="DETAILS">DETAILS</h1>
+
+<h2 id="Why">Why?</h2>
+
+<p>The Mojolicious::Types module has only very little knowledge about what is really needed to treat types correctly, and only contains a tiny list of extensions. <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html">MIME::Types</a> tries to follow the standards very closely and contains all types found in various lists on internet.</p>
+
+<h2 id="How-to-use-with-Mojolicious">How to use with Mojolicious</h2>
+
+<p>Start your Mojo application like this:</p>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">MyApp</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious'</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> startup </span><span class="operator">{</span>
+     <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+     <span class="operator">...</span>
+     <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">(</span><span class="variable">MojoX::MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<p>If you have special options for <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html#Constructors">MIME::Types::new()</a>, then create your own MIME::Types object first:</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$mt</span>    <span class="operator">=</span> <span class="variable">MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="variable">%opts</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$types</span> <span class="operator">=</span> <span class="variable">MojoX::MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">mime_types</span> <span class="operator">=&gt;</span> <span class="variable">$mt</span><span class="operator">);</span>
+  <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">(</span><span class="variable">$types</span><span class="operator">);</span>
+</code></pre>
+
+<p>In any case, you can reach the smart <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html">MIME::Types</a> object later as</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$mt</span>    <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">-&gt;</span><span class="variable">mimeTypes</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$mime</span>  <span class="operator">=</span> <span class="variable">$mt</span><span class="operator">-&gt;</span><span class="variable">mimeTypeOf</span><span class="operator">(</span><span class="variable">$filename</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="How-to-use-with-Mojolicious::Lite">How to use with Mojolicious::Lite</h2>
+
+<p>The use in Mojolicious::Lite applications is only slightly different from above:</p>
+
+<pre><code>  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">(</span><span class="variable">MojoX::MIME::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$types</span> <span class="operator">=</span> <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="Differences-with-Mojolicious::Types">Differences with Mojolicious::Types</h2>
+
+<p>There are a few major difference with Mojolicious::Types:</p>
+
+<ul>
+
+<li><p>the tables maintained by <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html">MIME::Types</a> are complete. So: there shouldn&#39;t be a need to add your own types, not via <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MojoX/MIME/Types.html#Attributes">types()</a>, not via <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MojoX/MIME/Types.html#Actions">type()</a>. All attempts to add types are ignored; better remove them from your code.</p>
+
+</li>
+<li><p>This plugin understands the experimental flag &#39;x-&#39; in types and handles casing issues.</p>
+
+</li>
+<li><p>Updates to the internal hash via types() are simply ignored, because it is expensive to implement (and won&#39;t add something new).</p>
+
+</li>
+<li><p>The <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MojoX/MIME/Types.html#Actions">detect()</a> is implemented in a compatible way, but does not understand wildcards (&#39;*&#39;). You should use <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html#HTTP-support">MIME::Types::httpAcceptBest()</a> or <a href="../../../../../../root/.cpanm/work/1458884182.5965/MIME-Types-2.13/blib/lib/MIME/Types.html#HTTP-support">MIME::Types::httpAcceptSelect()</a> to replace this broken function.</p>
+
+</li>
+</ul>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p>This module is part of MIME-Types distribution version 2.13, built on March 07, 2016. Website: <i>http://perl.overmeer.net/mimetypes/</i></p>
+
+<h1 id="LICENSE">LICENSE</h1>
+
+<p>Copyrights 1999,2001-2016 by [Mark Overmeer]. For other contributors see ChangeLog.</p>
+
+<p>This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself. See <i>http://www.perl.com/perl/misc/Artistic.html</i></p>
+
+
+</body>
+
+</html>
+
+

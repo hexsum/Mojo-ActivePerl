@@ -1,0 +1,166 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OPTIONS">OPTIONS</a>
+    <ul>
+      <li><a href="#default">default</a></li>
+      <li><a href="#ext">ext</a></li>
+      <li><a href="#file">file</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#load">load</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#register">register</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Plugin::Config - Perl-ish configuration plugin</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="comment"># myapp.conf (it's just Perl returning a hash)</span>
+  <span class="operator">{</span>
+    <span class="comment"># Just a value</span>
+    <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">"bar"</span><span class="operator">,</span>
+  
+    <span class="comment"># Nested data structures are fine too</span>
+    <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'â¥'</span><span class="operator">]</span><span class="operator">,</span>
+  
+    <span class="comment"># You have full access to the application</span>
+    <span class="string">music_dir</span> <span class="operator">=&gt;</span> <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">home</span><span class="operator">-&gt;</span><span class="variable">rel_dir</span><span class="operator">(</span><span class="string">'music'</span><span class="operator">)</span>
+  <span class="operator">};</span>
+  
+  <span class="comment"># Mojolicious</span>
+  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'Config'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$config</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Mojolicious::Lite</span>
+  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">plugin</span> <span class="string">'Config'</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$config</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># foo.html.ep</span>
+  <span class="variable">%=</span> <span class="variable">$config</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span>
+  
+  <span class="comment"># The configuration is available application-wide</span>
+  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">config</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$config</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Everything can be customized with options</span>
+  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">plugin</span> <span class="string">Config</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">file</span> <span class="operator">=&gt;</span> <span class="string">'/etc/myapp.stuff'</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Config.html">Mojolicious::Plugin::Config</a> is a Perl-ish configuration plugin.</p>
+
+<p>The application object can be accessed via <code>$app</code> or the <code>app</code> function, <a href="../../../../lib/strict.html">strict</a>, <a href="../../../../lib/warnings.html">warnings</a>, <a href="../../../../lib/utf8.html">utf8</a> and Perl 5.10 <a href="../../../../lib/feature.html">features</a> are automatically enabled. You can extend the normal configuration file <code>$moniker.conf</code> with <code>mode</code> specific ones like <code>$moniker.$mode.conf</code>. A default configuration filename will be generated from the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#moniker">&quot;moniker&quot; in Mojolicious</a>.</p>
+
+<p>The code of this plugin is a good example for learning to build new plugins, you&#39;re welcome to fork it.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html#PLUGINS">&quot;PLUGINS&quot; in Mojolicious::Plugins</a> for a list of plugins that are available by default.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Config.html">Mojolicious::Plugin::Config</a> supports the following options.</p>
+
+<h2 id="default">default</h2>
+
+<pre><code>  <span class="comment"># Mojolicious::Lite</span>
+  <span class="variable">plugin</span> <span class="string">Config</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">default</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}}</span><span class="operator">;</span>
+</code></pre>
+
+<p>Default configuration, making configuration files optional.</p>
+
+<h2 id="ext">ext</h2>
+
+<pre><code>  <span class="comment"># Mojolicious::Lite</span>
+  <span class="variable">plugin</span> <span class="string">Config</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">ext</span> <span class="operator">=&gt;</span> <span class="string">'stuff'</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<p>File extension for generated configuration filenames, defaults to <code>conf</code>.</p>
+
+<h2 id="file">file</h2>
+
+<pre><code>  <span class="comment"># Mojolicious::Lite</span>
+  <span class="variable">plugin</span> <span class="string">Config</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">file</span> <span class="operator">=&gt;</span> <span class="string">'myapp.conf'</span><span class="operator">}</span><span class="operator">;</span>
+  <span class="variable">plugin</span> <span class="string">Config</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">file</span> <span class="operator">=&gt;</span> <span class="string">'/etc/foo.stuff'</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<p>Path to configuration file, absolute or relative to the application home directory, defaults to the value of the <code>MOJO_CONFIG</code> environment variable or <code>$moniker.conf</code> in the application home directory.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Config.html">Mojolicious::Plugin::Config</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin.html">Mojolicious::Plugin</a> and implements the following new ones.</p>
+
+<h2 id="load">load</h2>
+
+<pre><code>  <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="variable">$file</span><span class="operator">,</span> <span class="variable">$conf</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">);</span>
+</code></pre>
+
+<p>Loads configuration file and passes the content to <a href="#parse">&quot;parse&quot;</a>.</p>
+
+<pre><code>  <span class="keyword">sub</span><span class="variable"> load </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$file</span><span class="operator">,</span> <span class="variable">$conf</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+    <span class="keyword">return</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="variable">$content</span><span class="operator">,</span> <span class="variable">$file</span><span class="operator">,</span> <span class="variable">$conf</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">);</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="variable">$content</span><span class="operator">,</span> <span class="variable">$file</span><span class="operator">,</span> <span class="variable">$conf</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse configuration file.</p>
+
+<pre><code>  <span class="keyword">sub</span><span class="variable"> parse </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$content</span><span class="operator">,</span> <span class="variable">$file</span><span class="operator">,</span> <span class="variable">$conf</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+    <span class="keyword">return</span> <span class="variable">$hash</span><span class="operator">;</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h2 id="register">register</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">register</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">register</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="operator">{</span><span class="string">file</span> <span class="operator">=&gt;</span> <span class="string">'/etc/app.conf'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Register plugin in <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application and merge configuration.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

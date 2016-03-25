@@ -1,0 +1,221 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#constraints">constraints</a></li>
+      <li><a href="#defaults">defaults</a></li>
+      <li><a href="#placeholder_start">placeholder_start</a></li>
+      <li><a href="#placeholders">placeholders</a></li>
+      <li><a href="#quote_end">quote_end</a></li>
+      <li><a href="#quote_start">quote_start</a></li>
+      <li><a href="#regex">regex</a></li>
+      <li><a href="#relaxed_start">relaxed_start</a></li>
+      <li><a href="#tree">tree</a></li>
+      <li><a href="#unparsed">unparsed</a></li>
+      <li><a href="#wildcard_start">wildcard_start</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#match">match</a></li>
+      <li><a href="#match_partial">match_partial</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#render">render</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Routes::Pattern - Route pattern</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Routes::Pattern</span><span class="operator">;</span>
+  
+  <span class="comment"># Create pattern</span>
+  <span class="keyword">my</span> <span class="variable">$pattern</span> <span class="operator">=</span> <span class="variable">Mojolicious::Routes::Pattern</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/test/:name'</span><span class="operator">);</span>
+  
+  <span class="comment"># Match routes</span>
+  <span class="keyword">my</span> <span class="variable">$captures</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">match</span><span class="operator">(</span><span class="string">'/test/sebastian'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$captures</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">name</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Pattern.html">Mojolicious::Routes::Pattern</a> is the core of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes.html">Mojolicious::Routes</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Pattern.html">Mojolicious::Routes::Pattern</a> implements the following attributes.</p>
+
+<h2 id="constraints">constraints</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$constraints</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">constraints</span><span class="operator">;</span>
+  <span class="variable">$pattern</span>        <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">constraints</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Regular expression constraints.</p>
+
+<h2 id="defaults">defaults</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$defaults</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">;</span>
+  <span class="variable">$pattern</span>     <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Default parameters.</p>
+
+<h2 id="placeholder_start">placeholder_start</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$start</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">placeholder_start</span><span class="operator">;</span>
+  <span class="variable">$pattern</span>  <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">placeholder_start</span><span class="operator">(</span><span class="string">':'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character indicating a placeholder, defaults to <code>:</code>.</p>
+
+<h2 id="placeholders">placeholders</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$placeholders</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">placeholders</span><span class="operator">;</span>
+  <span class="variable">$pattern</span>         <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">placeholders</span><span class="operator">(</span><span class="operator">[</span><span class="string">'foo'</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Placeholder names.</p>
+
+<h2 id="quote_end">quote_end</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$end</span>  <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">quote_end</span><span class="operator">;</span>
+  <span class="variable">$pattern</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">quote_end</span><span class="operator">(</span><span class="string">']'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character indicating the end of a quoted placeholder, defaults to <code>)</code>.</p>
+
+<h2 id="quote_start">quote_start</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$start</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">quote_start</span><span class="operator">;</span>
+  <span class="variable">$pattern</span>  <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">quote_start</span><span class="operator">(</span><span class="string">'['</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character indicating the start of a quoted placeholder, defaults to <code>(</code>.</p>
+
+<h2 id="regex">regex</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$regex</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">regex</span><span class="operator">;</span>
+  <span class="variable">$pattern</span>  <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">regex</span><span class="operator">(</span><span class="variable">$regex</span><span class="operator">);</span>
+</code></pre>
+
+<p>Pattern in compiled regular expression form.</p>
+
+<h2 id="relaxed_start">relaxed_start</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$start</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">relaxed_start</span><span class="operator">;</span>
+  <span class="variable">$pattern</span>  <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">relaxed_start</span><span class="operator">(</span><span class="string">'*'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character indicating a relaxed placeholder, defaults to <code><span class="comment">#</span>
+</code>.</p>
+
+<h2 id="tree">tree</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tree</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">;</span>
+  <span class="variable">$pattern</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">(</span><span class="operator">[[</span><span class="string">'text'</span><span class="operator">,</span> <span class="string">'/foo'</span><span class="operator">]]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Pattern in parsed form. Note that this structure should only be used very carefully since it is very dynamic.</p>
+
+<h2 id="unparsed">unparsed</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$unparsed</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">unparsed</span><span class="operator">;</span>
+  <span class="variable">$pattern</span>     <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">unparsed</span><span class="operator">(</span><span class="string">'/(foo)/(bar)'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Raw unparsed pattern.</p>
+
+<h2 id="wildcard_start">wildcard_start</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$start</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">wildcard_start</span><span class="operator">;</span>
+  <span class="variable">$pattern</span>  <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">wildcard_start</span><span class="operator">(</span><span class="string">'*'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Character indicating the start of a wildcard placeholder, defaults to <code>*</code>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Pattern.html">Mojolicious::Routes::Pattern</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="match">match</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$captures</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">match</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$captures</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">match</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">,</span> <span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<p>Match pattern against entire path, format detection is disabled by default.</p>
+
+<h2 id="match_partial">match_partial</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$captures</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">match_partial</span><span class="operator">(\</span><span class="variable">$path</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$captures</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">match_partial</span><span class="operator">(\</span><span class="variable">$path</span><span class="operator">,</span> <span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<p>Match pattern against path and remove matching parts, format detection is disabled by default.</p>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$pattern</span> <span class="operator">=</span> <span class="variable">Mojolicious::Routes::Pattern</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$pattern</span> <span class="operator">=</span> <span class="variable">Mojolicious::Routes::Pattern</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/:action'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$pattern</span>
+    <span class="operator">=</span> <span class="variable">Mojolicious::Routes::Pattern</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/:action'</span><span class="operator">,</span> <span class="string">action</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$pattern</span> <span class="operator">=</span> <span class="variable">Mojolicious::Routes::Pattern</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">format</span> <span class="operator">=&gt;</span> <span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Pattern.html">Mojolicious::Routes::Pattern</a> object and <a href="#parse">&quot;parse&quot;</a> pattern if necessary.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$pattern</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'/:action'</span><span class="operator">);</span>
+  <span class="variable">$pattern</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'/:action'</span><span class="operator">,</span> <span class="string">action</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">);</span>
+  <span class="variable">$pattern</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">format</span> <span class="operator">=&gt;</span> <span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse pattern.</p>
+
+<h2 id="render">render</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="operator">{</span><span class="string">action</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$pattern</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="operator">{</span><span class="string">action</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">}</span><span class="operator">,</span> <span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<p>Render pattern into a path with parameters, format rendering is disabled by default.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

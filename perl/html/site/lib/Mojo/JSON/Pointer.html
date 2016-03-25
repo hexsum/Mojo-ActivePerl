@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#data">data</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#contains">contains</a></li>
+      <li><a href="#get">get</a></li>
+      <li><a href="#new">new</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::JSON::Pointer - JSON Pointers</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::JSON::Pointer</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$pointer</span> <span class="operator">=</span> <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">23</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">]}</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$pointer</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/foo/1'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="string">'Contains "/foo".'</span> <span class="keyword">if</span> <span class="variable">$pointer</span><span class="operator">-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a> is a relaxed implementation of <a href="http://tools.ietf.org/html/rfc6901">RFC 6901</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a> implements the following attributes.</p>
+
+<h2 id="data">data</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$data</span> <span class="operator">=</span> <span class="variable">$pointer</span><span class="operator">-&gt;</span><span class="variable">data</span><span class="operator">;</span>
+  <span class="variable">$pointer</span> <span class="operator">=</span> <span class="variable">$pointer</span><span class="operator">-&gt;</span><span class="variable">data</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Data structure to be processed.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="contains">contains</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$pointer</span><span class="operator">-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/foo/1'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if <a href="#data">&quot;data&quot;</a> contains a value that can be identified with the given JSON Pointer.</p>
+
+<pre><code>  <span class="comment"># True</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'just a string'</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">''</span><span class="operator">);</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">'â¥'</span> <span class="operator">=&gt;</span> <span class="string">'mojolicious'</span><span class="operator">}</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/â¥'</span><span class="operator">);</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">4</span><span class="operator">,</span> <span class="number">5</span><span class="operator">]}</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">4</span><span class="operator">,</span> <span class="number">5</span><span class="operator">]}</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/baz/1'</span><span class="operator">);</span>
+  
+  <span class="comment"># False</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">'â¥'</span> <span class="operator">=&gt;</span> <span class="string">'mojolicious'</span><span class="operator">}</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/â'</span><span class="operator">);</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">4</span><span class="operator">,</span> <span class="number">5</span><span class="operator">]}</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/bar'</span><span class="operator">);</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">4</span><span class="operator">,</span> <span class="number">5</span><span class="operator">]}</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/baz/9'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="get">get</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$pointer</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Extract value from <a href="#data">&quot;data&quot;</a> identified by the given JSON Pointer.</p>
+
+<pre><code>  <span class="comment"># "just a string"</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'just a string'</span><span class="operator">)-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">''</span><span class="operator">);</span>
+  
+  <span class="comment"># "mojolicious"</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">'â¥'</span> <span class="operator">=&gt;</span> <span class="string">'mojolicious'</span><span class="operator">}</span><span class="operator">)-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/â¥'</span><span class="operator">);</span>
+  
+  <span class="comment"># "bar"</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">4</span><span class="operator">,</span> <span class="number">5</span><span class="operator">,</span> <span class="number">6</span><span class="operator">]}</span><span class="operator">)-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  
+  <span class="comment"># "4"</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">4</span><span class="operator">,</span> <span class="number">5</span><span class="operator">,</span> <span class="number">6</span><span class="operator">]}</span><span class="operator">)-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/baz/0'</span><span class="operator">);</span>
+  
+  <span class="comment"># "6"</span>
+  <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">4</span><span class="operator">,</span> <span class="number">5</span><span class="operator">,</span> <span class="number">6</span><span class="operator">]}</span><span class="operator">)-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/baz/2'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$pointer</span> <span class="operator">=</span> <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$pointer</span> <span class="operator">=</span> <span class="variable">Mojo::JSON::Pointer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Build new <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a> object.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

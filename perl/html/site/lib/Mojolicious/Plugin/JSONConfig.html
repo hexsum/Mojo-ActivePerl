@@ -1,0 +1,149 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OPTIONS">OPTIONS</a>
+    <ul>
+      <li><a href="#template">template</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#register">register</a></li>
+      <li><a href="#render">render</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Plugin::JSONConfig - JSON configuration plugin</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="comment"># myapp.json (it's just JSON with embedded Perl)</span>
+  <span class="operator">{</span>
+    <span class="variable">%#</span> <span class="variable">Just</span> <span class="variable">a</span> <span class="variable">value</span>
+    <span class="string">"foo"</span><span class="operator">:</span> <span class="string">"bar"</span><span class="operator">,</span>
+  
+    <span class="variable">%#</span> <span class="variable">Nested</span> <span class="variable">data</span> <span class="variable">structures</span> <span class="variable">are</span> <span class="variable">fine</span> <span class="variable">too</span>
+    <span class="string">"baz"</span><span class="operator">:</span> <span class="operator">[</span><span class="string">"â¥"</span><span class="operator">]</span><span class="operator">,</span>
+  
+    <span class="variable">%#</span> <span class="variable">You</span> <span class="variable">have</span> <span class="variable">full</span> <span class="variable">access</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">application</span>
+    <span class="string">"music_dir"</span><span class="operator">:</span> <span class="string">"&lt;%= app-&gt;home-&gt;rel_dir('music') %&gt;"</span>
+  <span class="operator">}</span>
+  
+  <span class="comment"># Mojolicious</span>
+  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'JSONConfig'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$config</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Mojolicious::Lite</span>
+  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">plugin</span> <span class="string">'JSONConfig'</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$config</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># foo.html.ep</span>
+  <span class="variable">%=</span> <span class="variable">$config</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span>
+  
+  <span class="comment"># The configuration is available application-wide</span>
+  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">config</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$config</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Everything can be customized with options</span>
+  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">plugin</span> <span class="string">JSONConfig</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">file</span> <span class="operator">=&gt;</span> <span class="string">'/etc/myapp.conf'</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/JSONConfig.html">Mojolicious::Plugin::JSONConfig</a> is a JSON configuration plugin that preprocesses its input with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a>.</p>
+
+<p>The application object can be accessed via <code>$app</code> or the <code>app</code> function. You can extend the normal configuration file <code>$moniker.json</code> with <code>mode</code> specific ones like <code>$moniker.$mode.json</code>. A default configuration filename will be generated from the value of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#moniker">&quot;moniker&quot; in Mojolicious</a>.</p>
+
+<p>The code of this plugin is a good example for learning to build new plugins, you&#39;re welcome to fork it.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html#PLUGINS">&quot;PLUGINS&quot; in Mojolicious::Plugins</a> for a list of plugins that are available by default.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/JSONConfig.html">Mojolicious::Plugin::JSONConfig</a> inherits all options from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Config.html">Mojolicious::Plugin::Config</a> and supports the following new ones.</p>
+
+<h2 id="template">template</h2>
+
+<pre><code>  <span class="comment"># Mojolicious::Lite</span>
+  <span class="variable">plugin</span> <span class="string">JSONConfig</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">line_start</span> <span class="operator">=&gt;</span> <span class="string">'.'</span><span class="operator">}}</span><span class="operator">;</span>
+</code></pre>
+
+<p>Attribute values passed to <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> object used to preprocess configuration files.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/JSONConfig.html">Mojolicious::Plugin::JSONConfig</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Config.html">Mojolicious::Plugin::Config</a> and implements the following new ones.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="variable">$content</span><span class="operator">,</span> <span class="variable">$file</span><span class="operator">,</span> <span class="variable">$conf</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">);</span>
+</code></pre>
+
+<p>Process content with <a href="#render">&quot;render&quot;</a> and parse it with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a>.</p>
+
+<pre><code>  <span class="keyword">sub</span><span class="variable"> parse </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$content</span><span class="operator">,</span> <span class="variable">$file</span><span class="operator">,</span> <span class="variable">$conf</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+    <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="variable">$content</span><span class="operator">,</span> <span class="variable">$file</span><span class="operator">,</span> <span class="variable">$conf</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">);</span>
+    <span class="operator">...</span>
+    <span class="keyword">return</span> <span class="variable">$hash</span><span class="operator">;</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h2 id="register">register</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">register</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$config</span> <span class="operator">=</span> <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">register</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="operator">{</span><span class="string">file</span> <span class="operator">=&gt;</span> <span class="string">'/etc/foo.conf'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Register plugin in <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application and merge configuration.</p>
+
+<h2 id="render">render</h2>
+
+<pre><code>  <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="variable">$content</span><span class="operator">,</span> <span class="variable">$file</span><span class="operator">,</span> <span class="variable">$conf</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">);</span>
+</code></pre>
+
+<p>Process configuration file with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a>.</p>
+
+<pre><code>  <span class="keyword">sub</span><span class="variable"> render </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$content</span><span class="operator">,</span> <span class="variable">$file</span><span class="operator">,</span> <span class="variable">$conf</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+    <span class="keyword">return</span> <span class="variable">$content</span><span class="operator">;</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#mapping">mapping</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#detect">detect</a></li>
+      <li><a href="#type">type</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Types - MIME types</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Types</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$types</span> <span class="operator">=</span> <span class="variable">Mojolicious::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'text/foo'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Types.html">Mojolicious::Types</a> manages MIME types for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+<pre><code>  <span class="variable">appcache</span> <span class="operator">-&gt;</span> <span class="variable">text</span><span class="operator">/</span><span class="variable">cache</span><span class="operator">-</span><span class="variable">manifest</span>
+  <span class="variable">atom</span>     <span class="operator">-&gt;</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">atom</span><span class="operator">+</span><span class="variable">xml</span>
+  <span class="variable">bin</span>      <span class="operator">-&gt;</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">octet</span><span class="operator">-</span><span class="variable">stream</span>
+  <span class="variable">css</span>      <span class="operator">-&gt;</span> <span class="variable">text</span><span class="operator">/</span><span class="variable">css</span>
+  <span class="variable">gif</span>      <span class="operator">-&gt;</span> <span class="variable">image</span><span class="operator">/</span><span class="variable">gif</span>
+  <span class="variable">gz</span>       <span class="operator">-&gt;</span> <span class="variable">application</span><span class="operator">/x-</span><span class="variable">gzip</span>
+  <span class="variable">htm</span>      <span class="operator">-&gt;</span> <span class="variable">text</span><span class="operator">/</span><span class="variable">html</span>
+  <span class="variable">html</span>     <span class="operator">-&gt;</span> <span class="variable">text</span><span class="operator">/</span><span class="variable">html</span><span class="operator">;</span><span class="variable">charset</span><span class="operator">=</span><span class="variable">UTF</span><span class="operator">-</span><span class="number">8</span>
+  <span class="variable">ico</span>      <span class="operator">-&gt;</span> <span class="variable">image</span><span class="operator">/x-</span><span class="variable">icon</span>
+  <span class="variable">jpeg</span>     <span class="operator">-&gt;</span> <span class="variable">image</span><span class="operator">/</span><span class="variable">jpeg</span>
+  <span class="variable">jpg</span>      <span class="operator">-&gt;</span> <span class="variable">image</span><span class="operator">/</span><span class="variable">jpeg</span>
+  <span class="variable">js</span>       <span class="operator">-&gt;</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">javascript</span>
+  <span class="variable">json</span>     <span class="operator">-&gt;</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">json</span><span class="operator">;</span><span class="variable">charset</span><span class="operator">=</span><span class="variable">UTF</span><span class="operator">-</span><span class="number">8</span>
+  <span class="variable">mp3</span>      <span class="operator">-&gt;</span> <span class="variable">audio</span><span class="operator">/</span><span class="variable">mpeg</span>
+  <span class="variable">mp4</span>      <span class="operator">-&gt;</span> <span class="variable">video</span><span class="operator">/</span><span class="variable">mp4</span>
+  <span class="variable">ogg</span>      <span class="operator">-&gt;</span> <span class="variable">audio</span><span class="operator">/</span><span class="variable">ogg</span>
+  <span class="variable">ogv</span>      <span class="operator">-&gt;</span> <span class="variable">video</span><span class="operator">/</span><span class="variable">ogg</span>
+  <span class="variable">pdf</span>      <span class="operator">-&gt;</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">pdf</span>
+  <span class="variable">png</span>      <span class="operator">-&gt;</span> <span class="variable">image</span><span class="operator">/</span><span class="variable">png</span>
+  <span class="variable">rss</span>      <span class="operator">-&gt;</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">rss</span><span class="operator">+</span><span class="variable">xml</span>
+  <span class="variable">svg</span>      <span class="operator">-&gt;</span> <span class="variable">image</span><span class="operator">/</span><span class="variable">svg</span><span class="operator">+</span><span class="variable">xml</span>
+  <span class="variable">txt</span>      <span class="operator">-&gt;</span> <span class="variable">text</span><span class="operator">/</span><span class="variable">plain</span><span class="operator">;</span><span class="variable">charset</span><span class="operator">=</span><span class="variable">UTF</span><span class="operator">-</span><span class="number">8</span>
+  <span class="variable">webm</span>     <span class="operator">-&gt;</span> <span class="variable">video</span><span class="operator">/</span><span class="variable">webm</span>
+  <span class="variable">woff</span>     <span class="operator">-&gt;</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">font</span><span class="operator">-</span><span class="variable">woff</span>
+  <span class="variable">xml</span>      <span class="operator">-&gt;</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">xml</span><span class="operator">,</span><span class="variable">text</span><span class="operator">/</span><span class="variable">xml</span>
+  <span class="variable">zip</span>      <span class="operator">-&gt;</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">zip</span>
+</code></pre>
+
+<p>The most common ones are already defined.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Types.html">Mojolicious::Types</a> implements the following attributes.</p>
+
+<h2 id="mapping">mapping</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$mapping</span> <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">mapping</span><span class="operator">;</span>
+  <span class="variable">$types</span>      <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">mapping</span><span class="operator">(</span><span class="operator">{</span><span class="string">png</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'image/png'</span><span class="operator">]}</span><span class="operator">);</span>
+</code></pre>
+
+<p>MIME type mapping.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Types.html">Mojolicious::Types</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="detect">detect</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$exts</span> <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">(</span><span class="string">'application/json;q=9'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$exts</span> <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">(</span><span class="string">'text/html, application/json;q=9'</span><span class="operator">,</span> <span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<p>Detect file extensions from <code>Accept</code> header value, prioritization of unspecific values that contain more than one MIME type is disabled by default.</p>
+
+<pre><code>  <span class="comment"># List detected extensions prioritized</span>
+  <span class="keyword">say</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">(</span><span class="string">'application/json, text/xml;q=0.1'</span><span class="operator">,</span> <span class="number">1</span><span class="operator">)</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="type">type</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$type</span> <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">'png'</span><span class="operator">);</span>
+  <span class="variable">$types</span>   <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">png</span> <span class="operator">=&gt;</span> <span class="string">'image/png'</span><span class="operator">);</span>
+  <span class="variable">$types</span>   <span class="operator">=</span> <span class="variable">$types</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'application/json'</span><span class="operator">,</span> <span class="string">'text/x-json'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or set MIME types for file extension, alternatives are only used for detection.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

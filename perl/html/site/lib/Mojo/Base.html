@@ -1,0 +1,176 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a>
+    <ul>
+      <li><a href="#has">has</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#attr">attr</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#tap">tap</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Base - Minimal base class for Mojo projects</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Cat</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="operator">-</span><span class="variable">base</span><span class="operator">;</span>
+  
+  <span class="variable">has</span> <span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'Nyan'</span><span class="operator">;</span>
+  <span class="variable">has</span> <span class="operator">[</span><span class="string">'age'</span><span class="operator">,</span> <span class="string">'weight'</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="number">4</span><span class="operator">;</span>
+  
+  <span class="keyword">package</span> <span class="variable">Tiger</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Cat'</span><span class="operator">;</span>
+  
+  <span class="variable">has</span> <span class="string">friend</span>  <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">Cat</span><span class="operator">-&gt;</span><span class="variable">new</span> <span class="operator">};</span>
+  <span class="variable">has</span> <span class="string">stripes</span> <span class="operator">=&gt;</span> <span class="number">42</span><span class="operator">;</span>
+  
+  <span class="keyword">package</span> <span class="variable">main</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="operator">-</span><span class="variable">strict</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$mew</span> <span class="operator">=</span> <span class="variable">Cat</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'Longcat'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$mew</span><span class="operator">-&gt;</span><span class="variable">age</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$mew</span><span class="operator">-&gt;</span><span class="variable">age</span><span class="operator">(</span><span class="number">3</span><span class="operator">)-&gt;</span><span class="variable">weight</span><span class="operator">(</span><span class="number">5</span><span class="operator">)-&gt;</span><span class="variable">age</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$rawr</span> <span class="operator">=</span> <span class="variable">Tiger</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">stripes</span> <span class="operator">=&gt;</span> <span class="number">38</span><span class="operator">,</span> <span class="string">weight</span> <span class="operator">=&gt;</span> <span class="number">250</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$rawr</span><span class="operator">-&gt;</span><span class="variable">tap</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">friend</span><span class="operator">-&gt;</span><span class="variable">name</span><span class="operator">(</span><span class="string">'Tacgnol'</span><span class="operator">)</span> <span class="operator">})-&gt;</span><span class="variable">weight</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> is a simple base class for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a> projects with fluent interfaces.</p>
+
+<pre><code>  <span class="comment"># Automatically enables "strict", "warnings", "utf8" and Perl 5.10 features</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="operator">-</span><span class="variable">strict</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="operator">-</span><span class="variable">base</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'SomeBaseClass'</span><span class="operator">;</span>
+</code></pre>
+
+<p>All three forms save a lot of typing.</p>
+
+<pre><code>  <span class="comment"># use Mojo::Base -strict;</span>
+  <span class="keyword">use</span> <span class="variable">strict</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">warnings</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">utf8</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">feature</span> <span class="string">':5.10'</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">IO::Handle</span> <span class="operator">();</span>
+  
+  <span class="comment"># use Mojo::Base -base;</span>
+  <span class="keyword">use</span> <span class="variable">strict</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">warnings</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">utf8</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">feature</span> <span class="string">':5.10'</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">IO::Handle</span> <span class="operator">();</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span><span class="operator">;</span>
+  <span class="keyword">push</span> <span class="variable">@ISA</span><span class="operator">,</span> <span class="string">'Mojo::Base'</span><span class="operator">;</span>
+  <span class="keyword">sub</span><span class="variable"> has </span><span class="operator">{</span> <span class="variable">Mojo::Base::attr</span><span class="operator">(</span><span class="keyword">__PACKAGE__</span><span class="operator">,</span> <span class="variable">@_</span><span class="operator">)</span> <span class="operator">}</span>
+  
+  <span class="comment"># use Mojo::Base 'SomeBaseClass';</span>
+  <span class="keyword">use</span> <span class="variable">strict</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">warnings</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">utf8</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">feature</span> <span class="string">':5.10'</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">IO::Handle</span> <span class="operator">();</span>
+  <span class="keyword">require</span> <span class="variable">SomeBaseClass</span><span class="operator">;</span>
+  <span class="keyword">push</span> <span class="variable">@ISA</span><span class="operator">,</span> <span class="string">'SomeBaseClass'</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span><span class="operator">;</span>
+  <span class="keyword">sub</span><span class="variable"> has </span><span class="operator">{</span> <span class="variable">Mojo::Base::attr</span><span class="operator">(</span><span class="keyword">__PACKAGE__</span><span class="operator">,</span> <span class="variable">@_</span><span class="operator">)</span> <span class="operator">}</span>
+</code></pre>
+
+<h1 id="FUNCTIONS">FUNCTIONS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> implements the following functions, which can be imported with the <code>-base</code> flag or by setting a base class.</p>
+
+<h2 id="has">has</h2>
+
+<pre><code>  <span class="variable">has</span> <span class="string">'name'</span><span class="operator">;</span>
+  <span class="variable">has</span> <span class="operator">[</span><span class="string">'name1'</span><span class="operator">,</span> <span class="string">'name2'</span><span class="operator">,</span> <span class="string">'name3'</span><span class="operator">]</span><span class="operator">;</span>
+  <span class="variable">has</span> <span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">;</span>
+  <span class="variable">has</span> <span class="string">name</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="variable">has</span> <span class="operator">[</span><span class="string">'name1'</span><span class="operator">,</span> <span class="string">'name2'</span><span class="operator">,</span> <span class="string">'name3'</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">;</span>
+  <span class="variable">has</span> <span class="operator">[</span><span class="string">'name1'</span><span class="operator">,</span> <span class="string">'name2'</span><span class="operator">,</span> <span class="string">'name3'</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Create attributes for hash-based objects, just like the <a href="#attr">&quot;attr&quot;</a> method.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> implements the following methods.</p>
+
+<h2 id="attr">attr</h2>
+
+<pre><code>  <span class="variable">$object</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">'name'</span><span class="operator">);</span>
+  <span class="variable">SubClass</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">'name'</span><span class="operator">);</span>
+  <span class="variable">SubClass</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="operator">[</span><span class="string">'name1'</span><span class="operator">,</span> <span class="string">'name2'</span><span class="operator">,</span> <span class="string">'name3'</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">SubClass</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">SubClass</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="variable">SubClass</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="operator">[</span><span class="string">'name1'</span><span class="operator">,</span> <span class="string">'name2'</span><span class="operator">,</span> <span class="string">'name3'</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">SubClass</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="operator">[</span><span class="string">'name1'</span><span class="operator">,</span> <span class="string">'name2'</span><span class="operator">,</span> <span class="string">'name3'</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Create attribute accessors for hash-based objects, an array reference can be used to create more than one at a time. Pass an optional second argument to set a default value, it should be a constant or a callback. The callback will be executed at accessor read time if there&#39;s no set value. Accessors can be chained, that means they return their invocant when they are called with an argument.</p>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$object</span> <span class="operator">=</span> <span class="variable">SubClass</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$object</span> <span class="operator">=</span> <span class="variable">SubClass</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'value'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$object</span> <span class="operator">=</span> <span class="variable">SubClass</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'value'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>This base class provides a basic constructor for hash-based objects. You can pass it either a hash or a hash reference with attribute values.</p>
+
+<h2 id="tap">tap</h2>
+
+<pre><code>  <span class="variable">$object</span> <span class="operator">=</span> <span class="variable">$object</span><span class="operator">-&gt;</span><span class="variable">tap</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="variable">$object</span> <span class="operator">=</span> <span class="variable">$object</span><span class="operator">-&gt;</span><span class="variable">tap</span><span class="operator">(</span><span class="string">'some_method'</span><span class="operator">);</span>
+  <span class="variable">$object</span> <span class="operator">=</span> <span class="variable">$object</span><span class="operator">-&gt;</span><span class="variable">tap</span><span class="operator">(</span><span class="string">'some_method'</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<p>Tap into a method chain to perform operations on an object within the chain (also known as a K combinator or Kestrel). The object will be the first argument passed to the callback, and is also available as <code>$_</code>. The callback&#39;s return value will be ignored; instead, the object (the callback&#39;s first argument) will be the return value. In this way, arbitrary code can be used within (i.e., spliced or tapped into) a chained set of object method calls.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="variable">$object</span> <span class="operator">=</span> <span class="variable">$object</span><span class="operator">-&gt;</span><span class="variable">tap</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">some_method</span><span class="operator">(</span><span class="variable">@args</span><span class="operator">)</span> <span class="operator">});</span>
+  
+  <span class="comment"># Inject side effects into a method chain</span>
+  <span class="variable">$object</span><span class="operator">-&gt;</span><span class="variable">foo</span><span class="operator">(</span><span class="string">'A'</span><span class="operator">)-&gt;</span><span class="variable">tap</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">foo</span> <span class="operator">})-&gt;</span><span class="variable">foo</span><span class="operator">(</span><span class="string">'B'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

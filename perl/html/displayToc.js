@@ -1,0 +1,2 @@
+function writelinks(anchorName, depth) {
+}

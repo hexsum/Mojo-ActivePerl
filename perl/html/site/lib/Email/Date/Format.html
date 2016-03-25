@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#VERSION">VERSION</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a>
+    <ul>
+      <li><a href="#email_date">email_date</a></li>
+      <li><a href="#email_gmdate">email_gmdate</a></li>
+    </ul>
+  </li>
+  <li><a href="#AUTHORS">AUTHORS</a></li>
+  <li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Email::Date::Format - produce RFC 2822 date strings</p>
+
+<h1 id="VERSION">VERSION</h1>
+
+<p>version 1.005</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Email::Date::Format</span> <span class="string">qw(email_date)</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$header</span> <span class="operator">=</span> <span class="variable">email_date</span><span class="operator">(</span><span class="variable">$date</span><span class="operator">-&gt;</span><span class="variable">epoch</span><span class="operator">);</span>
+  
+  <span class="variable">Email::Simple</span><span class="operator">-&gt;</span><span class="variable">create</span><span class="operator">(</span>
+    <span class="string">header</span> <span class="operator">=&gt;</span> <span class="operator">[</span>
+      <span class="string">Date</span> <span class="operator">=&gt;</span> <span class="variable">$header</span><span class="operator">,</span>
+    <span class="operator">]</span><span class="operator">,</span>
+    <span class="string">body</span> <span class="operator">=&gt;</span> <span class="string">'...'</span><span class="operator">,</span>
+  <span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>This module provides a simple means for generating an RFC 2822 compliant datetime string. (In case you care, they&#39;re not RFC 822 dates, because they use a four digit year, which is not allowed in RFC 822.)</p>
+
+<h1 id="FUNCTIONS">FUNCTIONS</h1>
+
+<h2 id="email_date">email_date</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">email_date</span><span class="operator">;</span> <span class="comment"># now</span>
+  <span class="keyword">my</span> <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">email_date</span><span class="operator">(</span> <span class="keyword">time</span> <span class="operator">-</span> <span class="number">60</span><span class="operator">*</span><span class="number">60</span> <span class="operator">);</span> <span class="comment"># one hour ago</span>
+</code></pre>
+
+<p><code>email_date</code> accepts an epoch value, such as the one returned by <code>time</code>. It returns a string representing the date and time of the input, as specified in RFC 2822. If no input value is provided, the current value of <code>time</code> is used.</p>
+
+<p><code>email_date</code> is exported only if requested.</p>
+
+<h2 id="email_gmdate">email_gmdate</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">email_gmdate</span><span class="operator">;</span>
+</code></pre>
+
+<p><code>email_gmdate</code> is identical to <code>email_date</code>, but it will return a string indicating the time in Greenwich Mean Time, rather than local time.</p>
+
+<p><code>email_gmdate</code> is exported only if requested.</p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<ul>
+
+<li><p>Casey West</p>
+
+</li>
+<li><p>Ricardo SIGNES &lt;rjbs@cpan.org&gt;</p>
+
+</li>
+</ul>
+
+<h1 id="COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</h1>
+
+<p>This software is copyright (c) 2004 by Casey West.</p>
+
+<p>This is free software; you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself.</p>
+
+
+</body>
+
+</html>
+
+

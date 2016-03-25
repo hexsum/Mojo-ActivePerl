@@ -1,0 +1,227 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a>
+    <ul>
+      <li><a href="#any">any</a></li>
+      <li><a href="#app">app</a></li>
+      <li><a href="#del">del</a></li>
+      <li><a href="#get">get</a></li>
+      <li><a href="#group">group</a></li>
+      <li><a href="#helper">helper</a></li>
+      <li><a href="#hook">hook</a></li>
+      <li><a href="#options">options</a></li>
+      <li><a href="#patch">patch</a></li>
+      <li><a href="#plugin">plugin</a></li>
+      <li><a href="#post">post</a></li>
+      <li><a href="#put">put</a></li>
+      <li><a href="#under">under</a></li>
+      <li><a href="#websocket">websocket</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a></li>
+  <li><a href="#METHODS">METHODS</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Lite - Micro real-time web framework</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="comment"># Automatically enables "strict", "warnings", "utf8" and Perl 5.10 features</span>
+  <span class="keyword">use</span> <span class="variable">Mojolicious::Lite</span><span class="operator">;</span>
+  
+  <span class="comment"># Route with placeholder</span>
+  <span class="variable">get</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span>   <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">"Hello from </span><span class="variable">$foo</span><span class="string">."</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  
+  <span class="comment"># Start the Mojolicious command system</span>
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> is a micro real-time web framework built around <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+<p>See <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a> for more!</p>
+
+<h1 id="FUNCTIONS">FUNCTIONS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> implements the following functions, which are automatically exported.</p>
+
+<h2 id="any">any</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">any</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">any</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span> <span class="operator">=&gt;</span> <span class="string">'name'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">any</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">any</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">any</span> <span class="operator">[</span><span class="string">'GET'</span><span class="operator">,</span> <span class="string">'POST'</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">any</span> <span class="operator">[</span><span class="string">'GET'</span><span class="operator">,</span> <span class="string">'POST'</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Generate route with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html#any">&quot;any&quot; in Mojolicious::Routes::Route</a>, matching any of the listed HTTP request methods or all. See also <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a> for many more argument variations.</p>
+
+<h2 id="app">app</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">app</span><span class="operator">;</span>
+</code></pre>
+
+<p>Returns the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> application object, which is a subclass of <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+<pre><code>  <span class="comment"># Use all the available attributes and methods</span>
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">level</span><span class="operator">(</span><span class="string">'error'</span><span class="operator">);</span>
+  <span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="del">del</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">del</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">del</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span> <span class="operator">=&gt;</span> <span class="string">'name'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">del</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">del</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Generate route with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html#delete">&quot;delete&quot; in Mojolicious::Routes::Route</a>, matching only <code>DELETE</code> requests. See also <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a> for many more argument variations.</p>
+
+<h2 id="get">get</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">get</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">get</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span> <span class="operator">=&gt;</span> <span class="string">'name'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">get</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">get</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Generate route with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html#get">&quot;get&quot; in Mojolicious::Routes::Route</a>, matching only <code>GET</code> requests. See also <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a> for many more argument variations.</p>
+
+<h2 id="group">group</h2>
+
+<pre><code>  <span class="variable">group</span> <span class="operator">{...};</span>
+</code></pre>
+
+<p>Start a new route group.</p>
+
+<h2 id="helper">helper</h2>
+
+<pre><code>  <span class="variable">helper</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Add a new helper with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#helper">&quot;helper&quot; in Mojolicious</a>.</p>
+
+<h2 id="hook">hook</h2>
+
+<pre><code>  <span class="variable">hook</span> <span class="string">after_dispatch</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Share code with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#hook">&quot;hook&quot; in Mojolicious</a>.</p>
+
+<h2 id="options">options</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">options</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">options</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span> <span class="operator">=&gt;</span> <span class="string">'name'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">options</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">options</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Generate route with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html#options">&quot;options&quot; in Mojolicious::Routes::Route</a>, matching only <code>OPTIONS</code> requests. See also <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a> for many more argument variations.</p>
+
+<h2 id="patch">patch</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">patch</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">patch</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span> <span class="operator">=&gt;</span> <span class="string">'name'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">patch</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">patch</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Generate route with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html#patch">&quot;patch&quot; in Mojolicious::Routes::Route</a>, matching only <code>PATCH</code> requests. See also <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a> for many more argument variations.</p>
+
+<h2 id="plugin">plugin</h2>
+
+<pre><code>  <span class="variable">plugin</span> <span class="string">SomePlugin</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<p>Load a plugin with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#plugin">&quot;plugin&quot; in Mojolicious</a>.</p>
+
+<h2 id="post">post</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">post</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">post</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span> <span class="operator">=&gt;</span> <span class="string">'name'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">post</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">post</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Generate route with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html#post">&quot;post&quot; in Mojolicious::Routes::Route</a>, matching only <code>POST</code> requests. See also <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a> for many more argument variations.</p>
+
+<h2 id="put">put</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">put</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">put</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span> <span class="operator">=&gt;</span> <span class="string">'name'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">put</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">put</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Generate route with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html#put">&quot;put&quot; in Mojolicious::Routes::Route</a>, matching only <code>PUT</code> requests. See also <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a> for many more argument variations.</p>
+
+<h2 id="under">under</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">under</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">under</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">under</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">under</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">]</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">under</span> <span class="operator">[</span><span class="string">format</span> <span class="operator">=&gt;</span> <span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+</code></pre>
+
+<p>Generate nested route with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html#under">&quot;under&quot; in Mojolicious::Routes::Route</a>, to which all following routes are automatically appended. See also <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a> for more argument variations.</p>
+
+<h2 id="websocket">websocket</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">websocket</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">websocket</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span> <span class="operator">=&gt;</span> <span class="string">'name'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">websocket</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">websocket</span> <span class="string">'/:foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">qr/\w+/</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Generate route with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html#websocket">&quot;websocket&quot; in Mojolicious::Routes::Route</a>, matching only WebSocket handshakes. See also <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a> for many more argument variations.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> inherits all attributes from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#tree">tree</a></li>
+      <li><a href="#xml">xml</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#render">render</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::DOM::HTML - HTML/XML engine</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::DOM::HTML</span><span class="operator">;</span>
+  
+  <span class="comment"># Turn HTML into DOM tree</span>
+  <span class="keyword">my</span> <span class="variable">$html</span> <span class="operator">=</span> <span class="variable">Mojo::DOM::HTML</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$html</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;div&gt;&lt;p id="a"&gt;Test&lt;/p&gt;&lt;p id="b"&gt;123&lt;/p&gt;&lt;/div&gt;'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tree</span> <span class="operator">=</span> <span class="variable">$html</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/HTML.html">Mojo::DOM::HTML</a> is the HTML/XML engine used by <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a>, based on the <a href="https://html.spec.whatwg.org">HTML Living Standard</a> and the <a href="http://www.w3.org/TR/xml/">Extensible Markup Language (XML) 1.0</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/HTML.html">Mojo::DOM::HTML</a> implements the following attributes.</p>
+
+<h2 id="tree">tree</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tree</span> <span class="operator">=</span> <span class="variable">$html</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">;</span>
+  <span class="variable">$html</span>    <span class="operator">=</span> <span class="variable">$html</span><span class="operator">-&gt;</span><span class="variable">tree</span><span class="operator">(</span><span class="operator">[</span><span class="string">'root'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Document Object Model. Note that this structure should only be used very carefully since it is very dynamic.</p>
+
+<h2 id="xml">xml</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$html</span><span class="operator">-&gt;</span><span class="variable">xml</span><span class="operator">;</span>
+  <span class="variable">$html</span>    <span class="operator">=</span> <span class="variable">$html</span><span class="operator">-&gt;</span><span class="variable">xml</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Disable HTML semantics in parser and activate case-sensitivity, defaults to auto-detection based on XML declarations.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/HTML.html">Mojo::DOM::HTML</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$html</span> <span class="operator">=</span> <span class="variable">$html</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'&lt;foo bar="baz"&gt;I â¥ Mojolicious!&lt;/foo&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse HTML/XML fragment.</p>
+
+<h2 id="render">render</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$html</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render DOM to HTML/XML.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

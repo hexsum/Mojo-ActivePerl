@@ -1,0 +1,440 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a>
+    <ul>
+      <li><a href="#b">b</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#b64_decode">b64_decode</a></li>
+      <li><a href="#b64_encode">b64_encode</a></li>
+      <li><a href="#camelize">camelize</a></li>
+      <li><a href="#clone">clone</a></li>
+      <li><a href="#decamelize">decamelize</a></li>
+      <li><a href="#decode">decode</a></li>
+      <li><a href="#encode">encode</a></li>
+      <li><a href="#hmac_sha1_sum">hmac_sha1_sum</a></li>
+      <li><a href="#html_unescape">html_unescape</a></li>
+      <li><a href="#md5_bytes">md5_bytes</a></li>
+      <li><a href="#md5_sum">md5_sum</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#punycode_decode">punycode_decode</a></li>
+      <li><a href="#punycode_encode">punycode_encode</a></li>
+      <li><a href="#quote">quote</a></li>
+      <li><a href="#say">say</a></li>
+      <li><a href="#secure_compare">secure_compare</a></li>
+      <li><a href="#sha1_bytes">sha1_bytes</a></li>
+      <li><a href="#sha1_sum">sha1_sum</a></li>
+      <li><a href="#size">size</a></li>
+      <li><a href="#slurp">slurp</a></li>
+      <li><a href="#spurt">spurt</a></li>
+      <li><a href="#split">split</a></li>
+      <li><a href="#squish">squish</a></li>
+      <li><a href="#tap">tap</a></li>
+      <li><a href="#term_escape">term_escape</a></li>
+      <li><a href="#to_string">to_string</a></li>
+      <li><a href="#trim">trim</a></li>
+      <li><a href="#unindent">unindent</a></li>
+      <li><a href="#unquote">unquote</a></li>
+      <li><a href="#url_escape">url_escape</a></li>
+      <li><a href="#url_unescape">url_unescape</a></li>
+      <li><a href="#xml_escape">xml_escape</a></li>
+      <li><a href="#xor_encode">xor_encode</a></li>
+    </ul>
+  </li>
+  <li><a href="#OPERATORS">OPERATORS</a>
+    <ul>
+      <li><a href="#bool">bool</a></li>
+      <li><a href="#stringify">stringify</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::ByteStream - ByteStream</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::ByteStream</span><span class="operator">;</span>
+  
+  <span class="comment"># Manipulate bytestream</span>
+  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">Mojo::ByteStream</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'foo_bar_baz'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">camelize</span><span class="operator">;</span>
+  
+  <span class="comment"># Chain methods</span>
+  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">Mojo::ByteStream</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'foo bar baz'</span><span class="operator">)-&gt;</span><span class="variable">quote</span><span class="operator">;</span>
+  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">unquote</span><span class="operator">-&gt;</span><span class="variable">encode</span><span class="operator">(</span><span class="string">'UTF-8'</span><span class="operator">)-&gt;</span><span class="variable">b64_encode</span><span class="operator">(</span><span class="string">''</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="string">"</span><span class="variable">$stream</span><span class="string">"</span><span class="operator">;</span>
+  
+  <span class="comment"># Use the alternative constructor</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::ByteStream</span> <span class="string">'b'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">b</span><span class="operator">(</span><span class="string">'foobarbaz'</span><span class="operator">)-&gt;</span><span class="variable">b64_encode</span><span class="operator">(</span><span class="string">''</span><span class="operator">)-&gt;</span><span class="variable">say</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> is a scalar-based container for bytestreams that provides a more friendly API for many of the functions in <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html">Mojo::Util</a>.</p>
+
+<pre><code>  <span class="comment"># Access scalar directly to manipulate bytestream</span>
+  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">Mojo::ByteStream</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$$stream</span> <span class="operator">.=</span> <span class="string">'bar'</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="FUNCTIONS">FUNCTIONS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> implements the following functions, which can be imported individually.</p>
+
+<h2 id="b">b</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">b</span><span class="operator">(</span><span class="string">'test123'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new scalar-based <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> object.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> implements the following methods.</p>
+
+<h2 id="b64_decode">b64_decode</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">b64_decode</span><span class="operator">;</span>
+</code></pre>
+
+<p>Base64 decode bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#b64_decode">&quot;b64_decode&quot; in Mojo::Util</a>.</p>
+
+<h2 id="b64_encode">b64_encode</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">b64_encode</span><span class="operator">;</span>
+  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">b64_encode</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+</code></pre>
+
+<p>Base64 encode bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#b64_encode">&quot;b64_encode&quot; in Mojo::Util</a>.</p>
+
+<pre><code>  <span class="comment"># "Zm9vIGJhciBiYXo="</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'foo bar baz'</span><span class="operator">)-&gt;</span><span class="variable">b64_encode</span><span class="operator">(</span><span class="string">''</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="camelize">camelize</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">camelize</span><span class="operator">;</span>
+</code></pre>
+
+<p>Camelize bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#camelize">&quot;camelize&quot; in Mojo::Util</a>.</p>
+
+<h2 id="clone">clone</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$stream2</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">clone</span><span class="operator">;</span>
+</code></pre>
+
+<p>Clone bytestream.</p>
+
+<h2 id="decamelize">decamelize</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">decamelize</span><span class="operator">;</span>
+</code></pre>
+
+<p>Decamelize bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#decamelize">&quot;decamelize&quot; in Mojo::Util</a>.</p>
+
+<h2 id="decode">decode</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">decode</span><span class="operator">;</span>
+  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">decode</span><span class="operator">(</span><span class="string">'iso-8859-1'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Decode bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#decode">&quot;decode&quot; in Mojo::Util</a>, defaults to using <code>UTF-8</code>.</p>
+
+<pre><code>  <span class="comment"># "â¥"</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'%E2%99%A5'</span><span class="operator">)-&gt;</span><span class="variable">url_unescape</span><span class="operator">-&gt;</span><span class="variable">decode</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="encode">encode</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">encode</span><span class="operator">;</span>
+  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">encode</span><span class="operator">(</span><span class="string">'iso-8859-1'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Encode bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#encode">&quot;encode&quot; in Mojo::Util</a>, defaults to using <code>UTF-8</code>.</p>
+
+<pre><code>  <span class="comment"># "%E2%99%A5"</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'â¥'</span><span class="operator">)-&gt;</span><span class="variable">encode</span><span class="operator">-&gt;</span><span class="variable">url_escape</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="hmac_sha1_sum">hmac_sha1_sum</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">hmac_sha1_sum</span><span class="operator">(</span><span class="string">'passw0rd'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Generate HMAC-SHA1 checksum for bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#hmac_sha1_sum">&quot;hmac_sha1_sum&quot; in Mojo::Util</a>.</p>
+
+<pre><code>  <span class="comment"># "7fbdc89263974a89210ea71f171c77d3f8c21471"</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'foo bar baz'</span><span class="operator">)-&gt;</span><span class="variable">hmac_sha1_sum</span><span class="operator">(</span><span class="string">'secr3t'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="html_unescape">html_unescape</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">html_unescape</span><span class="operator">;</span>
+</code></pre>
+
+<p>Unescape all HTML entities in bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#html_unescape">&quot;html_unescape&quot; in Mojo::Util</a>.</p>
+
+<pre><code>  <span class="comment"># "%3Chtml%3E"</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'&amp;lt;html&amp;gt;'</span><span class="operator">)-&gt;</span><span class="variable">html_unescape</span><span class="operator">-&gt;</span><span class="variable">url_escape</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="md5_bytes">md5_bytes</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">md5_bytes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Generate binary MD5 checksum for bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#md5_bytes">&quot;md5_bytes&quot; in Mojo::Util</a>.</p>
+
+<h2 id="md5_sum">md5_sum</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">md5_sum</span><span class="operator">;</span>
+</code></pre>
+
+<p>Generate MD5 checksum for bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#md5_sum">&quot;md5_sum&quot; in Mojo::Util</a>.</p>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">Mojo::ByteStream</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'test123'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new scalar-based <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> object.</p>
+
+<h2 id="punycode_decode">punycode_decode</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">punycode_decode</span><span class="operator">;</span>
+</code></pre>
+
+<p>Punycode decode bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#punycode_decode">&quot;punycode_decode&quot; in Mojo::Util</a>.</p>
+
+<h2 id="punycode_encode">punycode_encode</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">punycode_encode</span><span class="operator">;</span>
+</code></pre>
+
+<p>Punycode encode bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#punycode_encode">&quot;punycode_encode&quot; in Mojo::Util</a>.</p>
+
+<h2 id="quote">quote</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">quote</span><span class="operator">;</span>
+</code></pre>
+
+<p>Quote bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#quote">&quot;quote&quot; in Mojo::Util</a>.</p>
+
+<h2 id="say">say</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">say</span><span class="operator">;</span>
+  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">say</span><span class="operator">(</span><span class="variable">*STDERR</span><span class="operator">);</span>
+</code></pre>
+
+<p>Print bytestream to handle and append a newline, defaults to using <code>STDOUT</code>.</p>
+
+<h2 id="secure_compare">secure_compare</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">secure_compare</span><span class="operator">(</span><span class="variable">$str</span><span class="operator">);</span>
+</code></pre>
+
+<p>Compare bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#secure_compare">&quot;secure_compare&quot; in Mojo::Util</a>.</p>
+
+<h2 id="sha1_bytes">sha1_bytes</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">sha1_bytes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Generate binary SHA1 checksum for bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#sha1_bytes">&quot;sha1_bytes&quot; in Mojo::Util</a>.</p>
+
+<h2 id="sha1_sum">sha1_sum</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">sha1_sum</span><span class="operator">;</span>
+</code></pre>
+
+<p>Generate SHA1 checksum for bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#sha1_sum">&quot;sha1_sum&quot; in Mojo::Util</a>.</p>
+
+<h2 id="size">size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">size</span><span class="operator">;</span>
+</code></pre>
+
+<p>Size of bytestream.</p>
+
+<h2 id="slurp">slurp</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">slurp</span><span class="operator">;</span>
+</code></pre>
+
+<p>Read all data at once from file into bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#slurp">&quot;slurp&quot; in Mojo::Util</a>.</p>
+
+<pre><code>  <span class="comment"># Read file and print lines in random order</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'/home/sri/myapp.pl'</span><span class="operator">)-&gt;</span><span class="variable">slurp</span><span class="operator">-&gt;</span><span class="variable">split</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">)-&gt;</span><span class="variable">shuffle</span><span class="operator">-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">)-&gt;</span><span class="variable">say</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="spurt">spurt</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">spurt</span><span class="operator">(</span><span class="string">'/home/sri/myapp.pl'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Write all data from bytestream at once to file with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#spurt">&quot;spurt&quot; in Mojo::Util</a>.</p>
+
+<pre><code>  <span class="comment"># Remove unnecessary whitespace from file</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'/home/sri/foo.txt'</span><span class="operator">)-&gt;</span><span class="variable">slurp</span><span class="operator">-&gt;</span><span class="variable">squish</span><span class="operator">-&gt;</span><span class="variable">spurt</span><span class="operator">(</span><span class="string">'/home/sri/bar.txt'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="split">split</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">split</span><span class="operator">(</span><span class="string">','</span><span class="operator">);</span>
+</code></pre>
+
+<p>Turn bytestream into <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object containing <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> objects.</p>
+
+<pre><code>  <span class="comment"># "One,Two,Three"</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">"one,two,three"</span><span class="operator">)-&gt;</span><span class="variable">split</span><span class="operator">(</span><span class="string">','</span><span class="operator">)-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'camelize'</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">','</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="squish">squish</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">squish</span><span class="operator">;</span>
+</code></pre>
+
+<p>Trim whitespace characters from both ends of bytestream and then change all consecutive groups of whitespace into one space each with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#squish">&quot;squish&quot; in Mojo::Util</a>.</p>
+
+<h2 id="tap">tap</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">tap</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Alias for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html#tap">&quot;tap&quot; in Mojo::Base</a>.</p>
+
+<h2 id="term_escape">term_escape</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">term_escape</span><span class="operator">;</span>
+</code></pre>
+
+<p>Escape POSIX control characters in bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#term_escape">&quot;term_escape&quot; in Mojo::Util</a>.</p>
+
+<pre><code>  <span class="comment"># Print binary checksum to terminal</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="variable">sha1_bytes</span><span class="operator">-&gt;</span><span class="variable">term_escape</span><span class="operator">-&gt;</span><span class="variable">say</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="to_string">to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Stringify bytestream.</p>
+
+<h2 id="trim">trim</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">trim</span><span class="operator">;</span>
+</code></pre>
+
+<p>Trim whitespace characters from both ends of bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#trim">&quot;trim&quot; in Mojo::Util</a>.</p>
+
+<h2 id="unindent">unindent</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">unindent</span><span class="operator">;</span>
+</code></pre>
+
+<p>Unindent bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#unindent">&quot;unindent&quot; in Mojo::Util</a>.</p>
+
+<h2 id="unquote">unquote</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">unquote</span><span class="operator">;</span>
+</code></pre>
+
+<p>Unquote bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#unquote">&quot;unquote&quot; in Mojo::Util</a>.</p>
+
+<h2 id="url_escape">url_escape</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">url_escape</span><span class="operator">;</span>
+  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">url_escape</span><span class="operator">(</span><span class="string">'^A-Za-z0-9\-._~'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Percent encode all unsafe characters in bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#url_escape">&quot;url_escape&quot; in Mojo::Util</a>.</p>
+
+<pre><code>  <span class="comment"># "%E2%98%83"</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'â'</span><span class="operator">)-&gt;</span><span class="variable">encode</span><span class="operator">-&gt;</span><span class="variable">url_escape</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="url_unescape">url_unescape</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">url_unescape</span><span class="operator">;</span>
+</code></pre>
+
+<p>Decode percent encoded characters in bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#url_unescape">&quot;url_unescape&quot; in Mojo::Util</a>.</p>
+
+<pre><code>  <span class="comment"># "&amp;lt;html&amp;gt;"</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'%3Chtml%3E'</span><span class="operator">)-&gt;</span><span class="variable">url_unescape</span><span class="operator">-&gt;</span><span class="variable">xml_escape</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="xml_escape">xml_escape</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">xml_escape</span><span class="operator">;</span>
+</code></pre>
+
+<p>Escape only the characters <code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&quot;</code> and <code>&#39;</code> in bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#xml_escape">&quot;xml_escape&quot; in Mojo::Util</a>.</p>
+
+<h2 id="xor_encode">xor_encode</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">xor_encode</span><span class="operator">(</span><span class="variable">$key</span><span class="operator">);</span>
+</code></pre>
+
+<p>XOR encode bytestream with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#xor_encode">&quot;xor_encode&quot; in Mojo::Util</a>.</p>
+
+<pre><code>  <span class="comment"># "%04%0E%15B%03%1B%10"</span>
+  <span class="variable">b</span><span class="operator">(</span><span class="string">'foo bar'</span><span class="operator">)-&gt;</span><span class="variable">xor_encode</span><span class="operator">(</span><span class="string">'baz'</span><span class="operator">)-&gt;</span><span class="variable">url_escape</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="OPERATORS">OPERATORS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> overloads the following operators.</p>
+
+<h2 id="bool">bool</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="operator">!!</span><span class="variable">$bytestream</span><span class="operator">;</span>
+</code></pre>
+
+<p>Always true.</p>
+
+<h2 id="stringify">stringify</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="string">"</span><span class="variable">$bytestream</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#to_string">&quot;to_string&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

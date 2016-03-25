@@ -1,0 +1,212 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#base_classes">base_classes</a></li>
+      <li><a href="#cache">cache</a></li>
+      <li><a href="#conditions">conditions</a></li>
+      <li><a href="#hidden">hidden</a></li>
+      <li><a href="#namespaces">namespaces</a></li>
+      <li><a href="#shortcuts">shortcuts</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#add_condition">add_condition</a></li>
+      <li><a href="#add_shortcut">add_shortcut</a></li>
+      <li><a href="#continue">continue</a></li>
+      <li><a href="#dispatch">dispatch</a></li>
+      <li><a href="#hide">hide</a></li>
+      <li><a href="#is_hidden">is_hidden</a></li>
+      <li><a href="#lookup">lookup</a></li>
+      <li><a href="#match">match</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Routes - Always find your destination with routes</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Routes</span><span class="operator">;</span>
+  
+  <span class="comment"># Simple route</span>
+  <span class="keyword">my</span> <span class="variable">$r</span> <span class="operator">=</span> <span class="variable">Mojolicious::Routes</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">route</span><span class="operator">(</span><span class="string">'/'</span><span class="operator">)-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">controller</span> <span class="operator">=&gt;</span> <span class="string">'blog'</span><span class="operator">,</span> <span class="string">action</span> <span class="operator">=&gt;</span> <span class="string">'welcome'</span><span class="operator">);</span>
+  
+  <span class="comment"># More advanced routes</span>
+  <span class="keyword">my</span> <span class="variable">$blog</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">under</span><span class="operator">(</span><span class="string">'/blog'</span><span class="operator">);</span>
+  <span class="variable">$blog</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/list'</span><span class="operator">)-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">'blog#list'</span><span class="operator">);</span>
+  <span class="variable">$blog</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/:id'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">id</span> <span class="operator">=&gt;</span> <span class="string">qr/\d+/</span><span class="operator">]</span><span class="operator">)-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">'blog#show'</span><span class="operator">,</span> <span class="string">id</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+  <span class="variable">$blog</span><span class="operator">-&gt;</span><span class="variable">patch</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">shift</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Go away!'</span><span class="operator">,</span> <span class="string">status</span> <span class="operator">=&gt;</span> <span class="number">405</span><span class="operator">)</span> <span class="operator">});</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes.html">Mojolicious::Routes</a> is the core of the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> web framework.</p>
+
+<p>See <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Routing.html">Mojolicious::Guides::Routing</a> for more.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes.html">Mojolicious::Routes</a> inherits all attributes from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html">Mojolicious::Routes::Route</a> and implements the following new ones.</p>
+
+<h2 id="base_classes">base_classes</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$classes</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">base_classes</span><span class="operator">;</span>
+  <span class="variable">$r</span>          <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">base_classes</span><span class="operator">(</span><span class="operator">[</span><span class="string">'MyApp::Controller'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Base classes used to identify controllers, defaults to <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a> and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a>.</p>
+
+<h2 id="cache">cache</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cache</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">cache</span><span class="operator">;</span>
+  <span class="variable">$r</span>        <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">cache</span><span class="operator">(</span><span class="variable">Mojo::Cache</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Routing cache, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cache.html">Mojo::Cache</a> object.</p>
+
+<h2 id="conditions">conditions</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$conditions</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">conditions</span><span class="operator">;</span>
+  <span class="variable">$r</span>             <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">conditions</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Contains all available conditions.</p>
+
+<h2 id="hidden">hidden</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$hidden</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">hidden</span><span class="operator">;</span>
+  <span class="variable">$r</span>         <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">hidden</span><span class="operator">(</span><span class="operator">[</span><span class="string">'attr'</span><span class="operator">,</span> <span class="string">'has'</span><span class="operator">,</span> <span class="string">'new'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Controller attributes and methods that are hidden from router, defaults to <code>attr</code>, <code>has</code>, <code>new</code> and <code>tap</code>.</p>
+
+<h2 id="namespaces">namespaces</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$namespaces</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">;</span>
+  <span class="variable">$r</span>             <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">(</span><span class="operator">[</span><span class="string">'MyApp::Controller'</span><span class="operator">,</span> <span class="string">'MyApp'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Namespaces to load controllers from.</p>
+
+<pre><code>  <span class="comment"># Add another namespace to load controllers from</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'MyApp::MyController'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="shortcuts">shortcuts</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$shortcuts</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">shortcuts</span><span class="operator">;</span>
+  <span class="variable">$r</span>            <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">shortcuts</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...}</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Contains all available shortcuts.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes.html">Mojolicious::Routes</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html">Mojolicious::Routes::Route</a> and implements the following new ones.</p>
+
+<h2 id="add_condition">add_condition</h2>
+
+<pre><code>  <span class="variable">$r</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">add_condition</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Register a condition.</p>
+
+<pre><code>  <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">add_condition</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$route</span><span class="operator">,</span> <span class="variable">$c</span><span class="operator">,</span> <span class="variable">$captures</span><span class="operator">,</span> <span class="variable">$arg</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+    <span class="keyword">return</span> <span class="number">1</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="add_shortcut">add_shortcut</h2>
+
+<pre><code>  <span class="variable">$r</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">add_shortcut</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Register a shortcut.</p>
+
+<pre><code>  <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">add_shortcut</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$route</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="continue">continue</h2>
+
+<pre><code>  <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">continue</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Continue dispatch chain and emit the hook <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#around_action">&quot;around_action&quot; in Mojolicious</a> for every action.</p>
+
+<h2 id="dispatch">dispatch</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">dispatch</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Match routes with <a href="#match">&quot;match&quot;</a> and dispatch with <a href="#continue">&quot;continue&quot;</a>.</p>
+
+<h2 id="hide">hide</h2>
+
+<pre><code>  <span class="variable">$r</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">hide</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Hide controller attributes and methods from router.</p>
+
+<h2 id="is_hidden">is_hidden</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">is_hidden</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if controller attribute or method is hidden from router.</p>
+
+<h2 id="lookup">lookup</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">lookup</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Find route by name with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html#find">&quot;find&quot; in Mojolicious::Routes::Route</a> and cache all results for future lookups.</p>
+
+<h2 id="match">match</h2>
+
+<pre><code>  <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">match</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Match routes with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Match.html">Mojolicious::Routes::Match</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

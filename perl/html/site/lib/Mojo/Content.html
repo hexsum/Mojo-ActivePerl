@@ -1,0 +1,412 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#body">body</a></li>
+      <li><a href="#drain">drain</a></li>
+      <li><a href="#read">read</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#auto_decompress">auto_decompress</a></li>
+      <li><a href="#auto_relax">auto_relax</a></li>
+      <li><a href="#expect_close">expect_close</a></li>
+      <li><a href="#headers">headers</a></li>
+      <li><a href="#max_buffer_size">max_buffer_size</a></li>
+      <li><a href="#max_leftover_size">max_leftover_size</a></li>
+      <li><a href="#relaxed">relaxed</a></li>
+      <li><a href="#skip_body">skip_body</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#body_contains">body_contains</a></li>
+      <li><a href="#body_size">body_size</a></li>
+      <li><a href="#boundary">boundary</a></li>
+      <li><a href="#charset">charset</a></li>
+      <li><a href="#clone">clone</a></li>
+      <li><a href="#generate_body_chunk">generate_body_chunk</a></li>
+      <li><a href="#get_body_chunk">get_body_chunk</a></li>
+      <li><a href="#get_header_chunk">get_header_chunk</a></li>
+      <li><a href="#header_size">header_size</a></li>
+      <li><a href="#headers_contain">headers_contain</a></li>
+      <li><a href="#is_chunked">is_chunked</a></li>
+      <li><a href="#is_compressed">is_compressed</a></li>
+      <li><a href="#is_dynamic">is_dynamic</a></li>
+      <li><a href="#is_finished">is_finished</a></li>
+      <li><a href="#is_limit_exceeded">is_limit_exceeded</a></li>
+      <li><a href="#is_multipart">is_multipart</a></li>
+      <li><a href="#is_parsing_body">is_parsing_body</a></li>
+      <li><a href="#leftovers">leftovers</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#parse_body">parse_body</a></li>
+      <li><a href="#progress">progress</a></li>
+      <li><a href="#write">write</a></li>
+      <li><a href="#write_chunk">write_chunk</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Content - HTTP content base class</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Mojo::Content::MyContent</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojo::Content'</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> body_contains  </span><span class="operator">{...}</span>
+  <span class="keyword">sub</span><span class="variable"> body_size      </span><span class="operator">{...}</span>
+  <span class="keyword">sub</span><span class="variable"> get_body_chunk </span><span class="operator">{...}</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html">Mojo::Content</a> is an abstract base class for HTTP content containers, based on <a href="http://tools.ietf.org/html/rfc7230">RFC 7230</a> and <a href="http://tools.ietf.org/html/rfc7231">RFC 7231</a>, like <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/MultiPart.html">Mojo::Content::MultiPart</a> and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/Single.html">Mojo::Content::Single</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html">Mojo::Content</a> inherits all events from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones.</p>
+
+<h2 id="body">body</h2>
+
+<pre><code>  <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">body</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$content</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted once all headers have been parsed and the body starts.</p>
+
+<pre><code>  <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">body</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$content</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">auto_upgrade</span><span class="operator">(</span><span class="number">0</span><span class="operator">)</span> <span class="keyword">if</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">header</span><span class="operator">(</span><span class="string">'X-No-MultiPart'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="drain">drain</h2>
+
+<pre><code>  <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">drain</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$content</span><span class="operator">,</span> <span class="variable">$offset</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted once all data has been written.</p>
+
+<pre><code>  <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">drain</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$content</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="keyword">time</span><span class="operator">);</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="read">read</h2>
+
+<pre><code>  <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">read</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$content</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a new chunk of content arrives.</p>
+
+<pre><code>  <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">unsubscribe</span><span class="operator">(</span><span class="string">'read'</span><span class="operator">)-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">read</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$content</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Streaming: </span><span class="variable">$bytes</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html">Mojo::Content</a> implements the following attributes.</p>
+
+<h2 id="auto_decompress">auto_decompress</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">auto_decompress</span><span class="operator">;</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">auto_decompress</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Decompress content automatically if <a href="#is_compressed">&quot;is_compressed&quot;</a> is true.</p>
+
+<h2 id="auto_relax">auto_relax</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">auto_relax</span><span class="operator">;</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">auto_relax</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Try to detect when relaxed parsing is necessary.</p>
+
+<h2 id="expect_close">expect_close</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">expect_close</span><span class="operator">;</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">expect_close</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Expect a response that is terminated with a connection close.</p>
+
+<h2 id="headers">headers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">;</span>
+  <span class="variable">$content</span>    <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">(</span><span class="variable">Mojo::Headers</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Content headers, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Headers.html">Mojo::Headers</a> object.</p>
+
+<h2 id="max_buffer_size">max_buffer_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">max_buffer_size</span><span class="operator">;</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">max_buffer_size</span><span class="operator">(</span><span class="number">1024</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum size in bytes of buffer for content parser, defaults to the value of the <code>MOJO_MAX_BUFFER_SIZE</code> environment variable or <code>262144</code> (256KB).</p>
+
+<h2 id="max_leftover_size">max_leftover_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">max_leftover_size</span><span class="operator">;</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">max_leftover_size</span><span class="operator">(</span><span class="number">1024</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum size in bytes of buffer for pipelined HTTP requests, defaults to the value of the <code>MOJO_MAX_LEFTOVER_SIZE</code> environment variable or <code>262144</code> (256KB).</p>
+
+<h2 id="relaxed">relaxed</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">relaxed</span><span class="operator">;</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">relaxed</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Activate relaxed parsing for responses that are terminated with a connection close.</p>
+
+<h2 id="skip_body">skip_body</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">skip_body</span><span class="operator">;</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">skip_body</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Skip body parsing and finish after headers.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html">Mojo::Content</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="body_contains">body_contains</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">body_contains</span><span class="operator">(</span><span class="string">'foo bar baz'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if content contains a specific string. Meant to be overloaded in a subclass.</p>
+
+<h2 id="body_size">body_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">body_size</span><span class="operator">;</span>
+</code></pre>
+
+<p>Content size in bytes. Meant to be overloaded in a subclass.</p>
+
+<h2 id="boundary">boundary</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$boundary</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">boundary</span><span class="operator">;</span>
+</code></pre>
+
+<p>Extract multipart boundary from <code>Content-Type</code> header.</p>
+
+<h2 id="charset">charset</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$charset</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">charset</span><span class="operator">;</span>
+</code></pre>
+
+<p>Extract charset from <code>Content-Type</code> header.</p>
+
+<h2 id="clone">clone</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$clone</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">clone</span><span class="operator">;</span>
+</code></pre>
+
+<p>Clone content if possible, otherwise return <code>undef</code>.</p>
+
+<h2 id="generate_body_chunk">generate_body_chunk</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">generate_body_chunk</span><span class="operator">(</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<p>Generate dynamic content.</p>
+
+<h2 id="get_body_chunk">get_body_chunk</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">get_body_chunk</span><span class="operator">(</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get a chunk of content starting from a specific position. Meant to be overloaded in a subclass.</p>
+
+<h2 id="get_header_chunk">get_header_chunk</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">get_header_chunk</span><span class="operator">(</span><span class="number">13</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get a chunk of the headers starting from a specific position. Note that this method finalizes the content.</p>
+
+<h2 id="header_size">header_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">header_size</span><span class="operator">;</span>
+</code></pre>
+
+<p>Size of headers in bytes. Note that this method finalizes the content.</p>
+
+<h2 id="headers_contain">headers_contain</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">headers_contain</span><span class="operator">(</span><span class="string">'foo bar baz'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if headers contain a specific string. Note that this method finalizes the content.</p>
+
+<h2 id="is_chunked">is_chunked</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">is_chunked</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if <code>Transfer-Encoding</code> header indicates chunked tranfer encoding.</p>
+
+<h2 id="is_compressed">is_compressed</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">is_compressed</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check <code>Content-Encoding</code> header for <code>gzip</code> value.</p>
+
+<h2 id="is_dynamic">is_dynamic</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">is_dynamic</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if content will be dynamically generated, which prevents <a href="#clone">&quot;clone&quot;</a> from working.</p>
+
+<h2 id="is_finished">is_finished</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">is_finished</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if parser is finished.</p>
+
+<h2 id="is_limit_exceeded">is_limit_exceeded</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">is_limit_exceeded</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if buffer has exceeded <a href="#max_buffer_size">&quot;max_buffer_size&quot;</a>.</p>
+
+<h2 id="is_multipart">is_multipart</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">is_multipart</span><span class="operator">;</span>
+</code></pre>
+
+<p>False, this is not a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/MultiPart.html">Mojo::Content::MultiPart</a> object.</p>
+
+<h2 id="is_parsing_body">is_parsing_body</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">is_parsing_body</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if body parsing started yet.</p>
+
+<h2 id="leftovers">leftovers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">leftovers</span><span class="operator">;</span>
+</code></pre>
+
+<p>Get leftover data from content parser.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$content</span>
+    <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Length: 12\x0d\x0a\x0d\x0aHello World!"</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse content chunk.</p>
+
+<h2 id="parse_body">parse_body</h2>
+
+<pre><code>  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">parse_body</span><span class="operator">(</span><span class="string">'Hi!'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse body chunk and skip headers.</p>
+
+<h2 id="progress">progress</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">progress</span><span class="operator">;</span>
+</code></pre>
+
+<p>Size of content already received from message in bytes.</p>
+
+<h2 id="write">write</h2>
+
+<pre><code>  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">;</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">''</span><span class="operator">);</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="variable">$bytes</span><span class="operator">);</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="variable">$bytes</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Write dynamic content non-blocking, the optional drain callback will be executed once all data has been written. Calling this method without a chunk of data will finalize the <a href="#headers">&quot;headers&quot;</a> and allow for dynamic content to be written later. You can write an empty chunk of data at any time to end the stream.</p>
+
+<pre><code>  <span class="comment"># Make sure previous chunk of data has been written before continuing</span>
+  <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">'He'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$content</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">'llo!'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$content</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="string">''</span><span class="operator">);</span>
+    <span class="operator">});</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="write_chunk">write_chunk</h2>
+
+<pre><code>  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">;</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="string">''</span><span class="operator">);</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="variable">$bytes</span><span class="operator">);</span>
+  <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="variable">$bytes</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Write dynamic content non-blocking with chunked transfer encoding, the optional drain callback will be executed once all data has been written. Calling this method without a chunk of data will finalize the <a href="#headers">&quot;headers&quot;</a> and allow for dynamic content to be written later. You can write an empty chunk of data at any time to end the stream.</p>
+
+<pre><code>  <span class="comment"># Make sure previous chunk of data has been written before continuing</span>
+  <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="string">'He'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$content</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="string">'llo!'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$content</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">$content</span><span class="operator">-&gt;</span><span class="variable">write_chunk</span><span class="operator">(</span><span class="string">''</span><span class="operator">);</span>
+    <span class="operator">});</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

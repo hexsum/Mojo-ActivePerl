@@ -1,0 +1,235 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#OVERVIEW">OVERVIEW</a></li>
+  <li><a href="#REPORTING-BUGS">REPORTING BUGS</a>
+    <ul>
+      <li><a href="#Reporting-security-issues">Reporting security issues</a></li>
+    </ul>
+  </li>
+  <li><a href="#RESOLVING-ISSUES">RESOLVING ISSUES</a></li>
+  <li><a href="#CONTRIBUTING-DOCUMENTATION">CONTRIBUTING DOCUMENTATION</a></li>
+  <li><a href="#CONTRIBUTING-CODE">CONTRIBUTING CODE</a>
+    <ul>
+      <li><a href="#Mission-statement">Mission statement</a></li>
+      <li><a href="#Rules">Rules</a></li>
+    </ul>
+  </li>
+  <li><a href="#SPONSORSHIP">SPONSORSHIP</a></li>
+  <li><a href="#CODE-OF-CONDUCT">CODE OF CONDUCT</a></li>
+  <li><a href="#MORE">MORE</a></li>
+  <li><a href="#SUPPORT">SUPPORT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Guides::Contributing - Contributing to Mojolicious</p>
+
+<h1 id="OVERVIEW">OVERVIEW</h1>
+
+<p>There are many ways to contribute to <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, this guide will show you a few of them.</p>
+
+<h1 id="REPORTING-BUGS">REPORTING BUGS</h1>
+
+<p>We use the <a href="https://github.com/kraih/mojo/issues">GitHub issue tracker</a>, so you&#39;ll need to create a (free) GitHub account to be able to submit issues, comments and pull requests.</p>
+
+<p>First of all, make sure you are using the latest version of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, it is quite likely that your bug has already been fixed. If that doesn&#39;t help, take a look at the list of currently open issues, perhaps it has already been reported by someone else and you can just add a comment confirming it.</p>
+
+<p>If it hasn&#39;t been reported yet, try to prepare a test case demonstrating the bug, you are not expected to fix it yourself, but you&#39;ll have to make sure the developers can replicate your problem. Sending in your whole application generally does more harm than good, the <code>t</code> directory of this distribution has many good examples for how to do it right. Writing a test is usually the hardest part of fixing a bug, so the better your test case the faster it can be fixed. ;)</p>
+
+<p>And don&#39;t forget to add a descriptive title and text, when you create a new issue. If your issue does not contain enough information or is unintelligible, it might get closed pretty quickly. But don&#39;t be disheartened, if there&#39;s new activity it will get reopened just as quickly.</p>
+
+<h2 id="Reporting-security-issues">Reporting security issues</h2>
+
+<p>Please report security issues directly to the CPAN email address of the pumpkin-holder, which is currently <code>sri@cpan.org</code>, and give us a few days to develop and release a proper fix.</p>
+
+<h1 id="RESOLVING-ISSUES">RESOLVING ISSUES</h1>
+
+<p>There are many ways in which you can help us resolve existing issues on the <a href="https://github.com/kraih/mojo/issues">GitHub issue tracker</a>.</p>
+
+<p>Can you replicate the problem on your computer? Add a comment saying that you&#39;re seeing the same. Perhaps you can provide additional information that will make it easier for others to replicate the problem, maybe even contribute a better test case.</p>
+
+<p>And for all code contributions we very much appreciate additional testing and code review, just add a comment to show your approval or to point out flaws that need to be addressed.</p>
+
+<h1 id="CONTRIBUTING-DOCUMENTATION">CONTRIBUTING DOCUMENTATION</h1>
+
+<p>One of the easiest ways to contribute to <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> is through documentation improvements. While the <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a> are carefully curated by the core team, everybody with a (free) GitHub account can make changes and add new information to the <a href="http://github.com/kraih/mojo/wiki">Mojolicious wiki</a>. Pull requests with additions or changes to the documentation included in the <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> distribution follow the same rules as code contributions.</p>
+
+<h1 id="CONTRIBUTING-CODE">CONTRIBUTING CODE</h1>
+
+<p>All code contributions should be sent as <a href="https://help.github.com/articles/using-pull-requests">GitHub pull requests</a>.</p>
+
+<p>An expressive title and detailed description are invaluable during the review process, which usually ends when members of the community have voiced their opinions and the core team voted for or against a change. All code changes should emulate the style of the surrounding code, include tests that fail without them, and update relevant documentation.</p>
+
+<p>While the <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> distribution covers a wide range of features, we are rather conservative when it comes to adding new ones. So if your contribution is not a bug fix, you can drastically increase its chances of getting accepted by discussing it in advance on the <a href="http://groups.google.com/group/mojolicious">mailing-list</a> or the official IRC channel <code><span class="comment">#mojo</span>
+</code> on <code>irc.perl.org</code>.</p>
+
+<p>The following mission statement and rules are the foundation of all <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a> and <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> development. Please make sure that your contribution aligns well with them before sending a pull request.</p>
+
+<h2 id="Mission-statement">Mission statement</h2>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a> is a web development toolkit, with all the basic tools and helpers needed to write simple web applications and higher level web frameworks, such as <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+<p>All components should be reusable in other projects, and in a UNIXish way only loosely coupled.</p>
+
+<p>Especially for people new to Perl it should be as easy as possible to install <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> and get started. Writing web applications can be one of the most fun ways to learn a language!</p>
+
+<p>For developers of other web frameworks, it should be possible to reuse all the infrastructure and just consider the higher levels of the <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> distribution an example application.</p>
+
+<h2 id="Rules">Rules</h2>
+
+<ul>
+
+<p>Web development should be easy and fun, this is what we optimize for.</p>
+
+<p>The web is a moving target, to stay relevant we have to stay in motion too.</p>
+
+<p>Keep it simple, no magic unless absolutely necessary.</p>
+
+<p>The installation process should be as fast and painless as possible. (Less than a minute on most common hardware is a good rule of thumb)</p>
+
+<p>The addition and modification of features is decided by majority vote or the pumpkin-holder.</p>
+
+<p>Any core developer may nominate a new one, who must then be accepted by a 2/3 majority vote.</p>
+
+<p>The pumpkin-holder has veto rights and may select their successor.</p>
+
+<p>It&#39;s not a feature without a test and documentation.</p>
+
+<p>A feature is only needed when the majority of the user base benefits from it.</p>
+
+<p>Features may only be changed in a major release, to fix a serious security issue, or after being deprecated for at least 3 months.</p>
+
+<p>Refactoring and deprecations should be avoided if there are no substantial benefits.</p>
+
+<p>New features can be marked as experimental to be excluded from deprecation policies.</p>
+
+<p>A major release is signaled by a new major version number and a unique code name based on a Unicode character.</p>
+
+<p>Only add dependencies if absolutely necessary and make them optional if possible.</p>
+
+<p>Domain specific languages should be avoided in favor of Perl-ish solutions.</p>
+
+<p>No inline POD.</p>
+
+<p>Documentation belongs to the guides, module POD is just an API reference.</p>
+
+<p>The main focus of the included documentation should be on examples, no walls of text. (An example for every one or two sentences is a good rule of thumb)</p>
+
+<p>Everything should be ordered alphabetically if possible, or at least be consistent if not.</p>
+
+<p>The master source code repository should always be kept in a stable state, use feature branches for actual development.</p>
+
+<p>Code has to be run through <a>Perl::Tidy</a> with the included <a href="https://github.com/kraih/mojo/blob/master/.perltidyrc">.perltidyrc</a>, and everything should look like it was written by a single person.</p>
+
+<p>Functions and methods should be as short as possible, no spaghetti code.</p>
+
+<p>Comments should be correctly capitalized, and funny if possible, punctuation is optional if it doesn&#39;t increase readability.</p>
+
+<p>No names outside of <code>Mojolicious.pm</code>.</p>
+
+</ul>
+
+<h1 id="SPONSORSHIP">SPONSORSHIP</h1>
+
+<p>Please consider sponsoring the ongoing development of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, especially if your company benefits from this project. We welcome your patronage on <a href="https://gratipay.com/mojolicious">Gratipay</a>, <a href="https://www.bountysource.com/teams/mojolicious">Bountysource</a> or <a href="https://www.paypal.me/kraih">PayPal</a>.</p>
+
+<p>Grants for contiguous full-time development, over the period of a few days, can also have a huge impact. They allow us to tackle complex issues that are otherwise left to linger until somebody can&#39;t afford to not fix them. To arrange such a grant for a core developer please email <code>sri@cpan.org</code>.</p>
+
+<h1 id="CODE-OF-CONDUCT">CODE OF CONDUCT</h1>
+
+<p>Like the technical community as a whole, the Mojolicious team and community is made up of a mixture of professionals and volunteers from all over the world, working on every aspect of the mission - including mentorship, teaching, and connecting people.</p>
+
+<p>Diversity is one of our huge strengths, but it can also lead to communication issues and unhappiness. To that end, we have a few ground rules that we ask people to adhere to. This code applies equally to founders, mentors and those seeking help and guidance.</p>
+
+<p>This isn&rsquo;t an exhaustive list of things that you can&rsquo;t do. Rather, take it in the spirit in which it&rsquo;s intended - a guide to make it easier to enrich all of us and the technical communities in which we participate.</p>
+
+<p>This code of conduct applies to all spaces managed by the Mojolicious project. This includes IRC, the mailing lists, the issue tracker, and any other forums created by the project team which the community uses for communication. In addition, violations of this code outside these spaces may affect a person&#39;s ability to participate within them.</p>
+
+<p>If you believe someone is violating the code of conduct, we ask that you report it by emailing <code>jberger@cpan.org</code> or other members of <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#CORE-DEVELOPERS">the team</a>.</p>
+
+<ul>
+
+<li><p><b>Be friendly and patient.</b></p>
+
+</li>
+<li><p><b>Be welcoming.</b> We strive to be a community that welcomes and supports people of all backgrounds and identities. This includes, but is not limited to members of any race, ethnicity, culture, national origin, colour, immigration status, social and economic class, educational level, sex, sexual orientation, gender identity and expression, age, size, family status, political belief, religion, and mental and physical ability.</p>
+
+</li>
+<li><p><b>Be considerate.</b> Your work will be used by other people, and you in turn will depend on the work of others. Any decision you take will affect users and colleagues, and you should take those consequences into account when making decisions. Remember that we&#39;re a world-wide community, so you might not be communicating in someone else&#39;s primary language.</p>
+
+</li>
+<li><p><b>Be respectful.</b> Not all of us will agree all the time, but disagreement is no excuse for poor behavior and poor manners. We might all experience some frustration now and then, but we cannot allow that frustration to turn into a personal attack. It&rsquo;s important to remember that a community where people feel uncomfortable or threatened is not a productive one. Members of the Mojolicious community should be respectful when dealing with other members as well as with people outside the Mojolicious community.</p>
+
+</li>
+<li><p><b>Be careful in the words that you choose.</b> We are a community of professionals, and we conduct ourselves professionally. Be kind to others. Do not insult or put down other participants. Harassment and other exclusionary behavior aren&#39;t acceptable. This includes, but is not limited to:</p>
+
+<ul>
+
+<li><p>Violent threats or language directed against another person.</p>
+
+</li>
+<li><p>Discriminatory jokes and language.</p>
+
+</li>
+<li><p>Posting sexually explicit or violent material.</p>
+
+</li>
+<li><p>Posting (or threatening to post) other people&#39;s personally identifying information (&quot;doxing&quot;).</p>
+
+</li>
+<li><p>Personal insults, especially those using racist or sexist terms.</p>
+
+</li>
+<li><p>Unwelcome sexual attention.</p>
+
+</li>
+<li><p>Advocating for, or encouraging, any of the above behavior.</p>
+
+</li>
+<li><p>Repeated harassment of others. In general, if someone asks you to stop, then stop.</p>
+
+</li>
+</ul>
+
+</li>
+<li><p><b>When we disagree, try to understand why.</b> Disagreements, both social and technical, happen all the time and Mojolicious is no exception. It is important that we resolve disagreements and differing views constructively. Remember that we&rsquo;re different. The strength of Mojolicious comes from its varied community, people from a wide range of backgrounds. Different people have different perspectives on issues. Being unable to understand why someone holds a viewpoint doesn&rsquo;t mean that they&rsquo;re wrong. Don&rsquo;t forget that it is human to err and blaming each other doesn&rsquo;t get us anywhere. Instead, focus on helping to resolve issues and learning from mistakes.</p>
+
+</li>
+</ul>
+
+<p>Original text courtesy of the <a href="http://speakup.io/coc.html">Speak Up! project</a>.</p>
+
+<h1 id="MORE">MORE</h1>
+
+<p>You can continue with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a> now or take a look at the <a href="http://github.com/kraih/mojo/wiki">Mojolicious wiki</a>, which contains a lot more documentation and examples by many different authors.</p>
+
+<h1 id="SUPPORT">SUPPORT</h1>
+
+<p>If you have any questions the documentation might not yet answer, don&#39;t hesitate to ask on the <a href="http://groups.google.com/group/mojolicious">mailing-list</a> or the official IRC channel <code><span class="comment">#mojo</span>
+</code> on <code>irc.perl.org</code>.</p>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,502 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a>
+    <ul>
+      <li><a href="#b64_decode">b64_decode</a></li>
+      <li><a href="#b64_encode">b64_encode</a></li>
+      <li><a href="#camelize">camelize</a></li>
+      <li><a href="#class_to_file">class_to_file</a></li>
+      <li><a href="#class_to_path">class_to_path</a></li>
+      <li><a href="#decamelize">decamelize</a></li>
+      <li><a href="#decode">decode</a></li>
+      <li><a href="#deprecated">deprecated</a></li>
+      <li><a href="#dumper">dumper</a></li>
+      <li><a href="#encode">encode</a></li>
+      <li><a href="#files">files</a></li>
+      <li><a href="#hmac_sha1_sum">hmac_sha1_sum</a></li>
+      <li><a href="#html_unescape">html_unescape</a></li>
+      <li><a href="#md5_bytes">md5_bytes</a></li>
+      <li><a href="#md5_sum">md5_sum</a></li>
+      <li><a href="#monkey_patch">monkey_patch</a></li>
+      <li><a href="#punycode_decode">punycode_decode</a></li>
+      <li><a href="#punycode_encode">punycode_encode</a></li>
+      <li><a href="#quote">quote</a></li>
+      <li><a href="#secure_compare">secure_compare</a></li>
+      <li><a href="#sha1_bytes">sha1_bytes</a></li>
+      <li><a href="#sha1_sum">sha1_sum</a></li>
+      <li><a href="#slurp">slurp</a></li>
+      <li><a href="#split_cookie_header">split_cookie_header</a></li>
+      <li><a href="#split_header">split_header</a></li>
+      <li><a href="#spurt">spurt</a></li>
+      <li><a href="#squish">squish</a></li>
+      <li><a href="#steady_time">steady_time</a></li>
+      <li><a href="#tablify">tablify</a></li>
+      <li><a href="#term_escape">term_escape</a></li>
+      <li><a href="#trim">trim</a></li>
+      <li><a href="#unindent">unindent</a></li>
+      <li><a href="#unquote">unquote</a></li>
+      <li><a href="#url_escape">url_escape</a></li>
+      <li><a href="#url_unescape">url_unescape</a></li>
+      <li><a href="#xml_escape">xml_escape</a></li>
+      <li><a href="#xor_encode">xor_encode</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Util - Portable utility functions</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Util</span> <span class="string">qw(b64_encode url_escape url_unescape)</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="string">'test=23'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$escaped</span> <span class="operator">=</span> <span class="variable">url_escape</span> <span class="variable">$str</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">url_unescape</span> <span class="variable">$escaped</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">b64_encode</span> <span class="variable">$escaped</span><span class="operator">,</span> <span class="string">''</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html">Mojo::Util</a> provides portable utility functions for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a>.</p>
+
+<h1 id="FUNCTIONS">FUNCTIONS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html">Mojo::Util</a> implements the following functions, which can be imported individually.</p>
+
+<h2 id="b64_decode">b64_decode</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">b64_decode</span> <span class="variable">$b64</span><span class="operator">;</span>
+</code></pre>
+
+<p>Base64 decode bytes.</p>
+
+<h2 id="b64_encode">b64_encode</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$b64</span> <span class="operator">=</span> <span class="variable">b64_encode</span> <span class="variable">$bytes</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$b64</span> <span class="operator">=</span> <span class="variable">b64_encode</span> <span class="variable">$bytes</span><span class="operator">,</span> <span class="string">"\n"</span><span class="operator">;</span>
+</code></pre>
+
+<p>Base64 encode bytes, the line ending defaults to a newline.</p>
+
+<h2 id="camelize">camelize</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$camelcase</span> <span class="operator">=</span> <span class="variable">camelize</span> <span class="variable">$snakecase</span><span class="operator">;</span>
+</code></pre>
+
+<p>Convert <code>snake_case</code> string to <code>CamelCase</code> and replace <code>-</code> with <code>::</code>.</p>
+
+<pre><code>  <span class="comment"># "FooBar"</span>
+  <span class="variable">camelize</span> <span class="string">'foo_bar'</span><span class="operator">;</span>
+  
+  <span class="comment"># "FooBar::Baz"</span>
+  <span class="variable">camelize</span> <span class="string">'foo_bar-baz'</span><span class="operator">;</span>
+  
+  <span class="comment"># "FooBar::Baz"</span>
+  <span class="variable">camelize</span> <span class="string">'FooBar::Baz'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="class_to_file">class_to_file</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$file</span> <span class="operator">=</span> <span class="variable">class_to_file</span> <span class="string">'Foo::Bar'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Convert a class name to a file.</p>
+
+<pre><code>  <span class="comment"># "foo_bar"</span>
+  <span class="variable">class_to_file</span> <span class="string">'Foo::Bar'</span><span class="operator">;</span>
+  
+  <span class="comment"># "foobar"</span>
+  <span class="variable">class_to_file</span> <span class="string">'FOO::Bar'</span><span class="operator">;</span>
+  
+  <span class="comment"># "foo_bar"</span>
+  <span class="variable">class_to_file</span> <span class="string">'FooBar'</span><span class="operator">;</span>
+  
+  <span class="comment"># "foobar"</span>
+  <span class="variable">class_to_file</span> <span class="string">'FOOBar'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="class_to_path">class_to_path</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">class_to_path</span> <span class="string">'Foo::Bar'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Convert class name to path.</p>
+
+<pre><code>  <span class="comment"># "Foo/Bar.pm"</span>
+  <span class="variable">class_to_path</span> <span class="string">'Foo::Bar'</span><span class="operator">;</span>
+  
+  <span class="comment"># "FooBar.pm"</span>
+  <span class="variable">class_to_path</span> <span class="string">'FooBar'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="decamelize">decamelize</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$snakecase</span> <span class="operator">=</span> <span class="variable">decamelize</span> <span class="variable">$camelcase</span><span class="operator">;</span>
+</code></pre>
+
+<p>Convert <code>CamelCase</code> string to <code>snake_case</code> and replace <code>::</code> with <code>-</code>.</p>
+
+<pre><code>  <span class="comment"># "foo_bar"</span>
+  <span class="variable">decamelize</span> <span class="string">'FooBar'</span><span class="operator">;</span>
+  
+  <span class="comment"># "foo_bar-baz"</span>
+  <span class="variable">decamelize</span> <span class="string">'FooBar::Baz'</span><span class="operator">;</span>
+  
+  <span class="comment"># "foo_bar-baz"</span>
+  <span class="variable">decamelize</span> <span class="string">'foo_bar-baz'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="decode">decode</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$chars</span> <span class="operator">=</span> <span class="variable">decode</span> <span class="string">'UTF-8'</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Decode bytes to characters, or return <code>undef</code> if decoding failed.</p>
+
+<h2 id="deprecated">deprecated</h2>
+
+<pre><code>  <span class="variable">deprecated</span> <span class="string">'foo is DEPRECATED in favor of bar'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Warn about deprecated feature from perspective of caller. You can also set the <code>MOJO_FATAL_DEPRECATIONS</code> environment variable to make them die instead.</p>
+
+<h2 id="dumper">dumper</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$perl</span> <span class="operator">=</span> <span class="variable">dumper</span> <span class="operator">{</span><span class="string">some</span> <span class="operator">=&gt;</span> <span class="string">'data'</span><span class="operator">};</span>
+</code></pre>
+
+<p>Dump a Perl data structure with <a href="../../../lib/Data/Dumper.html">Data::Dumper</a>.</p>
+
+<h2 id="encode">encode</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">encode</span> <span class="string">'UTF-8'</span><span class="operator">,</span> <span class="variable">$chars</span><span class="operator">;</span>
+</code></pre>
+
+<p>Encode characters to bytes.</p>
+
+<h2 id="files">files</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">@files</span> <span class="operator">=</span> <span class="variable">files</span> <span class="string">'/tmp/uploads'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">@files</span> <span class="operator">=</span> <span class="variable">files</span> <span class="string">'/tmp/uploads'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">hidden</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<p>List all files recursively in a directory.</p>
+
+<pre><code>  <span class="comment"># List all templates</span>
+  <span class="keyword">say</span> <span class="keyword">for</span> <span class="variable">files</span> <span class="string">'/home/sri/myapp/templates'</span><span class="operator">;</span>
+</code></pre>
+
+<p>These options are currently available:</p>
+
+<dl>
+
+<dt id="hidden">hidden</dt>
+<dd>
+
+<pre><code>  hidden =&gt; 1</code></pre>
+
+<p>Include hidden files and directories.</p>
+
+</dd>
+</dl>
+
+<h2 id="hmac_sha1_sum">hmac_sha1_sum</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$checksum</span> <span class="operator">=</span> <span class="variable">hmac_sha1_sum</span> <span class="variable">$bytes</span><span class="operator">,</span> <span class="string">'passw0rd'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Generate HMAC-SHA1 checksum for bytes.</p>
+
+<pre><code>  <span class="comment"># "11cedfd5ec11adc0ec234466d8a0f2a83736aa68"</span>
+  <span class="variable">hmac_sha1_sum</span> <span class="string">'foo'</span><span class="operator">,</span> <span class="string">'passw0rd'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="html_unescape">html_unescape</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">html_unescape</span> <span class="variable">$escaped</span><span class="operator">;</span>
+</code></pre>
+
+<p>Unescape all HTML entities in string.</p>
+
+<pre><code>  <span class="comment"># "&lt;div&gt;"</span>
+  <span class="variable">html_unescape</span> <span class="string">'&amp;lt;div&amp;gt;'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="md5_bytes">md5_bytes</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$checksum</span> <span class="operator">=</span> <span class="variable">md5_bytes</span> <span class="variable">$bytes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Generate binary MD5 checksum for bytes.</p>
+
+<h2 id="md5_sum">md5_sum</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$checksum</span> <span class="operator">=</span> <span class="variable">md5_sum</span> <span class="variable">$bytes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Generate MD5 checksum for bytes.</p>
+
+<pre><code>  <span class="comment"># "acbd18db4cc2f85cedef654fccc4a4d8"</span>
+  <span class="variable">md5_sum</span> <span class="string">'foo'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="monkey_patch">monkey_patch</h2>
+
+<pre><code>  <span class="variable">monkey_patch</span> <span class="variable">$package</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+  <span class="variable">monkey_patch</span> <span class="variable">$package</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...},</span> <span class="string">bar</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...};</span>
+</code></pre>
+
+<p>Monkey patch functions into package.</p>
+
+<pre><code>  <span class="variable">monkey_patch</span> <span class="string">'MyApp'</span><span class="operator">,</span>
+    <span class="string">one</span>   <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="string">'One!'</span> <span class="operator">},</span>
+    <span class="string">two</span>   <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="string">'Two!'</span> <span class="operator">},</span>
+    <span class="string">three</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="string">'Three!'</span> <span class="operator">};</span>
+</code></pre>
+
+<h2 id="punycode_decode">punycode_decode</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">punycode_decode</span> <span class="variable">$punycode</span><span class="operator">;</span>
+</code></pre>
+
+<p>Punycode decode string as described in <a href="http://tools.ietf.org/html/rfc3492">RFC 3492</a>.</p>
+
+<pre><code>  <span class="comment"># "bÃ¼cher"</span>
+  <span class="variable">punycode_decode</span> <span class="string">'bcher-kva'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="punycode_encode">punycode_encode</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$punycode</span> <span class="operator">=</span> <span class="variable">punycode_encode</span> <span class="variable">$str</span><span class="operator">;</span>
+</code></pre>
+
+<p>Punycode encode string as described in <a href="http://tools.ietf.org/html/rfc3492">RFC 3492</a>.</p>
+
+<pre><code>  <span class="comment"># "bcher-kva"</span>
+  <span class="variable">punycode_encode</span> <span class="string">'bÃ¼cher'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="quote">quote</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$quoted</span> <span class="operator">=</span> <span class="variable">quote</span> <span class="variable">$str</span><span class="operator">;</span>
+</code></pre>
+
+<p>Quote string.</p>
+
+<h2 id="secure_compare">secure_compare</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">secure_compare</span> <span class="variable">$str1</span><span class="operator">,</span> <span class="variable">$str2</span><span class="operator">;</span>
+</code></pre>
+
+<p>Constant time comparison algorithm to prevent timing attacks.</p>
+
+<h2 id="sha1_bytes">sha1_bytes</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$checksum</span> <span class="operator">=</span> <span class="variable">sha1_bytes</span> <span class="variable">$bytes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Generate binary SHA1 checksum for bytes.</p>
+
+<h2 id="sha1_sum">sha1_sum</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$checksum</span> <span class="operator">=</span> <span class="variable">sha1_sum</span> <span class="variable">$bytes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Generate SHA1 checksum for bytes.</p>
+
+<pre><code>  <span class="comment"># "0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33"</span>
+  <span class="variable">sha1_sum</span> <span class="string">'foo'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="slurp">slurp</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">slurp</span> <span class="string">'/etc/passwd'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Read all data at once from file.</p>
+
+<h2 id="split_cookie_header">split_cookie_header</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tree</span> <span class="operator">=</span> <span class="variable">split_cookie_header</span> <span class="string">'a=b; expires=Thu, 07 Aug 2008 07:07:59 GMT'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Same as <a href="#split_header">&quot;split_header&quot;</a>, but handles <code>expires</code> values from <a href="http://tools.ietf.org/html/rfc6265">RFC 6265</a>.</p>
+
+<h2 id="split_header">split_header</h2>
+
+<pre><code>   <span class="keyword">my</span> <span class="variable">$tree</span> <span class="operator">=</span> <span class="variable">split_header</span> <span class="string">'foo="bar baz"; test=123, yada'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Split HTTP header value into key/value pairs, each comma separated part gets its own array reference, and keys without a value get <code>undef</code> assigned.</p>
+
+<pre><code>  <span class="comment"># "one"</span>
+  <span class="variable">split_header</span><span class="operator">(</span><span class="string">'one; two="three four", five=six'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">][</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+  
+  <span class="comment"># "two"</span>
+  <span class="variable">split_header</span><span class="operator">(</span><span class="string">'one; two="three four", five=six'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">][</span><span class="number">2</span><span class="operator">]</span><span class="operator">;</span>
+  
+  <span class="comment"># "three four"</span>
+  <span class="variable">split_header</span><span class="operator">(</span><span class="string">'one; two="three four", five=six'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">][</span><span class="number">3</span><span class="operator">]</span><span class="operator">;</span>
+  
+  <span class="comment"># "five"</span>
+  <span class="variable">split_header</span><span class="operator">(</span><span class="string">'one; two="three four", five=six'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">1</span><span class="operator">][</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+  
+  <span class="comment"># "six"</span>
+  <span class="variable">split_header</span><span class="operator">(</span><span class="string">'one; two="three four", five=six'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">1</span><span class="operator">][</span><span class="number">1</span><span class="operator">]</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="spurt">spurt</h2>
+
+<pre><code>  <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">spurt</span> <span class="variable">$bytes</span><span class="operator">,</span> <span class="string">'/etc/passwd'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Write all data at once to file.</p>
+
+<h2 id="squish">squish</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$squished</span> <span class="operator">=</span> <span class="variable">squish</span> <span class="variable">$str</span><span class="operator">;</span>
+</code></pre>
+
+<p>Trim whitespace characters from both ends of string and then change all consecutive groups of whitespace into one space each.</p>
+
+<pre><code>  <span class="comment"># "foo bar"</span>
+  <span class="variable">squish</span> <span class="string">'  foo  bar  '</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="steady_time">steady_time</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$time</span> <span class="operator">=</span> <span class="variable">steady_time</span><span class="operator">;</span>
+</code></pre>
+
+<p>High resolution time elapsed from an arbitrary fixed point in the past, resilient to time jumps if a monotonic clock is available through <a href="../../../lib/Time/HiRes.html">Time::HiRes</a>.</p>
+
+<h2 id="tablify">tablify</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$table</span> <span class="operator">=</span> <span class="variable">tablify</span> <span class="operator">[[</span><span class="string">'foo'</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">]</span><span class="operator">,</span> <span class="operator">[</span><span class="string">'baz'</span><span class="operator">,</span> <span class="string">'yada'</span><span class="operator">]]</span><span class="operator">;</span>
+</code></pre>
+
+<p>Row-oriented generator for text tables.</p>
+
+<pre><code>  <span class="comment"># "foo   bar\nyada  yada\nbaz   yada\n"</span>
+  <span class="variable">tablify</span> <span class="operator">[[</span><span class="string">'foo'</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">]</span><span class="operator">,</span> <span class="operator">[</span><span class="string">'yada'</span><span class="operator">,</span> <span class="string">'yada'</span><span class="operator">]</span><span class="operator">,</span> <span class="operator">[</span><span class="string">'baz'</span><span class="operator">,</span> <span class="string">'yada'</span><span class="operator">]]</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="term_escape">term_escape</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$escaped</span> <span class="operator">=</span> <span class="variable">term_escape</span> <span class="variable">$str</span><span class="operator">;</span>
+</code></pre>
+
+<p>Escape all POSIX control characters except for <code>\n</code>.</p>
+
+<pre><code>  <span class="comment"># "foo\\x09bar\\x0d\n"</span>
+  <span class="variable">term_escape</span> <span class="string">"foo\tbar\r\n"</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="trim">trim</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$trimmed</span> <span class="operator">=</span> <span class="variable">trim</span> <span class="variable">$str</span><span class="operator">;</span>
+</code></pre>
+
+<p>Trim whitespace characters from both ends of string.</p>
+
+<pre><code>  <span class="comment"># "foo bar"</span>
+  <span class="variable">trim</span> <span class="string">'  foo bar  '</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="unindent">unindent</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$unindented</span> <span class="operator">=</span> <span class="variable">unindent</span> <span class="variable">$str</span><span class="operator">;</span>
+</code></pre>
+
+<p>Unindent multi-line string.</p>
+
+<pre><code>  <span class="comment"># "foo\nbar\nbaz\n"</span>
+  <span class="variable">unindent</span> <span class="string">"  foo\n  bar\n  baz\n"</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="unquote">unquote</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">unquote</span> <span class="variable">$quoted</span><span class="operator">;</span>
+</code></pre>
+
+<p>Unquote string.</p>
+
+<h2 id="url_escape">url_escape</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$escaped</span> <span class="operator">=</span> <span class="variable">url_escape</span> <span class="variable">$str</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$escaped</span> <span class="operator">=</span> <span class="variable">url_escape</span> <span class="variable">$str</span><span class="operator">,</span> <span class="string">'^A-Za-z0-9\-._~'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Percent encode unsafe characters in string as described in <a href="http://tools.ietf.org/html/rfc3986">RFC 3986</a>, the pattern used defaults to <code>^A-Za-z0-9\-._~</code>.</p>
+
+<pre><code>  <span class="comment"># "foo%3Bbar"</span>
+  <span class="variable">url_escape</span> <span class="string">'foo;bar'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="url_unescape">url_unescape</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">url_unescape</span> <span class="variable">$escaped</span><span class="operator">;</span>
+</code></pre>
+
+<p>Decode percent encoded characters in string as described in <a href="http://tools.ietf.org/html/rfc3986">RFC 3986</a>.</p>
+
+<pre><code>  <span class="comment"># "foo;bar"</span>
+  <span class="variable">url_unescape</span> <span class="string">'foo%3Bbar'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="xml_escape">xml_escape</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$escaped</span> <span class="operator">=</span> <span class="variable">xml_escape</span> <span class="variable">$str</span><span class="operator">;</span>
+</code></pre>
+
+<p>Escape unsafe characters <code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&quot;</code> and <code>&#39;</code> in string, but do not escape <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> objects.</p>
+
+<pre><code>  <span class="comment"># "&amp;lt;div&amp;gt;"</span>
+  <span class="variable">xml_escape</span> <span class="string">'&lt;div&gt;'</span><span class="operator">;</span>
+  
+  <span class="comment"># "&lt;div&gt;"</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::ByteStream</span> <span class="string">'b'</span><span class="operator">;</span>
+  <span class="variable">xml_escape</span> <span class="variable">b</span><span class="operator">(</span><span class="string">'&lt;div&gt;'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="xor_encode">xor_encode</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$encoded</span> <span class="operator">=</span> <span class="variable">xor_encode</span> <span class="variable">$str</span><span class="operator">,</span> <span class="variable">$key</span><span class="operator">;</span>
+</code></pre>
+
+<p>XOR encode string with variable length key.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

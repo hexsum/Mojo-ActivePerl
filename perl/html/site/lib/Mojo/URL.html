@@ -1,0 +1,411 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#base">base</a></li>
+      <li><a href="#fragment">fragment</a></li>
+      <li><a href="#host">host</a></li>
+      <li><a href="#port">port</a></li>
+      <li><a href="#scheme">scheme</a></li>
+      <li><a href="#userinfo">userinfo</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#authority">authority</a></li>
+      <li><a href="#clone">clone</a></li>
+      <li><a href="#host_port">host_port</a></li>
+      <li><a href="#ihost">ihost</a></li>
+      <li><a href="#is_abs">is_abs</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#path">path</a></li>
+      <li><a href="#path_query">path_query</a></li>
+      <li><a href="#protocol">protocol</a></li>
+      <li><a href="#query">query</a></li>
+      <li><a href="#to_abs">to_abs</a></li>
+      <li><a href="#to_string">to_string</a></li>
+    </ul>
+  </li>
+  <li><a href="#OPERATORS">OPERATORS</a>
+    <ul>
+      <li><a href="#bool">bool</a></li>
+      <li><a href="#stringify">stringify</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::URL - Uniform Resource Locator</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::URL</span><span class="operator">;</span>
+  
+  <span class="comment"># Parse</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://sri:foo@example.com:3000/foo?foo=bar#23'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">scheme</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">userinfo</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">host</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">port</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">query</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">fragment</span><span class="operator">;</span>
+  
+  <span class="comment"># Build</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">scheme</span><span class="operator">(</span><span class="string">'http'</span><span class="operator">);</span>
+  <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">userinfo</span><span class="operator">(</span><span class="string">'sri:foobar'</span><span class="operator">);</span>
+  <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">host</span><span class="operator">(</span><span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">port</span><span class="operator">(</span><span class="number">3000</span><span class="operator">);</span>
+  <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">);</span>
+  <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">);</span>
+  <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">fragment</span><span class="operator">(</span><span class="number">23</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="string">"</span><span class="variable">$url</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a> implements a subset of <a href="http://tools.ietf.org/html/rfc3986">RFC 3986</a>, <a href="http://tools.ietf.org/html/rfc3987">RFC 3987</a> and the <a href="https://url.spec.whatwg.org">URL Living Standard</a> for Uniform Resource Locators with support for IDNA and IRIs.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a> implements the following attributes.</p>
+
+<h2 id="base">base</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$base</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">base</span><span class="operator">;</span>
+  <span class="variable">$url</span>     <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">base</span><span class="operator">(</span><span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Base of this URL, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a> object.</p>
+
+<pre><code>  <span class="string">"http://example.com/a/b?c"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">"/a/b?c"</span><span class="operator">)-&gt;</span><span class="variable">base</span><span class="operator">(</span><span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">"http://example.com"</span><span class="operator">))-&gt;</span><span class="variable">to_abs</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="fragment">fragment</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$fragment</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">fragment</span><span class="operator">;</span>
+  <span class="variable">$url</span>         <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">fragment</span><span class="operator">(</span><span class="string">'â¥mojoliciousâ¥'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Fragment part of this URL.</p>
+
+<pre><code>  <span class="comment"># "yada"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/foo?bar=baz#yada'</span><span class="operator">)-&gt;</span><span class="variable">fragment</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="host">host</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$host</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">host</span><span class="operator">;</span>
+  <span class="variable">$url</span>     <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">host</span><span class="operator">(</span><span class="string">'127.0.0.1'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Host part of this URL.</p>
+
+<pre><code>  <span class="comment"># "example.com"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://sri:t3st@example.com:8080/foo'</span><span class="operator">)-&gt;</span><span class="variable">host</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="port">port</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$port</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">port</span><span class="operator">;</span>
+  <span class="variable">$url</span>     <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">port</span><span class="operator">(</span><span class="number">8080</span><span class="operator">);</span>
+</code></pre>
+
+<p>Port part of this URL.</p>
+
+<pre><code>  <span class="comment"># "8080"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://sri:t3st@example.com:8080/foo'</span><span class="operator">)-&gt;</span><span class="variable">port</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="scheme">scheme</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$scheme</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">scheme</span><span class="operator">;</span>
+  <span class="variable">$url</span>       <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">scheme</span><span class="operator">(</span><span class="string">'http'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Scheme part of this URL.</p>
+
+<pre><code>  <span class="comment"># "http"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/foo'</span><span class="operator">)-&gt;</span><span class="variable">scheme</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="userinfo">userinfo</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$info</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">userinfo</span><span class="operator">;</span>
+  <span class="variable">$url</span>     <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">userinfo</span><span class="operator">(</span><span class="string">'root:â¥'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Userinfo part of this URL.</p>
+
+<pre><code>  <span class="comment"># "sri:t3st"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'https://sri:t3st@example.com/foo'</span><span class="operator">)-&gt;</span><span class="variable">userinfo</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="authority">authority</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$authority</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">authority</span><span class="operator">;</span>
+  <span class="variable">$url</span>          <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">authority</span><span class="operator">(</span><span class="string">'root:%E2%99%A5@localhost:8080'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Authority part of this URL.</p>
+
+<pre><code>  <span class="comment"># "root:%E2%99%A5@xn--n3h.net:8080"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://root:â¥@â.net:8080/test'</span><span class="operator">)-&gt;</span><span class="variable">authority</span><span class="operator">;</span>
+  
+  <span class="comment"># "root@example.com"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://root@example.com/test'</span><span class="operator">)-&gt;</span><span class="variable">authority</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="clone">clone</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$url2</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">clone</span><span class="operator">;</span>
+</code></pre>
+
+<p>Clone this URL.</p>
+
+<h2 id="host_port">host_port</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$host_port</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">host_port</span><span class="operator">;</span>
+</code></pre>
+
+<p>Normalized version of <a href="#host">&quot;host&quot;</a> and <a href="#port">&quot;port&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># "xn--n3h.net:8080"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://â.net:8080/test'</span><span class="operator">)-&gt;</span><span class="variable">host_port</span><span class="operator">;</span>
+  
+  <span class="comment"># "example.com"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/test'</span><span class="operator">)-&gt;</span><span class="variable">host_port</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="ihost">ihost</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$ihost</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">ihost</span><span class="operator">;</span>
+  <span class="variable">$url</span>      <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">ihost</span><span class="operator">(</span><span class="string">'xn--bcher-kva.ch'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Host part of this URL in punycode format.</p>
+
+<pre><code>  <span class="comment"># "xn--n3h.net"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://â.net'</span><span class="operator">)-&gt;</span><span class="variable">ihost</span><span class="operator">;</span>
+  
+  <span class="comment"># "example.com"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com'</span><span class="operator">)-&gt;</span><span class="variable">ihost</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="is_abs">is_abs</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">is_abs</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if URL is absolute.</p>
+
+<pre><code>  <span class="comment"># True</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com'</span><span class="operator">)-&gt;</span><span class="variable">is_abs</span><span class="operator">;</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/test/index.html'</span><span class="operator">)-&gt;</span><span class="variable">is_abs</span><span class="operator">;</span>
+  
+  <span class="comment"># False</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'test/index.html'</span><span class="operator">)-&gt;</span><span class="variable">is_abs</span><span class="operator">;</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/test/index.html'</span><span class="operator">)-&gt;</span><span class="variable">is_abs</span><span class="operator">;</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'//example.com/test/index.html'</span><span class="operator">)-&gt;</span><span class="variable">is_abs</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://127.0.0.1:3000/foo?f=b&amp;baz=2#foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a> object and <a href="#parse">&quot;parse&quot;</a> URL if necessary.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'http://127.0.0.1:3000/foo/bar?fo=o&amp;baz=23#foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse relative or absolute URL.</p>
+
+<pre><code>  <span class="comment"># "/test/123"</span>
+  <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'/test/123?foo=bar'</span><span class="operator">)-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+  
+  <span class="comment"># "example.com"</span>
+  <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'http://example.com/test/123?foo=bar'</span><span class="operator">)-&gt;</span><span class="variable">host</span><span class="operator">;</span>
+  
+  <span class="comment"># "sri@example.com"</span>
+  <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'mailto:sri@example.com'</span><span class="operator">)-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="path">path</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+  <span class="variable">$url</span>     <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">(</span><span class="string">'foo/bar'</span><span class="operator">);</span>
+  <span class="variable">$url</span>     <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">);</span>
+  <span class="variable">$url</span>     <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">(</span><span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Path part of this URL, relative paths will be merged with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Path.html#merge">&quot;merge&quot; in Mojo::Path</a>, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Path.html">Mojo::Path</a> object.</p>
+
+<pre><code>  <span class="comment"># "perldoc"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/perldoc/Mojo'</span><span class="operator">)-&gt;</span><span class="variable">path</span><span class="operator">-&gt;</span><span class="variable">parts</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+  
+  <span class="comment"># "/perldoc/DOM/HTML"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/perldoc/Mojo'</span><span class="operator">)-&gt;</span><span class="variable">path</span><span class="operator">-&gt;</span><span class="variable">merge</span><span class="operator">(</span><span class="string">'DOM/HTML'</span><span class="operator">);</span>
+  
+  <span class="comment"># "http://example.com/DOM/HTML"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/perldoc/Mojo'</span><span class="operator">)-&gt;</span><span class="variable">path</span><span class="operator">(</span><span class="string">'/DOM/HTML'</span><span class="operator">);</span>
+  
+  <span class="comment"># "http://example.com/perldoc/DOM/HTML"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/perldoc/Mojo'</span><span class="operator">)-&gt;</span><span class="variable">path</span><span class="operator">(</span><span class="string">'DOM/HTML'</span><span class="operator">);</span>
+  
+  <span class="comment"># "http://example.com/perldoc/Mojo/DOM/HTML"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/perldoc/Mojo/'</span><span class="operator">)-&gt;</span><span class="variable">path</span><span class="operator">(</span><span class="string">'DOM/HTML'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="path_query">path_query</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path_query</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">path_query</span><span class="operator">;</span>
+</code></pre>
+
+<p>Normalized version of <a href="#path">&quot;path&quot;</a> and <a href="#query">&quot;query&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># "/test?a=1&amp;b=2"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/test?a=1&amp;b=2'</span><span class="operator">)-&gt;</span><span class="variable">path_query</span><span class="operator">;</span>
+  
+  <span class="comment"># "/"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/'</span><span class="operator">)-&gt;</span><span class="variable">path_query</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="protocol">protocol</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$proto</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">protocol</span><span class="operator">;</span>
+</code></pre>
+
+<p>Normalized version of <a href="#scheme">&quot;scheme&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># "http"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'HtTp://example.com'</span><span class="operator">)-&gt;</span><span class="variable">protocol</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="query">query</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$query</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">query</span><span class="operator">;</span>
+  <span class="variable">$url</span>      <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="operator">[</span><span class="string">merge</span> <span class="operator">=&gt;</span> <span class="string">'with'</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">$url</span>      <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="operator">{</span><span class="string">append</span> <span class="operator">=&gt;</span> <span class="string">'to'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$url</span>      <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="string">replace</span> <span class="operator">=&gt;</span> <span class="string">'with'</span><span class="operator">);</span>
+  <span class="variable">$url</span>      <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="string">'a=1&amp;b=2'</span><span class="operator">);</span>
+  <span class="variable">$url</span>      <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="variable">Mojo::Parameters</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Query part of this URL, key/value pairs in an array reference will be merged with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Parameters.html#merge">&quot;merge&quot; in Mojo::Parameters</a>, and key/value pairs in a hash reference appended with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Parameters.html#append">&quot;append&quot; in Mojo::Parameters</a>, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Parameters.html">Mojo::Parameters</a> object.</p>
+
+<pre><code>  <span class="comment"># "2"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com?a=1&amp;b=2'</span><span class="operator">)-&gt;</span><span class="variable">query</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'b'</span><span class="operator">);</span>
+  
+  <span class="comment"># "a=2&amp;b=2&amp;c=3"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com?a=1&amp;b=2'</span><span class="operator">)-&gt;</span><span class="variable">query</span><span class="operator">-&gt;</span><span class="variable">merge</span><span class="operator">(</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="number">2</span><span class="operator">,</span> <span class="string">c</span> <span class="operator">=&gt;</span> <span class="number">3</span><span class="operator">);</span>
+  
+  <span class="comment"># "http://example.com?a=2&amp;c=3"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com?a=1&amp;b=2'</span><span class="operator">)-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="number">2</span><span class="operator">,</span> <span class="string">c</span> <span class="operator">=&gt;</span> <span class="number">3</span><span class="operator">);</span>
+  
+  <span class="comment"># "http://example.com?a=2&amp;a=3"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com?a=1&amp;b=2'</span><span class="operator">)-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># "http://example.com?a=2&amp;b=2&amp;c=3"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com?a=1&amp;b=2'</span><span class="operator">)-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="operator">[</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="number">2</span><span class="operator">,</span> <span class="string">c</span> <span class="operator">=&gt;</span> <span class="number">3</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># "http://example.com?b=2"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com?a=1&amp;b=2'</span><span class="operator">)-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="operator">[</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="keyword">undef</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># "http://example.com?a=1&amp;b=2&amp;a=2&amp;c=3"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com?a=1&amp;b=2'</span><span class="operator">)-&gt;</span><span class="variable">query</span><span class="operator">(</span><span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="number">2</span><span class="operator">,</span> <span class="string">c</span> <span class="operator">=&gt;</span> <span class="number">3</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="to_abs">to_abs</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$abs</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$abs</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">(</span><span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/foo'</span><span class="operator">));</span>
+</code></pre>
+
+<p>Clone relative URL and turn it into an absolute one using <a href="#base">&quot;base&quot;</a> or provided base URL.</p>
+
+<pre><code>  <span class="comment"># "http://example.com/foo/baz.xml?test=123"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'baz.xml?test=123'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">(</span><span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/foo/bar.html'</span><span class="operator">));</span>
+  
+  <span class="comment"># "http://example.com/baz.xml?test=123"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/baz.xml?test=123'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">(</span><span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/foo/bar.html'</span><span class="operator">));</span>
+  
+  <span class="comment"># "http://example.com/foo/baz.xml?test=123"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'//example.com/foo/baz.xml?test=123'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">(</span><span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://example.com/foo/bar.html'</span><span class="operator">));</span>
+</code></pre>
+
+<h2 id="to_string">to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$url</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Turn URL into a string.</p>
+
+<pre><code>  <span class="comment"># "http://mojolicious.org"</span>
+  <span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">-&gt;</span><span class="variable">scheme</span><span class="operator">(</span><span class="string">'http'</span><span class="operator">)-&gt;</span><span class="variable">host</span><span class="operator">(</span><span class="string">'mojolicious.org'</span><span class="operator">)-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="OPERATORS">OPERATORS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a> overloads the following operators.</p>
+
+<h2 id="bool">bool</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="operator">!!</span><span class="variable">$url</span><span class="operator">;</span>
+</code></pre>
+
+<p>Always true.</p>
+
+<h2 id="stringify">stringify</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="string">"</span><span class="variable">$url</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#to_string">&quot;to_string&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

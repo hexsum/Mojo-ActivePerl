@@ -1,0 +1,333 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a>
+    <ul>
+      <li><a href="#c">c</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#TO_JSON">TO_JSON</a></li>
+      <li><a href="#compact">compact</a></li>
+      <li><a href="#each">each</a></li>
+      <li><a href="#first">first</a></li>
+      <li><a href="#flatten">flatten</a></li>
+      <li><a href="#grep">grep</a></li>
+      <li><a href="#join">join</a></li>
+      <li><a href="#last">last</a></li>
+      <li><a href="#map">map</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#reduce">reduce</a></li>
+      <li><a href="#reverse">reverse</a></li>
+      <li><a href="#slice">slice</a></li>
+      <li><a href="#shuffle">shuffle</a></li>
+      <li><a href="#size">size</a></li>
+      <li><a href="#sort">sort</a></li>
+      <li><a href="#tap">tap</a></li>
+      <li><a href="#to_array">to_array</a></li>
+      <li><a href="#uniq">uniq</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Collection - Collection</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Collection</span><span class="operator">;</span>
+  
+  <span class="comment"># Manipulate collection</span>
+  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">Mojo::Collection</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">qw(just works)</span><span class="operator">);</span>
+  <span class="keyword">unshift</span> <span class="variable">@$collection</span><span class="operator">,</span> <span class="string">'it'</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+  
+  <span class="comment"># Chain methods</span>
+  <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">ucfirst</span> <span class="operator">})-&gt;</span><span class="variable">shuffle</span><span class="operator">-&gt;</span><span class="variable">each</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$word</span><span class="operator">,</span> <span class="variable">$num</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"</span><span class="variable">$num</span><span class="string">: </span><span class="variable">$word</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Use the alternative constructor</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Collection</span> <span class="string">'c'</span><span class="operator">;</span>
+  <span class="variable">c</span><span class="operator">(</span><span class="string">qw(a b c)</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">'/'</span><span class="operator">)-&gt;</span><span class="variable">url_escape</span><span class="operator">-&gt;</span><span class="variable">say</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> is an array-based container for collections.</p>
+
+<pre><code>  <span class="comment"># Access array directly to manipulate collection</span>
+  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">Mojo::Collection</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="number">1</span> <span class="operator">..</span> <span class="number">25</span><span class="operator">);</span>
+  <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">23</span><span class="operator">]</span> <span class="operator">+=</span> <span class="number">100</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="keyword">for</span> <span class="variable">@$collection</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="FUNCTIONS">FUNCTIONS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> implements the following functions, which can be imported individually.</p>
+
+<h2 id="c">c</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">c</span><span class="operator">(</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new array-based <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> implements the following methods.</p>
+
+<h2 id="TO_JSON">TO_JSON</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$array</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">TO_JSON</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#to_array">&quot;to_array&quot;</a>.</p>
+
+<h2 id="compact">compact</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">compact</span><span class="operator">;</span>
+</code></pre>
+
+<p>Create a new collection with all elements that are defined and not an empty string.</p>
+
+<pre><code>  <span class="comment"># "0, 1, 2, 3"</span>
+  <span class="variable">Mojo::Collection</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="keyword">undef</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="string">''</span><span class="operator">,</span> <span class="number">3</span><span class="operator">)-&gt;</span><span class="variable">compact</span><span class="operator">-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">', '</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="each">each</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">@elements</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">each</span><span class="operator">;</span>
+  <span class="variable">$collection</span>  <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">each</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Evaluate callback for each element in collection, or return all elements as a list if none has been provided. The element will be the first argument passed to the callback, and is also available as <code>$_</code>.</p>
+
+<pre><code>  <span class="comment"># Make a numbered list</span>
+  <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">each</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$e</span><span class="operator">,</span> <span class="variable">$num</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"</span><span class="variable">$num</span><span class="string">: </span><span class="variable">$e</span><span class="string">"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="first">first</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">(</span><span class="string">qr/foo/</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">(</span><span class="string">'some_method'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">(</span><span class="string">'some_method'</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<p>Evaluate regular expression/callback for, or call method on, each element in collection and return the first one that matched the regular expression, or for which the callback/method returned true. The element will be the first argument passed to the callback, and is also available as <code>$_</code>.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="keyword">my</span> <span class="variable">$first</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">some_method</span><span class="operator">(</span><span class="variable">@args</span><span class="operator">)</span> <span class="operator">});</span>
+  
+  <span class="comment"># Find first value that contains the word "mojo"</span>
+  <span class="keyword">my</span> <span class="variable">$interesting</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">(</span><span class="string">qr/mojo/i</span><span class="operator">);</span>
+  
+  <span class="comment"># Find first value that is greater than 5</span>
+  <span class="keyword">my</span> <span class="variable">$greater</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">first</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span> <span class="operator">&gt;</span> <span class="number">5</span> <span class="operator">});</span>
+</code></pre>
+
+<h2 id="flatten">flatten</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">flatten</span><span class="operator">;</span>
+</code></pre>
+
+<p>Flatten nested collections/arrays recursively and create a new collection with all elements.</p>
+
+<pre><code>  <span class="comment"># "1, 2, 3, 4, 5, 6, 7"</span>
+  <span class="variable">Mojo::Collection</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="number">1</span><span class="operator">,</span> <span class="operator">[</span><span class="number">2</span><span class="operator">,</span> <span class="operator">[</span><span class="number">3</span><span class="operator">,</span> <span class="number">4</span><span class="operator">]</span><span class="operator">,</span> <span class="number">5</span><span class="operator">,</span> <span class="operator">[</span><span class="number">6</span><span class="operator">]]</span><span class="operator">,</span> <span class="number">7</span><span class="operator">)-&gt;</span><span class="variable">flatten</span><span class="operator">-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">', '</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="grep">grep</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">grep</span><span class="operator">(</span><span class="string">qr/foo/</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">grep</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">grep</span><span class="operator">(</span><span class="string">'some_method'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">grep</span><span class="operator">(</span><span class="string">'some_method'</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<p>Evaluate regular expression/callback for, or call method on, each element in collection and create a new collection with all elements that matched the regular expression, or for which the callback/method returned true. The element will be the first argument passed to the callback, and is also available as <code>$_</code>.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">grep</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">some_method</span><span class="operator">(</span><span class="variable">@args</span><span class="operator">)</span> <span class="operator">});</span>
+  
+  <span class="comment"># Find all values that contain the word "mojo"</span>
+  <span class="keyword">my</span> <span class="variable">$interesting</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">grep</span><span class="operator">(</span><span class="string">qr/mojo/i</span><span class="operator">);</span>
+  
+  <span class="comment"># Find all values that are greater than 5</span>
+  <span class="keyword">my</span> <span class="variable">$greater</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">grep</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span> <span class="operator">&gt;</span> <span class="number">5</span> <span class="operator">});</span>
+</code></pre>
+
+<h2 id="join">join</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">join</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+</code></pre>
+
+<p>Turn collection into <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a>.</p>
+
+<pre><code>  <span class="comment"># Join all values with commas</span>
+  <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">', '</span><span class="operator">)-&gt;</span><span class="variable">say</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="last">last</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$last</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">last</span><span class="operator">;</span>
+</code></pre>
+
+<p>Return the last element in collection.</p>
+
+<h2 id="map">map</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'some_method'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'some_method'</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<p>Evaluate callback for, or call method on, each element in collection and create a new collection from the results. The element will be the first argument passed to the callback, and is also available as <code>$_</code>.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">some_method</span><span class="operator">(</span><span class="variable">@args</span><span class="operator">)</span> <span class="operator">});</span>
+  
+  <span class="comment"># Append the word "mojo" to all values</span>
+  <span class="keyword">my</span> <span class="variable">$mojoified</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span> <span class="operator">.</span> <span class="string">'mojo'</span> <span class="operator">});</span>
+</code></pre>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">Mojo::Collection</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new array-based <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object.</p>
+
+<h2 id="reduce">reduce</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$result</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">reduce</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$result</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">reduce</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...},</span> <span class="variable">$initial</span><span class="operator">);</span>
+</code></pre>
+
+<p>Reduce elements in collection with callback, the first element will be used as initial value if none has been provided.</p>
+
+<pre><code>  <span class="comment"># Calculate the sum of all values</span>
+  <span class="keyword">my</span> <span class="variable">$sum</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">reduce</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$a</span> <span class="operator">+</span> <span class="variable">$b</span> <span class="operator">});</span>
+  
+  <span class="comment"># Count how often each value occurs in collection</span>
+  <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">reduce</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$a</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="variable">$b</span><span class="operator">}</span><span class="operator">++;</span> <span class="variable">$a</span> <span class="operator">},</span> <span class="operator">{}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="reverse">reverse</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">reverse</span><span class="operator">;</span>
+</code></pre>
+
+<p>Create a new collection with all elements in reverse order.</p>
+
+<h2 id="slice">slice</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">slice</span><span class="operator">(</span><span class="number">4</span> <span class="operator">..</span> <span class="number">7</span><span class="operator">);</span>
+</code></pre>
+
+<p>Create a new collection with all selected elements.</p>
+
+<pre><code>  <span class="comment"># "B C E"</span>
+  <span class="variable">Mojo::Collection</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'A'</span><span class="operator">,</span> <span class="string">'B'</span><span class="operator">,</span> <span class="string">'C'</span><span class="operator">,</span> <span class="string">'D'</span><span class="operator">,</span> <span class="string">'E'</span><span class="operator">)-&gt;</span><span class="variable">slice</span><span class="operator">(</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">4</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">' '</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="shuffle">shuffle</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">shuffle</span><span class="operator">;</span>
+</code></pre>
+
+<p>Create a new collection with all elements in random order.</p>
+
+<h2 id="size">size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">size</span><span class="operator">;</span>
+</code></pre>
+
+<p>Number of elements in collection.</p>
+
+<h2 id="sort">sort</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">sort</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">sort</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Sort elements based on return value of callback and create a new collection from the results.</p>
+
+<pre><code>  <span class="comment"># Sort values case-insensitive</span>
+  <span class="keyword">my</span> <span class="variable">$case_insensitive</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">sort</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">uc</span><span class="operator">(</span><span class="variable">$a</span><span class="operator">)</span> <span class="keyword">cmp</span> <span class="keyword">uc</span><span class="operator">(</span><span class="variable">$b</span><span class="operator">)</span> <span class="operator">});</span>
+</code></pre>
+
+<h2 id="tap">tap</h2>
+
+<pre><code>  <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">tap</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Alias for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html#tap">&quot;tap&quot; in Mojo::Base</a>.</p>
+
+<h2 id="to_array">to_array</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$array</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">to_array</span><span class="operator">;</span>
+</code></pre>
+
+<p>Turn collection into array reference.</p>
+
+<h2 id="uniq">uniq</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">uniq</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">uniq</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">uniq</span><span class="operator">(</span><span class="string">'some_method'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">uniq</span><span class="operator">(</span><span class="string">'some_method'</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<p>Create a new collection without duplicate elements, using the string representation of either the elements or the return value of the callback/method.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="keyword">my</span> <span class="variable">$new</span> <span class="operator">=</span> <span class="variable">$collection</span><span class="operator">-&gt;</span><span class="variable">uniq</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">some_method</span><span class="operator">(</span><span class="variable">@args</span><span class="operator">)</span> <span class="operator">});</span>
+  
+  <span class="comment"># "foo bar baz"</span>
+  <span class="variable">Mojo::Collection</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">'baz'</span><span class="operator">)-&gt;</span><span class="variable">uniq</span><span class="operator">-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">' '</span><span class="operator">);</span>
+  
+  <span class="comment"># "[[1, 2], [2, 1]]"</span>
+  <span class="variable">Mojo::Collection</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">]</span><span class="operator">,</span> <span class="operator">[</span><span class="number">2</span><span class="operator">,</span> <span class="number">1</span><span class="operator">]</span><span class="operator">,</span> <span class="operator">[</span><span class="number">3</span><span class="operator">,</span> <span class="number">2</span><span class="operator">]</span><span class="operator">)-&gt;</span><span class="variable">uniq</span><span class="operator">(</span><span class="keyword">sub</span><span class="operator">{</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span> <span class="operator">})-&gt;</span><span class="variable">to_array</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

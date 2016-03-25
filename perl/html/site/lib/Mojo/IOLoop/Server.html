@@ -1,0 +1,270 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#accept">accept</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#reactor">reactor</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#generate_port">generate_port</a></li>
+      <li><a href="#handle">handle</a></li>
+      <li><a href="#is_accepting">is_accepting</a></li>
+      <li><a href="#listen">listen</a></li>
+      <li><a href="#port1">port</a></li>
+      <li><a href="#start">start</a></li>
+      <li><a href="#stop">stop</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::IOLoop::Server - Non-blocking TCP server</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::IOLoop::Server</span><span class="operator">;</span>
+  
+  <span class="comment"># Create listen socket</span>
+  <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop::Server</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">accept</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$server</span><span class="operator">,</span> <span class="variable">$handle</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">);</span>
+  
+  <span class="comment"># Start and stop accepting connections</span>
+  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">stop</span><span class="operator">;</span>
+  
+  <span class="comment"># Start reactor if necessary</span>
+  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Server.html">Mojo::IOLoop::Server</a> accepts TCP connections for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Server.html">Mojo::IOLoop::Server</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones.</p>
+
+<h2 id="accept">accept</h2>
+
+<pre><code>  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">accept</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$server</span><span class="operator">,</span> <span class="variable">$handle</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted for each accepted connection.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Server.html">Mojo::IOLoop::Server</a> implements the following attributes.</p>
+
+<h2 id="reactor">reactor</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$reactor</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">;</span>
+  <span class="variable">$server</span>     <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">(</span><span class="variable">Mojo::Reactor::Poll</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Low-level event reactor, defaults to the <code>reactor</code> attribute value of the global <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> singleton.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Server.html">Mojo::IOLoop::Server</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="generate_port">generate_port</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$port</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">generate_port</span><span class="operator">;</span>
+</code></pre>
+
+<p>Find a free TCP port, primarily used for tests.</p>
+
+<h2 id="handle">handle</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$handle</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">handle</span><span class="operator">;</span>
+</code></pre>
+
+<p>Get handle for server, usually an <a href="../../../../lib/IO/Socket/IP.html">IO::Socket::IP</a> object.</p>
+
+<h2 id="is_accepting">is_accepting</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">is_accepting</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if connections are currently being accepted.</p>
+
+<h2 id="listen">listen</h2>
+
+<pre><code>  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">);</span>
+</code></pre>
+
+<p>Create a new listen socket. Note that TLS support depends on <a href="../../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> (1.94+).</p>
+
+<p>These options are currently available:</p>
+
+<dl>
+
+<dt id="address">address</dt>
+<dd>
+
+<pre><code>  address =&gt; &#39;127.0.0.1&#39;</code></pre>
+
+<p>Local address to listen on, defaults to <code>0.0.0.0</code>.</p>
+
+</dd>
+<dt id="backlog">backlog</dt>
+<dd>
+
+<pre><code>  backlog =&gt; 128</code></pre>
+
+<p>Maximum backlog size, defaults to <code>SOMAXCONN</code>.</p>
+
+</dd>
+<dt id="port">port</dt>
+<dd>
+
+<pre><code>  port =&gt; 80</code></pre>
+
+<p>Port to listen on, defaults to a random port.</p>
+
+</dd>
+<dt id="reuse">reuse</dt>
+<dd>
+
+<pre><code>  reuse =&gt; 1</code></pre>
+
+<p>Allow multiple servers to use the same port with the <code>SO_REUSEPORT</code> socket option.</p>
+
+</dd>
+<dt id="single_accept">single_accept</dt>
+<dd>
+
+<pre><code>  single_accept =&gt; 1</code></pre>
+
+<p>Only accept one connection at a time.</p>
+
+</dd>
+<dt id="tls">tls</dt>
+<dd>
+
+<pre><code>  tls =&gt; 1</code></pre>
+
+<p>Enable TLS.</p>
+
+</dd>
+<dt id="tls_ca">tls_ca</dt>
+<dd>
+
+<pre><code>  tls_ca =&gt; &#39;/etc/tls/ca.crt&#39;</code></pre>
+
+<p>Path to TLS certificate authority file.</p>
+
+</dd>
+<dt id="tls_cert">tls_cert</dt>
+<dd>
+
+<pre><code>  <span class="string">tls_cert</span> <span class="operator">=&gt;</span> <span class="string">'/etc/tls/server.crt'</span>
+  <span class="string">tls_cert</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">'mojolicious.org'</span> <span class="operator">=&gt;</span> <span class="string">'/etc/tls/mojo.crt'</span><span class="operator">}</span>
+</code></pre>
+
+<p>Path to the TLS cert file, defaults to a built-in test certificate.</p>
+
+</dd>
+<dt id="tls_ciphers">tls_ciphers</dt>
+<dd>
+
+<pre><code>  tls_ciphers =&gt; &#39;AES128-GCM-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH&#39;</code></pre>
+
+<p>TLS cipher specification string. For more information about the format see <a href="https://www.openssl.org/docs/manmaster/apps/ciphers.html#CIPHER-STRINGS">https://www.openssl.org/docs/manmaster/apps/ciphers.html#CIPHER-STRINGS</a>.</p>
+
+</dd>
+<dt id="tls_key">tls_key</dt>
+<dd>
+
+<pre><code>  <span class="string">tls_key</span> <span class="operator">=&gt;</span> <span class="string">'/etc/tls/server.key'</span>
+  <span class="string">tls_key</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">'mojolicious.org'</span> <span class="operator">=&gt;</span> <span class="string">'/etc/tls/mojo.key'</span><span class="operator">}</span>
+</code></pre>
+
+<p>Path to the TLS key file, defaults to a built-in test key.</p>
+
+</dd>
+<dt id="tls_verify">tls_verify</dt>
+<dd>
+
+<pre><code>  tls_verify =&gt; 0x00</code></pre>
+
+<p>TLS verification mode, defaults to <code>0x03</code>.</p>
+
+</dd>
+<dt id="tls_version">tls_version</dt>
+<dd>
+
+<pre><code>  tls_version =&gt; &#39;TLSv1_2&#39;</code></pre>
+
+<p>TLS protocol version.</p>
+
+</dd>
+</dl>
+
+<h2 id="port1">port</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$port</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">port</span><span class="operator">;</span>
+</code></pre>
+
+<p>Get port this server is listening on.</p>
+
+<h2 id="start">start</h2>
+
+<pre><code>  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>Start or resume accepting connections.</p>
+
+<h2 id="stop">stop</h2>
+
+<pre><code>  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">stop</span><span class="operator">;</span>
+</code></pre>
+
+<p>Stop accepting connections.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

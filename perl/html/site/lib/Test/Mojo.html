@@ -1,0 +1,788 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#message">message</a></li>
+      <li><a href="#success">success</a></li>
+      <li><a href="#tx">tx</a></li>
+      <li><a href="#ua">ua</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#app">app</a></li>
+      <li><a href="#content_is">content_is</a></li>
+      <li><a href="#content_isnt">content_isnt</a></li>
+      <li><a href="#content_like">content_like</a></li>
+      <li><a href="#content_type_is">content_type_is</a></li>
+      <li><a href="#content_type_isnt">content_type_isnt</a></li>
+      <li><a href="#content_type_like">content_type_like</a></li>
+      <li><a href="#content_type_unlike">content_type_unlike</a></li>
+      <li><a href="#content_unlike">content_unlike</a></li>
+      <li><a href="#delete_ok">delete_ok</a></li>
+      <li><a href="#element_count_is">element_count_is</a></li>
+      <li><a href="#element_exists">element_exists</a></li>
+      <li><a href="#element_exists_not">element_exists_not</a></li>
+      <li><a href="#finish_ok">finish_ok</a></li>
+      <li><a href="#finished_ok">finished_ok</a></li>
+      <li><a href="#get_ok">get_ok</a></li>
+      <li><a href="#head_ok">head_ok</a></li>
+      <li><a href="#header_is">header_is</a></li>
+      <li><a href="#header_isnt">header_isnt</a></li>
+      <li><a href="#header_like">header_like</a></li>
+      <li><a href="#header_unlike">header_unlike</a></li>
+      <li><a href="#json_has">json_has</a></li>
+      <li><a href="#json_hasnt">json_hasnt</a></li>
+      <li><a href="#json_is">json_is</a></li>
+      <li><a href="#json_like">json_like</a></li>
+      <li><a href="#json_message_has">json_message_has</a></li>
+      <li><a href="#json_message_hasnt">json_message_hasnt</a></li>
+      <li><a href="#json_message_is">json_message_is</a></li>
+      <li><a href="#json_message_like">json_message_like</a></li>
+      <li><a href="#json_message_unlike">json_message_unlike</a></li>
+      <li><a href="#json_unlike">json_unlike</a></li>
+      <li><a href="#message_is">message_is</a></li>
+      <li><a href="#message_isnt">message_isnt</a></li>
+      <li><a href="#message_like">message_like</a></li>
+      <li><a href="#message_ok">message_ok</a></li>
+      <li><a href="#message_unlike">message_unlike</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#options_ok">options_ok</a></li>
+      <li><a href="#or">or</a></li>
+      <li><a href="#patch_ok">patch_ok</a></li>
+      <li><a href="#post_ok">post_ok</a></li>
+      <li><a href="#put_ok">put_ok</a></li>
+      <li><a href="#request_ok">request_ok</a></li>
+      <li><a href="#reset_session">reset_session</a></li>
+      <li><a href="#send_ok">send_ok</a></li>
+      <li><a href="#status_is">status_is</a></li>
+      <li><a href="#status_isnt">status_isnt</a></li>
+      <li><a href="#text_is">text_is</a></li>
+      <li><a href="#text_isnt">text_isnt</a></li>
+      <li><a href="#text_like">text_like</a></li>
+      <li><a href="#text_unlike">text_unlike</a></li>
+      <li><a href="#websocket_ok">websocket_ok</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Test::Mojo - Testing Mojo</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Test::More</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Test::Mojo</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">Test::Mojo</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'MyApp'</span><span class="operator">);</span>
+  
+  <span class="comment"># HTML/XML</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/welcome'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">text_is</span><span class="operator">(</span><span class="string">'div#message'</span> <span class="operator">=&gt;</span> <span class="string">'Hello!'</span><span class="operator">);</span>
+  
+  <span class="comment"># JSON</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="string">'/search.json'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">q =&gt; 'Perl'})
+    -&gt;status_is(200)
+    -&gt;header_is('Server' =</span><span class="operator">&gt;</span> <span class="string">'Mojolicious (Perl)'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">header_isnt</span><span class="operator">(</span><span class="string">'X-Bender'</span> <span class="operator">=&gt;</span> <span class="string">'Bite my shiny metal ass!'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">json_is</span><span class="operator">(</span><span class="string">'/results/4/title'</span> <span class="operator">=&gt;</span> <span class="string">'Perl rocks!'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">json_like</span><span class="operator">(</span><span class="string">'/results/7/title'</span> <span class="operator">=&gt;</span> <span class="string">qr/Perl/</span><span class="operator">);</span>
+  
+  <span class="comment"># WebSocket</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">websocket_ok</span><span class="operator">(</span><span class="string">'/echo'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">send_ok</span><span class="operator">(</span><span class="string">'hello'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">message_ok</span>
+    <span class="operator">-&gt;</span><span class="variable">message_is</span><span class="operator">(</span><span class="string">'echo: hello'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">finish_ok</span><span class="operator">;</span>
+  
+  <span class="variable">done_testing</span><span class="operator">();</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Test/Mojo.html">Test::Mojo</a> is a test user agent based on <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>, it is usually used together with <a href="../../../lib/Test/More.html">Test::More</a> to test <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> applications. Just run your tests with the command <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/test.html">Mojolicious::Command::test</a> or <a href="../../../bin/prove.html">prove</a>.</p>
+
+<pre><code>  $ ./script/my_app test
+  $ ./script/my_app test -v t/foo.t
+  $ prove -l -v t/foo.t</code></pre>
+
+<p>If it is not already defined, the <code>MOJO_LOG_LEVEL</code> environment variable will be set to <code>debug</code> or <code>fatal</code>, depending on the value of the <code>HARNESS_IS_VERBOSE</code> environment variable.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Test/Mojo.html">Test::Mojo</a> implements the following attributes.</p>
+
+<h2 id="message">message</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message</span><span class="operator">;</span>
+  <span class="variable">$t</span>      <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message</span><span class="operator">(</span><span class="operator">[</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Current WebSocket message represented as an array reference containing the frame type and payload.</p>
+
+<pre><code>  <span class="comment"># More specific tests</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::JSON</span> <span class="string">'decode_json'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="variable">decode_json</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">1</span><span class="operator">]</span><span class="operator">;</span>
+  <span class="variable">is</span> <span class="keyword">ref</span> <span class="variable">$hash</span><span class="operator">,</span> <span class="string">'HASH'</span><span class="operator">,</span> <span class="string">'right reference'</span><span class="operator">;</span>
+  <span class="variable">is</span> <span class="variable">$hash</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">'right value'</span><span class="operator">;</span>
+  
+  <span class="comment"># Test custom message</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message</span><span class="operator">(</span><span class="operator">[</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">]</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">json_message_has</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">json_message_hasnt</span><span class="operator">(</span><span class="string">'/bar'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">json_message_is</span><span class="operator">(</span><span class="string">'/foo/baz'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">yada</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="success">success</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">success</span><span class="operator">;</span>
+  <span class="variable">$t</span>       <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">success</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>True if the last test was successful.</p>
+
+<pre><code>  <span class="comment"># Build custom tests</span>
+  <span class="keyword">my</span> <span class="variable">$location_is</span> <span class="operator">=</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$t</span><span class="operator">,</span> <span class="variable">$value</span><span class="operator">,</span> <span class="variable">$desc</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="variable">$desc</span> <span class="operator">||=</span> <span class="string">"Location: </span><span class="variable">$value</span><span class="string">"</span><span class="operator">;</span>
+    <span class="keyword">local</span> <span class="variable">$Test::Builder::Level</span> <span class="operator">=</span> <span class="variable">$Test::Builder::Level</span> <span class="operator">+</span> <span class="number">1</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">success</span><span class="operator">(</span><span class="variable">is</span><span class="operator">(</span><span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">location</span><span class="operator">,</span> <span class="variable">$value</span><span class="operator">,</span> <span class="variable">$desc</span><span class="operator">));</span>
+  <span class="operator">};</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">302</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">$location_is</span><span class="operator">(</span><span class="string">'http://mojolicious.org'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">or</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">diag</span> <span class="string">'Must have been Joel!'</span> <span class="operator">});</span>
+</code></pre>
+
+<h2 id="tx">tx</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">;</span>
+  <span class="variable">$t</span>     <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Current transaction, usually a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> or <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> object.</p>
+
+<pre><code>  <span class="comment"># More specific tests</span>
+  <span class="variable">is</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">json</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">'right value'</span><span class="operator">;</span>
+  <span class="variable">ok</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">-&gt;</span><span class="variable">is_multipart</span><span class="operator">,</span> <span class="string">'multipart content'</span><span class="operator">;</span>
+  <span class="variable">is</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">previous</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">,</span> <span class="number">302</span><span class="operator">,</span> <span class="string">'right status'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="ua">ua</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$ua</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">;</span>
+  <span class="variable">$t</span>     <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">(</span><span class="variable">Mojo::UserAgent</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>User agent used for testing, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a> object.</p>
+
+<pre><code>  <span class="comment"># Allow redirects</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">max_redirects</span><span class="operator">(</span><span class="number">10</span><span class="operator">);</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/redirect'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">content_like</span><span class="operator">(</span><span class="string">qr/redirected/</span><span class="operator">);</span>
+  
+  <span class="comment"># Switch protocol from HTTP to HTTPS</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">(</span><span class="string">'https'</span><span class="operator">);</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/secure'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">content_like</span><span class="operator">(</span><span class="string">qr/secure/</span><span class="operator">);</span>
+  
+  <span class="comment"># Use absolute URL for request with Basic authentication</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">userinfo</span><span class="operator">(</span><span class="string">'sri:secr3t'</span><span class="operator">)-&gt;</span><span class="variable">path</span><span class="operator">(</span><span class="string">'/secrets.json'</span><span class="operator">);</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="variable">$url</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">limit</span> <span class="operator">=&gt;</span> <span class="number">10</span><span class="operator">}</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">json_is</span><span class="operator">(</span><span class="string">'/1/content'</span><span class="operator">,</span> <span class="string">'Mojo rocks!'</span><span class="operator">);</span>
+  
+  <span class="comment"># Customize all transactions (including followed redirects)</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">start</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">accept_language</span><span class="operator">(</span><span class="string">'en-US'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/hello'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">content_like</span><span class="operator">(</span><span class="string">qr/Howdy/</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Test/Mojo.html">Test::Mojo</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="app">app</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">;</span>
+  <span class="variable">$t</span>      <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Access application with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Server.html#app">&quot;app&quot; in Mojo::UserAgent::Server</a>.</p>
+
+<pre><code>  <span class="comment"># Change log level</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">level</span><span class="operator">(</span><span class="string">'fatal'</span><span class="operator">);</span>
+  
+  <span class="comment"># Test application directly</span>
+  <span class="variable">is</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">'right value'</span><span class="operator">;</span>
+  <span class="variable">ok</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">routes</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'echo'</span><span class="operator">)-&gt;</span><span class="variable">is_websocket</span><span class="operator">,</span> <span class="string">'WebSocket route'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">build_controller</span><span class="operator">;</span>
+  <span class="variable">ok</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">),</span> <span class="string">'rendering was successful'</span><span class="operator">;</span>
+  <span class="variable">is</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">status</span><span class="operator">,</span> <span class="number">200</span><span class="operator">,</span> <span class="string">'right status'</span><span class="operator">;</span>
+  <span class="variable">is</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">,</span> <span class="string">'Foo!'</span><span class="operator">,</span> <span class="string">'right content'</span><span class="operator">;</span>
+  
+  <span class="comment"># Change application behavior</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">before_dispatch</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'This request did not reach the router.'</span><span class="operator">)</span>
+      <span class="keyword">if</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/user'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/user'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">content_like</span><span class="operator">(</span><span class="string">qr/not reach the router/</span><span class="operator">);</span>
+  
+  <span class="comment"># Extract additional information</span>
+  <span class="keyword">my</span> <span class="variable">$stash</span><span class="operator">;</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">after_dispatch</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$stash</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">-&gt;</span><span class="variable">stash</span> <span class="operator">});</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/hello'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+  <span class="variable">is</span> <span class="variable">$stash</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">'right value'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="content_is">content_is</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_is</span><span class="operator">(</span><span class="string">'working!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_is</span><span class="operator">(</span><span class="string">'working!'</span><span class="operator">,</span> <span class="string">'right content'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check response content for exact match after retrieving it from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html#text">&quot;text&quot; in Mojo::Message</a>.</p>
+
+<h2 id="content_isnt">content_isnt</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_isnt</span><span class="operator">(</span><span class="string">'working!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_isnt</span><span class="operator">(</span><span class="string">'working!'</span><span class="operator">,</span> <span class="string">'different content'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#content_is">&quot;content_is&quot;</a>.</p>
+
+<h2 id="content_like">content_like</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_like</span><span class="operator">(</span><span class="string">qr/working!/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_like</span><span class="operator">(</span><span class="string">qr/working!/</span><span class="operator">,</span> <span class="string">'right content'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check response content for similar match after retrieving it from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html#text">&quot;text&quot; in Mojo::Message</a>.</p>
+
+<h2 id="content_type_is">content_type_is</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_type_is</span><span class="operator">(</span><span class="string">'text/html'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_type_is</span><span class="operator">(</span><span class="string">'text/html'</span><span class="operator">,</span> <span class="string">'right content type'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check response <code>Content-Type</code> header for exact match.</p>
+
+<h2 id="content_type_isnt">content_type_isnt</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_type_isnt</span><span class="operator">(</span><span class="string">'text/html'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_type_isnt</span><span class="operator">(</span><span class="string">'text/html'</span><span class="operator">,</span> <span class="string">'different content type'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#content_type_is">&quot;content_type_is&quot;</a>.</p>
+
+<h2 id="content_type_like">content_type_like</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_type_like</span><span class="operator">(</span><span class="string">qr/text/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_type_like</span><span class="operator">(</span><span class="string">qr/text/</span><span class="operator">,</span> <span class="string">'right content type'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check response <code>Content-Type</code> header for similar match.</p>
+
+<h2 id="content_type_unlike">content_type_unlike</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_type_unlike</span><span class="operator">(</span><span class="string">qr/text/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_type_unlike</span><span class="operator">(</span><span class="string">qr/text/</span><span class="operator">,</span> <span class="string">'different content type'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#content_type_like">&quot;content_type_like&quot;</a>.</p>
+
+<h2 id="content_unlike">content_unlike</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_unlike</span><span class="operator">(</span><span class="string">qr/working!/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">content_unlike</span><span class="operator">(</span><span class="string">qr/working!/</span><span class="operator">,</span> <span class="string">'different content'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#content_like">&quot;content_like&quot;</a>.</p>
+
+<h2 id="delete_ok">delete_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">delete_ok</span><span class="operator">(</span><span class="string">'http://example.com/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">delete_ok</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">delete_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">delete_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">delete_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform a <code>DELETE</code> request and check for transport errors, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html#delete">&quot;delete&quot; in Mojo::UserAgent</a>, except for the callback.</p>
+
+<h2 id="element_count_is">element_count_is</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">element_count_is</span><span class="operator">(</span><span class="string">'div.foo[x=y]'</span><span class="operator">,</span> <span class="number">5</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">element_count_is</span><span class="operator">(</span><span class="string">'html body div'</span><span class="operator">,</span> <span class="number">30</span><span class="operator">,</span> <span class="string">'thirty elements'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Checks the number of HTML/XML elements matched by the CSS selector with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html#find">&quot;find&quot; in Mojo::DOM</a>.</p>
+
+<h2 id="element_exists">element_exists</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'div.foo[x=y]'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'html head title'</span><span class="operator">,</span> <span class="string">'has a title'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Checks for existence of the CSS selectors first matching HTML/XML element with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html#at">&quot;at&quot; in Mojo::DOM</a>.</p>
+
+<pre><code>  <span class="comment"># Check attribute values</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/login'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'label[for=email]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'input[name=email][type=text][value*="example.com"]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'label[for=pass]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'input[name=pass][type=password]'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">element_exists</span><span class="operator">(</span><span class="string">'input[type=submit][value]'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="element_exists_not">element_exists_not</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">element_exists_not</span><span class="operator">(</span><span class="string">'div.foo[x=y]'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">element_exists_not</span><span class="operator">(</span><span class="string">'html head title'</span><span class="operator">,</span> <span class="string">'has no title'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#element_exists">&quot;element_exists&quot;</a>.</p>
+
+<h2 id="finish_ok">finish_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">finish_ok</span><span class="operator">;</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">finish_ok</span><span class="operator">(</span><span class="number">1000</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">finish_ok</span><span class="operator">(</span><span class="number">1003</span> <span class="operator">=&gt;</span> <span class="string">'Cannot accept data!'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Close WebSocket connection gracefully.</p>
+
+<h2 id="finished_ok">finished_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">finished_ok</span><span class="operator">(</span><span class="number">1000</span><span class="operator">);</span>
+</code></pre>
+
+<p>Wait for WebSocket connection to be closed gracefully and check status.</p>
+
+<h2 id="get_ok">get_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'http://example.com/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform a <code>GET</code> request and check for transport errors, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html#get">&quot;get&quot; in Mojo::UserAgent</a>, except for the callback.</p>
+
+<pre><code>  <span class="comment"># Run tests against remote host</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'http://mojolicious.org/perldoc'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+  
+  <span class="comment"># Use relative URL for request with Basic authentication</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'//sri:secr3t@/secrets.json'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">json_is</span><span class="operator">(</span><span class="string">'/1/content'</span><span class="operator">,</span> <span class="string">'Mojo rocks!'</span><span class="operator">);</span>
+  
+  <span class="comment"># Run additional tests on the transaction</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+  <span class="variable">is</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'input'</span><span class="operator">)-&gt;</span><span class="variable">val</span><span class="operator">,</span> <span class="string">'whatever'</span><span class="operator">,</span> <span class="string">'right value'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="head_ok">head_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">head_ok</span><span class="operator">(</span><span class="string">'http://example.com/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">head_ok</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">head_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">head_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">head_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform a <code>HEAD</code> request and check for transport errors, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html#head">&quot;head&quot; in Mojo::UserAgent</a>, except for the callback.</p>
+
+<h2 id="header_is">header_is</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">header_is</span><span class="operator">(</span><span class="string">ETag</span> <span class="operator">=&gt;</span> <span class="string">'"abc321"'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">header_is</span><span class="operator">(</span><span class="string">ETag</span> <span class="operator">=&gt;</span> <span class="string">'"abc321"'</span><span class="operator">,</span> <span class="string">'right header'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check response header for exact match.</p>
+
+<h2 id="header_isnt">header_isnt</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">header_isnt</span><span class="operator">(</span><span class="string">Etag</span> <span class="operator">=&gt;</span> <span class="string">'"abc321"'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">header_isnt</span><span class="operator">(</span><span class="string">ETag</span> <span class="operator">=&gt;</span> <span class="string">'"abc321"'</span><span class="operator">,</span> <span class="string">'different header'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#header_is">&quot;header_is&quot;</a>.</p>
+
+<h2 id="header_like">header_like</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">header_like</span><span class="operator">(</span><span class="string">ETag</span> <span class="operator">=&gt;</span> <span class="string">qr/abc/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">header_like</span><span class="operator">(</span><span class="string">ETag</span> <span class="operator">=&gt;</span> <span class="string">qr/abc/</span><span class="operator">,</span> <span class="string">'right header'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check response header for similar match.</p>
+
+<h2 id="header_unlike">header_unlike</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">header_unlike</span><span class="operator">(</span><span class="string">ETag</span> <span class="operator">=&gt;</span> <span class="string">qr/abc/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">header_unlike</span><span class="operator">(</span><span class="string">ETag</span> <span class="operator">=&gt;</span> <span class="string">qr/abc/</span><span class="operator">,</span> <span class="string">'different header'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#header_like">&quot;header_like&quot;</a>.</p>
+
+<h2 id="json_has">json_has</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_has</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_has</span><span class="operator">(</span><span class="string">'/minibar'</span><span class="operator">,</span> <span class="string">'has a minibar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if JSON response contains a value that can be identified using the given JSON Pointer with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a>.</p>
+
+<h2 id="json_hasnt">json_hasnt</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_hasnt</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_hasnt</span><span class="operator">(</span><span class="string">'/minibar'</span><span class="operator">,</span> <span class="string">'no minibar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#json_has">&quot;json_has&quot;</a>.</p>
+
+<h2 id="json_is">json_is</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_is</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_is</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_is</span><span class="operator">(</span><span class="string">'/foo/1'</span> <span class="operator">=&gt;</span> <span class="number">2</span><span class="operator">,</span> <span class="string">'right value'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check the value extracted from JSON response using the given JSON Pointer with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a>, which defaults to the root value if it is omitted.</p>
+
+<h2 id="json_like">json_like</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_like</span><span class="operator">(</span><span class="string">'/foo/1'</span> <span class="operator">=&gt;</span> <span class="string">qr/^\d+$/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_like</span><span class="operator">(</span><span class="string">'/foo/1'</span> <span class="operator">=&gt;</span> <span class="string">qr/^\d+$/</span><span class="operator">,</span> <span class="string">'right value'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check the value extracted from JSON response using the given JSON Pointer with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a> for similar match.</p>
+
+<h2 id="json_message_has">json_message_has</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_has</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_has</span><span class="operator">(</span><span class="string">'/minibar'</span><span class="operator">,</span> <span class="string">'has a minibar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if JSON WebSocket message contains a value that can be identified using the given JSON Pointer with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a>.</p>
+
+<h2 id="json_message_hasnt">json_message_hasnt</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_hasnt</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_hasnt</span><span class="operator">(</span><span class="string">'/minibar'</span><span class="operator">,</span> <span class="string">'no minibar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#json_message_has">&quot;json_message_has&quot;</a>.</p>
+
+<h2 id="json_message_is">json_message_is</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_is</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_is</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_is</span><span class="operator">(</span><span class="string">'/foo/1'</span> <span class="operator">=&gt;</span> <span class="number">2</span><span class="operator">,</span> <span class="string">'right value'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check the value extracted from JSON WebSocket message using the given JSON Pointer with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a>, which defaults to the root value if it is omitted.</p>
+
+<h2 id="json_message_like">json_message_like</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_like</span><span class="operator">(</span><span class="string">'/foo/1'</span> <span class="operator">=&gt;</span> <span class="string">qr/^\d+$/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_like</span><span class="operator">(</span><span class="string">'/foo/1'</span> <span class="operator">=&gt;</span> <span class="string">qr/^\d+$/</span><span class="operator">,</span> <span class="string">'right value'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check the value extracted from JSON WebSocket message using the given JSON Pointer with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a> for similar match.</p>
+
+<h2 id="json_message_unlike">json_message_unlike</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_unlike</span><span class="operator">(</span><span class="string">'/foo/1'</span> <span class="operator">=&gt;</span> <span class="string">qr/^\d+$/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_message_unlike</span><span class="operator">(</span><span class="string">'/foo/1'</span> <span class="operator">=&gt;</span> <span class="string">qr/^\d+$/</span><span class="operator">,</span> <span class="string">'different value'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#json_message_like">&quot;json_message_like&quot;</a>.</p>
+
+<h2 id="json_unlike">json_unlike</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_unlike</span><span class="operator">(</span><span class="string">'/foo/1'</span> <span class="operator">=&gt;</span> <span class="string">qr/^\d+$/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">json_unlike</span><span class="operator">(</span><span class="string">'/foo/1'</span> <span class="operator">=&gt;</span> <span class="string">qr/^\d+$/</span><span class="operator">,</span> <span class="string">'different value'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#json_like">&quot;json_like&quot;</a>.</p>
+
+<h2 id="message_is">message_is</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_is</span><span class="operator">(</span><span class="operator">{</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_is</span><span class="operator">(</span><span class="operator">{</span><span class="string">text</span>   <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_is</span><span class="operator">(</span><span class="string">'working!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_is</span><span class="operator">(</span><span class="string">'working!'</span><span class="operator">,</span> <span class="string">'right message'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check WebSocket message for exact match.</p>
+
+<h2 id="message_isnt">message_isnt</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_isnt</span><span class="operator">(</span><span class="operator">{</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_isnt</span><span class="operator">(</span><span class="operator">{</span><span class="string">text</span>   <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_isnt</span><span class="operator">(</span><span class="string">'working!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_isnt</span><span class="operator">(</span><span class="string">'working!'</span><span class="operator">,</span> <span class="string">'different message'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#message_is">&quot;message_is&quot;</a>.</p>
+
+<h2 id="message_like">message_like</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_like</span><span class="operator">(</span><span class="operator">{</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="string">qr/</span><span class="variable">$bytes</span><span class="string">/</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_like</span><span class="operator">(</span><span class="operator">{</span><span class="string">text</span>   <span class="operator">=&gt;</span> <span class="string">qr/</span><span class="variable">$bytes</span><span class="string">/</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_like</span><span class="operator">(</span><span class="string">qr/working!/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_like</span><span class="operator">(</span><span class="string">qr/working!/</span><span class="operator">,</span> <span class="string">'right message'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check WebSocket message for similar match.</p>
+
+<h2 id="message_ok">message_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_ok</span><span class="operator">;</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_ok</span><span class="operator">(</span><span class="string">'got a message'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Wait for next WebSocket message to arrive.</p>
+
+<pre><code>  <span class="comment"># Wait for message and perform multiple tests on it</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">websocket_ok</span><span class="operator">(</span><span class="string">'/time'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">message_ok</span>
+    <span class="operator">-&gt;</span><span class="variable">message_like</span><span class="operator">(</span><span class="string">qr/\d+/</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">message_unlike</span><span class="operator">(</span><span class="string">qr/\w+/</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">finish_ok</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="message_unlike">message_unlike</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_unlike</span><span class="operator">(</span><span class="operator">{</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="string">qr/</span><span class="variable">$bytes</span><span class="string">/</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_unlike</span><span class="operator">(</span><span class="operator">{</span><span class="string">text</span>   <span class="operator">=&gt;</span> <span class="string">qr/</span><span class="variable">$bytes</span><span class="string">/</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_unlike</span><span class="operator">(</span><span class="string">qr/working!/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">message_unlike</span><span class="operator">(</span><span class="string">qr/working!/</span><span class="operator">,</span> <span class="string">'different message'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#message_like">&quot;message_like&quot;</a>.</p>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">Test::Mojo</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">Test::Mojo</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'MyApp'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">Test::Mojo</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="variable">MyApp</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Test/Mojo.html">Test::Mojo</a> object.</p>
+
+<h2 id="options_ok">options_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">options_ok</span><span class="operator">(</span><span class="string">'http://example.com/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">options_ok</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">options_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">options_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">options_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform a <code>OPTIONS</code> request and check for transport errors, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html#options">&quot;options&quot; in Mojo::UserAgent</a>, except for the callback.</p>
+
+<h2 id="or">or</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">or</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Execute callback if the value of <a href="#success">&quot;success&quot;</a> is false.</p>
+
+<pre><code>  <span class="comment"># Diagnostics</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">get_ok</span><span class="operator">(</span><span class="string">'/bad'</span><span class="operator">)-&gt;</span><span class="variable">or</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">diag</span> <span class="string">'Must have been Glen!'</span> <span class="operator">})</span>
+    <span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">or</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">diag</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">)-&gt;</span><span class="variable">text</span> <span class="operator">});</span>
+</code></pre>
+
+<h2 id="patch_ok">patch_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">patch_ok</span><span class="operator">(</span><span class="string">'http://example.com/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">patch_ok</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">patch_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">patch_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">patch_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform a <code>PATCH</code> request and check for transport errors, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html#patch">&quot;patch&quot; in Mojo::UserAgent</a>, except for the callback.</p>
+
+<h2 id="post_ok">post_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="string">'http://example.com/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform a <code>POST</code> request and check for transport errors, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html#post">&quot;post&quot; in Mojo::UserAgent</a>, except for the callback.</p>
+
+<pre><code>  <span class="comment"># Test file upload</span>
+  <span class="keyword">my</span> <span class="variable">$upload</span> <span class="operator">=</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">content</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">filename</span> <span class="operator">=&gt;</span> <span class="string">'baz.txt'</span><span class="operator">}}</span><span class="operator">;</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="string">'/upload'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="variable">$upload</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+  
+  <span class="comment"># Test JSON API</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">post_ok</span><span class="operator">(</span><span class="string">'/hello.json'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">hello</span> <span class="operator">=&gt;</span> <span class="string">'world'</span><span class="operator">}</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">json_is</span><span class="operator">(</span><span class="operator">{</span><span class="string">bye</span> <span class="operator">=&gt;</span> <span class="string">'world'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="put_ok">put_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">put_ok</span><span class="operator">(</span><span class="string">'http://example.com/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">put_ok</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">put_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">put_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">put_ok</span><span class="operator">(</span><span class="string">'/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform a <code>PUT</code> request and check for transport errors, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html#put">&quot;put&quot; in Mojo::UserAgent</a>, except for the callback.</p>
+
+<h2 id="request_ok">request_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">request_ok</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform request and check for transport errors.</p>
+
+<pre><code>  <span class="comment"># Request with custom method</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">(</span><span class="string">FOO</span> <span class="operator">=&gt;</span> <span class="string">'/test.json'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">request_ok</span><span class="operator">(</span><span class="variable">$tx</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">json_is</span><span class="operator">(</span><span class="operator">{</span><span class="string">success</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span><span class="operator">);</span>
+  
+  <span class="comment"># Request with custom cookie</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">(</span><span class="string">GET</span> <span class="operator">=&gt;</span> <span class="string">'/account'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">(</span><span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'user'</span><span class="operator">,</span> <span class="string">value</span> <span class="operator">=&gt;</span> <span class="string">'sri'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">request_ok</span><span class="operator">(</span><span class="variable">$tx</span><span class="operator">)-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">)-&gt;</span><span class="variable">text_is</span><span class="operator">(</span><span class="string">'head &gt; title'</span> <span class="operator">=&gt;</span> <span class="string">'Hello sri'</span><span class="operator">);</span>
+  
+  <span class="comment"># Custom WebSocket handshake</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">build_websocket_tx</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="string">'User-Agent'</span><span class="operator">);</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">request_ok</span><span class="operator">(</span><span class="variable">$tx</span><span class="operator">)-&gt;</span><span class="variable">message_ok</span><span class="operator">-&gt;</span><span class="variable">message_is</span><span class="operator">(</span><span class="string">'bar'</span><span class="operator">)-&gt;</span><span class="variable">finish_ok</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="reset_session">reset_session</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">reset_session</span><span class="operator">;</span>
+</code></pre>
+
+<p>Reset user agent session.</p>
+
+<h2 id="send_ok">send_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">send_ok</span><span class="operator">(</span><span class="operator">{</span><span class="string">binary</span> <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">send_ok</span><span class="operator">(</span><span class="operator">{</span><span class="string">text</span>   <span class="operator">=&gt;</span> <span class="variable">$bytes</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">send_ok</span><span class="operator">(</span><span class="operator">{</span><span class="string">json</span>   <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">test</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]}}</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">send_ok</span><span class="operator">(</span><span class="operator">[</span><span class="variable">$fin</span><span class="operator">,</span> <span class="variable">$rsv1</span><span class="operator">,</span> <span class="variable">$rsv2</span><span class="operator">,</span> <span class="variable">$rsv3</span><span class="operator">,</span> <span class="variable">$op</span><span class="operator">,</span> <span class="variable">$payload</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">send_ok</span><span class="operator">(</span><span class="variable">$chars</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">send_ok</span><span class="operator">(</span><span class="variable">$chars</span><span class="operator">,</span> <span class="string">'sent successfully'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Send message or frame via WebSocket.</p>
+
+<pre><code>  <span class="comment"># Send JSON object as "Text" message</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">websocket_ok</span><span class="operator">(</span><span class="string">'/echo.json'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">send_ok</span><span class="operator">(</span><span class="operator">{</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">test</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">}}</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">message_ok</span>
+    <span class="operator">-&gt;</span><span class="variable">json_message_is</span><span class="operator">(</span><span class="string">'/test'</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">finish_ok</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="status_is">status_is</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">status_is</span><span class="operator">(</span><span class="number">200</span><span class="operator">,</span> <span class="string">'right status'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check response status for exact match.</p>
+
+<h2 id="status_isnt">status_isnt</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">status_isnt</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">status_isnt</span><span class="operator">(</span><span class="number">200</span><span class="operator">,</span> <span class="string">'different status'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#status_is">&quot;status_is&quot;</a>.</p>
+
+<h2 id="text_is">text_is</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">text_is</span><span class="operator">(</span><span class="string">'div.foo[x=y]'</span> <span class="operator">=&gt;</span> <span class="string">'Hello!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">text_is</span><span class="operator">(</span><span class="string">'html head title'</span> <span class="operator">=&gt;</span> <span class="string">'Hello!'</span><span class="operator">,</span> <span class="string">'right title'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Checks text content of the CSS selectors first matching HTML/XML element for exact match with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html#at">&quot;at&quot; in Mojo::DOM</a>.</p>
+
+<h2 id="text_isnt">text_isnt</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">text_isnt</span><span class="operator">(</span><span class="string">'div.foo[x=y]'</span> <span class="operator">=&gt;</span> <span class="string">'Hello!'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">text_isnt</span><span class="operator">(</span><span class="string">'html head title'</span> <span class="operator">=&gt;</span> <span class="string">'Hello!'</span><span class="operator">,</span> <span class="string">'different title'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#text_is">&quot;text_is&quot;</a>.</p>
+
+<h2 id="text_like">text_like</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">text_like</span><span class="operator">(</span><span class="string">'div.foo[x=y]'</span> <span class="operator">=&gt;</span> <span class="string">qr/Hello/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">text_like</span><span class="operator">(</span><span class="string">'html head title'</span> <span class="operator">=&gt;</span> <span class="string">qr/Hello/</span><span class="operator">,</span> <span class="string">'right title'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Checks text content of the CSS selectors first matching HTML/XML element for similar match with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html#at">&quot;at&quot; in Mojo::DOM</a>.</p>
+
+<h2 id="text_unlike">text_unlike</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">text_unlike</span><span class="operator">(</span><span class="string">'div.foo[x=y]'</span> <span class="operator">=&gt;</span> <span class="string">qr/Hello/</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">text_unlike</span><span class="operator">(</span><span class="string">'html head title'</span> <span class="operator">=&gt;</span> <span class="string">qr/Hello/</span><span class="operator">,</span> <span class="string">'different title'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Opposite of <a href="#text_like">&quot;text_like&quot;</a>.</p>
+
+<h2 id="websocket_ok">websocket_ok</h2>
+
+<pre><code>  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">websocket_ok</span><span class="operator">(</span><span class="string">'http://example.com/echo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">websocket_ok</span><span class="operator">(</span><span class="string">'/echo'</span><span class="operator">);</span>
+  <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">websocket_ok</span><span class="operator">(</span><span class="string">'/echo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">DNT</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'v1.proto'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Open a WebSocket connection with transparent handshake, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html#websocket">&quot;websocket&quot; in Mojo::UserAgent</a>, except for the callback.</p>
+
+<pre><code>  <span class="comment"># WebSocket with permessage-deflate compression</span>
+  <span class="variable">$t</span><span class="operator">-&gt;</span><span class="variable">websocket_ok</span><span class="operator">(</span><span class="string">'/'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">'Sec-WebSocket-Extensions'</span> <span class="operator">=&gt;</span> <span class="string">'permessage-deflate'</span><span class="operator">}</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">send_ok</span><span class="operator">(</span><span class="string">'y'</span> <span class="operator">x</span> <span class="number">50000</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">message_ok</span>
+    <span class="operator">-&gt;</span><span class="variable">message_is</span><span class="operator">(</span><span class="string">'z'</span> <span class="operator">x</span> <span class="number">50000</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">finish_ok</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

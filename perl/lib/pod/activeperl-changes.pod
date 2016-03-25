@@ -1,0 +1,98 @@
+=head1 ActivePerl 5.22 Change Log
+
+For the latest information on ActivePerl, please see:
+
+    http://www.ActiveState.com/ActivePerl/
+
+=head2 Build 2201 January, 2016
+
+Build 2201 is based on Perl 5.22.1 plus additional selected changes.
+
+I<Bug Fixes and Changes since build 2200>
+
+=over 3
+
+=item *
+
+The following security vulnerabilities have been addressed:
+
+=over
+
+=item OpenSSL - multiple fixes
+
+OpenSSL has been upgraded to 1.0.2e to address several moderate
+issues. Please see https://www.openssl.org/news/secadv/20151203.txt
+for full details.
+
+CVE-2015-3193: BN_mod_exp may produce incorrect results on x86_64
+
+CVE-2015-3194: Certificate verify crash with missing PSS parameter
+
+CVE-2015-3195: X509_ATTRIBUTE memory leak
+
+CVE-2015-3196: Race condition handling PSK identify hint
+
+CVE-2015-1794: Anon DH ServerKeyExchange with 0 p parameter
+
+=item CVE-2015-8607
+
+Beginning in PathTools 3.47 and/or perl 5.20.0, the File::Spec::canonpath()
+routine returned untained strings even if passed tainted input.  This defect
+undermines the guarantee of taint propagation, which is sometimes used to
+ensure that unvalidated user input does not reach sensitive code.
+
+=item CVE-2015-8608
+
+Perl 5 on Windows suffers from two out-of-bounds read and multiple small
+buffer over-read vulnerabilities in the VDir::MapPathA and VDir::MapPathW
+functions that could potentially be exploited to achieve arbitrary code
+execution.
+
+These defects have been present since perl-5.005_02-2346-g7766f13, circa
+1999, and are still present in the latest releases of Perl.
+
+=back
+
+=item *
+
+Significant changes that have occurred in the Perl 5.22.1 release are
+documented in L<perl5221delta>.
+
+=item *
+
+Most bundled modules have been updated to their latest released
+version from CPAN.  Use the C<ppm query> command to check the exact
+version included in this release.
+
+=back
+
+=head2 Build 2200 June, 2015
+
+I<What's new in the 2200 Series>
+
+=over 3
+
+=item *
+
+This build corresponds to the Perl 5.22.0 source code release.
+
+=item *
+
+The 2200 series builds of ActivePerl are not binary compatible with
+builds in the 2000 or earlier series.  Any extensions built using binaries
+from the ActivePerl 2000 or earlier series will need to be recompiled.
+Note especially that this applies to PPM packages that may have been
+built for earlier series of ActivePerl.
+
+=item *
+
+Significant changes that have occurred since the 5.20 release are documented in
+L<perl5220delta>.
+
+=item *
+
+Most bundled distributions have been updated to their latest released
+version from CPAN.  Use the C<ppm list> command to check the exact
+version included in this release.
+
+=back

@@ -1,0 +1,128 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#SIGNALS">SIGNALS</a>
+    <ul>
+      <li><a href="#INT-TERM">INT, TERM</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#daemon">daemon</a></li>
+      <li><a href="#watch">watch</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#modified_files">modified_files</a></li>
+      <li><a href="#run">run</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Server::Morbo - Tonight at 11...DOOOOOOOOOOOOOOOM!</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Server::Morbo</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$morbo</span> <span class="operator">=</span> <span class="variable">Mojo::Server::Morbo</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$morbo</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">(</span><span class="string">'/home/sri/myapp.pl'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Morbo.html">Mojo::Server::Morbo</a> is a full featured, self-restart capable non-blocking I/O HTTP and WebSocket server, built around the very well tested and reliable <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a>, with IPv6, TLS, SNI, Comet (long polling), keep-alive and multiple event loop support. Note that the server uses signals for process management, so you should avoid modifying signal handlers in your applications.</p>
+
+<p>To start applications with it you can use the <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/script/morbo.html">morbo</a> script.</p>
+
+<pre><code>  $ morbo ./myapp.pl
+  Server available at http://127.0.0.1:3000</code></pre>
+
+<p>For better scalability (epoll, kqueue) and to provide non-blocking name resolution, SOCKS5 as well as TLS support, the optional modules <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">EV</a> (4.0+), <a>Net::DNS::Native</a> (0.15+), <a>IO::Socket::Socks</a> (0.64+) and <a href="../../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> (1.94+) will be used automatically if possible. Individual features can also be disabled with the <code>MOJO_NO_NDN</code>, <code>MOJO_NO_SOCKS</code> and <code>MOJO_NO_TLS</code> environment variables.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Cookbook.html#DEPLOYMENT">&quot;DEPLOYMENT&quot; in Mojolicious::Guides::Cookbook</a> for more.</p>
+
+<h1 id="SIGNALS">SIGNALS</h1>
+
+<p>The <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Morbo.html">Mojo::Server::Morbo</a> process can be controlled at runtime with the following signals.</p>
+
+<h2 id="INT-TERM">INT, TERM</h2>
+
+<p>Shut down server immediately.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Morbo.html">Mojo::Server::Morbo</a> implements the following attributes.</p>
+
+<h2 id="daemon">daemon</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$daemon</span> <span class="operator">=</span> <span class="variable">$morbo</span><span class="operator">-&gt;</span><span class="variable">daemon</span><span class="operator">;</span>
+  <span class="variable">$morbo</span>     <span class="operator">=</span> <span class="variable">$morbo</span><span class="operator">-&gt;</span><span class="variable">daemon</span><span class="operator">(</span><span class="variable">Mojo::Server::Daemon</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a> object this server manages.</p>
+
+<h2 id="watch">watch</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$watch</span> <span class="operator">=</span> <span class="variable">$morbo</span><span class="operator">-&gt;</span><span class="variable">watch</span><span class="operator">;</span>
+  <span class="variable">$morbo</span>    <span class="operator">=</span> <span class="variable">$morbo</span><span class="operator">-&gt;</span><span class="variable">watch</span><span class="operator">(</span><span class="operator">[</span><span class="string">'/home/sri/my_app'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Files and directories to watch for changes, defaults to the application script as well as the <code>lib</code> and <code>templates</code> directories in the current working directory.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Morbo.html">Mojo::Server::Morbo</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="modified_files">modified_files</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$files</span> <span class="operator">=</span> <span class="variable">$morbo</span><span class="operator">-&gt;</span><span class="variable">modified_files</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if files from <a href="#watch">&quot;watch&quot;</a> have been modified since the last check and return an array reference with the results.</p>
+
+<pre><code>  <span class="comment"># All files that have been modified</span>
+  <span class="keyword">say</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$morbo</span><span class="operator">-&gt;</span><span class="variable">modified_files</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="run">run</h2>
+
+<pre><code>  <span class="variable">$morbo</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">(</span><span class="string">'script/my_app'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Run server for application and wait for <a href="#SIGNALS">&quot;SIGNALS&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

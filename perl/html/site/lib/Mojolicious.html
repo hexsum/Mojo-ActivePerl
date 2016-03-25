@@ -1,0 +1,910 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../displayToc.js"></script>
+<script language="JavaScript" src="../../tocParas.js"></script>
+<script language="JavaScript" src="../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#HOOKS">HOOKS</a>
+    <ul>
+      <li><a href="#after_build_tx">after_build_tx</a></li>
+      <li><a href="#around_dispatch">around_dispatch</a></li>
+      <li><a href="#before_dispatch">before_dispatch</a></li>
+      <li><a href="#after_static">after_static</a></li>
+      <li><a href="#before_routes">before_routes</a></li>
+      <li><a href="#around_action">around_action</a></li>
+      <li><a href="#before_render">before_render</a></li>
+      <li><a href="#after_render">after_render</a></li>
+      <li><a href="#after_dispatch">after_dispatch</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#commands">commands</a></li>
+      <li><a href="#controller_class">controller_class</a></li>
+      <li><a href="#mode">mode</a></li>
+      <li><a href="#moniker">moniker</a></li>
+      <li><a href="#plugins">plugins</a></li>
+      <li><a href="#renderer">renderer</a></li>
+      <li><a href="#routes">routes</a></li>
+      <li><a href="#secrets">secrets</a></li>
+      <li><a href="#sessions">sessions</a></li>
+      <li><a href="#static">static</a></li>
+      <li><a href="#types">types</a></li>
+      <li><a href="#validator">validator</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#build_controller">build_controller</a></li>
+      <li><a href="#build_tx">build_tx</a></li>
+      <li><a href="#defaults">defaults</a></li>
+      <li><a href="#dispatch">dispatch</a></li>
+      <li><a href="#handler">handler</a></li>
+      <li><a href="#helper">helper</a></li>
+      <li><a href="#hook">hook</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#plugin">plugin</a></li>
+      <li><a href="#start">start</a></li>
+      <li><a href="#startup">startup</a></li>
+    </ul>
+  </li>
+  <li><a href="#AUTOLOAD">AUTOLOAD</a></li>
+  <li><a href="#BUNDLED-FILES">BUNDLED FILES</a>
+    <ul>
+      <li><a href="#Mojolicious-Artwork">Mojolicious Artwork</a></li>
+      <li><a href="#jQuery">jQuery</a></li>
+      <li><a href="#prettify.js">prettify.js</a></li>
+    </ul>
+  </li>
+  <li><a href="#CODE-NAMES">CODE NAMES</a></li>
+  <li><a href="#SPONSORS">SPONSORS</a></li>
+  <li><a href="#PROJECT-FOUNDER">PROJECT FOUNDER</a></li>
+  <li><a href="#CORE-DEVELOPERS">CORE DEVELOPERS</a></li>
+  <li><a href="#CREDITS">CREDITS</a></li>
+  <li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious - Real-time web framework</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="comment"># Application</span>
+  <span class="keyword">package</span> <span class="variable">MyApp</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious'</span><span class="operator">;</span>
+  
+  <span class="comment"># Route</span>
+  <span class="keyword">sub</span><span class="variable"> startup </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">routes</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/hello'</span><span class="operator">)-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">'foo#hello'</span><span class="operator">);</span>
+  <span class="operator">}</span>
+  
+  <span class="comment"># Controller</span>
+  <span class="keyword">package</span> <span class="variable">MyApp::Controller::Foo</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious::Controller'</span><span class="operator">;</span>
+  
+  <span class="comment"># Action</span>
+  <span class="keyword">sub</span><span class="variable"> hello </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Hello World!'</span><span class="operator">);</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>Take a look at our excellent documentation in <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>!</p>
+
+<h1 id="HOOKS">HOOKS</h1>
+
+<p><a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> will emit the following hooks in the listed order.</p>
+
+<h2 id="after_build_tx">after_build_tx</h2>
+
+<p>Emitted right after the transaction is built and before the HTTP request gets parsed.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">after_build_tx</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$tx</span><span class="operator">,</span> <span class="variable">$app</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>This is a very powerful hook and should not be used lightly, it makes some rather advanced features such as upload progress bars possible. Note that this hook will not work for embedded applications, because only the host application gets to build transactions. (Passed the transaction and application object)</p>
+
+<h2 id="around_dispatch">around_dispatch</h2>
+
+<p>Emitted right after a new request has been received and wraps around the whole dispatch process, so you have to manually forward to the next hook if you want to continue the chain. Default exception handling with <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html#reply--exception">&quot;reply-&gt;exception&quot; in Mojolicious::Plugin::DefaultHelpers</a> is the first hook in the chain and a call to <a href="#dispatch">&quot;dispatch&quot;</a> the last, yours will be in between.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">around_dispatch</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$next</span><span class="operator">,</span> <span class="variable">$c</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+    <span class="variable">$next</span><span class="operator">-&gt;();</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>This is a very powerful hook and should not be used lightly, it allows you to, for example, customize application-wide exception handling, consider it the sledgehammer in your toolbox. (Passed a callback leading to the next hook and the default controller object)</p>
+
+<h2 id="before_dispatch">before_dispatch</h2>
+
+<p>Emitted right before the static file server and router start their work.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">before_dispatch</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Very useful for rewriting incoming requests and other preprocessing tasks. (Passed the default controller object)</p>
+
+<h2 id="after_static">after_static</h2>
+
+<p>Emitted after a static file response has been generated by the static file server.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">after_static</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Mostly used for post-processing static file responses. (Passed the default controller object)</p>
+
+<h2 id="before_routes">before_routes</h2>
+
+<p>Emitted after the static file server determined if a static file should be served and before the router starts its work.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">before_routes</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Mostly used for custom dispatchers and collecting metrics. (Passed the default controller object)</p>
+
+<h2 id="around_action">around_action</h2>
+
+<p>Emitted right before an action gets executed and wraps around it, so you have to manually forward to the next hook if you want to continue the chain. Default action dispatching is the last hook in the chain, yours will run before it.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">around_action</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$next</span><span class="operator">,</span> <span class="variable">$c</span><span class="operator">,</span> <span class="variable">$action</span><span class="operator">,</span> <span class="variable">$last</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+    <span class="keyword">return</span> <span class="variable">$next</span><span class="operator">-&gt;();</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>This is a very powerful hook and should not be used lightly, it allows you for example to pass additional arguments to actions or handle return values differently. (Passed a callback leading to the next hook, the current controller object, the action callback and a flag indicating if this action is an endpoint)</p>
+
+<h2 id="before_render">before_render</h2>
+
+<p>Emitted before content is generated by the renderer. Note that this hook can trigger out of order due to its dynamic nature, and with embedded applications will only work for the application that is rendering.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">before_render</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Mostly used for pre-processing arguments passed to the renderer. (Passed the current controller object and the render arguments)</p>
+
+<h2 id="after_render">after_render</h2>
+
+<p>Emitted after content has been generated by the renderer that will be assigned to the response. Note that this hook can trigger out of order due to its dynamic nature, and with embedded applications will only work for the application that is rendering.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">after_render</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$c</span><span class="operator">,</span> <span class="variable">$output</span><span class="operator">,</span> <span class="variable">$format</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Mostly used for post-processing dynamically generated content. (Passed the current controller object, a reference to the content and the format)</p>
+
+<h2 id="after_dispatch">after_dispatch</h2>
+
+<p>Emitted in reverse order after a response has been generated. Note that this hook can trigger out of order due to its dynamic nature, and with embedded applications will only work for the application that is generating the response.</p>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">after_dispatch</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Useful for rewriting outgoing responses and other post-processing tasks. (Passed the current controller object)</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> inherits all attributes from <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a> and implements the following new ones.</p>
+
+<h2 id="commands">commands</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$commands</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">commands</span><span class="operator">;</span>
+  <span class="variable">$app</span>         <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">commands</span><span class="operator">(</span><span class="variable">Mojolicious::Commands</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Command line interface for your application, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Commands.html">Mojolicious::Commands</a> object.</p>
+
+<pre><code>  <span class="comment"># Add another namespace to load commands from</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">commands</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'MyApp::Command'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="controller_class">controller_class</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$class</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">controller_class</span><span class="operator">;</span>
+  <span class="variable">$app</span>      <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">controller_class</span><span class="operator">(</span><span class="string">'Mojolicious::Controller'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Class to be used for the default controller, defaults to <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a>. Note that this class needs to have already been loaded before the first request arrives.</p>
+
+<h2 id="mode">mode</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$mode</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">mode</span><span class="operator">;</span>
+  <span class="variable">$app</span>     <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">mode</span><span class="operator">(</span><span class="string">'production'</span><span class="operator">);</span>
+</code></pre>
+
+<p>The operating mode for your application, defaults to a value from the <code>MOJO_MODE</code> and <code>PLACK_ENV</code> environment variables or <code>development</code>. Right before calling <a href="#startup">&quot;startup&quot;</a>, <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> will pick up the current mode, name the log file after it and raise the log level from <code>debug</code> to <code>info</code> if it has a value other than <code>development</code>.</p>
+
+<h2 id="moniker">moniker</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$moniker</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">moniker</span><span class="operator">;</span>
+  <span class="variable">$app</span>        <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">moniker</span><span class="operator">(</span><span class="string">'foo_bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Moniker of this application, often used as default filename for configuration files and the like, defaults to decamelizing the application class with <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#decamelize">&quot;decamelize&quot; in Mojo::Util</a>.</p>
+
+<h2 id="plugins">plugins</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$plugins</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugins</span><span class="operator">;</span>
+  <span class="variable">$app</span>        <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugins</span><span class="operator">(</span><span class="variable">Mojolicious::Plugins</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>The plugin manager, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html">Mojolicious::Plugins</a> object. See the <a href="#plugin">&quot;plugin&quot;</a> method below if you want to load a plugin.</p>
+
+<pre><code>  <span class="comment"># Add another namespace to load plugins from</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugins</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'MyApp::Plugin'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="renderer">renderer</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$renderer</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">;</span>
+  <span class="variable">$app</span>         <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">(</span><span class="variable">Mojolicious::Renderer</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Used to render content, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html">Mojolicious::Renderer</a> object. For more information about how to generate content see <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Rendering.html">Mojolicious::Guides::Rendering</a>.</p>
+
+<pre><code>  <span class="comment"># Add another "templates" directory</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'/home/sri/templates'</span><span class="operator">;</span>
+  
+  <span class="comment"># Add another "templates" directory with higher precedence</span>
+  <span class="keyword">unshift</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'/home/sri/themes/blue/templates'</span><span class="operator">;</span>
+  
+  <span class="comment"># Add another class with templates in DATA section</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'Mojolicious::Plugin::Fun'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="routes">routes</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$routes</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">routes</span><span class="operator">;</span>
+  <span class="variable">$app</span>       <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">routes</span><span class="operator">(</span><span class="variable">Mojolicious::Routes</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>The router, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes.html">Mojolicious::Routes</a> object. You use this in your startup method to define the url endpoints for your application.</p>
+
+<pre><code>  <span class="comment"># Add routes</span>
+  <span class="keyword">my</span> <span class="variable">$r</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">routes</span><span class="operator">;</span>
+  <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">'test#foo'</span><span class="operator">,</span> <span class="string">title</span> <span class="operator">=&gt;</span> <span class="string">'Hello Mojo!'</span><span class="operator">);</span>
+  <span class="variable">$r</span><span class="operator">-&gt;</span><span class="variable">post</span><span class="operator">(</span><span class="string">'/baz'</span><span class="operator">)-&gt;</span><span class="variable">to</span><span class="operator">(</span><span class="string">'test#baz'</span><span class="operator">);</span>
+  
+  <span class="comment"># Add another namespace to load controllers from</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">routes</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'MyApp::MyController'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="secrets">secrets</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$secrets</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">secrets</span><span class="operator">;</span>
+  <span class="variable">$app</span>        <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">secrets</span><span class="operator">(</span><span class="operator">[</span><span class="variable">$bytes</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Secret passphrases used for signed cookies and the like, defaults to the <a href="#moniker">&quot;moniker&quot;</a> of this application, which is not very secure, so you should change it!!! As long as you are using the insecure default there will be debug messages in the log file reminding you to change your passphrase. Only the first passphrase is used to create new signatures, but all of them for verification. So you can increase security without invalidating all your existing signed cookies by rotating passphrases, just add new ones to the front and remove old ones from the back.</p>
+
+<pre><code>  <span class="comment"># Rotate passphrases</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">secrets</span><span class="operator">(</span><span class="operator">[</span><span class="string">'new_passw0rd'</span><span class="operator">,</span> <span class="string">'old_passw0rd'</span><span class="operator">,</span> <span class="string">'very_old_passw0rd'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="sessions">sessions</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$sessions</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">sessions</span><span class="operator">;</span>
+  <span class="variable">$app</span>         <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">sessions</span><span class="operator">(</span><span class="variable">Mojolicious::Sessions</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Signed cookie based session manager, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Sessions.html">Mojolicious::Sessions</a> object. You can usually leave this alone, see <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#session">&quot;session&quot; in Mojolicious::Controller</a> for more information about working with session data.</p>
+
+<pre><code>  <span class="comment"># Change name of cookie used for all sessions</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">sessions</span><span class="operator">-&gt;</span><span class="variable">cookie_name</span><span class="operator">(</span><span class="string">'mysession'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="static">static</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$static</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">;</span>
+  <span class="variable">$app</span>       <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">(</span><span class="variable">Mojolicious::Static</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>For serving static files from your <code>public</code> directories, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Static.html">Mojolicious::Static</a> object.</p>
+
+<pre><code>  <span class="comment"># Add another "public" directory</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'/home/sri/public'</span><span class="operator">;</span>
+  
+  <span class="comment"># Add another "public" directory with higher precedence</span>
+  <span class="keyword">unshift</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'/home/sri/themes/blue/public'</span><span class="operator">;</span>
+  
+  <span class="comment"># Add another class with static files in DATA section</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">-&gt;</span><span class="variable">classes</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'Mojolicious::Plugin::Fun'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="types">types</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$types</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">;</span>
+  <span class="variable">$app</span>      <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">(</span><span class="variable">Mojolicious::Types</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Responsible for connecting file extensions with MIME types, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Types.html">Mojolicious::Types</a> object.</p>
+
+<pre><code>  <span class="comment"># Add custom MIME type</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">types</span><span class="operator">-&gt;</span><span class="variable">type</span><span class="operator">(</span><span class="string">twt</span> <span class="operator">=&gt;</span> <span class="string">'text/tweet'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="validator">validator</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$validator</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">validator</span><span class="operator">;</span>
+  <span class="variable">$app</span>          <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">validator</span><span class="operator">(</span><span class="variable">Mojolicious::Validator</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Validate values, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator.html">Mojolicious::Validator</a> object.</p>
+
+<pre><code>  <span class="comment"># Add validation check</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">validator</span><span class="operator">-&gt;</span><span class="variable">add_check</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$validation</span><span class="operator">,</span> <span class="variable">$name</span><span class="operator">,</span> <span class="variable">$value</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="variable">$value</span> <span class="keyword">ne</span> <span class="string">'foo'</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Add validation filter</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">validator</span><span class="operator">-&gt;</span><span class="variable">add_filter</span><span class="operator">(</span><span class="string">quotemeta</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$validation</span><span class="operator">,</span> <span class="variable">$name</span><span class="operator">,</span> <span class="variable">$value</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="keyword">quotemeta</span> <span class="variable">$value</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> inherits all methods from <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a> and implements the following new ones.</p>
+
+<h2 id="build_controller">build_controller</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">build_controller</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">build_controller</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">build_controller</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Build default controller object with <a href="#controller_class">&quot;controller_class&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Render template from application</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">build_controller</span><span class="operator">-&gt;</span><span class="variable">render_to_string</span><span class="operator">(</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="build_tx">build_tx</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">;</span>
+</code></pre>
+
+<p>Build <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object and emit <a href="#after_build_tx">&quot;after_build_tx&quot;</a> hook.</p>
+
+<h2 id="defaults">defaults</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span>  <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$app</span>     <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$app</span>     <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+</code></pre>
+
+<p>Default values for <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#stash">&quot;stash&quot; in Mojolicious::Controller</a>, assigned for every new request.</p>
+
+<pre><code>  <span class="comment"># Remove value</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="keyword">delete</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Assign multiple values at once</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'test'</span><span class="operator">,</span> <span class="string">bar</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="dispatch">dispatch</h2>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">dispatch</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>The heart of every <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application, calls the <a href="#static">&quot;static&quot;</a> and <a href="#routes">&quot;routes&quot;</a> dispatchers for every request and passes them a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a> object.</p>
+
+<h2 id="handler">handler</h2>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">handler</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">handler</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Sets up the default controller and emits the <a href="#around_dispatch">&quot;around_dispatch&quot;</a> hook for every request.</p>
+
+<h2 id="helper">helper</h2>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">helper</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Add or replace a helper that will be available as a method of the controller object and the application object, as well as a function in <code>ep</code> templates. For a full list of helpers that are available by default see <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html">Mojolicious::Plugin::DefaultHelpers</a> and <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a>.</p>
+
+<pre><code>  <span class="comment"># Helper</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">helper</span><span class="operator">(</span><span class="string">cache</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">state</span> <span class="variable">$cache</span> <span class="operator">=</span> <span class="operator">{}</span> <span class="operator">});</span>
+  
+  <span class="comment"># Application</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">cache</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span> <span class="operator">=</span> <span class="string">'bar'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$result</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">cache</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Controller</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">cache</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span> <span class="operator">=</span> <span class="string">'bar'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$result</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">cache</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Template</span>
+  <span class="operator">% </span><span class="variable">cache</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span> <span class="operator">=</span> <span class="string">'bar'</span><span class="operator">;</span>
+  <span class="variable">%=</span> <span class="variable">cache</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span>
+</code></pre>
+
+<h2 id="hook">hook</h2>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">after_dispatch</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Extend <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> with hooks, which allow code to be shared with all requests indiscriminately, for a full list of available hooks see <a href="#HOOKS">&quot;HOOKS&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Dispatchers will not run if there's already a response code defined</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">hook</span><span class="operator">(</span><span class="string">before_dispatch</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'Skipped static file server and router!'</span><span class="operator">)</span>
+      <span class="keyword">if</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">-&gt;</span><span class="variable">to_route</span> <span class="operator">=~</span> <span class="regex">/do_not_dispatch/</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">moniker</span> <span class="operator">=&gt;</span> <span class="string">'foo_bar'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">moniker</span> <span class="operator">=&gt;</span> <span class="string">'foo_bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application and call <a href="#startup">&quot;startup&quot;</a>. Will automatically detect your home directory and set up logging based on your current operating mode. Also sets up the renderer, static file server, a default set of plugins and an <a href="#around_dispatch">&quot;around_dispatch&quot;</a> hook with the default exception handling.</p>
+
+<h2 id="plugin">plugin</h2>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'some_thing'</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'some_thing'</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'some_thing'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'SomeThing'</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'SomeThing'</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'SomeThing'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'MyApp::Plugin::SomeThing'</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'MyApp::Plugin::SomeThing'</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'MyApp::Plugin::SomeThing'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Load a plugin, for a full list of example plugins included in the <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> distribution see <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html#PLUGINS">&quot;PLUGINS&quot; in Mojolicious::Plugins</a>.</p>
+
+<h2 id="start">start</h2>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">(</span><span class="variable">@ARGV</span><span class="operator">);</span>
+</code></pre>
+
+<p>Start the command line interface for your application. For a full list of commands that are available by default see <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Commands.html#COMMANDS">&quot;COMMANDS&quot; in Mojolicious::Commands</a>. Note that the options <code>-h</code>/<code>--help</code>, <code>--home</code> and <code>-m</code>/<code>--mode</code>, which are shared by all commands, will be parsed from <code>@ARGV</code> during compile time.</p>
+
+<pre><code>  <span class="comment"># Always start daemon</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">(</span><span class="string">'daemon'</span><span class="operator">,</span> <span class="string">'-l'</span><span class="operator">,</span> <span class="string">'http://*:8080'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="startup">startup</h2>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">startup</span><span class="operator">;</span>
+</code></pre>
+
+<p>This is your main hook into the application, it will be called at application startup. Meant to be overloaded in a subclass.</p>
+
+<pre><code>  <span class="keyword">sub</span><span class="variable"> startup </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="AUTOLOAD">AUTOLOAD</h1>
+
+<p>In addition to the <a href="#ATTRIBUTES">&quot;ATTRIBUTES&quot;</a> and <a href="#METHODS">&quot;METHODS&quot;</a> above you can also call helpers on <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> objects. This includes all helpers from <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html">Mojolicious::Plugin::DefaultHelpers</a> and <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a>. Note that application helpers are always called with a new default controller object, so they can&#39;t depend on or change controller state, which includes request, response and stash.</p>
+
+<pre><code>  <span class="comment"># Call helper</span>
+  <span class="keyword">say</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">dumper</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+  
+  <span class="comment"># Longer version</span>
+  <span class="keyword">say</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">build_controller</span><span class="operator">-&gt;</span><span class="variable">helpers</span><span class="operator">-&gt;</span><span class="variable">dumper</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="BUNDLED-FILES">BUNDLED FILES</h1>
+
+<p>The <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> distribution includes a few files with different licenses that have been bundled for internal use.</p>
+
+<h2 id="Mojolicious-Artwork">Mojolicious Artwork</h2>
+
+<pre><code>  Copyright (C) 2010-2016, Sebastian Riedel.</code></pre>
+
+<p>Licensed under the CC-SA License, Version 4.0 <a href="http://creativecommons.org/licenses/by-sa/4.0">http://creativecommons.org/licenses/by-sa/4.0</a>.</p>
+
+<h2 id="jQuery">jQuery</h2>
+
+<pre><code>  Copyright (C) jQuery Foundation.</code></pre>
+
+<p>Licensed under the MIT License, <a href="http://creativecommons.org/licenses/MIT">http://creativecommons.org/licenses/MIT</a>.</p>
+
+<h2 id="prettify.js">prettify.js</h2>
+
+<pre><code>  Copyright (C) 2006, 2013 Google Inc..</code></pre>
+
+<p>Licensed under the Apache License, Version 2.0 <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>.</p>
+
+<h1 id="CODE-NAMES">CODE NAMES</h1>
+
+<p>Every major release of <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> has a code name, these are the ones that have been used in the past.</p>
+
+<p>6.0, <code>Clinking Beer Mugs</code> (U+1F37B)</p>
+
+<p>5.0, <code>Tiger Face</code> (U+1F42F)</p>
+
+<p>4.0, <code>Top Hat</code> (U+1F3A9)</p>
+
+<p>3.0, <code>Rainbow</code> (U+1F308)</p>
+
+<p>2.0, <code>Leaf Fluttering In Wind</code> (U+1F343)</p>
+
+<p>1.4, <code>Smiling Face With Sunglasses</code> (U+1F60E)</p>
+
+<p>1.3, <code>Tropical Drink</code> (U+1F379)</p>
+
+<p>1.1, <code>Smiling Cat Face With Heart-Shaped Eyes</code> (U+1F63B)</p>
+
+<p>1.0, <code>Snowflake</code> (U+2744)</p>
+
+<h1 id="SPONSORS">SPONSORS</h1>
+
+<p>Some of the work on this distribution has been sponsored by <a href="http://www.perlfoundation.org">The Perl Foundation</a>, thank you!</p>
+
+<h1 id="PROJECT-FOUNDER">PROJECT FOUNDER</h1>
+
+<p>Sebastian Riedel, <code>sri@cpan.org</code></p>
+
+<h1 id="CORE-DEVELOPERS">CORE DEVELOPERS</h1>
+
+<p>Current members of the core team in alphabetical order:</p>
+
+<ul>
+
+<p>Abhijit Menon-Sen, <code>ams@cpan.org</code></p>
+
+<p>Glen Hinkle, <code>tempire@cpan.org</code></p>
+
+<p>Jan Henning Thorsen, <code>jhthorsen@cpan.org</code></p>
+
+<p>Joel Berger, <code>jberger@cpan.org</code></p>
+
+<p>Marcus Ramberg, <code>mramberg@cpan.org</code></p>
+
+</ul>
+
+<h1 id="CREDITS">CREDITS</h1>
+
+<p>In alphabetical order:</p>
+
+<ul>
+
+<p>Adam Kennedy</p>
+
+<p>Adriano Ferreira</p>
+
+<p>Al Newkirk</p>
+
+<p>Alex Efros</p>
+
+<p>Alex Salimon</p>
+
+<p>Alexey Likhatskiy</p>
+
+<p>Anatoly Sharifulin</p>
+
+<p>Andre Vieth</p>
+
+<p>Andreas Jaekel</p>
+
+<p>Andreas Koenig</p>
+
+<p>Andrew Fresh</p>
+
+<p>Andrew Nugged</p>
+
+<p>Andrey Khozov</p>
+
+<p>Andrey Kuzmin</p>
+
+<p>Andy Grundman</p>
+
+<p>Aristotle Pagaltzis</p>
+
+<p>Ashley Dev</p>
+
+<p>Ask Bjoern Hansen</p>
+
+<p>Audrey Tang</p>
+
+<p>Ben Tyler</p>
+
+<p>Ben van Staveren</p>
+
+<p>Benjamin Erhart</p>
+
+<p>Bernhard Graf</p>
+
+<p>Breno G. de Oliveira</p>
+
+<p>Brian Duggan</p>
+
+<p>Brian Medley</p>
+
+<p>Burak Gursoy</p>
+
+<p>Ch Lamprecht</p>
+
+<p>Charlie Brady</p>
+
+<p>Chas. J. Owens IV</p>
+
+<p>Christian Hansen</p>
+
+<p>chromatic</p>
+
+<p>Curt Tilmes</p>
+
+<p>Dan Book</p>
+
+<p>Daniel Kimsey</p>
+
+<p>Danijel Tasov</p>
+
+<p>Danny Thomas</p>
+
+<p>David Davis</p>
+
+<p>David Webb</p>
+
+<p>Diego Kuperman</p>
+
+<p>Dmitriy Shalashov</p>
+
+<p>Dmitry Konstantinov</p>
+
+<p>Dominik Jarmulowicz</p>
+
+<p>Dominique Dumont</p>
+
+<p>Douglas Christopher Wilson</p>
+
+<p>Eugen Konkov</p>
+
+<p>Eugene Toropov</p>
+
+<p>Gisle Aas</p>
+
+<p>Graham Barr</p>
+
+<p>Graham Knop</p>
+
+<p>Henry Tang</p>
+
+<p>Hideki Yamamura</p>
+
+<p>Hiroki Toyokawa</p>
+
+<p>Ian Goodacre</p>
+
+<p>Ilya Chesnokov</p>
+
+<p>James Duncan</p>
+
+<p>Jan Jona Javorsek</p>
+
+<p>Jan Schmidt</p>
+
+<p>Jaroslav Muhin</p>
+
+<p>Jesse Vincent</p>
+
+<p>Johannes Plunien</p>
+
+<p>John Kingsley</p>
+
+<p>Jonathan Yu</p>
+
+<p>Josh Leder</p>
+
+<p>Kazuhiro Shibuya</p>
+
+<p>Kevin Old</p>
+
+<p>Kitamura Akatsuki</p>
+
+<p>Klaus S. Madsen</p>
+
+<p>Lars Balker Rasmussen</p>
+
+<p>Lee Johnson</p>
+
+<p>Leon Brocard</p>
+
+<p>Magnus Holm</p>
+
+<p>Maik Fischer</p>
+
+<p>Mark Fowler</p>
+
+<p>Mark Grimes</p>
+
+<p>Mark Stosberg</p>
+
+<p>Marty Tennison</p>
+
+<p>Matt S Trout</p>
+
+<p>Matthew Lineen</p>
+
+<p>Maksym Komar</p>
+
+<p>Maxim Vuets</p>
+
+<p>Michael Gregorowicz</p>
+
+<p>Michael Harris</p>
+
+<p>Mike Magowan</p>
+
+<p>Mirko Westermeier</p>
+
+<p>Mons Anderson</p>
+
+<p>Moritz Lenz</p>
+
+<p>Neil Watkiss</p>
+
+<p>Nic Sandfield</p>
+
+<p>Nils Diewald</p>
+
+<p>Oleg Zhelo</p>
+
+<p>Olivier Mengue</p>
+
+<p>Pascal Gaudette</p>
+
+<p>Paul Evans</p>
+
+<p>Paul Tomlin</p>
+
+<p>Pavel Shaydo</p>
+
+<p>Pedro Melo</p>
+
+<p>Peter Edwards</p>
+
+<p>Pierre-Yves Ritschard</p>
+
+<p>Piotr Roszatycki</p>
+
+<p>Quentin Carbonneaux</p>
+
+<p>Rafal Pocztarski</p>
+
+<p>Randal Schwartz</p>
+
+<p>Richard Elberger</p>
+
+<p>Rick Delaney</p>
+
+<p>Robert Hicks</p>
+
+<p>Robin Lee</p>
+
+<p>Roland Lammel</p>
+
+<p>Ryan Jendoubi</p>
+
+<p>Sascha Kiefer</p>
+
+<p>Scott Wiersdorf</p>
+
+<p>Sergey Zasenko</p>
+
+<p>Simon Bertrang</p>
+
+<p>Simone Tampieri</p>
+
+<p>Shu Cho</p>
+
+<p>Skye Shaw</p>
+
+<p>Stanis Trendelenburg</p>
+
+<p>Steffen Ullrich</p>
+
+<p>Stephane Este-Gracias</p>
+
+<p>Steve Atkins</p>
+
+<p>Tatsuhiko Miyagawa</p>
+
+<p>Terrence Brannon</p>
+
+<p>Tianon Gravi</p>
+
+<p>Tomas Znamenacek</p>
+
+<p>Ulrich Habel</p>
+
+<p>Ulrich Kautz</p>
+
+<p>Uwe Voelker</p>
+
+<p>Viacheslav Tykhanovskyi</p>
+
+<p>Victor Engmark</p>
+
+<p>Viliam Pucik</p>
+
+<p>Wes Cravens</p>
+
+<p>Yaroslav Korshak</p>
+
+<p>Yuki Kimoto</p>
+
+<p>Zak B. Elep</p>
+
+<p>Zoffix Znet</p>
+
+</ul>
+
+<h1 id="COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</h1>
+
+<p>Copyright (C) 2008-2016, Sebastian Riedel and others.</p>
+
+<p>This program is free software, you can redistribute it and/or modify it under the terms of the Artistic License version 2.0.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="https://github.com/kraih/mojo">https://github.com/kraih/mojo</a>, <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

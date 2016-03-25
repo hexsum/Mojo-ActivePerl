@@ -1,0 +1,170 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#cookie_domain">cookie_domain</a></li>
+      <li><a href="#cookie_name">cookie_name</a></li>
+      <li><a href="#cookie_path">cookie_path</a></li>
+      <li><a href="#default_expiration">default_expiration</a></li>
+      <li><a href="#deserialize">deserialize</a></li>
+      <li><a href="#secure">secure</a></li>
+      <li><a href="#serialize">serialize</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#load">load</a></li>
+      <li><a href="#store">store</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Sessions - Session manager based on signed cookies</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojolicious::Sessions</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$sessions</span> <span class="operator">=</span> <span class="variable">Mojolicious::Sessions</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">cookie_name</span><span class="operator">(</span><span class="string">'myapp'</span><span class="operator">);</span>
+  <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">default_expiration</span><span class="operator">(</span><span class="number">86400</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Sessions.html">Mojolicious::Sessions</a> manages sessions based on signed cookies for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>. All data gets serialized with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a> and stored Base64 encoded on the client-side, but is protected from unwanted changes with a HMAC-SHA1 signature.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Sessions.html">Mojolicious::Sessions</a> implements the following attributes.</p>
+
+<h2 id="cookie_domain">cookie_domain</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$domain</span> <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">cookie_domain</span><span class="operator">;</span>
+  <span class="variable">$sessions</span>  <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">cookie_domain</span><span class="operator">(</span><span class="string">'.example.com'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Domain for session cookies, not defined by default.</p>
+
+<h2 id="cookie_name">cookie_name</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$name</span>  <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">cookie_name</span><span class="operator">;</span>
+  <span class="variable">$sessions</span> <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">cookie_name</span><span class="operator">(</span><span class="string">'session'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Name for session cookies, defaults to <code>mojolicious</code>.</p>
+
+<h2 id="cookie_path">cookie_path</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span>  <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">cookie_path</span><span class="operator">;</span>
+  <span class="variable">$sessions</span> <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">cookie_path</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Path for session cookies, defaults to <code>/</code>.</p>
+
+<h2 id="default_expiration">default_expiration</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$time</span>  <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">default_expiration</span><span class="operator">;</span>
+  <span class="variable">$sessions</span> <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">default_expiration</span><span class="operator">(</span><span class="number">3600</span><span class="operator">);</span>
+</code></pre>
+
+<p>Default time for sessions to expire in seconds from now, defaults to <code>3600</code>. The expiration timeout gets refreshed for every request. Setting the value to <code>0</code> will allow sessions to persist until the browser window is closed, this can have security implications though. For more control you can also use the <code>expiration</code> and <code>expires</code> session values.</p>
+
+<pre><code>  <span class="comment"># Expiration date in seconds from now (persists between requests)</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expiration</span> <span class="operator">=&gt;</span> <span class="number">604800</span><span class="operator">);</span>
+  
+  <span class="comment"># Expiration date as absolute epoch time (only valid for one request)</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expires</span> <span class="operator">=&gt;</span> <span class="keyword">time</span> <span class="operator">+</span> <span class="number">604800</span><span class="operator">);</span>
+  
+  <span class="comment"># Delete whole session by setting an expiration date in the past</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">session</span><span class="operator">(</span><span class="string">expires</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="deserialize">deserialize</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cb</span>    <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">deserialize</span><span class="operator">;</span>
+  <span class="variable">$sessions</span> <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">deserialize</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>A callback used to deserialize sessions, defaults to <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html#j">&quot;j&quot; in Mojo::JSON</a>.</p>
+
+<pre><code>  <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">deserialize</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="operator">{}</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="secure">secure</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span>  <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">secure</span><span class="operator">;</span>
+  <span class="variable">$sessions</span> <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">secure</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Set the secure flag on all session cookies, so that browsers send them only over HTTPS connections.</p>
+
+<h2 id="serialize">serialize</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cb</span>    <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">serialize</span><span class="operator">;</span>
+  <span class="variable">$sessions</span> <span class="operator">=</span> <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">serialize</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>A callback used to serialize sessions, defaults to <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html#encode_json">&quot;encode_json&quot; in Mojo::JSON</a>.</p>
+
+<pre><code>  <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">serialize</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="string">''</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Sessions.html">Mojolicious::Sessions</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="load">load</h2>
+
+<pre><code>  <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Load session data from signed cookie.</p>
+
+<h2 id="store">store</h2>
+
+<pre><code>  <span class="variable">$sessions</span><span class="operator">-&gt;</span><span class="variable">store</span><span class="operator">(</span><span class="variable">Mojolicious::Controller</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Store session data in signed cookie.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

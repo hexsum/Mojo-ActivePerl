@@ -1,0 +1,4356 @@
+=head2 Wed Dec 23 18:05:18 2015: C<Module> L<URI|URI>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.69>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:20 2015: C<Module> L<LWP::MediaTypes|LWP::MediaTypes>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.02>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:22 2015: C<Module> L<IO::HTML|IO::HTML>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.001>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:23 2015: C<Module> L<HTTP::Date|HTTP::Date>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.02>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:25 2015: C<Module> L<Encode::Locale|Encode::Locale>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.05>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:28 2015: C<Module> L<HTTP::Message|HTTP::Message>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.11>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:30 2015: C<Module> L<HTML::Tagset|HTML::Tagset>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.20>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:36 2015: C<Module> L<WWW::RobotRules|WWW::RobotRules>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.02>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:39 2015: C<Module> L<Net::HTTP|Net::HTTP>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.09>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:40 2015: C<Module> L<HTTP::Negotiate|HTTP::Negotiate>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.01>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:46 2015: C<Module> L<HTTP::Daemon|HTTP::Daemon>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.01>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:48 2015: C<Module> L<HTTP::Cookies|HTTP::Cookies>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.01>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:05:55 2015: C<Module> L<HTML::Parser|HTML::Parser>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.71>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:06:04 2015: C<Module> L<File::Listing|File::Listing>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.04>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:06:06 2015: C<Module> L<ExtUtils::Config|ExtUtils::Config>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.008>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:06:25 2015: C<Module> L<LWP|LWP>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.13>
+
+=item *
+
+C<EXE_FILES: bin/lwp-request bin/lwp-mirror bin/lwp-download bin/lwp-dump>
+
+=back
+
+=head2 Wed Dec 23 18:06:33 2015: C<Module> L<Archive::Zip|Archive::Zip>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.47>
+
+=item *
+
+C<EXE_FILES: script/crc32>
+
+=back
+
+=head2 Wed Dec 23 18:06:35 2015: C<Module> L<ExtUtils::InstallPaths|ExtUtils::InstallPaths>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.011>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:06:38 2015: C<Module> L<ExtUtils::Helpers|ExtUtils::Helpers>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.022>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:06:40 2015: C<Module> L<Try::Tiny|Try::Tiny>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.22>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:08:45 2015: C<Module> L<ActiveState::Utils|ActiveState::Utils>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.10>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:08:47 2015: C<Module> L<Test::Requires|Test::Requires>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.10>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:08:50 2015: C<Module> L<Test::Fatal|Test::Fatal>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.014>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:09:09 2015: C<Module> L<Hook::LexWrap|Hook::LexWrap>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.25>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:09:11 2015: C<Module> L<Exporter::Tiny|Exporter::Tiny>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.042>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:09:13 2015: C<Module> L<Probe::Perl|Probe::Perl>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.03>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:09:15 2015: C<Module> L<IPC::Run3|IPC::Run3>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.048>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:09:18 2015: C<Module> L<Sub::Uplevel|Sub::Uplevel>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.25>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:13:50 2015: C<Module> L<Mozilla::CA|Mozilla::CA>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 20150826>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:13:56 2015: C<Module> L<Test::Deep|Test::Deep>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.119>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:14:00 2015: C<Module> L<Package::Stash::XS|Package::Stash::XS>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.28>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:14:02 2015: C<Module> L<Dist::CheckConflicts|Dist::CheckConflicts>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.11>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:14:06 2015: C<Module> L<Module::Implementation|Module::Implementation>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.09>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:14:07 2015: C<Module> L<Sub::Exporter::Progressive|Sub::Exporter::Progressive>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.001011>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:14:10 2015: C<Module> L<Sub::Install|Sub::Install>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.928>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:14:15 2015: C<Module> L<Params::Util|Params::Util>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.07>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:14:16 2015: C<Module> L<Text::Glob|Text::Glob>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.09>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:14:18 2015: C<Module> L<Number::Compare|Number::Compare>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.03>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:14:20 2015: C<Module> L<Algorithm::C3|Algorithm::C3>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.10>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:15:28 2015: C<Module> L<Test::SubCalls|Test::SubCalls>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.09>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:15:30 2015: C<Module> L<Test::Object|Test::Object>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.07>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:15:32 2015: C<Module> L<Test::NoWarnings|Test::NoWarnings>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.04>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:15:38 2015: C<Module> L<File::Remove|File::Remove>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.52>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:15:40 2015: C<Module> L<Class::Inspector|Class::Inspector>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.28>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:15:42 2015: C<Module> L<Task::Weaken|Task::Weaken>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.04>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:15:54 2015: C<Module> L<List::MoreUtils|List::MoreUtils>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.413>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:15:55 2015: C<Module> L<IO::String|IO::String>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.08>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:15:58 2015: C<Module> L<Clone|Clone>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.38>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:16:01 2015: C<Module> L<Devel::StackTrace|Devel::StackTrace>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.00>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:16:03 2015: C<Module> L<Class::Data::Inheritable|Class::Data::Inheritable>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.08>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:16:06 2015: C<Module> L<Test::Script|Test::Script>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.10>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:16:13 2015: C<Module> L<Test::Warn|Test::Warn>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.30>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:16:54 2015: C<Module> L<Net::SSLeay|Net::SSLeay>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.72>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:16:55 2015: C<Module> L<CPAN::Meta::Check|CPAN::Meta::Check>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.012>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:17:00 2015: C<Module> L<Package::Stash|Package::Stash>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.37>
+
+=item *
+
+C<EXE_FILES: bin/package-stash-conflicts>
+
+=back
+
+=head2 Wed Dec 23 18:17:04 2015: C<Module> L<B::Hooks::EndOfScope|B::Hooks::EndOfScope>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.15>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:17:06 2015: C<Module> L<Data::OptList|Data::OptList>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.109>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:17:08 2015: C<Module> L<File::Find::Rule|File::Find::Rule>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.33>
+
+=item *
+
+C<EXE_FILES: findrule>
+
+=back
+
+=head2 Wed Dec 23 18:17:11 2015: C<Module> L<Class::C3|Class::C3>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.30>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:17:20 2015: C<Module> L<Algorithm::Diff|Algorithm::Diff>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.1903>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:17:23 2015: C<Module> L<Test::Exception|Test::Exception>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.40>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:20:47 2015: C<Module> L<PPI|PPI>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.220>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:20:52 2015: C<Module> L<Exception::Class|Exception::Class>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.39>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:20:54 2015: C<Module> L<File::Which|File::Which>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.19>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:21:12 2015: C<Module> L<CGI|CGI>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 4.22>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:22:21 2015: C<Module> L<IO::Socket::SSL|IO::Socket::SSL>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.020>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:22:24 2015: C<Module> L<Test::Warnings|Test::Warnings>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.021>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:22:28 2015: C<Module> L<namespace::clean|namespace::clean>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.26>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:22:30 2015: C<Module> L<Sub::Identify|Sub::Identify>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.12>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:22:34 2015: C<Module> L<Sub::Exporter|Sub::Exporter>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.987>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:22:36 2015: C<Module> L<File::Find::Rule::Perl|File::Find::Rule::Perl>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.15>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:22:38 2015: C<Module> L<MRO::Compat|MRO::Compat>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.12>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:22:41 2015: C<Module> L<Class::Load|Class::Load>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.23>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:22:48 2015: C<Module> L<GD|GD>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.53>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:22:50 2015: C<Module> L<Text::Diff|Text::Diff>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.43>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:24:06 2015: C<Module> L<Capture::Tiny|Capture::Tiny>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.30>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:24:08 2015: C<Module> L<Test::Without::Module|Test::Without::Module>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.18>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:24:10 2015: C<Module> L<Carp::Clan|Carp::Clan>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.04>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:04 2015: C<Module> L<DBI|DBI>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.634>
+
+=item *
+
+C<EXE_FILES: dbiproxy dbiprof dbilogstrip>
+
+=back
+
+=head2 Wed Dec 23 18:27:06 2015: C<Module> L<Text::Soundex|Text::Soundex>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.04>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:10 2015: C<Module> L<Math::Base::Convert|Math::Base::Convert>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.08>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:14 2015: C<Module> L<Tcl|Tcl>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.02>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:16 2015: C<Module> L<PPIx::Utilities|PPIx::Utilities>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.001000>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:26 2015: C<Module> L<PPIx::Regexp|PPIx::Regexp>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.042_02>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:32 2015: C<Module> L<Module::Pluggable|Module::Pluggable>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 5.2>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:34 2015: C<Module> L<File::HomeDir|File::HomeDir>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.00>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:38 2015: C<Module> L<Email::Address|Email::Address>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.908>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:40 2015: C<Module> L<Config::Tiny|Config::Tiny>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.23>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:42 2015: C<Module> L<B::Keywords|B::Keywords>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.14>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:49 2015: C<Module> L<XML::Parser|XML::Parser>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.44>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:54 2015: C<Module> L<HTML::Template|HTML::Template>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.95>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:56 2015: C<Module> L<ActiveState::YAML|ActiveState::YAML>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.01>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:27:58 2015: C<Module> L<ActiveState::RelocateTree|ActiveState::RelocateTree>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.04>
+
+=item *
+
+C<EXE_FILES: bin/reloc_perl>
+
+=back
+
+=head2 Wed Dec 23 18:28:02 2015: C<Module> L<ActivePerl::DocTools|ActivePerl::DocTools>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.04>
+
+=item *
+
+C<EXE_FILES: bin/ap-update-html bin/ap-user-guide>
+
+=back
+
+=head2 Wed Dec 23 18:28:07 2015: C<Module> L<Compress::Raw::Zlib|Compress::Raw::Zlib>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.069>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:13 2015: C<Module> L<Compress::Raw::Bzip2|Compress::Raw::Bzip2>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.069>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:14 2015: C<Module> L<HTTP::Server::Simple|HTTP::Server::Simple>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.51>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:19 2015: C<Module> L<LWP::Protocol::https|LWP::Protocol::https>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.06>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:25 2015: C<Module> L<HTML::Form|HTML::Form>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.03>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:27 2015: C<Module> L<Text::Reform|Text::Reform>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.20>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:30 2015: C<Module> L<Test::CleanNamespaces|Test::CleanNamespaces>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.18>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:33 2015: C<Module> L<Sub::Name|Sub::Name>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.14>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:35 2015: C<Module> L<Package::DeprecationManager|Package::DeprecationManager>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.14>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:38 2015: C<Module> L<Module::Runtime::Conflicts|Module::Runtime::Conflicts>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.002>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:40 2015: C<Module> L<Eval::Closure|Eval::Closure>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.13>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:42 2015: C<Module> L<Devel::OverloadInfo|Devel::OverloadInfo>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.004>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:44 2015: C<Module> L<Devel::GlobalDestruction|Devel::GlobalDestruction>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.13>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:48 2015: C<Module> L<Class::Load::XS|Class::Load::XS>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.09>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:28:59 2015: C<Module> L<JSON|JSON>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.90>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:29:01 2015: C<Module> L<GD::Text|GD::Text>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.86>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:29:03 2015: C<Module> L<Test::Differences|Test::Differences>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.63>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:29:06 2015: C<Module> L<JSON::MaybeXS|JSON::MaybeXS>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.003005>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:29:23 2015: C<Module> L<Bit::Vector|Bit::Vector>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 7.4>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:30:28 2015: C<Module> L<ActiveState::Test|ActiveState::Test>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.00>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:32:28 2015: C<Module> L<Text::CSV_XS|Text::CSV_XS>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.20>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:32:38 2015: C<Module> L<SQL::Statement|SQL::Statement>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.407>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:32:58 2015: C<Module> L<Tkx|Tkx>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.09>
+
+=item *
+
+C<EXE_FILES: tkx-ed tkx-prove>
+
+=back
+
+=head2 Wed Dec 23 18:34:25 2015: C<Module> L<XML::Simple|XML::Simple>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.20>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:34:28 2015: C<Module> L<Term::ReadKey|Term::ReadKey>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.33>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:35:30 2015: C<Module> L<DBD::SQLite|DBD::SQLite>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.48>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:35:40 2015: C<Module> L<version|version>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.9912>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:36:19 2015: C<Module> L<threads|threads>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.02>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:36:23 2015: C<Module> L<perlfaq|perlfaq>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 5.021010>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:36:25 2015: C<Module> L<parent|parent>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.234>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:36:31 2015: C<Module> L<Net|Net>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.07>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:36:32 2015: C<Module> L<lib|lib>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.63>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:36:34 2015: C<Module> L<if|if>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.0606>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:36:42 2015: C<Module> L<autodie|autodie>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.29>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:36:45 2015: C<Module> L<Unicode::Normalize|Unicode::Normalize>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.23>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:37:07 2015: C<Module> L<Unicode::Collate|Unicode::Collate>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.14>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:37:11 2015: C<Module> L<Time::Piece|Time::Piece>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.31>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:37:37 2015: C<Module> L<Thread::Queue|Thread::Queue>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.07>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:37:38 2015: C<Module> L<Term::Cap|Term::Cap>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.17>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:37:41 2015: C<Module> L<Sys::Syslog|Sys::Syslog>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.33>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:37:47 2015: C<Module> L<Socket|Socket>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.020>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:37:53 2015: C<Module> L<List::Util|List::Util>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.42>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:37:57 2015: C<Module> L<Pod::Usage|Pod::Usage>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.67>
+
+=item *
+
+C<EXE_FILES: scripts/pod2usage>
+
+=back
+
+=head2 Wed Dec 23 18:38:10 2015: C<Module> L<Pod::Simple|Pod::Simple>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.31>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:38:13 2015: C<Module> L<Pod::Checker|Pod::Checker>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.71>
+
+=item *
+
+C<EXE_FILES: scripts/podchecker>
+
+=back
+
+=head2 Wed Dec 23 18:38:15 2015: C<Module> L<Perl::OSType|Perl::OSType>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.009>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:38:17 2015: C<Module> L<Parse::CPAN::Meta|Parse::CPAN::Meta>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.4417>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:38:20 2015: C<Module> L<Module::Metadata|Module::Metadata>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.000027>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:38:51 2015: C<Module> L<Math::BigInt|Math::BigInt>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.9993>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:38:56 2015: C<Module> L<Locale::Codes|Locale::Codes>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.36>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:39:54 2015: C<Module> L<IO::Compress|IO::Compress>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.069>
+
+=item *
+
+C<EXE_FILES: bin/zipdetails>
+
+=back
+
+=head2 Wed Dec 23 18:40:03 2015: C<Module> L<HTTP::Tiny|HTTP::Tiny>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.056>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:40:05 2015: C<Module> L<Getopt::Long|Getopt::Long>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.47>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:40:07 2015: C<Module> L<File::Path|File::Path>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.12>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:40:15 2015: C<Module> L<ExtUtils::ParseXS|ExtUtils::ParseXS>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.30>
+
+=item *
+
+C<EXE_FILES: lib/ExtUtils/xsubpp>
+
+=back
+
+=head2 Wed Dec 23 18:40:18 2015: C<Module> L<ExtUtils::CBuilder|ExtUtils::CBuilder>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.280224>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:41:15 2015: C<Module> L<Encode|Encode>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.78>
+
+=item *
+
+C<EXE_FILES: bin/enc2xs bin/piconv bin/encguess>
+
+=back
+
+=head2 Wed Dec 23 18:41:29 2015: C<Module> L<Devel::PPPort|Devel::PPPort>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.32>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:41:34 2015: C<Module> L<CPAN::Meta::YAML|CPAN::Meta::YAML>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.016>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:41:37 2015: C<Module> L<CPAN::Meta::Requirements|CPAN::Meta::Requirements>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.133>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:41:45 2015: C<Module> L<CPAN::Meta|CPAN::Meta>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.150005>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:41:47 2015: C<Module> L<Attribute::Handlers|Attribute::Handlers>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.99>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:41:48 2015: C<Module> L<mylib|mylib>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.02>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:42:05 2015: C<Module> L<YAML::LibYAML|YAML::LibYAML>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.59>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:43:25 2015: C<Module> L<WWW::Mechanize|WWW::Mechanize>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.75>
+
+=item *
+
+C<EXE_FILES: bin/mech-dump>
+
+=back
+
+=head2 Wed Dec 23 18:43:27 2015: C<Module> L<Text::Autoformat|Text::Autoformat>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.72>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:43:28 2015: C<Module> L<Term::ReadLine::Perl|Term::ReadLine::Perl>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.0303>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:43:30 2015: C<Module> L<Shell::Command|Shell::Command>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.06>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:43:31 2015: C<Module> L<Scope::Guard|Scope::Guard>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.21>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:43:33 2015: C<Module> L<PPM::Repositories|PPM::Repositories>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.20>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:43:41 2015: C<Module> L<Package::Constants|Package::Constants>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.06>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:43:43 2015: C<Module> L<Net::Telnet|Net::Telnet>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.04>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:48:06 2015: C<Module> L<Moose|Moose>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.1603>
+
+=item *
+
+C<EXE_FILES: bin/moose-outdated>
+
+=back
+
+=head2 Wed Dec 23 18:48:10 2015: C<Module> L<JSON::Any|JSON::Any>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.39>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:48:13 2015: C<Module> L<GD::Graph|GD::Graph>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.49>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:48:16 2015: C<Module> L<File::Next|File::Next>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.12>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:48:19 2015: C<Module> L<Digest::SHA1|Digest::SHA1>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.13>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:48:21 2015: C<Module> L<Digest::HMAC|Digest::HMAC>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.03>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:51:05 2015: C<Module> L<Devel::NYTProf|Devel::NYTProf>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.02>
+
+=item *
+
+C<EXE_FILES: bin/nytprofhtml bin/flamegraph.pl bin/nytprofcsv bin/nytprofcalls bin/nytprofcg bin/nytprofmerge bin/nytprofpf>
+
+=back
+
+=head2 Wed Dec 23 18:51:14 2015: C<Module> L<Date::Calc|Date::Calc>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.4>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:51:16 2015: C<Module> L<Data::Dump|Data::Dump>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.23>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:51:53 2015: C<Module> L<DBD::Pg|DBD::Pg>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.5.3>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:52:26 2015: C<Module> L<DBD::Oracle|DBD::Oracle>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.74>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:52:37 2015: C<Module> L<DBD::ODBC|DBD::ODBC>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.52>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:52:47 2015: C<Module> L<DBD::CSV|DBD::CSV>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.48>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:52:49 2015: C<Module> L<Class::Accessor|Class::Accessor>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.34>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:53:17 2015: C<Module> L<BSD::Resource|BSD::Resource>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.2908>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:53:19 2015: C<Module> L<ActiveState::Scineplex|ActiveState::Scineplex>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.01>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:53:23 2015: C<Module> L<ActiveState::PerlCritic|ActiveState::PerlCritic>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 10.00>
+
+=item *
+
+C<EXE_FILES: bin/perlcritic-gui>
+
+=back
+
+=head2 Wed Dec 23 18:53:35 2015: C<Module> L<ActivePerl::PPM|ActivePerl::PPM>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 4.20>
+
+=item *
+
+C<EXE_FILES: bin/ppm bin/ppm-shell>
+
+=back
+
+=head2 Wed Dec 23 18:53:36 2015: C<Module> L<ActivePerl::CPAN::Config|ActivePerl::CPAN::Config>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.00>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Wed Dec 23 18:53:38 2015: C<Module> L<ActivePerl::Config|ActivePerl::Config>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.05>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 13:24:52 2016: C<Module> L<Mojolicious|Mojolicious>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.57>
+
+=item *
+
+C<EXE_FILES: script/hypnotoad script/mojo script/morbo>
+
+=back
+
+=head2 Fri Mar 25 13:33:59 2016: C<Module> L<Mojo::Webqq|Mojo::Webqq>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.7.5>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 13:35:50 2016: C<Module> L<Mojo::Weixin|Mojo::Weixin>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.0.8>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 13:36:08 2016: C<Module> L<Mojo::SMTP::Client|Mojo::SMTP::Client>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.10>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 13:36:35 2016: C<Module> L<MIME::Types|MIME::Types>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.13>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 13:37:08 2016: C<Module> L<Date::Parse|Date::Parse>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.30>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 13:37:14 2016: C<Module> L<Mail|Mail>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.14>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 13:37:20 2016: C<Module> L<Email::Date::Format|Email::Date::Format>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.005>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 13:37:24 2016: C<Module> L<MIME::Lite|MIME::Lite>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.030>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 13:38:47 2016: C<Module> L<BSD::Resource|BSD::Resource>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.2909>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 14:54:35 2016: C<Module> L<Parse::IRC|Parse::IRC>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.20>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Mar 25 14:54:38 2016: C<Module> L<Mojo::IRC::Server::Chinese|Mojo::IRC::Server::Chinese>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.7.7>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+

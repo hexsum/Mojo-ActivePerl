@@ -1,0 +1,167 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a>
+    <ul>
+      <li><a href="#build_frame">build_frame</a></li>
+      <li><a href="#challenge">challenge</a></li>
+      <li><a href="#client_handshake">client_handshake</a></li>
+      <li><a href="#parse_frame">parse_frame</a></li>
+      <li><a href="#server_handshake">server_handshake</a></li>
+    </ul>
+  </li>
+  <li><a href="#CONSTANTS">CONSTANTS</a>
+    <ul>
+      <li><a href="#WS_BINARY">WS_BINARY</a></li>
+      <li><a href="#WS_CLOSE">WS_CLOSE</a></li>
+      <li><a href="#WS_CONTINUATION">WS_CONTINUATION</a></li>
+      <li><a href="#WS_PING">WS_PING</a></li>
+      <li><a href="#WS_PONG">WS_PONG</a></li>
+      <li><a href="#WS_TEXT">WS_TEXT</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::WebSocket - The WebSocket protocol</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::WebSocket</span> <span class="string">qw(WS_TEXT build_frame parse_frame)</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">build_frame</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="variable">WS_TEXT</span><span class="operator">,</span> <span class="string">'Hello World!'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$frame</span> <span class="operator">=</span> <span class="variable">parse_frame</span> <span class="operator">\</span><span class="variable">$bytes</span><span class="operator">,</span> <span class="number">262144</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/WebSocket.html">Mojo::WebSocket</a> implements the WebSocket protocol as described in <a href="http://tools.ietf.org/html/rfc6455">RFC 6455</a>. Note that 64-bit frames require a Perl with support for quads or they are limited to 32-bit.</p>
+
+<h1 id="FUNCTIONS">FUNCTIONS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/WebSocket.html">Mojo::WebSocket</a> implements the following functions, which can be imported individually.</p>
+
+<h2 id="build_frame">build_frame</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">build_frame</span> <span class="variable">$masked</span><span class="operator">,</span> <span class="variable">$fin</span><span class="operator">,</span> <span class="variable">$rsv1</span><span class="operator">,</span> <span class="variable">$rsv2</span><span class="operator">,</span> <span class="variable">$rsv3</span><span class="operator">,</span> <span class="variable">$op</span><span class="operator">,</span> <span class="variable">$payload</span><span class="operator">;</span>
+</code></pre>
+
+<p>Build WebSocket frame.</p>
+
+<pre><code>  <span class="comment"># Masked binary frame with FIN bit and payload</span>
+  <span class="keyword">say</span> <span class="variable">build_frame</span> <span class="number">1</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="variable">WS_BINARY</span><span class="operator">,</span> <span class="string">'Hello World!'</span><span class="operator">;</span>
+  
+  <span class="comment"># Text frame with payload but without FIN bit</span>
+  <span class="keyword">say</span> <span class="variable">build_frame</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="variable">WS_TEXT</span><span class="operator">,</span> <span class="string">'Hello '</span><span class="operator">;</span>
+  
+  <span class="comment"># Continuation frame with FIN bit and payload</span>
+  <span class="keyword">say</span> <span class="variable">build_frame</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="variable">WS_CONTINUATION</span><span class="operator">,</span> <span class="string">'World!'</span><span class="operator">;</span>
+  
+  <span class="comment"># Close frame with FIN bit and without payload</span>
+  <span class="keyword">say</span> <span class="variable">build_frame</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="variable">WS_CLOSE</span><span class="operator">,</span> <span class="string">''</span><span class="operator">;</span>
+  
+  <span class="comment"># Ping frame with FIN bit and payload</span>
+  <span class="keyword">say</span> <span class="variable">build_frame</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="variable">WS_PING</span><span class="operator">,</span> <span class="string">'Test 123'</span><span class="operator">;</span>
+  
+  <span class="comment"># Pong frame with FIN bit and payload</span>
+  <span class="keyword">say</span> <span class="variable">build_frame</span> <span class="number">0</span><span class="operator">,</span> <span class="number">1</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="number">0</span><span class="operator">,</span> <span class="variable">WS_PONG</span><span class="operator">,</span> <span class="string">'Test 123'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="challenge">challenge</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">challenge</span> <span class="variable">Mojo::Transaction::WebSocket</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check WebSocket handshake challenge.</p>
+
+<h2 id="client_handshake">client_handshake</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">client_handshake</span> <span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+</code></pre>
+
+<p>Perform WebSocket handshake client-side.</p>
+
+<h2 id="parse_frame">parse_frame</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$frame</span> <span class="operator">=</span> <span class="variable">parse_frame</span> <span class="operator">\</span><span class="variable">$bytes</span><span class="operator">,</span> <span class="variable">$limit</span><span class="operator">;</span>
+</code></pre>
+
+<p>Parse WebSocket frame.</p>
+
+<pre><code>  <span class="comment"># Parse single frame and remove it from buffer</span>
+  <span class="keyword">my</span> <span class="variable">$frame</span> <span class="operator">=</span> <span class="variable">parse_frame</span> <span class="operator">\</span><span class="variable">$buffer</span><span class="operator">,</span> <span class="number">262144</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="string">"FIN: </span><span class="variable">$frame</span><span class="string">-&gt;[0]"</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="string">"RSV1: </span><span class="variable">$frame</span><span class="string">-&gt;[1]"</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="string">"RSV2: </span><span class="variable">$frame</span><span class="string">-&gt;[2]"</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="string">"RSV3: </span><span class="variable">$frame</span><span class="string">-&gt;[3]"</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="string">"Opcode: </span><span class="variable">$frame</span><span class="string">-&gt;[4]"</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="string">"Payload: </span><span class="variable">$frame</span><span class="string">-&gt;[5]"</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="server_handshake">server_handshake</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">server_handshake</span> <span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+</code></pre>
+
+<p>Perform WebSocket handshake server-side.</p>
+
+<h1 id="CONSTANTS">CONSTANTS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/WebSocket.html">Mojo::WebSocket</a> implements the following constants, which can be imported individually.</p>
+
+<h2 id="WS_BINARY">WS_BINARY</h2>
+
+<p>Opcode for <code>Binary</code> frames.</p>
+
+<h2 id="WS_CLOSE">WS_CLOSE</h2>
+
+<p>Opcode for <code>Close</code> frames.</p>
+
+<h2 id="WS_CONTINUATION">WS_CONTINUATION</h2>
+
+<p>Opcode for <code>Continuation</code> frames.</p>
+
+<h2 id="WS_PING">WS_PING</h2>
+
+<p>Opcode for <code>Ping</code> frames.</p>
+
+<h2 id="WS_PONG">WS_PONG</h2>
+
+<p>Opcode for <code>Pong</code> frames.</p>
+
+<h2 id="WS_TEXT">WS_TEXT</h2>
+
+<p>Opcode for <code>Text</code> frames.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

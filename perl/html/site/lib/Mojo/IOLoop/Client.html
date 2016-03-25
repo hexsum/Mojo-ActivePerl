@@ -1,0 +1,237 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#connect">connect</a></li>
+      <li><a href="#error">error</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#reactor">reactor</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#connect1">connect</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::IOLoop::Client - Non-blocking TCP client</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::IOLoop::Client</span><span class="operator">;</span>
+  
+  <span class="comment"># Create socket connection</span>
+  <span class="keyword">my</span> <span class="variable">$client</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop::Client</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">connect</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span> <span class="variable">$handle</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">error</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">connect</span><span class="operator">(</span><span class="string">address</span> <span class="operator">=&gt;</span> <span class="string">'example.com'</span><span class="operator">,</span> <span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">80</span><span class="operator">);</span>
+  
+  <span class="comment"># Start reactor if necessary</span>
+  <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Client.html">Mojo::IOLoop::Client</a> opens TCP connections for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Client.html">Mojo::IOLoop::Client</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones.</p>
+
+<h2 id="connect">connect</h2>
+
+<pre><code>  <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">connect</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span> <span class="variable">$handle</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted once the connection is established.</p>
+
+<h2 id="error">error</h2>
+
+<pre><code>  <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">error</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted if an error occurs on the connection, fatal if unhandled.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Client.html">Mojo::IOLoop::Client</a> implements the following attributes.</p>
+
+<h2 id="reactor">reactor</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$reactor</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">;</span>
+  <span class="variable">$client</span>     <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">(</span><span class="variable">Mojo::Reactor::Poll</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Low-level event reactor, defaults to the <code>reactor</code> attribute value of the global <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> singleton.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Client.html">Mojo::IOLoop::Client</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="connect1">connect</h2>
+
+<pre><code>  <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">connect</span><span class="operator">(</span><span class="string">address</span> <span class="operator">=&gt;</span> <span class="string">'127.0.0.1'</span><span class="operator">,</span> <span class="string">port</span> <span class="operator">=&gt;</span> <span class="number">3000</span><span class="operator">);</span>
+</code></pre>
+
+<p>Open a socket connection to a remote host. Note that non-blocking name resolution depends on <a>Net::DNS::Native</a> (0.15+), SOCKS5 support on <a>IO::Socket::Socks</a> (0.64), and TLS support on <a href="../../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> (1.94+).</p>
+
+<p>These options are currently available:</p>
+
+<dl>
+
+<dt id="address">address</dt>
+<dd>
+
+<pre><code>  address =&gt; &#39;mojolicious.org&#39;</code></pre>
+
+<p>Address or host name of the peer to connect to, defaults to <code>127.0.0.1</code>.</p>
+
+</dd>
+<dt id="handle">handle</dt>
+<dd>
+
+<pre><code>  handle =&gt; $handle</code></pre>
+
+<p>Use an already prepared <a href="../../../../lib/IO/Socket/IP.html">IO::Socket::IP</a> object.</p>
+
+</dd>
+<dt id="local_address">local_address</dt>
+<dd>
+
+<pre><code>  local_address =&gt; &#39;127.0.0.1&#39;</code></pre>
+
+<p>Local address to bind to.</p>
+
+</dd>
+<dt id="port">port</dt>
+<dd>
+
+<pre><code>  port =&gt; 80</code></pre>
+
+<p>Port to connect to, defaults to <code>80</code> or <code>443</code> with <code>tls</code> option.</p>
+
+</dd>
+<dt id="socks_address">socks_address</dt>
+<dd>
+
+<pre><code>  socks_address =&gt; &#39;127.0.0.1&#39;</code></pre>
+
+<p>Address or host name of SOCKS5 proxy server to use for connection.</p>
+
+</dd>
+<dt id="socks_pass">socks_pass</dt>
+<dd>
+
+<pre><code>  socks_pass =&gt; &#39;secr3t&#39;</code></pre>
+
+<p>Password to use for SOCKS5 authentication.</p>
+
+</dd>
+<dt id="socks_port">socks_port</dt>
+<dd>
+
+<pre><code>  socks_port =&gt; 9050</code></pre>
+
+<p>Port of SOCKS5 proxy server to use for connection.</p>
+
+</dd>
+<dt id="socks_user">socks_user</dt>
+<dd>
+
+<pre><code>  socks_user =&gt; &#39;sri&#39;</code></pre>
+
+<p>Username to use for SOCKS5 authentication.</p>
+
+</dd>
+<dt id="timeout">timeout</dt>
+<dd>
+
+<pre><code>  timeout =&gt; 15</code></pre>
+
+<p>Maximum amount of time in seconds establishing connection may take before getting canceled, defaults to <code>10</code>.</p>
+
+</dd>
+<dt id="tls">tls</dt>
+<dd>
+
+<pre><code>  tls =&gt; 1</code></pre>
+
+<p>Enable TLS.</p>
+
+</dd>
+<dt id="tls_ca">tls_ca</dt>
+<dd>
+
+<pre><code>  tls_ca =&gt; &#39;/etc/tls/ca.crt&#39;</code></pre>
+
+<p>Path to TLS certificate authority file. Also activates hostname verification.</p>
+
+</dd>
+<dt id="tls_cert">tls_cert</dt>
+<dd>
+
+<pre><code>  tls_cert =&gt; &#39;/etc/tls/client.crt&#39;</code></pre>
+
+<p>Path to the TLS certificate file.</p>
+
+</dd>
+<dt id="tls_key">tls_key</dt>
+<dd>
+
+<pre><code>  tls_key =&gt; &#39;/etc/tls/client.key&#39;</code></pre>
+
+<p>Path to the TLS key file.</p>
+
+</dd>
+</dl>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,414 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#HELPERS">HELPERS</a>
+    <ul>
+      <li><a href="#accepts">accepts</a></li>
+      <li><a href="#app">app</a></li>
+      <li><a href="#b">b</a></li>
+      <li><a href="#c">c</a></li>
+      <li><a href="#config">config</a></li>
+      <li><a href="#content">content</a></li>
+      <li><a href="#content_for">content_for</a></li>
+      <li><a href="#content_with">content_with</a></li>
+      <li><a href="#csrf_token">csrf_token</a></li>
+      <li><a href="#current_route">current_route</a></li>
+      <li><a href="#delay">delay</a></li>
+      <li><a href="#dumper">dumper</a></li>
+      <li><a href="#extends">extends</a></li>
+      <li><a href="#flash">flash</a></li>
+      <li><a href="#inactivity_timeout">inactivity_timeout</a></li>
+      <li><a href="#include">include</a></li>
+      <li><a href="#is_fresh">is_fresh</a></li>
+      <li><a href="#layout">layout</a></li>
+      <li><a href="#param">param</a></li>
+      <li><a href="#reply-asset">reply-&gt;asset</a></li>
+      <li><a href="#reply-exception">reply-&gt;exception</a></li>
+      <li><a href="#reply-not_found">reply-&gt;not_found</a></li>
+      <li><a href="#reply-static">reply-&gt;static</a></li>
+      <li><a href="#session">session</a></li>
+      <li><a href="#stash">stash</a></li>
+      <li><a href="#title">title</a></li>
+      <li><a href="#ua">ua</a></li>
+      <li><a href="#url_for">url_for</a></li>
+      <li><a href="#url_with">url_with</a></li>
+      <li><a href="#validation">validation</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#register">register</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Plugin::DefaultHelpers - Default helpers plugin</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="comment"># Mojolicious</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'DefaultHelpers'</span><span class="operator">);</span>
+  
+  <span class="comment"># Mojolicious::Lite</span>
+  <span class="variable">plugin</span> <span class="string">'DefaultHelpers'</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html">Mojolicious::Plugin::DefaultHelpers</a> is a collection of helpers for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+<p>This is a core plugin, that means it is always enabled and its code a good example for learning to build new plugins, you&#39;re welcome to fork it.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html#PLUGINS">&quot;PLUGINS&quot; in Mojolicious::Plugins</a> for a list of plugins that are available by default.</p>
+
+<h1 id="HELPERS">HELPERS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html">Mojolicious::Plugin::DefaultHelpers</a> implements the following helpers.</p>
+
+<h2 id="accepts">accepts</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$formats</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$format</span>  <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">(</span><span class="string">'html'</span><span class="operator">,</span> <span class="string">'json'</span><span class="operator">,</span> <span class="string">'txt'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Select best possible representation for resource from <code>Accept</code> request header, <code>format</code> stash value or <code>format</code> <code>GET</code>/<code>POST</code> parameter with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html#accepts">&quot;accepts&quot; in Mojolicious::Renderer</a>, defaults to returning the first extension if no preference could be detected.</p>
+
+<pre><code>  <span class="comment"># Check if JSON is acceptable</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">hello</span> <span class="operator">=&gt;</span> <span class="string">'world'</span><span class="operator">}</span><span class="operator">)</span> <span class="keyword">if</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">(</span><span class="string">'json'</span><span class="operator">);</span>
+  
+  <span class="comment"># Check if JSON was specifically requested</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">hello</span> <span class="operator">=&gt;</span> <span class="string">'world'</span><span class="operator">}</span><span class="operator">)</span> <span class="keyword">if</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">(</span><span class="string">''</span><span class="operator">,</span> <span class="string">'json'</span><span class="operator">);</span>
+  
+  <span class="comment"># Unsupported representation</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">data</span> <span class="operator">=&gt;</span> <span class="string">''</span><span class="operator">,</span> <span class="string">status</span> <span class="operator">=&gt;</span> <span class="number">204</span><span class="operator">)</span>
+    <span class="keyword">unless</span> <span class="keyword">my</span> <span class="variable">$format</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">(</span><span class="string">'html'</span><span class="operator">,</span> <span class="string">'json'</span><span class="operator">);</span>
+  
+  <span class="comment"># Detected representations to select from</span>
+  <span class="keyword">my</span> <span class="variable">@formats</span> <span class="operator">=</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="app">app</h2>
+
+<pre><code>  %= app-&gt;secrets-&gt;[0]</code></pre>
+
+<p>Alias for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#app">&quot;app&quot; in Mojolicious::Controller</a>.</p>
+
+<h2 id="b">b</h2>
+
+<pre><code>  %= b(&#39;test 123&#39;)-&gt;b64_encode</code></pre>
+
+<p>Turn string into a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a> object.</p>
+
+<h2 id="c">c</h2>
+
+<pre><code>  %= c(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;)-&gt;shuffle-&gt;join</code></pre>
+
+<p>Turn list into a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object.</p>
+
+<h2 id="config">config</h2>
+
+<pre><code>  %= config &#39;something&#39;</code></pre>
+
+<p>Alias for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html#config">&quot;config&quot; in Mojo</a>.</p>
+
+<h2 id="content">content</h2>
+
+<pre><code>  %= content foo =&gt; begin
+    test
+  % end
+  %= content bar =&gt; &#39;Hello World!&#39;
+  %= content &#39;foo&#39;
+  %= content &#39;bar&#39;
+  %= content</code></pre>
+
+<p>Store partial rendered content in a named buffer and retrieve it later, defaults to retrieving the named buffer <code>content</code>, which is used by the renderer for the <code>layout</code> and <code>extends</code> features. New content will be ignored if the named buffer is already in use.</p>
+
+<h2 id="content_for">content_for</h2>
+
+<pre><code>  % content_for foo =&gt; begin
+    test
+  % end
+  %= content_for &#39;foo&#39;</code></pre>
+
+<p>Same as <a href="#content">&quot;content&quot;</a>, but appends content to named buffers if they are already in use.</p>
+
+<pre><code>  % content_for message =&gt; begin
+    Hello
+  % end
+  % content_for message =&gt; begin
+    world!
+  % end
+  %= content &#39;message&#39;</code></pre>
+
+<h2 id="content_with">content_with</h2>
+
+<pre><code>  % content_with foo =&gt; begin
+    test
+  % end
+  %= content_with &#39;foo&#39;</code></pre>
+
+<p>Same as <a href="#content">&quot;content&quot;</a>, but replaces content of named buffers if they are already in use.</p>
+
+<pre><code>  % content message =&gt; begin
+    world!
+  % end
+  % content_with message =&gt; begin
+    Hello &lt;%= content &#39;message&#39; %&gt;
+  % end
+  %= content &#39;message&#39;</code></pre>
+
+<h2 id="csrf_token">csrf_token</h2>
+
+<pre><code>  %= csrf_token</code></pre>
+
+<p>Get CSRF token from <a href="#session">&quot;session&quot;</a>, and generate one if none exists.</p>
+
+<h2 id="current_route">current_route</h2>
+
+<pre><code>  <span class="operator">% </span><span class="keyword">if</span> <span class="operator">(</span><span class="variable">current_route</span> <span class="string">'login'</span><span class="operator">)</span> <span class="operator">{</span>
+    <span class="variable">Welcome</span> <span class="variable">to</span> <span class="variable">Mojolicious</span><span class="operator">!</span>
+  <span class="operator">% }</span>
+  <span class="variable">%=</span> <span class="variable">current_route</span>
+</code></pre>
+
+<p>Check or get name of current route.</p>
+
+<h2 id="delay">delay</h2>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...},</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Disable automatic rendering and use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html#delay">&quot;delay&quot; in Mojo::IOLoop</a> to manage callbacks and control the flow of events, which can help you avoid deep nested closures that often result from continuation-passing style. Also keeps a reference to <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#tx">&quot;tx&quot; in Mojolicious::Controller</a> in case the underlying connection gets closed early, and calls <a href="#reply--exception">&quot;reply-&gt;exception&quot;</a> if an exception gets thrown in one of the steps, breaking the chain.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render_later</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span>    <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...},</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">catch</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">exception</span><span class="operator">(</span><span class="keyword">pop</span><span class="operator">)</span> <span class="keyword">and</span> <span class="keyword">undef</span> <span class="variable">$tx</span> <span class="operator">})-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+  
+  <span class="comment"># Non-blocking request</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'http://mojolicious.org'</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+    <span class="operator">},</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">title</span> <span class="operator">=&gt;</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">}</span><span class="operator">);</span>
+    <span class="operator">}</span>
+  <span class="operator">);</span>
+</code></pre>
+
+<h2 id="dumper">dumper</h2>
+
+<pre><code>  <span class="variable">%=</span> <span class="variable">dumper</span> <span class="operator">{</span><span class="string">some</span> <span class="operator">=&gt;</span> <span class="string">'data'</span><span class="operator">}</span>
+</code></pre>
+
+<p>Dump a Perl data structure with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html#dumper">&quot;dumper&quot; in Mojo::Util</a>, very useful for debugging.</p>
+
+<h2 id="extends">extends</h2>
+
+<pre><code>  <span class="operator">% </span><span class="variable">extends</span> <span class="string">'blue'</span><span class="operator">;</span>
+  <span class="operator">% </span><span class="variable">extends</span> <span class="string">'blue'</span><span class="operator">,</span> <span class="string">title</span> <span class="operator">=&gt;</span> <span class="string">'Blue!'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Set <code>extends</code> stash value, all additional key/value pairs get merged into the <a href="#stash">&quot;stash&quot;</a>.</p>
+
+<h2 id="flash">flash</h2>
+
+<pre><code>  %= flash &#39;foo&#39;</code></pre>
+
+<p>Alias for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#flash">&quot;flash&quot; in Mojolicious::Controller</a>.</p>
+
+<h2 id="inactivity_timeout">inactivity_timeout</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">inactivity_timeout</span><span class="operator">(</span><span class="number">3600</span><span class="operator">);</span>
+</code></pre>
+
+<p>Use <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html#stream">&quot;stream&quot; in Mojo::IOLoop</a> to find the current connection and increase timeout if possible.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">stream</span><span class="operator">(</span><span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">connection</span><span class="operator">)-&gt;</span><span class="variable">timeout</span><span class="operator">(</span><span class="number">3600</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="include">include</h2>
+
+<pre><code>  %= include &#39;menubar&#39;
+  %= include &#39;menubar&#39;, format =&gt; &#39;txt&#39;</code></pre>
+
+<p>Alias for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#render_to_string">&quot;render_to_string&quot; in Mojolicious::Controller</a>.</p>
+
+<h2 id="is_fresh">is_fresh</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">is_fresh</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">is_fresh</span><span class="operator">(</span><span class="string">etag</span> <span class="operator">=&gt;</span> <span class="string">'abc'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">is_fresh</span><span class="operator">(</span><span class="string">last_modified</span> <span class="operator">=&gt;</span> <span class="variable">$epoch</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check freshness of request by comparing the <code>If-None-Match</code> and <code>If-Modified-Since</code> request headers to the <code>ETag</code> and <code>Last-Modified</code> response headers with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Static.html#is_fresh">&quot;is_fresh&quot; in Mojolicious::Static</a>.</p>
+
+<pre><code>  <span class="comment"># Add ETag/Last-Modified headers and check freshness before rendering</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">is_fresh</span><span class="operator">(</span><span class="string">etag</span> <span class="operator">=&gt;</span> <span class="string">'abc'</span><span class="operator">,</span> <span class="string">last_modified</span> <span class="operator">=&gt;</span> <span class="number">1424985708</span><span class="operator">)</span>
+    <span class="operator">?</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">rendered</span><span class="operator">(</span><span class="number">304</span><span class="operator">)</span>
+    <span class="operator">:</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">text</span> <span class="operator">=&gt;</span> <span class="string">'I â¥ Mojolicious!'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="layout">layout</h2>
+
+<pre><code>  <span class="operator">% </span><span class="variable">layout</span> <span class="string">'green'</span><span class="operator">;</span>
+  <span class="operator">% </span><span class="variable">layout</span> <span class="string">'green'</span><span class="operator">,</span> <span class="string">title</span> <span class="operator">=&gt;</span> <span class="string">'Green!'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Set <code>layout</code> stash value, all additional key/value pairs get merged into the <a href="#stash">&quot;stash&quot;</a>.</p>
+
+<h2 id="param">param</h2>
+
+<pre><code>  %= param &#39;foo&#39;</code></pre>
+
+<p>Alias for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#param">&quot;param&quot; in Mojolicious::Controller</a>.</p>
+
+<h2 id="reply-asset">reply-&gt;asset</h2>
+
+<pre><code>  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">asset</span><span class="operator">(</span><span class="variable">Mojo::Asset::File</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Reply with a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/File.html">Mojo::Asset::File</a> or <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/Memory.html">Mojo::Asset::Memory</a> object using <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Static.html#serve_asset">&quot;serve_asset&quot; in Mojolicious::Static</a>, and perform content negotiation with <code>Range</code>, <code>If-Modified-Since</code> and <code>If-None-Match</code> headers.</p>
+
+<pre><code>  <span class="comment"># Serve asset with custom modification time</span>
+  <span class="keyword">my</span> <span class="variable">$asset</span> <span class="operator">=</span> <span class="variable">Mojo::Asset::Memory</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$asset</span><span class="operator">-&gt;</span><span class="variable">add_chunk</span><span class="operator">(</span><span class="string">'Hello World!'</span><span class="operator">)-&gt;</span><span class="variable">mtime</span><span class="operator">(</span><span class="number">784111777</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">asset</span><span class="operator">(</span><span class="variable">$asset</span><span class="operator">);</span>
+  
+  <span class="comment"># Serve static file if it exists</span>
+  <span class="keyword">if</span> <span class="operator">(</span><span class="keyword">my</span> <span class="variable">$asset</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">-&gt;</span><span class="variable">file</span><span class="operator">(</span><span class="string">'images/logo.png'</span><span class="operator">))</span> <span class="operator">{</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'image/png'</span><span class="operator">);</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">asset</span><span class="operator">(</span><span class="variable">$asset</span><span class="operator">);</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h2 id="reply-exception">reply-&gt;exception</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">exception</span><span class="operator">(</span><span class="string">'Oops!'</span><span class="operator">);</span>
+  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">exception</span><span class="operator">(</span><span class="variable">Mojo::Exception</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Render the exception template <code>exception.$mode.$format.*</code> or <code>exception.$format.*</code> and set the response status code to <code>500</code>. Also sets the stash values <code>exception</code> to a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a> object and <code>snapshot</code> to a copy of the <a href="#stash">&quot;stash&quot;</a> for use in the templates.</p>
+
+<h2 id="reply-not_found">reply-&gt;not_found</h2>
+
+<pre><code>  <span class="variable">$c</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">not_found</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render the not found template <code>not_found.$mode.$format.*</code> or <code>not_found.$format.*</code> and set the response status code to <code>404</code>. Also sets the stash value <code>snapshot</code> to a copy of the <a href="#stash">&quot;stash&quot;</a> for use in the templates.</p>
+
+<h2 id="reply-static">reply-&gt;static</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">(</span><span class="string">'images/logo.png'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">(</span><span class="string">'../lib/MyApp.pm'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Reply with a static file using <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html#static">&quot;static&quot; in Mojolicious</a>, usually from the <code>public</code> directories or <code>DATA</code> sections of your application. Note that this helper does not protect from traversing to parent directories.</p>
+
+<pre><code>  <span class="comment"># Serve file with a custom content type</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'application/myapp'</span><span class="operator">);</span>
+  <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">-&gt;</span><span class="variable">static</span><span class="operator">(</span><span class="string">'foo.txt'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="session">session</h2>
+
+<pre><code>  %= session &#39;foo&#39;</code></pre>
+
+<p>Alias for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#session">&quot;session&quot; in Mojolicious::Controller</a>.</p>
+
+<h2 id="stash">stash</h2>
+
+<pre><code>  <span class="variable">%=</span> <span class="variable">stash</span> <span class="string">'foo'</span>
+  <span class="operator">% </span><span class="variable">stash</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#stash">&quot;stash&quot; in Mojolicious::Controller</a>.</p>
+
+<pre><code>  %= stash(&#39;name&#39;) // &#39;Somebody&#39;</code></pre>
+
+<h2 id="title">title</h2>
+
+<pre><code>  <span class="variable">%=</span> <span class="variable">title</span>
+  <span class="operator">% </span><span class="variable">title</span> <span class="string">'Welcome!'</span><span class="operator">;</span>
+  <span class="operator">% </span><span class="variable">title</span> <span class="string">'Welcome!'</span><span class="operator">,</span> <span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Get or set <code>title</code> stash value, all additional key/value pairs get merged into the <a href="#stash">&quot;stash&quot;</a>.</p>
+
+<h2 id="ua">ua</h2>
+
+<pre><code>  %= ua-&gt;get(&#39;mojolicious.org&#39;)-&gt;res-&gt;dom-&gt;at(&#39;title&#39;)-&gt;text</code></pre>
+
+<p>Alias for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html#ua">&quot;ua&quot; in Mojo</a>.</p>
+
+<h2 id="url_for">url_for</h2>
+
+<pre><code>  %= url_for &#39;named&#39;, controller =&gt; &#39;bar&#39;, action =&gt; &#39;baz&#39;</code></pre>
+
+<p>Alias for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#url_for">&quot;url_for&quot; in Mojolicious::Controller</a>.</p>
+
+<pre><code>  %= url_for(&#39;/index.html&#39;)-&gt;query(foo =&gt; &#39;bar&#39;)</code></pre>
+
+<h2 id="url_with">url_with</h2>
+
+<pre><code>  %= url_with &#39;named&#39;, controller =&gt; &#39;bar&#39;, action =&gt; &#39;baz&#39;</code></pre>
+
+<p>Does the same as <a href="#url_for">&quot;url_for&quot;</a>, but inherits query parameters from the current request.</p>
+
+<pre><code>  %= url_with-&gt;query([page =&gt; 2])</code></pre>
+
+<h2 id="validation">validation</h2>
+
+<pre><code>  %= validation-&gt;param(&#39;foo&#39;)</code></pre>
+
+<p>Alias for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html#validation">&quot;validation&quot; in Mojolicious::Controller</a>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html">Mojolicious::Plugin::DefaultHelpers</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin.html">Mojolicious::Plugin</a> and implements the following new ones.</p>
+
+<h2 id="register">register</h2>
+
+<pre><code>  <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">register</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Register helpers in <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

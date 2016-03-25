@@ -1,0 +1,324 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#SIGNALS">SIGNALS</a>
+    <ul>
+      <li><a href="#INT-TERM">INT, TERM</a></li>
+    </ul>
+  </li>
+  <li><a href="#EVENTS">EVENTS</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#acceptors">acceptors</a></li>
+      <li><a href="#backlog">backlog</a></li>
+      <li><a href="#inactivity_timeout">inactivity_timeout</a></li>
+      <li><a href="#ioloop">ioloop</a></li>
+      <li><a href="#listen">listen</a></li>
+      <li><a href="#max_clients">max_clients</a></li>
+      <li><a href="#max_requests">max_requests</a></li>
+      <li><a href="#silent">silent</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#run">run</a></li>
+      <li><a href="#start">start</a></li>
+      <li><a href="#stop">stop</a></li>
+    </ul>
+  </li>
+  <li><a href="#DEBUGGING">DEBUGGING</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Server::Daemon - Non-blocking I/O HTTP and WebSocket server</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Server::Daemon</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$daemon</span> <span class="operator">=</span> <span class="variable">Mojo::Server::Daemon</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">listen</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'http://*:8080'</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">unsubscribe</span><span class="operator">(</span><span class="string">'request'</span><span class="operator">)-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">request</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$daemon</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Request</span>
+    <span class="keyword">my</span> <span class="variable">$method</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">method</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$path</span>   <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+  
+    <span class="comment"># Response</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">(</span><span class="string">"</span><span class="variable">$method</span><span class="string"> request for </span><span class="variable">$path</span><span class="string">!"</span><span class="operator">);</span>
+  
+    <span class="comment"># Resume transaction</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">resume</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a> is a full featured, highly portable non-blocking I/O HTTP and WebSocket server, with IPv6, TLS, SNI, Comet (long polling), keep-alive and multiple event loop support.</p>
+
+<p>For better scalability (epoll, kqueue) and to provide non-blocking name resolution, SOCKS5 as well as TLS support, the optional modules <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">EV</a> (4.0+), <a>Net::DNS::Native</a> (0.15+), <a>IO::Socket::Socks</a> (0.64+) and <a href="../../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> (1.94+) will be used automatically if possible. Individual features can also be disabled with the <code>MOJO_NO_NDN</code>, <code>MOJO_NO_SOCKS</code> and <code>MOJO_NO_TLS</code> environment variables.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Cookbook.html#DEPLOYMENT">&quot;DEPLOYMENT&quot; in Mojolicious::Guides::Cookbook</a> for more.</p>
+
+<h1 id="SIGNALS">SIGNALS</h1>
+
+<p>The <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a> process can be controlled at runtime with the following signals.</p>
+
+<h2 id="INT-TERM">INT, TERM</h2>
+
+<p>Shut down server immediately.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a> inherits all attributes from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a> and implements the following new ones.</p>
+
+<h2 id="acceptors">acceptors</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$acceptors</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">acceptors</span><span class="operator">;</span>
+  <span class="variable">$daemon</span>       <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">acceptors</span><span class="operator">(</span><span class="operator">[</span><span class="string">'6be0c140ef00a389c5d039536b56d139'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Active acceptor ids.</p>
+
+<pre><code>  <span class="comment"># Check port</span>
+  <span class="variable">mu</span> <span class="variable">$port</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">ioloop</span><span class="operator">-&gt;</span><span class="variable">acceptor</span><span class="operator">(</span><span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">acceptors</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">)-&gt;</span><span class="variable">port</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="backlog">backlog</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$backlog</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">backlog</span><span class="operator">;</span>
+  <span class="variable">$daemon</span>     <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">backlog</span><span class="operator">(</span><span class="number">128</span><span class="operator">);</span>
+</code></pre>
+
+<p>Listen backlog size, defaults to <code>SOMAXCONN</code>.</p>
+
+<h2 id="inactivity_timeout">inactivity_timeout</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$timeout</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">inactivity_timeout</span><span class="operator">;</span>
+  <span class="variable">$daemon</span>     <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">inactivity_timeout</span><span class="operator">(</span><span class="number">5</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum amount of time in seconds a connection can be inactive before getting closed, defaults to the value of the <code>MOJO_INACTIVITY_TIMEOUT</code> environment variable or <code>15</code>. Setting the value to <code>0</code> will allow connections to be inactive indefinitely.</p>
+
+<h2 id="ioloop">ioloop</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">ioloop</span><span class="operator">;</span>
+  <span class="variable">$daemon</span>  <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">ioloop</span><span class="operator">(</span><span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Event loop object to use for I/O operations, defaults to the global <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> singleton.</p>
+
+<h2 id="listen">listen</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$listen</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">;</span>
+  <span class="variable">$daemon</span>    <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="operator">[</span><span class="string">'https://127.0.0.1:8080'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Array reference with one or more locations to listen on, defaults to the value of the <code>MOJO_LISTEN</code> environment variable or <code>http://*:3000</code> (shortcut for <code>http://0.0.0.0:3000</code>).</p>
+
+<pre><code>  <span class="comment"># Listen on all IPv4 interfaces</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="operator">[</span><span class="string">'http://*:3000'</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Listen on all IPv4 and IPv6 interfaces</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="operator">[</span><span class="string">'http://[::]:3000'</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Listen on IPv6 interface</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="operator">[</span><span class="string">'http://[::1]:4000'</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Listen on IPv4 and IPv6 interfaces</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="operator">[</span><span class="string">'http://127.0.0.1:3000'</span><span class="operator">,</span> <span class="string">'http://[::1]:3000'</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Allow multiple servers to use the same port (SO_REUSEPORT)</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="operator">[</span><span class="string">'http://*:8080?reuse=1'</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Listen on two ports with HTTP and HTTPS at the same time</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="operator">[</span><span class="string">'http://*:3000'</span><span class="operator">,</span> <span class="string">'https://*:4000'</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Use a custom certificate and key</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="operator">[</span><span class="string">'https://*:3000?cert=/x/server.crt&amp;key=/y/server.key'</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Domain specific certificates and keys (SNI)</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span>
+    <span class="operator">[</span><span class="string">'https://*:3000?example.com_cert=/x/my.crt&amp;example.com_key=/y/my.key'</span><span class="operator">]</span><span class="operator">);</span>
+  
+  <span class="comment"># Or even a custom certificate authority</span>
+  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span>
+    <span class="operator">[</span><span class="string">'https://*:3000?cert=/x/server.crt&amp;key=/y/server.key&amp;ca=/z/ca.crt'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>These parameters are currently available:</p>
+
+<dl>
+
+<dt id="ca">ca</dt>
+<dd>
+
+<pre><code>  ca=/etc/tls/ca.crt</code></pre>
+
+<p>Path to TLS certificate authority file used to verify the peer certificate.</p>
+
+</dd>
+<dt id="cert">cert</dt>
+<dd>
+
+<pre><code>  cert=/etc/tls/server.crt
+  mojolicious.org_cert=/etc/tls/mojo.crt</code></pre>
+
+<p>Path to the TLS cert file, defaults to a built-in test certificate.</p>
+
+</dd>
+<dt id="ciphers">ciphers</dt>
+<dd>
+
+<pre><code>  ciphers=AES128-GCM-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH</code></pre>
+
+<p>TLS cipher specification string. For more information about the format see <a href="https://www.openssl.org/docs/manmaster/apps/ciphers.html#CIPHER-STRINGS">https://www.openssl.org/docs/manmaster/apps/ciphers.html#CIPHER-STRINGS</a>.</p>
+
+</dd>
+<dt id="key">key</dt>
+<dd>
+
+<pre><code>  key=/etc/tls/server.key
+  mojolicious.org_key=/etc/tls/mojo.key</code></pre>
+
+<p>Path to the TLS key file, defaults to a built-in test key.</p>
+
+</dd>
+<dt id="reuse">reuse</dt>
+<dd>
+
+<pre><code>  reuse=1</code></pre>
+
+<p>Allow multiple servers to use the same port with the <code>SO_REUSEPORT</code> socket option.</p>
+
+</dd>
+<dt id="single_accept">single_accept</dt>
+<dd>
+
+<pre><code>  single_accept=1</code></pre>
+
+<p>Only accept one connection at a time.</p>
+
+</dd>
+<dt id="verify">verify</dt>
+<dd>
+
+<pre><code>  verify=0x00</code></pre>
+
+<p>TLS verification mode, defaults to <code>0x03</code>.</p>
+
+</dd>
+<dt id="version">version</dt>
+<dd>
+
+<pre><code>  version=TLSv1_2</code></pre>
+
+<p>TLS protocol version.</p>
+
+</dd>
+</dl>
+
+<h2 id="max_clients">max_clients</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$max</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">max_clients</span><span class="operator">;</span>
+  <span class="variable">$daemon</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">max_clients</span><span class="operator">(</span><span class="number">100</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum number of accepted connections this server is allowed to handle concurrently, before stopping to accept new incoming connections, passed along to <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html#max_connections">&quot;max_connections&quot; in Mojo::IOLoop</a>.</p>
+
+<h2 id="max_requests">max_requests</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$max</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">max_requests</span><span class="operator">;</span>
+  <span class="variable">$daemon</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">max_requests</span><span class="operator">(</span><span class="number">250</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum number of keep-alive requests per connection, defaults to <code>100</code>.</p>
+
+<h2 id="silent">silent</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">silent</span><span class="operator">;</span>
+  <span class="variable">$daemon</span>  <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">silent</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Disable console messages.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a> and implements the following new ones.</p>
+
+<h2 id="run">run</h2>
+
+<pre><code>  <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">;</span>
+</code></pre>
+
+<p>Run server and wait for <a href="#SIGNALS">&quot;SIGNALS&quot;</a>.</p>
+
+<h2 id="start">start</h2>
+
+<pre><code>  <span class="variable">$daemon</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>Start or resume accepting connections through <a href="#ioloop">&quot;ioloop&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># Listen on random port</span>
+  <span class="keyword">my</span> <span class="variable">$id</span>   <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">listen</span><span class="operator">(</span><span class="operator">[</span><span class="string">'http://127.0.0.1'</span><span class="operator">]</span><span class="operator">)-&gt;</span><span class="variable">start</span><span class="operator">-&gt;</span><span class="variable">acceptors</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$port</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">ioloop</span><span class="operator">-&gt;</span><span class="variable">acceptor</span><span class="operator">(</span><span class="variable">$id</span><span class="operator">)-&gt;</span><span class="variable">port</span><span class="operator">;</span>
+  
+  <span class="comment"># Run multiple web servers concurrently</span>
+  <span class="keyword">my</span> <span class="variable">$daemon1</span> <span class="operator">=</span> <span class="variable">Mojo::Server::Daemon</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">listen</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'http://*:3000'</span><span class="operator">]</span><span class="operator">)-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$daemon2</span> <span class="operator">=</span> <span class="variable">Mojo::Server::Daemon</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">listen</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'http://*:4000'</span><span class="operator">]</span><span class="operator">)-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="stop">stop</h2>
+
+<pre><code>  <span class="variable">$daemon</span> <span class="operator">=</span> <span class="variable">$daemon</span><span class="operator">-&gt;</span><span class="variable">stop</span><span class="operator">;</span>
+</code></pre>
+
+<p>Stop accepting connections through <a href="#ioloop">&quot;ioloop&quot;</a>.</p>
+
+<h1 id="DEBUGGING">DEBUGGING</h1>
+
+<p>You can set the <code>MOJO_DAEMON_DEBUG</code> environment variable to get some advanced diagnostics information printed to <code>STDERR</code>.</p>
+
+<pre><code>  MOJO_DAEMON_DEBUG=1</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

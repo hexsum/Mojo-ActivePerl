@@ -1,0 +1,284 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#env">env</a></li>
+      <li><a href="#method">method</a></li>
+      <li><a href="#proxy">proxy</a></li>
+      <li><a href="#reverse_proxy">reverse_proxy</a></li>
+      <li><a href="#url">url</a></li>
+      <li><a href="#via_proxy">via_proxy</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#clone">clone</a></li>
+      <li><a href="#cookies">cookies</a></li>
+      <li><a href="#every_param">every_param</a></li>
+      <li><a href="#extract_start_line">extract_start_line</a></li>
+      <li><a href="#fix_headers">fix_headers</a></li>
+      <li><a href="#get_start_line_chunk">get_start_line_chunk</a></li>
+      <li><a href="#is_handshake">is_handshake</a></li>
+      <li><a href="#is_secure">is_secure</a></li>
+      <li><a href="#is_xhr">is_xhr</a></li>
+      <li><a href="#param">param</a></li>
+      <li><a href="#params">params</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#query_params">query_params</a></li>
+      <li><a href="#start_line_size">start_line_size</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Message::Request - HTTP request</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Message::Request</span><span class="operator">;</span>
+  
+  <span class="comment"># Parse</span>
+  <span class="keyword">my</span> <span class="variable">$req</span> <span class="operator">=</span> <span class="variable">Mojo::Message::Request</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"GET /foo HTTP/1.0\x0d\x0a"</span><span class="operator">);</span>
+  <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Length: 12\x0d\x0a"</span><span class="operator">);</span>
+  <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">"Content-Type: text/plain\x0d\x0a\x0d\x0a"</span><span class="operator">);</span>
+  <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'Hello World!'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">method</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  
+  <span class="comment"># Build</span>
+  <span class="keyword">my</span> <span class="variable">$req</span> <span class="operator">=</span> <span class="variable">Mojo::Message::Request</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'http://127.0.0.1/foo/bar'</span><span class="operator">);</span>
+  <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">method</span><span class="operator">(</span><span class="string">'GET'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Request.html">Mojo::Message::Request</a> is a container for HTTP requests, based on <a href="http://tools.ietf.org/html/rfc7230">RFC 7230</a>, <a href="http://tools.ietf.org/html/rfc7231">RFC 7231</a>, <a href="http://tools.ietf.org/html/rfc7235">RFC 7235</a> and <a href="http://tools.ietf.org/html/rfc2817">RFC 2817</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Request.html">Mojo::Message::Request</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Request.html">Mojo::Message::Request</a> inherits all attributes from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a> and implements the following new ones.</p>
+
+<h2 id="env">env</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$env</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">env</span><span class="operator">;</span>
+  <span class="variable">$req</span>    <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">env</span><span class="operator">(</span><span class="operator">{</span><span class="string">PATH_INFO</span> <span class="operator">=&gt;</span> <span class="string">'/'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Direct access to the <code>CGI</code> or <code>PSGI</code> environment hash if available.</p>
+
+<pre><code>  <span class="comment"># Check CGI version</span>
+  <span class="keyword">my</span> <span class="variable">$version</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">env</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">GATEWAY_INTERFACE</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Check PSGI version</span>
+  <span class="keyword">my</span> <span class="variable">$version</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">env</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">'psgi.version'</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="method">method</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$method</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">method</span><span class="operator">;</span>
+  <span class="variable">$req</span>       <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">method</span><span class="operator">(</span><span class="string">'POST'</span><span class="operator">);</span>
+</code></pre>
+
+<p>HTTP request method, defaults to <code>GET</code>.</p>
+
+<h2 id="proxy">proxy</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">proxy</span><span class="operator">;</span>
+  <span class="variable">$req</span>    <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">proxy</span><span class="operator">(</span><span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'http://127.0.0.1:3000'</span><span class="operator">));</span>
+</code></pre>
+
+<p>Proxy URL for request.</p>
+
+<h2 id="reverse_proxy">reverse_proxy</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">reverse_proxy</span><span class="operator">;</span>
+  <span class="variable">$req</span>     <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">reverse_proxy</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Request has been performed through a reverse proxy.</p>
+
+<h2 id="url">url</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">;</span>
+  <span class="variable">$req</span>    <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">(</span><span class="variable">Mojo::URL</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>HTTP request URL, defaults to a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a> object.</p>
+
+<pre><code>  <span class="comment"># Get request information</span>
+  <span class="keyword">my</span> <span class="variable">$info</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">-&gt;</span><span class="variable">userinfo</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$host</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">-&gt;</span><span class="variable">host</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">to_abs</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="via_proxy">via_proxy</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">via_proxy</span><span class="operator">;</span>
+  <span class="variable">$req</span>     <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">via_proxy</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Request can be performed through a proxy server.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Request.html">Mojo::Message::Request</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a> and implements the following new ones.</p>
+
+<h2 id="clone">clone</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$clone</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">clone</span><span class="operator">;</span>
+</code></pre>
+
+<p>Clone request if possible, otherwise return <code>undef</code>.</p>
+
+<h2 id="cookies">cookies</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cookies</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">;</span>
+  <span class="variable">$req</span>        <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">(</span><span class="variable">Mojo::Cookie::Request</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="variable">$req</span>        <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">(</span><span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">,</span> <span class="string">value</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Access request cookies, usually <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie/Request.html">Mojo::Cookie::Request</a> objects.</p>
+
+<pre><code>  <span class="comment"># Names of all cookies</span>
+  <span class="keyword">say</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">name</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="every_param">every_param</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$values</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">every_param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Similar to <a href="#param">&quot;param&quot;</a>, but returns all values sharing the same name as an array reference.</p>
+
+<pre><code>  <span class="comment"># Get first value</span>
+  <span class="keyword">say</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">every_param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="extract_start_line">extract_start_line</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">extract_start_line</span><span class="operator">(\</span><span class="variable">$str</span><span class="operator">);</span>
+</code></pre>
+
+<p>Extract request-line from string.</p>
+
+<h2 id="fix_headers">fix_headers</h2>
+
+<pre><code>  <span class="variable">$req</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">fix_headers</span><span class="operator">;</span>
+</code></pre>
+
+<p>Make sure request has all required headers.</p>
+
+<h2 id="get_start_line_chunk">get_start_line_chunk</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">get_start_line_chunk</span><span class="operator">(</span><span class="variable">$offset</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get a chunk of request-line data starting from a specific position. Note that this method finalizes the request.</p>
+
+<h2 id="is_handshake">is_handshake</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">is_handshake</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check <code>Upgrade</code> header for <code>websocket</code> value.</p>
+
+<h2 id="is_secure">is_secure</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">is_secure</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if connection is secure.</p>
+
+<h2 id="is_xhr">is_xhr</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">is_xhr</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check <code>X-Requested-With</code> header for <code>XMLHttpRequest</code> value.</p>
+
+<h2 id="param">param</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">param</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Access <code>GET</code> and <code>POST</code> parameters extracted from the query string and <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code> message body. If there are multiple values sharing the same name, and you want to access more than just the last one, you can use <a href="#every_param">&quot;every_param&quot;</a>. Note that this method caches all data, so it should not be called before the entire request body has been received. Parts of the request body need to be loaded into memory to parse <code>POST</code> parameters, so you have to make sure it is not excessively large, there&#39;s a 16MB limit by default.</p>
+
+<h2 id="params">params</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$params</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">params</span><span class="operator">;</span>
+</code></pre>
+
+<p>All <code>GET</code> and <code>POST</code> parameters extracted from the query string and <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code> message body, usually a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Parameters.html">Mojo::Parameters</a> object. Note that this method caches all data, so it should not be called before the entire request body has been received. Parts of the request body need to be loaded into memory to parse <code>POST</code> parameters, so you have to make sure it is not excessively large, there&#39;s a 16MB limit by default.</p>
+
+<pre><code>  <span class="comment"># Get parameter names and values</span>
+  <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">params</span><span class="operator">-&gt;</span><span class="variable">to_hash</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$req</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'GET /foo/bar HTTP/1.1'</span><span class="operator">);</span>
+  <span class="variable">$req</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="operator">{</span><span class="string">PATH_INFO</span> <span class="operator">=&gt;</span> <span class="string">'/'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse HTTP request chunks or environment hash.</p>
+
+<h2 id="query_params">query_params</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$params</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">query_params</span><span class="operator">;</span>
+</code></pre>
+
+<p>All <code>GET</code> parameters, usually a <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Parameters.html">Mojo::Parameters</a> object.</p>
+
+<pre><code>  <span class="comment"># Turn GET parameters to hash and extract value</span>
+  <span class="keyword">say</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">query_params</span><span class="operator">-&gt;</span><span class="variable">to_hash</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="start_line_size">start_line_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$req</span><span class="operator">-&gt;</span><span class="variable">start_line_size</span><span class="operator">;</span>
+</code></pre>
+
+<p>Size of the request-line in bytes. Note that this method finalizes the request.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

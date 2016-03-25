@@ -1,0 +1,452 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#finish">finish</a></li>
+      <li><a href="#progress">progress</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#content">content</a></li>
+      <li><a href="#default_charset">default_charset</a></li>
+      <li><a href="#max_line_size">max_line_size</a></li>
+      <li><a href="#max_message_size">max_message_size</a></li>
+      <li><a href="#version">version</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#body">body</a></li>
+      <li><a href="#body_params">body_params</a></li>
+      <li><a href="#body_size">body_size</a></li>
+      <li><a href="#build_body">build_body</a></li>
+      <li><a href="#build_headers">build_headers</a></li>
+      <li><a href="#build_start_line">build_start_line</a></li>
+      <li><a href="#cookie">cookie</a></li>
+      <li><a href="#cookies">cookies</a></li>
+      <li><a href="#dom">dom</a></li>
+      <li><a href="#error">error</a></li>
+      <li><a href="#every_cookie">every_cookie</a></li>
+      <li><a href="#every_upload">every_upload</a></li>
+      <li><a href="#extract_start_line">extract_start_line</a></li>
+      <li><a href="#finish1">finish</a></li>
+      <li><a href="#fix_headers">fix_headers</a></li>
+      <li><a href="#get_body_chunk">get_body_chunk</a></li>
+      <li><a href="#get_header_chunk">get_header_chunk</a></li>
+      <li><a href="#get_start_line_chunk">get_start_line_chunk</a></li>
+      <li><a href="#header_size">header_size</a></li>
+      <li><a href="#headers">headers</a></li>
+      <li><a href="#is_finished">is_finished</a></li>
+      <li><a href="#is_limit_exceeded">is_limit_exceeded</a></li>
+      <li><a href="#json">json</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#start_line_size">start_line_size</a></li>
+      <li><a href="#text">text</a></li>
+      <li><a href="#to_string">to_string</a></li>
+      <li><a href="#upload">upload</a></li>
+      <li><a href="#uploads">uploads</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Message - HTTP message base class</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Mojo::Message::MyMessage</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojo::Message'</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> cookies              </span><span class="operator">{...}</span>
+  <span class="keyword">sub</span><span class="variable"> extract_start_line   </span><span class="operator">{...}</span>
+  <span class="keyword">sub</span><span class="variable"> get_start_line_chunk </span><span class="operator">{...}</span>
+  <span class="keyword">sub</span><span class="variable"> start_line_size      </span><span class="operator">{...}</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a> is an abstract base class for HTTP message containers, based on <a href="http://tools.ietf.org/html/rfc7230">RFC 7230</a>, <a href="http://tools.ietf.org/html/rfc7231">RFC 7231</a> and <a href="http://tools.ietf.org/html/rfc2388">RFC 2388</a>, like <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Request.html">Mojo::Message::Request</a> and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Response.html">Mojo::Message::Response</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a> inherits all events from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones.</p>
+
+<h2 id="finish">finish</h2>
+
+<pre><code>  <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted after message building or parsing is finished.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$before</span> <span class="operator">=</span> <span class="keyword">time</span><span class="operator">;</span>
+  <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">header</span><span class="operator">(</span><span class="string">'X-Parser-Time'</span> <span class="operator">=&gt;</span> <span class="keyword">time</span> <span class="operator">-</span> <span class="variable">$before</span><span class="operator">);</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="progress">progress</h2>
+
+<pre><code>  <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">progress</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when message building or parsing makes progress.</p>
+
+<pre><code>  <span class="comment"># Building</span>
+  <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">progress</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$msg</span><span class="operator">,</span> <span class="variable">$state</span><span class="operator">,</span> <span class="variable">$offset</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">qq{Building "</span><span class="variable">$state</span><span class="string">" at offset </span><span class="variable">$offset</span><span class="string">}</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Parsing</span>
+  <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">progress</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> <span class="keyword">my</span> <span class="variable">$len</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_length</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">-&gt;</span><span class="variable">progress</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">'Progress: '</span><span class="operator">,</span> <span class="variable">$size</span> <span class="operator">==</span> <span class="variable">$len</span> <span class="operator">?</span> <span class="number">100</span> <span class="operator">:</span> <span class="keyword">int</span><span class="operator">(</span><span class="variable">$size</span> <span class="operator">/</span> <span class="operator">(</span><span class="variable">$len</span> <span class="operator">/</span> <span class="number">100</span><span class="operator">)),</span> <span class="string">'%'</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a> implements the following attributes.</p>
+
+<h2 id="content">content</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+  <span class="variable">$msg</span>    <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">(</span><span class="variable">Mojo::Content::Single</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Message content, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/Single.html">Mojo::Content::Single</a> object.</p>
+
+<h2 id="default_charset">default_charset</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$charset</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">default_charset</span><span class="operator">;</span>
+  <span class="variable">$msg</span>        <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">default_charset</span><span class="operator">(</span><span class="string">'UTF-8'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Default charset used by <a href="#text">&quot;text&quot;</a> and to extract data from <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code> message body, defaults to <code>UTF-8</code>.</p>
+
+<h2 id="max_line_size">max_line_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">max_line_size</span><span class="operator">;</span>
+  <span class="variable">$msg</span>     <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">max_line_size</span><span class="operator">(</span><span class="number">1024</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum start-line size in bytes, defaults to the value of the <code>MOJO_MAX_LINE_SIZE</code> environment variable or <code>8192</code> (8KB).</p>
+
+<h2 id="max_message_size">max_message_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">max_message_size</span><span class="operator">;</span>
+  <span class="variable">$msg</span>     <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">max_message_size</span><span class="operator">(</span><span class="number">1024</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum message size in bytes, defaults to the value of the <code>MOJO_MAX_MESSAGE_SIZE</code> environment variable or <code>16777216</code> (16MB). Setting the value to <code>0</code> will allow messages of indefinite size. Note that increasing this value can also drastically increase memory usage, should you for example, attempt to parse an excessively large message body with the <a href="#body_params">&quot;body_params&quot;</a>, <a href="#dom">&quot;dom&quot;</a> or <a href="#json">&quot;json&quot;</a> methods.</p>
+
+<h2 id="version">version</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$version</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">version</span><span class="operator">;</span>
+  <span class="variable">$msg</span>        <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">version</span><span class="operator">(</span><span class="string">'1.1'</span><span class="operator">);</span>
+</code></pre>
+
+<p>HTTP version of message, defaults to <code>1.1</code>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="body">body</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="variable">$msg</span>      <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">(</span><span class="string">'Hello!'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Slurp or replace <a href="#content">&quot;content&quot;</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/MultiPart.html">Mojo::Content::MultiPart</a> will be automatically downgraded to <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/Single.html">Mojo::Content::Single</a>.</p>
+
+<h2 id="body_params">body_params</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$params</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">body_params</span><span class="operator">;</span>
+</code></pre>
+
+<p><code>POST</code> parameters extracted from <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code> message body, usually a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Parameters.html">Mojo::Parameters</a> object. Note that this method caches all data, so it should not be called before the entire message body has been received. Parts of the message body need to be loaded into memory to parse <code>POST</code> parameters, so you have to make sure it is not excessively large, there&#39;s a 16MB limit by default.</p>
+
+<pre><code>  <span class="comment"># Get POST parameter names and values</span>
+  <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">body_params</span><span class="operator">-&gt;</span><span class="variable">to_hash</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="body_size">body_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">body_size</span><span class="operator">;</span>
+</code></pre>
+
+<p>Content size in bytes.</p>
+
+<h2 id="build_body">build_body</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">build_body</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render whole body with <a href="#get_body_chunk">&quot;get_body_chunk&quot;</a>.</p>
+
+<h2 id="build_headers">build_headers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">build_headers</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render all headers with <a href="#get_header_chunk">&quot;get_header_chunk&quot;</a>.</p>
+
+<h2 id="build_start_line">build_start_line</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">build_start_line</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render start-line with <a href="#get_start_line_chunk">&quot;get_start_line_chunk&quot;</a>.</p>
+
+<h2 id="cookie">cookie</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cookie</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">cookie</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Access message cookies, usually <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie/Request.html">Mojo::Cookie::Request</a> or <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie/Response.html">Mojo::Cookie::Response</a> objects. If there are multiple cookies sharing the same name, and you want to access more than just the last one, you can use <a href="#every_cookie">&quot;every_cookie&quot;</a>. Note that this method caches all data, so it should not be called before all headers have been received.</p>
+
+<pre><code>  <span class="comment"># Get cookie value</span>
+  <span class="keyword">say</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">cookie</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="variable">value</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="cookies">cookies</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cookies</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">;</span>
+</code></pre>
+
+<p>Access message cookies. Meant to be overloaded in a subclass.</p>
+
+<h2 id="dom">dom</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$dom</span>        <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$collection</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">(</span><span class="string">'a[href]'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Retrieve message body from <a href="#text">&quot;text&quot;</a> and turn it into a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a> object, an optional selector can be used to call the method <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html#find">&quot;find&quot; in Mojo::DOM</a> on it right away, which then returns a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a> object. Note that this method caches all data, so it should not be called before the entire message body has been received. The whole message body needs to be loaded into memory to parse it, so you have to make sure it is not excessively large, there&#39;s a 16MB limit by default.</p>
+
+<pre><code>  <span class="comment"># Perform "find" right away</span>
+  <span class="keyword">say</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">(</span><span class="string">'h1, h2, h3'</span><span class="operator">)-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'text'</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+  
+  <span class="comment"># Use everything else Mojo::DOM has to offer</span>
+  <span class="keyword">say</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'body'</span><span class="operator">)-&gt;</span><span class="variable">children</span><span class="operator">-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'tag'</span><span class="operator">)-&gt;</span><span class="variable">uniq</span><span class="operator">-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="error">error</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$err</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">;</span>
+  <span class="variable">$msg</span>    <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="operator">{</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'Parser error'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get or set message error, an <code>undef</code> return value indicates that there is no error.</p>
+
+<pre><code>  <span class="comment"># Connection or parser error</span>
+  <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="operator">{</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'Connection refused'</span><span class="operator">}</span><span class="operator">);</span>
+  
+  <span class="comment"># 4xx/5xx response</span>
+  <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="operator">{</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'Internal Server Error'</span><span class="operator">,</span> <span class="string">code</span> <span class="operator">=&gt;</span> <span class="number">500</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="every_cookie">every_cookie</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cookies</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">every_cookie</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Similar to <a href="#cookie">&quot;cookie&quot;</a>, but returns all message cookies sharing the same name as an array reference.</p>
+
+<pre><code>  <span class="comment"># Get first cookie value</span>
+  <span class="keyword">say</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">every_cookie</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">-&gt;</span><span class="variable">value</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="every_upload">every_upload</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$uploads</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">every_upload</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Similar to <a href="#upload">&quot;upload&quot;</a>, but returns all file uploads sharing the same name as an array reference.</p>
+
+<pre><code>  <span class="comment"># Get content of first uploaded file</span>
+  <span class="keyword">say</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">every_upload</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">-&gt;</span><span class="variable">asset</span><span class="operator">-&gt;</span><span class="variable">slurp</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="extract_start_line">extract_start_line</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">extract_start_line</span><span class="operator">(\</span><span class="variable">$str</span><span class="operator">);</span>
+</code></pre>
+
+<p>Extract start-line from string. Meant to be overloaded in a subclass.</p>
+
+<h2 id="finish1">finish</h2>
+
+<pre><code>  <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">;</span>
+</code></pre>
+
+<p>Finish message parser/generator.</p>
+
+<h2 id="fix_headers">fix_headers</h2>
+
+<pre><code>  <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">fix_headers</span><span class="operator">;</span>
+</code></pre>
+
+<p>Make sure message has all required headers.</p>
+
+<h2 id="get_body_chunk">get_body_chunk</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">get_body_chunk</span><span class="operator">(</span><span class="variable">$offset</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get a chunk of body data starting from a specific position. Note that it might not be possible to get the same chunk twice if content was generated dynamically.</p>
+
+<h2 id="get_header_chunk">get_header_chunk</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">get_header_chunk</span><span class="operator">(</span><span class="variable">$offset</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get a chunk of header data, starting from a specific position. Note that this method finalizes the message.</p>
+
+<h2 id="get_start_line_chunk">get_start_line_chunk</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">get_start_line_chunk</span><span class="operator">(</span><span class="variable">$offset</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get a chunk of start-line data starting from a specific position. Meant to be overloaded in a subclass.</p>
+
+<h2 id="header_size">header_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">header_size</span><span class="operator">;</span>
+</code></pre>
+
+<p>Size of headers in bytes. Note that this method finalizes the message.</p>
+
+<h2 id="headers">headers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">;</span>
+</code></pre>
+
+<p>Message headers, usually a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Headers.html">Mojo::Headers</a> object.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="keyword">my</span> <span class="variable">$headers</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="is_finished">is_finished</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">is_finished</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if message parser/generator is finished.</p>
+
+<h2 id="is_limit_exceeded">is_limit_exceeded</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">is_limit_exceeded</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if message has exceeded <a href="#max_line_size">&quot;max_line_size&quot;</a>, <a href="#max_message_size">&quot;max_message_size&quot;</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html#max_buffer_size">&quot;max_buffer_size&quot; in Mojo::Content</a> or <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Headers.html#max_line_size">&quot;max_line_size&quot; in Mojo::Headers</a>.</p>
+
+<h2 id="json">json</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">json</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">json</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Decode JSON message body directly using <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a> if possible, an <code>undef</code> return value indicates a bare <code>null</code> or that decoding failed. An optional JSON Pointer can be used to extract a specific value with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a>. Note that this method caches all data, so it should not be called before the entire message body has been received. The whole message body needs to be loaded into memory to parse it, so you have to make sure it is not excessively large, there&#39;s a 16MB limit by default.</p>
+
+<pre><code>  <span class="comment"># Extract JSON values</span>
+  <span class="keyword">say</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">json</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}{</span><span class="string">bar</span><span class="operator">}[</span><span class="number">23</span><span class="operator">]</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">json</span><span class="operator">(</span><span class="string">'/foo/bar/23'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'HTTP/1.1 200 OK...'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse message chunk.</p>
+
+<h2 id="start_line_size">start_line_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">start_line_size</span><span class="operator">;</span>
+</code></pre>
+
+<p>Size of the start-line in bytes. Meant to be overloaded in a subclass.</p>
+
+<h2 id="text">text</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+</code></pre>
+
+<p>Retrieve <a href="#body">&quot;body&quot;</a> and try to decode it with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html#charset">&quot;charset&quot; in Mojo::Content</a> or <a href="#default_charset">&quot;default_charset&quot;</a>.</p>
+
+<h2 id="to_string">to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render whole message. Note that this method finalizes the message, and that it might not be possible to render the same message twice if content was generated dynamically.</p>
+
+<h2 id="upload">upload</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$upload</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">upload</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Access <code>multipart/form-data</code> file uploads, usually <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Upload.html">Mojo::Upload</a> objects. If there are multiple uploads sharing the same name, and you want to access more than just the last one, you can use <a href="#every_upload">&quot;every_upload&quot;</a>. Note that this method caches all data, so it should not be called before the entire message body has been received.</p>
+
+<pre><code>  <span class="comment"># Get content of uploaded file</span>
+  <span class="keyword">say</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">upload</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">)-&gt;</span><span class="variable">asset</span><span class="operator">-&gt;</span><span class="variable">slurp</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="uploads">uploads</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$uploads</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">uploads</span><span class="operator">;</span>
+</code></pre>
+
+<p>All <code>multipart/form-data</code> file uploads, usually <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Upload.html">Mojo::Upload</a> objects.</p>
+
+<pre><code>  <span class="comment"># Names of all uploads</span>
+  <span class="keyword">say</span> <span class="variable">$_</span><span class="operator">-&gt;</span><span class="variable">name</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">uploads</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

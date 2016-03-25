@@ -1,0 +1,103 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a></li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#run">run</a></li>
+      <li><a href="#to_psgi_app">to_psgi_app</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Server::PSGI - PSGI server</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Server::PSGI</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$psgi</span> <span class="operator">=</span> <span class="variable">Mojo::Server::PSGI</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$psgi</span><span class="operator">-&gt;</span><span class="variable">unsubscribe</span><span class="operator">(</span><span class="string">'request'</span><span class="operator">)-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">request</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$psgi</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Request</span>
+    <span class="keyword">my</span> <span class="variable">$method</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">method</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$path</span>   <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+  
+    <span class="comment"># Response</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">(</span><span class="string">"</span><span class="variable">$method</span><span class="string"> request for </span><span class="variable">$path</span><span class="string">!"</span><span class="operator">);</span>
+  
+    <span class="comment"># Resume transaction</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">resume</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">$psgi</span><span class="operator">-&gt;</span><span class="variable">to_psgi_app</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">Mojo::Server::PSGI</a> allows <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> applications to run on all <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">PSGI</a> compatible servers.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Cookbook.html#DEPLOYMENT">&quot;DEPLOYMENT&quot; in Mojolicious::Guides::Cookbook</a> for more.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">Mojo::Server::PSGI</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">Mojo::Server::PSGI</a> inherits all attributes from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">Mojo::Server::PSGI</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a> and implements the following new ones.</p>
+
+<h2 id="run">run</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$res</span> <span class="operator">=</span> <span class="variable">$psgi</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">(</span><span class="variable">$env</span><span class="operator">);</span>
+</code></pre>
+
+<p>Run <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">PSGI</a>.</p>
+
+<h2 id="to_psgi_app">to_psgi_app</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">$psgi</span><span class="operator">-&gt;</span><span class="variable">to_psgi_app</span><span class="operator">;</span>
+</code></pre>
+
+<p>Turn <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a> application into <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">PSGI</a> application.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

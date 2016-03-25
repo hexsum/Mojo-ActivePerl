@@ -1,0 +1,471 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#CHANGE-LOG">CHANGE LOG</a></li>
+</ul>
+
+<h1 id="CHANGE-LOG">CHANGE LOG</h1>
+
+<dl>
+
+<dt id="Version-3.030">Version 3.030</dt>
+<dd>
+
+<p>Make send_by_sendmail set sender like documentation says it does (thanks, Michael Schout!)</p>
+
+</dd>
+<dt id="Version-3.029">Version 3.029</dt>
+<dd>
+
+<p>Allow the MIME-Version header to be replaced (thanks, Florian!)</p>
+
+</dd>
+<dt id="Version-3.028">Version 3.028</dt>
+<dd>
+
+<p>Various documentation fixes</p>
+
+</dd>
+<dt id="Version-3.027">Version 3.027</dt>
+<dd>
+
+<p>Add send_to_testfile method (Thanks, AlexanderBecker)</p>
+
+</dd>
+<dt id="Version-3.026">Version 3.026</dt>
+<dd>
+
+<p>Fix tests to pass with MIME::Types 1.28</p>
+
+</dd>
+<dt id="Version-3.025">Version 3.025</dt>
+<dd>
+
+<p>Added back support for providing a non-default SMTP port (#21156, #48783, thanks John Bokma!).</p>
+
+</dd>
+<dt id="Version-3.024">Version 3.024</dt>
+<dd>
+
+<p>add git repo link to metadata</p>
+
+</dd>
+<dt id="Version-3.023">Version 3.023</dt>
+<dd>
+
+<p>Correct erroneous changelog entry</p>
+
+<p>Fix typo in perldoc: utf-8, not utf8</p>
+
+</dd>
+<dt id="Version-3.022">Version 3.022</dt>
+<dd>
+
+<p>Behave on Cygwin as on Win32 with regard to defaulting to SMTP sending.</p>
+
+<p>Respect crazy people who put multiple Cc or Bcc headers in message (#30574, thanks Pavel V. Rochnyack!)</p>
+
+<p>We no longer rewrite array and hash refs in the send_by_sendmail args so aggressively.</p>
+
+<p>Cope with missing local sendmail (thanks to Debian for patching for this, and for putting up with me (rjbs) being an insufferable jerk!)</p>
+
+<p>Fix weird unicode-in-$1 bug (thanks SREZIC!)</p>
+
+<p>Other minor bug fixes.</p>
+
+</dd>
+<dt id="Version-3.021">Version 3.021</dt>
+<dd>
+
+<p>Replace Email::Date with Email::Date::Format to limit prereqs (Email::Date::Format produced just for this!)</p>
+
+<p>Begin the process of removing use of ExtUtils::TBone for testing</p>
+
+</dd>
+<dt id="Version-3.020">Version 3.020</dt>
+<dd>
+
+<p>Optimized code for speedup of creation of two-part messages. The internal structure of the object has changes, but that won&#39;t matter if you were using the published interface. (Sam Tregar)</p>
+
+<p>Removed the &quot;advanced features&quot;, ie auto-fallback delivery, from send_by_smtp. They didn&#39;t belong there in the first place.</p>
+
+</dd>
+<dt id="Version-3.01_06-2007-07-29">Version 3.01_06 (2007/07/29)</dt>
+<dd>
+
+<p>First release from Perl Email Project. Updated packaging.</p>
+
+</dd>
+<dt id="Version-3.01_04-2004-05-05">Version 3.01_04 (2004/05/05)</dt>
+<dd>
+
+<p>Reworked the new send_by_smtp stuff. Documentation modifications.</p>
+
+</dd>
+<dt id="Version-3.01_02-2003-08-28">Version 3.01_02 (2003/08/28)</dt>
+<dd>
+
+<p>Well, it seems 3.01_01 failed tests on Win32 due to me accidentally changing the line ending format to DOSish. Also the way that email extraction for SMTP with or without Mail::Address was different (from 2.117 even). So ive fixed that.</p>
+
+<p>Anybody depending on the undocumented extract_addrs() is in for a suprise. I suggest you look at using Mail::Address.</p>
+
+</dd>
+<dt id="Version-3.01_01-2003-04-25---2003-08-21">Version 3.01_01 (2003/04/25 - 2003/08/21)</dt>
+<dd>
+
+<p>(This version is a test release, if its ok then I&#39;ll re-release it as 3.02)</p>
+
+<p>Patched the pod to use correct entities Thanks to Ed Avis for the patch. Added better support for funky names in the from field when sending via SMTP, thanks to prodding by Darren Hemphill and Ollie Gallardo. (Actually I kind of messed this up orginally and no doubt Darren wasn&#39;t impressed. I ended up using something pretty close to his solution. My bad for not paying more attention. Sorry mate.)</p>
+
+<p>08/21: Apparently I never uploaded my changes for this version to CPAN. Sigh.</p>
+
+<p>*** Win32 CHANGES ***</p>
+
+<p>Up until this release the default send() method for all OS&#39;es has been to invoke sendmail and pipe the mail to it. This behaviour has now changed on Win32 to default to using SMTP. This means that if your /site/lib/Net/libnet.cfg file is properly configured then you can use SMTP without specifying a send method explicitly. This seemed a rational decision as most Win32 users who send mails are using an SMTP server and not a tool like sendmail.</p>
+
+<p>*** SMTP CHANGES ***</p>
+
+<p>Jonathan Eunice &lt;jeunice at illuminata dot com&gt; pointed out an interesting bug in the interaction between MIME::Lite and Net::SMTP/Net::CMD. This was that sending a mail ending in &quot;\n\n&quot; without additional encoding would cause Net::CMD to send an incorrect end of mail signal to the SMTP server which would result in A) The mail failing to be sent due to a timeout, and B) MIME::Lite to report that all was well.</p>
+
+<p>This has been fixed by checking to make sure that if the last character sent was \n, but the last two chars were not \r\n then the \n is turned into an \r, which Net::CMD then adds an \n to and then sends the normal &quot;.\r\n&quot; to terminate the message. Weird error, that im not entirely sure has been resolved properly. Please inform me if this screws anything up that it shouldn&#39;t.</p>
+
+<p>As stated earlier send_by_smtp wasnt extracting the _real_ email address from the overall fancy once specified in the From: field. This is resolved now, fancy display names are now possible while using SMTP.</p>
+
+<p>*** Content-Id ***</p>
+
+<p>It was pointed out by alex via CPAN RT that Content-Id needs to have angle brackets around it or HTML mails dont show up properly in many mail clients, furthermore the RFC mandates it (to be honest im taking his word on this, please feel free to yell at me if this causes trouble), so as he suggested I am automatically adding them in they arent provided.</p>
+
+<p>*** sendmail path ***</p>
+
+<p>Dom pointed out via CPAN RT that despite some effort going in to trying to discover the correct location of sendmail, that it was still using a bad default. Fixed.</p>
+
+<p>*** Date Stamping ***</p>
+
+<p>Kurt reported via RT that datestamps were not being correctly formatted. His patch has been incorporated with only one change, a comment where Perl was spelled PERL :-)</p>
+
+<p>*** Quoted printable fix ***</p>
+
+<p>Klaus Rusch noted a bug in how quoted-printable handled weird \r\n combinations. Fixed now.</p>
+
+</dd>
+<dt id="Version-3.01-2003-04-25">Version 3.01 (2003/04/25)</dt>
+<dd>
+
+<p>Eryq has reappeared long enough to graciously hand over the maintaince of the module to me. Thanks.</p>
+
+</dd>
+<dt id="Version-3.00-2003-04-24">Version 3.00 (2003/04/24)</dt>
+<dd>
+
+<p>Eryq has disappeared. His web site remains but he doesnt answer emails.</p>
+
+<p>I have taken it onto myself to take over maintenance until he returns to reclaim his excellent work.</p>
+
+<p>I don&#39;t intend to develop this in an serious way. I&#39;ll patch it if people have a patch and generally keep it ticking over, but dont expect new features.</p>
+
+<p>This release has code that actually works with MIME::Lite now. As well as a few other minor additions (like a test for this functionailty)</p>
+
+<p>For stuff that could be done, a first place would be to rewrite and extend the test suite. It should use Test::More or Test::Builder at the very least.</p>
+
+<p>I also might rip out the preformatted doc pages. It makes the distro way fatter than it needs to be. I reckon the package contains the POD in at least three forms. A wee tad overkill I think. :-)</p>
+
+</dd>
+<dt id="Version-2.117-2001-08-20">Version 2.117 (2001/08/20)</dt>
+<dd>
+
+<p>The terms-of-use have been placed in the distribution file &quot;COPYING&quot;. Also, small documentation tweaks were made.</p>
+
+</dd>
+<dt id="Version-2.116-2001-08-17">Version 2.116 (2001/08/17)</dt>
+<dd>
+
+<p>Added long-overdue patch which makes the instance method form of send() do the right thing when given HOW... arguments. <i>Thanks to Casey West for the patch.</i></p>
+
+</dd>
+<dt id="Version-2.114-2001-08-16">Version 2.114 (2001/08/16)</dt>
+<dd>
+
+<p>New special &#39;AUTO&#39; content type in new()/build() tells MIME::Lite to try and guess the type from file extension. To make use of this, you&#39;ll want to install <b>MIME::Types</b>. The &quot;AUTO&quot; setting can be made the default default (instead of &quot;TEXT&quot;) if you set <code>$AUTO_CONTENT_TYPE = 1, $PARANOID = 0</code>. <i>Thanks to</i> Ville Skytt&auml; <i>for these patches.</i></p>
+
+<p>File::Basename is used if it is available. <i>Thanks to</i> Ville Skytt&auml; <i>for this patch.</i></p>
+
+<p>SMTP failures (in send_by_smtp) now add the $smtp-&gt;message to the croak&#39;ed exception, so if things go wrong, you get a better idea of what and why. <i>Thanks to Thomas R. Wyant III for the patch.</i></p>
+
+<p>Made a subtle change to <code>as_string</code> which supposedly fixes a failed MIME data.t test with Perl 5.004_04 on NT 4 sp6. The problem might only exist in this old perl, but as the patch author says, not everyone has climbed higher on the Perl ladder. <i>Thanks to John Gotts for the patch.</i></p>
+
+<p>Added <code>contrib</code> directory, with <i>MailTool.pm</i>. <i>Thanks to Tom Wyant for this contribution.</i></p>
+
+<p>Improved HTML documentation (notice the links to the individual methods in the top menu).</p>
+
+<p>Corrected some mis-docs.</p>
+
+</dd>
+<dt id="Version-2.111-2001-04-03">Version 2.111 (2001/04/03)</dt>
+<dd>
+
+<p>Added long-overdue <code>parts()</code> and <code>parts_DFS()</code> methods.</p>
+
+<pre><code>    No instance method
+       For accessing the subparts?
+    That can&#39;t be right.  D&#39;OH!</code></pre>
+
+<p>Added long-overdue auto-verify logic to <code>print()</code> method.</p>
+
+<p>Added long-overdue <code>preamble()</code> method for getting/setting the preamble text. <i>Thanks to Jim Daigle for inspiring this.</i></p>
+
+</dd>
+<dt id="Version-2.108-2001-03-30">Version 2.108 (2001/03/30)</dt>
+<dd>
+
+<p>New <code>field_order()</code> allows you to set the header order, both on a per-message basis, and package-wide. <i>Thanks to Thomas Stromberg for suggesting this.</i></p>
+
+<p>Added code to try and divine &quot;sendmail&quot; path more intelligently. <i>Thanks to Slaven Rezic for the suggestion.</i></p>
+
+</dd>
+<dt id="Version-2.107-2001-03-27">Version 2.107 (2001/03/27)</dt>
+<dd>
+
+<p>Fixed serious bug where tainted data with quoted-printable encoding was causing infinite loops. The &quot;fix&quot; untaints the data in question, which is not optimal, but it&#39;s probably benign in this case. <i>Thanks to Stefan Sautter for tracking this nasty little beast down.</i> <i>Thanks to Larry Geralds for a related patch.</i></p>
+
+<pre><code>    &quot;Doctor, O doctor:
+       it&#39;s painful when I do *this* --&quot;
+    &quot;Simple: don&#39;t *do* that.&quot;</code></pre>
+
+<p>Fixed bugs where a non-local <code>$_</code> was being modified... again! Will I never learn? <i>Thanks to Maarten Koskamp for reporting this.</i></p>
+
+<pre><code>    <span class="variable">Dollar</span><span class="operator">-</span><span class="variable">underscore</span>
+       <span class="variable">can</span> <span class="variable">poison</span> <span class="variable">distant</span> <span class="variable">waters</span><span class="operator">;</span>
+       <span class="string">'local'</span> <span class="variable">must</span> <span class="variable">it</span> <span class="variable">be</span><span class="operator">.</span>
+</code></pre>
+
+<p>Fixed buglet in <code>add()</code> where all value references were being treated as arrayrefs, instead of as possibly-self-stringifying object refs. Now you can send in an object ref as the 2nd argument. <i>Thanks to dLux for the bug report.</i></p>
+
+<pre><code>    That ref is a string?
+       Operator overload
+    has ruined my day.</code></pre>
+
+<p>Added &quot;Approved&quot; as an acceptable header field for <code>new()</code>, as per RFC1036. <i>Thanks to Thomax for the suggestion regarding MIME-tools.</i></p>
+
+<p>Small improvements to docs to make different uses of attach() and various arguments clearer. <i>Thanks to Sven Rassman and Roland Walter for the suggestions.</i></p>
+
+</dd>
+<dt id="Version-2.106-2000-11-21">Version 2.106 (2000/11/21)</dt>
+<dd>
+
+<p>Added Alpha version of scrub() to make it easy for people to suppress the printing of unwanted MIME attributes (like Content-length). <i>Thanks to the many people who asked for this.</i></p>
+
+<p>Headers with empty-strings for their values are no longer printed. This seems sensible, and helps us implement scrub().</p>
+
+</dd>
+<dt id="Version-2.105-2000-10-14">Version 2.105 (2000/10/14)</dt>
+<dd>
+
+<p>The regression-test failure was identified, and it was my fault. Apparently some of the \-quoting in my &quot;autoloaded&quot; code was making Perl 5.6 unhappy. For this nesting-related idiocy, a nesting kaiku. <i>Thanks to Scott Schwartz for identifying the problem.</i></p>
+
+<pre><code>    <span class="variable">In</span> <span class="variable">a</span> <span class="variable">pattern</span><span class="operator">,</span> <span class="keyword">my</span>
+       <span class="variable">backslash</span><span class="keyword">-s</span> <span class="variable">dwells</span> <span class="variable">peacefully</span><span class="operator">,</span>
+    <span class="variable">unambiguous</span> <span class="operator">--</span>
+    
+       <span class="variable">but</span> <span class="variable">I</span> <span class="variable">embed</span> <span class="variable">it</span>
+          <span class="variable">in</span> <span class="variable">a</span> <span class="variable">double</span><span class="operator">-</span><span class="variable">quoted</span> <span class="variable">string</span>
+       <span class="variable">doubling</span> <span class="variable">the</span> <span class="variable">backslash</span> <span class="operator">--</span>
+    
+          <span class="variable">interpolating</span>
+             <span class="variable">that</span> <span class="variable">same</span> <span class="variable">double</span><span class="operator">-</span><span class="variable">quoted</span> <span class="variable">string</span>
+          <span class="variable">in</span> <span class="variable">other</span> <span class="variable">patterns</span> <span class="operator">--</span>
+    
+             <span class="keyword">and</span><span class="operator">,</span> <span class="variable">worlds</span> <span class="variable">within</span> <span class="variable">worlds</span><span class="operator">,</span>
+                <span class="variable">I</span> <span class="variable">single</span><span class="operator">-</span><span class="variable">quote</span> <span class="variable">the</span> <span class="variable">function</span>
+             <span class="variable">to</span> <span class="variable">autoload</span> <span class="variable">it</span> <span class="operator">--</span>
+    
+          <span class="variable">changing</span> <span class="variable">the</span> <span class="variable">meaning</span>
+       <span class="variable">of</span> <span class="variable">the</span> <span class="variable">backslash</span> <span class="keyword">and</span> <span class="variable">the</span> <span class="string">'s'</span><span class="operator">;</span>
+    <span class="keyword">and</span> <span class="variable">Five</span><span class="operator">-</span><span class="variable">Point</span><span class="operator">-</span><span class="variable">Six</span> <span class="variable">growls</span><span class="operator">.</span>
+</code></pre>
+
+</dd>
+<dt id="Version-2.104-2000-09-28">Version 2.104 (2000/09/28)</dt>
+<dd>
+
+<p>Now attempts to load and use Mail::Address for parsing email addresses <i>before</i> falling back to our own method. <i>Thanks to numerous people for suggesting this.</i></p>
+
+<pre><code>    Parsing addresses
+       is too damn hard. One last hope:
+    Let Graham Barr do it!</code></pre>
+
+<p>For the curious, the version of Mail::Address appears as the &quot;A&quot; number in the X-Mailer:</p>
+
+<pre><code>    <span class="variable">X</span><span class="operator">-</span><span class="variable">Mailer</span><span class="operator">:</span> <span class="variable">MIME::Lite</span> <span class="number">2.104</span>  <span class="operator">(</span><span class="variable">A1</span><span class="number">.15</span><span class="operator">;</span> <span class="variable">B2</span><span class="number">.09</span><span class="operator">;</span> <span class="variable">Q2</span><span class="number">.03</span><span class="operator">)</span>
+</code></pre>
+
+<p>Added <b>FromSender</b> option to send_by_sendmail(). <i>Thanks to Bill Moseley for suggesting this feature.</i></p>
+
+</dd>
+<dt id="Version-2.101-2000-06-06">Version 2.101 (2000/06/06)</dt>
+<dd>
+
+<p>Major revision to print_body() and body_as_string() so that &quot;body&quot; really means &quot;the part after the header&quot;, which is what most people would want in this context. This is <b>not</b> how it was used 1.x, where &quot;body&quot; only meant &quot;the body of a simple singlepart&quot;. Hopefully, this change will solve many problems and create very few ones.</p>
+
+<p>Added support for attaching a part to a &quot;message/rfc822&quot;, treating the &quot;message&quot; type as a multipart-like container.</p>
+
+<p>Now takes care not to include &quot;Bcc:&quot; in header when using send_by_smtp, as a safety precaution against qmail&#39;s behavior. <i>Thanks to Tatsuhiko Miyagawa for identifying this problem.</i></p>
+
+<p>Improved efficiency of many stringifying operations by using string-arrays which are joined, instead of doing multiple appends to a scalar.</p>
+
+<p>Cleaned up the &quot;examples&quot; directory.</p>
+
+</dd>
+<dt id="Version-1.147-2000-06-02">Version 1.147 (2000/06/02)</dt>
+<dd>
+
+<p>Fixed buglet where lack of Cc:/Bcc: was causing extract_addrs to emit &quot;undefined variable&quot; warnings. Also, lack of a &quot;To:&quot; field now causes a croak. <i>Thanks to David Mitchell for the bug report and suggested patch.</i></p>
+
+</dd>
+<dt id="Version-1.146-2000-05-18">Version 1.146 (2000/05/18)</dt>
+<dd>
+
+<p>Fixed bug in parsing of addresses; please read the WARNINGS section which describes recommended address formats for &quot;To:&quot;, &quot;Cc:&quot;, etc. Also added automatic inclusion of a UT &quot;Date:&quot; at top level unless explicitly told not to. <i>Thanks to Andy Jacobs for the bug report and the suggestion.</i></p>
+
+</dd>
+<dt id="Version-1.145-2000-05-06">Version 1.145 (2000/05/06)</dt>
+<dd>
+
+<p>Fixed bug in encode_7bit(): a lingering <code>/e</code> modifier was removed. <i>Thanks to Michael A. Chase for the patch.</i></p>
+
+</dd>
+<dt id="Version-1.142-2000-05-02">Version 1.142 (2000/05/02)</dt>
+<dd>
+
+<p>Added new, taint-safe invocation of &quot;sendmail&quot;, one which also sets up the <code>-f</code> option. Unfortunately, I couldn&#39;t make this automatic: the change could have broken a lot of code out there which used send_by_sendmail() with unusual &quot;sendmail&quot; variants. So you&#39;ll have to configure &quot;send&quot; to use the new mechanism:</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'sendmail'</span><span class="operator">);</span>       <span class="comment">### no args!</span>
+</code></pre>
+
+<p><i>Thanks to Jeremy Howard for suggesting these features.</i></p>
+
+</dd>
+<dt id="Version-1.140-2000-04-27">Version 1.140 (2000/04/27)</dt>
+<dd>
+
+<p>Fixed bug in support for &quot;To&quot;, &quot;Cc&quot;, and &quot;Bcc&quot; in send_by_smtp(): multiple (comma-separated) addresses should now work fine. We try real hard to extract addresses from the flat text strings. <i>Thanks to John Mason for motivating this change.</i></p>
+
+<p>Added automatic verification that attached data files exist, done immediately before the &quot;send&quot; action is invoked. To turn this off, set $MIME::Lite::AUTO_VERIFY to false.</p>
+
+</dd>
+<dt id="Version-1.137-2000-03-22">Version 1.137 (2000/03/22)</dt>
+<dd>
+
+<p>Added support for &quot;Cc&quot; and &quot;Bcc&quot; in send_by_smtp(). To turn this off, set $MIME::Lite::AUTO_CC to false. <i>Thanks to Lucas Maneos for the patch, and tons of others for the suggestion.</i></p>
+
+<p>Chooses a better default content-transfer-encoding if the content-type is &quot;image/*&quot;, &quot;audio/*&quot;, etc. To turn this off, set $MIME::Lite::AUTO_ENCODE to false. <i>Thanks to many folks for the suggestion.</i></p>
+
+<p>Fixed bug in QP-encoding where a non-local <code>$_</code> was being modified. <i>Thanks to Jochen Stenzel for finding this very obscure bug!</i></p>
+
+<p>Removed references to <code>$`</code>, <code>$&#39;</code>, and <code>$&amp;</code> (bad variables which slow things down).</p>
+
+<p>Added an example of how to send HTML files with enclosed in-line images, per popular demand.</p>
+
+</dd>
+<dt id="Version-1.133-1999-04-17">Version 1.133 (1999/04/17)</dt>
+<dd>
+
+<p>Fixed bug in &quot;Data&quot; handling: arrayrefs were not being handled properly.</p>
+
+</dd>
+<dt id="Version-1.130-1998-12-14">Version 1.130 (1998/12/14)</dt>
+<dd>
+
+<p>Added much larger and more-flexible send() facility. <i>Thanks to Andrew McRae (and Optimation New Zealand Ltd) for the Net::SMTP interface. Additional thanks to the many folks who requested this feature.</i></p>
+
+<p>Added get() method for extracting basic attributes.</p>
+
+<p>New... &quot;t&quot; tests!</p>
+
+</dd>
+<dt id="Version-1.124-1998-11-13">Version 1.124 (1998/11/13)</dt>
+<dd>
+
+<p>Folded in filehandle (FH) support in build/attach. <i>Thanks to Miko O&#39;Sullivan for the code.</i></p>
+
+</dd>
+<dt id="Version-1.122-1998-01-19">Version 1.122 (1998/01/19)</dt>
+<dd>
+
+<p>MIME::Base64 and MIME::QuotedPrint are used if available.</p>
+
+<p>The 7bit encoding no longer does &quot;escapes&quot;; it merely strips 8-bit characters.</p>
+
+</dd>
+<dt id="Version-1.121-1997-04-08">Version 1.121 (1997/04/08)</dt>
+<dd>
+
+<p>Filename attribute is now no longer ignored by build(). <i>Thanks to Ian Smith for finding and patching this bug.</i></p>
+
+</dd>
+<dt id="Version-1.120-1997-03-29">Version 1.120 (1997/03/29)</dt>
+<dd>
+
+<p>Efficiency hack to speed up MIME::Lite::IO_Scalar. <i>Thanks to David Aspinwall for the patch.</i></p>
+
+</dd>
+<dt id="Version-1.116-1997-03-19">Version 1.116 (1997/03/19)</dt>
+<dd>
+
+<p>Small bug in our private copy of encode_base64() was patched. <i>Thanks to Andreas Koenig for pointing this out.</i></p>
+
+<p>New, prettier way of specifying mail message headers in <code>build()</code>.</p>
+
+<p>New quiet method to turn off warnings.</p>
+
+<p>Changed &quot;stringify&quot; methods to more-standard &quot;as_string&quot; methods.</p>
+
+</dd>
+<dt id="Version-1.112-1997-03-06">Version 1.112 (1997/03/06)</dt>
+<dd>
+
+<p>Added <code>read_now()</code>, and <code>binmode()</code> method for our non-Unix-using brethren: file data is now read using binmode() if appropriate. <i>Thanks to Xiangzhou Wang for pointing out this bug.</i></p>
+
+</dd>
+<dt id="Version-1.110-1997-03-06">Version 1.110 (1997/03/06)</dt>
+<dd>
+
+<p>Fixed bug in opening the data filehandle.</p>
+
+</dd>
+<dt id="Version-1.102-1997-03-01">Version 1.102 (1997/03/01)</dt>
+<dd>
+
+<p>Initial release.</p>
+
+</dd>
+<dt id="Version-1.101-1997-03-01">Version 1.101 (1997/03/01)</dt>
+<dd>
+
+<p>Baseline code. Originally created: 11 December 1996. Ho ho ho.</p>
+
+</dd>
+</dl>
+
+
+</body>
+
+</html>
+
+

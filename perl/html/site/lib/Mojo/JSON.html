@@ -1,0 +1,139 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a>
+    <ul>
+      <li><a href="#decode_json">decode_json</a></li>
+      <li><a href="#encode_json">encode_json</a></li>
+      <li><a href="#false">false</a></li>
+      <li><a href="#from_json">from_json</a></li>
+      <li><a href="#j">j</a></li>
+      <li><a href="#to_json">to_json</a></li>
+      <li><a href="#true">true</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::JSON - Minimalistic JSON</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::JSON</span> <span class="string">qw(decode_json encode_json)</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">encode_json</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">]</span><span class="operator">,</span> <span class="string">bar</span> <span class="operator">=&gt;</span> <span class="string">'hello!'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="operator">\</span><span class="number">1</span><span class="operator">};</span>
+  <span class="keyword">my</span> <span class="variable">$hash</span>  <span class="operator">=</span> <span class="variable">decode_json</span> <span class="variable">$bytes</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a> is a minimalistic and possibly the fastest pure-Perl implementation of <a href="http://tools.ietf.org/html/rfc7159">RFC 7159</a>.</p>
+
+<p>It supports normal Perl data types like scalar, array reference, hash reference and will try to call the <code>TO_JSON</code> method on blessed references, or stringify them if it doesn&#39;t exist. Differentiating between strings and numbers in Perl is hard, depending on how it has been used, a scalar can be both at the same time. The string value has a higher precedence unless both representations are equivalent.</p>
+
+<pre><code>  <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="operator">-</span><span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]</span>     <span class="operator">-&gt;</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="operator">-</span><span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]</span>
+  <span class="operator">{</span><span class="string">"foo"</span><span class="operator">:</span> <span class="string">"bar"</span><span class="operator">}</span> <span class="operator">-&gt;</span> <span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">}</span>
+</code></pre>
+
+<p>Literal names will be translated to and from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a> constants or a similar native Perl value.</p>
+
+<pre><code>  true  -&gt; Mojo::JSON-&gt;true
+  false -&gt; Mojo::JSON-&gt;false
+  null  -&gt; undef</code></pre>
+
+<p>In addition scalar references will be used to generate booleans, based on if their values are true or false.</p>
+
+<pre><code>  \1 -&gt; true
+  \0 -&gt; false</code></pre>
+
+<p>The two Unicode whitespace characters <code>u2028</code> and <code>u2029</code> will always be escaped to make JSONP easier, and the character <code>/</code> to prevent XSS attacks.</p>
+
+<pre><code>  &quot;\x{2028}\x{2029}&lt;/script&gt;&quot; -&gt; &quot;\u2028\u2029&lt;\/script&gt;&quot;</code></pre>
+
+<h1 id="FUNCTIONS">FUNCTIONS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a> implements the following functions, which can be imported individually.</p>
+
+<h2 id="decode_json">decode_json</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">decode_json</span> <span class="variable">$bytes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Decode JSON to Perl value and die if decoding fails.</p>
+
+<h2 id="encode_json">encode_json</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">encode_json</span> <span class="operator">{</span><span class="string">i</span> <span class="operator">=&gt;</span> <span class="string">'â¥ mojolicious'</span><span class="operator">};</span>
+</code></pre>
+
+<p>Encode Perl value to JSON.</p>
+
+<h2 id="false">false</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$false</span> <span class="operator">=</span> <span class="variable">false</span><span class="operator">;</span>
+</code></pre>
+
+<p>False value, used because Perl has no native equivalent.</p>
+
+<h2 id="from_json">from_json</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">from_json</span> <span class="variable">$chars</span><span class="operator">;</span>
+</code></pre>
+
+<p>Decode JSON text that is not <code>UTF-8</code> encoded to Perl value and die if decoding fails.</p>
+
+<h2 id="j">j</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">j</span> <span class="operator">[</span><span class="number">1</span><span class="operator">,</span> <span class="number">2</span><span class="operator">,</span> <span class="number">3</span><span class="operator">]</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$bytes</span> <span class="operator">=</span> <span class="variable">j</span> <span class="operator">{</span><span class="string">i</span> <span class="operator">=&gt;</span> <span class="string">'â¥ mojolicious'</span><span class="operator">};</span>
+  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">j</span> <span class="variable">$bytes</span><span class="operator">;</span>
+</code></pre>
+
+<p>Encode Perl data structure (which may only be an array reference or hash reference) or decode JSON, an <code>undef</code> return value indicates a bare <code>null</code> or that decoding failed.</p>
+
+<h2 id="to_json">to_json</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$chars</span> <span class="operator">=</span> <span class="variable">to_json</span> <span class="operator">{</span><span class="string">i</span> <span class="operator">=&gt;</span> <span class="string">'â¥ mojolicious'</span><span class="operator">};</span>
+</code></pre>
+
+<p>Encode Perl value to JSON text without <code>UTF-8</code> encoding it.</p>
+
+<h2 id="true">true</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$true</span> <span class="operator">=</span> <span class="variable">true</span><span class="operator">;</span>
+</code></pre>
+
+<p>True value, used because Perl has no native equivalent.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

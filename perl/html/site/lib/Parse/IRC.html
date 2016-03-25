@@ -1,0 +1,218 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#VERSION">VERSION</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTION-INTERFACE">FUNCTION INTERFACE</a></li>
+  <li><a href="#OBJECT-INTERFACE">OBJECT INTERFACE</a>
+    <ul>
+      <li><a href="#CONSTRUCTOR">CONSTRUCTOR</a></li>
+      <li><a href="#METHODS">METHODS</a></li>
+    </ul>
+  </li>
+  <li><a href="#KUDOS">KUDOS</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+  <li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Parse::IRC - A parser for the IRC protocol.</p>
+
+<h1 id="VERSION">VERSION</h1>
+
+<p>version 1.20</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p>General usage:</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">strict</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Parse::IRC</span><span class="operator">;</span>
+  
+  <span class="comment"># Functional interface</span>
+  
+  <span class="keyword">my</span> <span class="variable">$hashref</span> <span class="operator">=</span> <span class="variable">parse_irc</span><span class="operator">(</span> <span class="variable">$irc_string</span> <span class="operator">);</span>
+  
+  <span class="comment"># OO interface</span>
+  
+  <span class="keyword">my</span> <span class="variable">$irc_parser</span> <span class="operator">=</span> <span class="variable">Parse::IRC</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">();</span>
+  
+  <span class="keyword">my</span> <span class="variable">$hashref</span> <span class="operator">=</span> <span class="variable">$irc_parser</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span> <span class="variable">$irc_string</span> <span class="operator">);</span>
+</code></pre>
+
+<p>Using Parse::IRC in a simple IRC bot:</p>
+
+<pre><code>  <span class="comment"># A simple IRC bot using Parse::IRC</span>
+  
+  <span class="keyword">use</span> <span class="variable">strict</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">IO::Socket</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Parse::IRC</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$parser</span> <span class="operator">=</span> <span class="variable">Parse::IRC</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span> <span class="string">public</span> <span class="operator">=&gt;</span> <span class="number">1</span> <span class="operator">);</span>
+  
+  <span class="keyword">my</span> <span class="variable">%dispatch</span> <span class="operator">=</span> <span class="operator">(</span> <span class="string">'ping'</span> <span class="operator">=&gt;</span> <span class="operator">\&amp;</span><span class="variable">irc_ping</span><span class="operator">,</span> <span class="string">'001'</span> <span class="operator">=&gt;</span> <span class="operator">\&amp;</span><span class="variable">irc_001</span><span class="operator">,</span> <span class="string">'public'</span> <span class="operator">=&gt;</span> <span class="operator">\&amp;</span><span class="variable">irc_public</span> <span class="operator">);</span>
+  
+  <span class="comment"># The server to connect to and our details.</span>
+  <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="string">"irc.perl.moo"</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$nick</span> <span class="operator">=</span> <span class="string">"parseirc$$"</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$login</span> <span class="operator">=</span> <span class="string">"simple_bot"</span><span class="operator">;</span>
+  
+  <span class="comment"># The channel which the bot will join.</span>
+  <span class="keyword">my</span> <span class="variable">$channel</span> <span class="operator">=</span> <span class="string">"#IRC.pm"</span><span class="operator">;</span>
+  
+  <span class="comment"># Connect to the IRC server.</span>
+  <span class="keyword">my</span> <span class="variable">$sock</span> <span class="operator">=</span> <span class="variable">new</span> <span class="variable">IO::Socket::INET</span><span class="operator">(</span><span class="string">PeerAddr</span> <span class="operator">=&gt;</span> <span class="variable">$server</span><span class="operator">,</span>
+                                  <span class="string">PeerPort</span> <span class="operator">=&gt;</span> <span class="number">6667</span><span class="operator">,</span>
+                                  <span class="string">Proto</span> <span class="operator">=&gt;</span> <span class="string">'tcp'</span><span class="operator">)</span> <span class="keyword">or</span>
+                                    <span class="keyword">die</span> <span class="string">"Can't connect\n"</span><span class="operator">;</span>
+  
+  <span class="comment"># Log on to the server.</span>
+  <span class="keyword">print</span> <span class="variable">$sock</span> <span class="string">"NICK </span><span class="variable">$nick</span><span class="string">\r\n"</span><span class="operator">;</span>
+  <span class="keyword">print</span> <span class="variable">$sock</span> <span class="string">"USER </span><span class="variable">$login</span><span class="string"> 8 * :Perl IRC Hacks Robot\r\n"</span><span class="operator">;</span>
+  
+  <span class="comment"># Keep reading lines from the server.</span>
+  <span class="keyword">while</span> <span class="operator">(</span><span class="keyword">my</span> <span class="variable">$input</span> <span class="operator">=</span> <span class="operator">&lt;</span><span class="variable">$sock</span><span class="operator">&gt;)</span> <span class="operator">{</span>
+    <span class="variable">$input</span> <span class="operator">=~</span> <span class="regex">s/\r\n//g</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$hashref</span> <span class="operator">=</span> <span class="variable">$parser</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span> <span class="variable">$input</span> <span class="operator">);</span>
+    <span class="variable">SWITCH</span><span class="operator">:</span> <span class="operator">{</span>
+          <span class="keyword">my</span> <span class="variable">$type</span> <span class="operator">=</span> <span class="keyword">lc</span> <span class="variable">$hashref</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">command</span><span class="operator">}</span><span class="operator">;</span>
+          <span class="keyword">my</span> <span class="variable">@args</span><span class="operator">;</span>
+          <span class="keyword">push</span> <span class="variable">@args</span><span class="operator">,</span> <span class="variable">$hashref</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">prefix</span><span class="operator">}</span> <span class="keyword">if</span> <span class="variable">$hashref</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">prefix</span><span class="operator">}</span><span class="operator">;</span>
+          <span class="keyword">push</span> <span class="variable">@args</span><span class="operator">,</span> <span class="variable">@</span><span class="operator">{</span> <span class="variable">$hashref</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">params</span><span class="operator">}</span> <span class="operator">}</span><span class="operator">;</span>
+          <span class="keyword">if</span> <span class="operator">(</span> <span class="keyword">defined</span> <span class="variable">$dispatch</span><span class="operator">{</span><span class="variable">$type</span><span class="operator">}</span> <span class="operator">)</span> <span class="operator">{</span>
+            <span class="variable">$dispatch</span><span class="operator">{</span><span class="variable">$type</span><span class="operator">}</span><span class="operator">-&gt;(</span><span class="variable">@args</span><span class="operator">);</span>
+            <span class="keyword">last</span> <span class="variable">SWITCH</span><span class="operator">;</span>
+          <span class="operator">}</span>
+          <span class="keyword">print</span> <span class="variable">STDOUT</span> <span class="keyword">join</span><span class="operator">(</span> <span class="string">' '</span><span class="operator">,</span> <span class="string">"irc_</span><span class="variable">$type</span><span class="string">:"</span><span class="operator">,</span> <span class="variable">@args</span> <span class="operator">),</span> <span class="string">"\n"</span><span class="operator">;</span>
+    <span class="operator">}</span>
+  <span class="operator">}</span>
+  
+  <span class="keyword">sub</span><span class="variable"> irc_ping </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">print</span> <span class="variable">$sock</span> <span class="string">"PONG :</span><span class="variable">$server</span><span class="string">\r\n"</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="number">1</span><span class="operator">;</span>
+  <span class="operator">}</span>
+  
+  <span class="keyword">sub</span><span class="variable"> irc_001 </span><span class="operator">{</span>
+    <span class="keyword">print</span> <span class="variable">STDOUT</span> <span class="string">"Connected to </span><span class="variable">$_</span><span class="string">[0]\n"</span><span class="operator">;</span>
+    <span class="keyword">print</span> <span class="variable">$sock</span> <span class="string">"JOIN </span><span class="variable">$channel</span><span class="string">\r\n"</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="number">1</span><span class="operator">;</span>
+  <span class="operator">}</span>
+  
+  <span class="keyword">sub</span><span class="variable"> irc_public </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$who</span><span class="operator">,</span><span class="variable">$where</span><span class="operator">,</span><span class="variable">$what</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">print</span> <span class="string">"</span><span class="variable">$who</span><span class="string"> -&gt; </span><span class="variable">$where</span><span class="string"> -&gt; </span><span class="variable">$what</span><span class="string">\n"</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="number">1</span><span class="operator">;</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>Parse::IRC provides a convenient way of parsing lines of text conforming to the IRC protocol ( see RFC1459 or RFC2812 ).</p>
+
+<h1 id="FUNCTION-INTERFACE">FUNCTION INTERFACE</h1>
+
+<p>Using the module automagically imports &#39;parse_irc&#39; into your namespace.</p>
+
+<dl>
+
+<dt id="parse_irc"><code>parse_irc</code></dt>
+<dd>
+
+<p>Takes a string of IRC protcol text. Returns a hashref on success or undef on failure. See below for the format of the hashref returned.</p>
+
+</dd>
+</dl>
+
+<h1 id="OBJECT-INTERFACE">OBJECT INTERFACE</h1>
+
+<h2 id="CONSTRUCTOR">CONSTRUCTOR</h2>
+
+<dl>
+
+<dt id="new"><code>new</code></dt>
+<dd>
+
+<p>Creates a new Parse::IRC object. One may specify <code>debug =&gt; 1</code> to enable warnings about non-IRC protcol lines. Specify <code>public =&gt; 1</code> to enable the automatic conversion of privmsgs targeted at channels to <code>public</code> instead of <code>privmsg</code>. Specify <code>ctcp =&gt; 1</code> to enable automatic conversion of privmsgs and notices with CTCP/DCC type encoding to <code>ctcp</code>, <code>ctcpreply</code> and <code>dcc_request</code>.</p>
+
+</dd>
+</dl>
+
+<h2 id="METHODS">METHODS</h2>
+
+<dl>
+
+<dt id="parse"><code>parse</code></dt>
+<dd>
+
+<p>Takes a string of IRC protcol text. Returns a hashref on success or undef on failure. The hashref contains the following fields:</p>
+
+<pre><code>  prefix
+  command
+  params ( this is an arrayref )
+  raw_line</code></pre>
+
+<p>For example, if the filter receives the following line, the following hashref is produced:</p>
+
+<pre><code>  <span class="variable">LINE</span><span class="operator">:</span> <span class="string">':moo.server.net 001 lamebot :Welcome to the IRC network lamebot'</span>
+  
+  <span class="variable">HASHREF</span><span class="operator">:</span> <span class="operator">{</span>
+             <span class="string">prefix</span>   <span class="operator">=&gt;</span> <span class="string">':moo.server.net'</span><span class="operator">,</span>
+             <span class="string">command</span>  <span class="operator">=&gt;</span> <span class="string">'001'</span><span class="operator">,</span>
+             <span class="string">params</span>   <span class="operator">=&gt;</span> <span class="operator">[</span> <span class="string">'lamebot'</span><span class="operator">,</span> <span class="string">'Welcome to the IRC network lamebot'</span> <span class="operator">]</span><span class="operator">,</span>
+             <span class="string">raw_line</span> <span class="operator">=&gt;</span> <span class="string">':moo.server.net 001 lamebot :Welcome to the IRC network lamebot'</span><span class="operator">,</span>
+           <span class="operator">}</span>
+</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="KUDOS">KUDOS</h1>
+
+<p>Based on code originally developed by Jonathan Steinert and Dennis Taylor</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>POE::Filter::IRCD</a></p>
+
+<p><a href="http://www.faqs.org/rfcs/rfc1459.html">http://www.faqs.org/rfcs/rfc1459.html</a></p>
+
+<p><a href="http://www.faqs.org/rfcs/rfc2812.html">http://www.faqs.org/rfcs/rfc2812.html</a></p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Chris Williams &lt;chris@bingosnet.co.uk&gt;</p>
+
+<h1 id="COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</h1>
+
+<p>This software is copyright (c) 2012 by Chris Williams, Jonathan Steinert and Dennis Taylor.</p>
+
+<p>This is free software; you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself.</p>
+
+
+</body>
+
+</html>
+
+

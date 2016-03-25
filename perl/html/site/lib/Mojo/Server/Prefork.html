@@ -1,0 +1,320 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#MANAGER-SIGNALS">MANAGER SIGNALS</a>
+    <ul>
+      <li><a href="#INT-TERM">INT, TERM</a></li>
+      <li><a href="#QUIT">QUIT</a></li>
+      <li><a href="#TTIN">TTIN</a></li>
+      <li><a href="#TTOU">TTOU</a></li>
+    </ul>
+  </li>
+  <li><a href="#WORKER-SIGNALS">WORKER SIGNALS</a>
+    <ul>
+      <li><a href="#QUIT1">QUIT</a></li>
+    </ul>
+  </li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#finish">finish</a></li>
+      <li><a href="#heartbeat">heartbeat</a></li>
+      <li><a href="#reap">reap</a></li>
+      <li><a href="#spawn">spawn</a></li>
+      <li><a href="#wait">wait</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#accepts">accepts</a></li>
+      <li><a href="#cleanup">cleanup</a></li>
+      <li><a href="#graceful_timeout">graceful_timeout</a></li>
+      <li><a href="#heartbeat_interval">heartbeat_interval</a></li>
+      <li><a href="#heartbeat_timeout">heartbeat_timeout</a></li>
+      <li><a href="#pid_file">pid_file</a></li>
+      <li><a href="#workers">workers</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#check_pid">check_pid</a></li>
+      <li><a href="#ensure_pid_file">ensure_pid_file</a></li>
+      <li><a href="#healthy">healthy</a></li>
+      <li><a href="#run">run</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Server::Prefork - Preforking non-blocking I/O HTTP and WebSocket server</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Server::Prefork</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$prefork</span> <span class="operator">=</span> <span class="variable">Mojo::Server::Prefork</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">listen</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'http://*:8080'</span><span class="operator">]</span><span class="operator">);</span>
+  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">unsubscribe</span><span class="operator">(</span><span class="string">'request'</span><span class="operator">)-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">request</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$prefork</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Request</span>
+    <span class="keyword">my</span> <span class="variable">$method</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">method</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$path</span>   <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+  
+    <span class="comment"># Response</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">(</span><span class="string">"</span><span class="variable">$method</span><span class="string"> request for </span><span class="variable">$path</span><span class="string">!"</span><span class="operator">);</span>
+  
+    <span class="comment"># Resume transaction</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">resume</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a> is a full featured, UNIX optimized, preforking non-blocking I/O HTTP and WebSocket server, built around the very well tested and reliable <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a>, with IPv6, TLS, SNI, Comet (long polling), keep-alive and multiple event loop support. Note that the server uses signals for process management, so you should avoid modifying signal handlers in your applications.</p>
+
+<p>For better scalability (epoll, kqueue) and to provide non-blocking name resolution, SOCKS5 as well as TLS support, the optional modules <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">EV</a> (4.0+), <a>Net::DNS::Native</a> (0.15+), <a>IO::Socket::Socks</a> (0.64+) and <a href="../../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> (1.84+) will be used automatically if possible. Individual features can also be disabled with the <code>MOJO_NO_NDN</code>, <code>MOJO_NO_SOCKS</code> and <code>MOJO_NO_TLS</code> environment variables.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Cookbook.html#DEPLOYMENT">&quot;DEPLOYMENT&quot; in Mojolicious::Guides::Cookbook</a> for more.</p>
+
+<h1 id="MANAGER-SIGNALS">MANAGER SIGNALS</h1>
+
+<p>The <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a> manager process can be controlled at runtime with the following signals.</p>
+
+<h2 id="INT-TERM">INT, TERM</h2>
+
+<p>Shut down server immediately.</p>
+
+<h2 id="QUIT">QUIT</h2>
+
+<p>Shut down server gracefully.</p>
+
+<h2 id="TTIN">TTIN</h2>
+
+<p>Increase worker pool by one.</p>
+
+<h2 id="TTOU">TTOU</h2>
+
+<p>Decrease worker pool by one.</p>
+
+<h1 id="WORKER-SIGNALS">WORKER SIGNALS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a> worker processes can be controlled at runtime with the following signals.</p>
+
+<h2 id="QUIT1">QUIT</h2>
+
+<p>Stop worker gracefully.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a> and can emit the following new ones.</p>
+
+<h2 id="finish">finish</h2>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$prefork</span><span class="operator">,</span> <span class="variable">$graceful</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when the server shuts down.</p>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$prefork</span><span class="operator">,</span> <span class="variable">$graceful</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$graceful</span> <span class="operator">?</span> <span class="string">'Graceful server shutdown'</span> <span class="operator">:</span> <span class="string">'Server shutdown'</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="heartbeat">heartbeat</h2>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">heartbeat</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$prefork</span><span class="operator">,</span> <span class="variable">$pid</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a heartbeat message has been received from a worker.</p>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">heartbeat</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$prefork</span><span class="operator">,</span> <span class="variable">$pid</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Worker </span><span class="variable">$pid</span><span class="string"> has a heartbeat"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="reap">reap</h2>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">reap</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$prefork</span><span class="operator">,</span> <span class="variable">$pid</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a child process dies.</p>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">reap</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$prefork</span><span class="operator">,</span> <span class="variable">$pid</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Worker </span><span class="variable">$pid</span><span class="string"> stopped"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="spawn">spawn</h2>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">spawn</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$prefork</span><span class="operator">,</span> <span class="variable">$pid</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a worker process is spawned.</p>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">spawn</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$prefork</span><span class="operator">,</span> <span class="variable">$pid</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Worker </span><span class="variable">$pid</span><span class="string"> started"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="wait">wait</h2>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">wait</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$prefork</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when the manager starts waiting for new heartbeat messages.</p>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">wait</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$prefork</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$workers</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">workers</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"Waiting for heartbeat messages from </span><span class="variable">$workers</span><span class="string"> workers"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a> inherits all attributes from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a> and implements the following new ones.</p>
+
+<h2 id="accepts">accepts</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$accepts</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">;</span>
+  <span class="variable">$prefork</span>    <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">accepts</span><span class="operator">(</span><span class="number">100</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum number of connections a worker is allowed to accept, before stopping gracefully and then getting replaced with a newly started worker, passed along to <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html#max_accepts">&quot;max_accepts&quot; in Mojo::IOLoop</a>, defaults to <code>10000</code>. Setting the value to <code>0</code> will allow workers to accept new connections indefinitely. Note that up to half of this value can be subtracted randomly to improve load balancing.</p>
+
+<h2 id="cleanup">cleanup</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">cleanup</span><span class="operator">;</span>
+  <span class="variable">$prefork</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">cleanup</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Delete <a href="#pid_file">&quot;pid_file&quot;</a> automatically once it is not needed anymore, defaults to a true value.</p>
+
+<h2 id="graceful_timeout">graceful_timeout</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$timeout</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">graceful_timeout</span><span class="operator">;</span>
+  <span class="variable">$prefork</span>    <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">graceful_timeout</span><span class="operator">(</span><span class="number">15</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum amount of time in seconds stopping a worker gracefully may take before being forced, defaults to <code>20</code>.</p>
+
+<h2 id="heartbeat_interval">heartbeat_interval</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$interval</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">heartbeat_interval</span><span class="operator">;</span>
+  <span class="variable">$prefork</span>     <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">heartbeat_interval</span><span class="operator">(</span><span class="number">3</span><span class="operator">);</span>
+</code></pre>
+
+<p>Heartbeat interval in seconds, defaults to <code>5</code>.</p>
+
+<h2 id="heartbeat_timeout">heartbeat_timeout</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$timeout</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">heartbeat_timeout</span><span class="operator">;</span>
+  <span class="variable">$prefork</span>    <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">heartbeat_timeout</span><span class="operator">(</span><span class="number">2</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum amount of time in seconds before a worker without a heartbeat will be stopped gracefully, defaults to <code>20</code>.</p>
+
+<h2 id="pid_file">pid_file</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$file</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">pid_file</span><span class="operator">;</span>
+  <span class="variable">$prefork</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">pid_file</span><span class="operator">(</span><span class="string">'/tmp/prefork.pid'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Full path of process id file, defaults to <code>prefork.pid</code> in a temporary directory.</p>
+
+<h2 id="workers">workers</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$workers</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">workers</span><span class="operator">;</span>
+  <span class="variable">$prefork</span>    <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">workers</span><span class="operator">(</span><span class="number">10</span><span class="operator">);</span>
+</code></pre>
+
+<p>Number of worker processes, defaults to <code>4</code>. A good rule of thumb is two worker processes per CPU core for applications that perform mostly non-blocking operations, blocking operations often require more and benefit from decreasing concurrency with <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html#clients">&quot;clients&quot; in Mojo::Server::Daemon</a> (often as low as <code>1</code>).</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a> and implements the following new ones.</p>
+
+<h2 id="check_pid">check_pid</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$pid</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">check_pid</span><span class="operator">;</span>
+</code></pre>
+
+<p>Get process id for running server from <a href="#pid_file">&quot;pid_file&quot;</a> or delete it if server is not running.</p>
+
+<pre><code>  <span class="keyword">say</span> <span class="string">'Server is not running'</span> <span class="keyword">unless</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">check_pid</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="ensure_pid_file">ensure_pid_file</h2>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">ensure_pid_file</span><span class="operator">;</span>
+</code></pre>
+
+<p>Ensure <a href="#pid_file">&quot;pid_file&quot;</a> exists.</p>
+
+<h2 id="healthy">healthy</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$healthy</span> <span class="operator">=</span> <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">healthy</span><span class="operator">;</span>
+</code></pre>
+
+<p>Number of currently active worker processes with a heartbeat.</p>
+
+<h2 id="run">run</h2>
+
+<pre><code>  <span class="variable">$prefork</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">;</span>
+</code></pre>
+
+<p>Run server and wait for <a href="#MANAGER-SIGNALS">&quot;MANAGER SIGNALS&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

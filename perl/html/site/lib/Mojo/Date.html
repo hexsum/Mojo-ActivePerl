@@ -1,0 +1,171 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#epoch">epoch</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#new">new</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#to_datetime">to_datetime</a></li>
+      <li><a href="#to_string">to_string</a></li>
+    </ul>
+  </li>
+  <li><a href="#OPERATORS">OPERATORS</a>
+    <ul>
+      <li><a href="#bool">bool</a></li>
+      <li><a href="#stringify">stringify</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Date - HTTP date</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Date</span><span class="operator">;</span>
+  
+  <span class="comment"># Parse</span>
+  <span class="keyword">my</span> <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'Sun, 06 Nov 1994 08:49:37 GMT'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$date</span><span class="operator">-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  
+  <span class="comment"># Build</span>
+  <span class="keyword">my</span> <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="keyword">time</span> <span class="operator">+</span> <span class="number">60</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="string">"</span><span class="variable">$date</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Date.html">Mojo::Date</a> implements HTTP date and time functions, based on <a href="http://tools.ietf.org/html/rfc7230">RFC 7230</a>, <a href="http://tools.ietf.org/html/rfc7231">RFC 7231</a> and <a href="http://tools.ietf.org/html/rfc3339">RFC 3339</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Date.html">Mojo::Date</a> implements the following attributes.</p>
+
+<h2 id="epoch">epoch</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$epoch</span> <span class="operator">=</span> <span class="variable">$date</span><span class="operator">-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  <span class="variable">$date</span>     <span class="operator">=</span> <span class="variable">$date</span><span class="operator">-&gt;</span><span class="variable">epoch</span><span class="operator">(</span><span class="number">784111777</span><span class="operator">);</span>
+</code></pre>
+
+<p>Epoch seconds, defaults to the current time.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Date.html">Mojo::Date</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'Sun Nov  6 08:49:37 1994'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Date.html">Mojo::Date</a> object and <a href="#parse">&quot;parse&quot;</a> date if necessary.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$date</span> <span class="operator">=</span> <span class="variable">$date</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'Sun Nov  6 08:49:37 1994'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse date.</p>
+
+<pre><code>  <span class="comment"># Epoch</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'784111777'</span><span class="operator">)-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'784111777.21'</span><span class="operator">)-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  
+  <span class="comment"># RFC 822/1123</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'Sun, 06 Nov 1994 08:49:37 GMT'</span><span class="operator">)-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  
+  <span class="comment"># RFC 850/1036</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'Sunday, 06-Nov-94 08:49:37 GMT'</span><span class="operator">)-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  
+  <span class="comment"># Ansi C asctime()</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'Sun Nov  6 08:49:37 1994'</span><span class="operator">)-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  
+  <span class="comment"># RFC 3339</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'1994-11-06T08:49:37Z'</span><span class="operator">)-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'1994-11-06T08:49:37'</span><span class="operator">)-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'1994-11-06T08:49:37.21Z'</span><span class="operator">)-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'1994-11-06T08:49:37+01:00'</span><span class="operator">)-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'1994-11-06T08:49:37-01:00'</span><span class="operator">)-&gt;</span><span class="variable">epoch</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="to_datetime">to_datetime</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$date</span><span class="operator">-&gt;</span><span class="variable">to_datetime</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render <a href="http://tools.ietf.org/html/rfc3339">RFC 3339</a> date and time.</p>
+
+<pre><code>  <span class="comment"># "1994-11-06T08:49:37Z"</span>
+  <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="number">784111777</span><span class="operator">)-&gt;</span><span class="variable">to_datetime</span><span class="operator">;</span>
+  
+  <span class="comment"># "1994-11-06T08:49:37.21Z"</span>
+  <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="number">784111777.21</span><span class="operator">)-&gt;</span><span class="variable">to_datetime</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="to_string">to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$date</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render date suitable for HTTP messages.</p>
+
+<pre><code>  <span class="comment"># "Sun, 06 Nov 1994 08:49:37 GMT"</span>
+  <span class="variable">Mojo::Date</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="number">784111777</span><span class="operator">)-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="OPERATORS">OPERATORS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Date.html">Mojo::Date</a> overloads the following operators.</p>
+
+<h2 id="bool">bool</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="operator">!!</span><span class="variable">$date</span><span class="operator">;</span>
+</code></pre>
+
+<p>Always true.</p>
+
+<h2 id="stringify">stringify</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="string">"</span><span class="variable">$date</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#to_string">&quot;to_string&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

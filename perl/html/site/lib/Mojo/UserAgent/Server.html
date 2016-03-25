@@ -1,0 +1,120 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#ioloop">ioloop</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#app">app</a></li>
+      <li><a href="#nb_url">nb_url</a></li>
+      <li><a href="#restart">restart</a></li>
+      <li><a href="#url">url</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::UserAgent::Server - Application server</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::UserAgent::Server</span><span class="operator">;</span>
+  
+  <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">Mojo::UserAgent::Server</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Server.html">Mojo::UserAgent::Server</a> is an embedded web server based on <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a> that processes requests for <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Server.html">Mojo::UserAgent::Server</a> implements the following attributes.</p>
+
+<h2 id="ioloop">ioloop</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">ioloop</span><span class="operator">;</span>
+  <span class="variable">$server</span>  <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">ioloop</span><span class="operator">(</span><span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Event loop object to use for I/O operations, defaults to the global <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> singleton.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Server.html">Mojo::UserAgent::Server</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="app">app</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">Mojo::UserAgent::Server</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">;</span>
+            <span class="variable">Mojo::UserAgent::Server</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">;</span>
+  <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Application this server handles, instance specific applications override the global default.</p>
+
+<pre><code>  <span class="comment"># Change application behavior</span>
+  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">defaults</span><span class="operator">(</span><span class="string">testing</span> <span class="operator">=&gt;</span> <span class="string">'oh yea!'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="nb_url">nb_url</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">nb_url</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">nb_url</span><span class="operator">(</span><span class="string">'http'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">nb_url</span><span class="operator">(</span><span class="string">'https'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get absolute <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a> object for server processing non-blocking requests with <a href="#app">&quot;app&quot;</a> and switch protocol if necessary.</p>
+
+<h2 id="restart">restart</h2>
+
+<pre><code>  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">restart</span><span class="operator">;</span>
+</code></pre>
+
+<p>Restart server with new port.</p>
+
+<h2 id="url">url</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">(</span><span class="string">'http'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$url</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">(</span><span class="string">'https'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Get absolute <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a> object for server processing blocking requests with <a href="#app">&quot;app&quot;</a> and switch protocol if necessary.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

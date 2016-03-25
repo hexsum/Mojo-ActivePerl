@@ -1,0 +1,286 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#COMMANDS">COMMANDS</a>
+    <ul>
+      <li><a href="#cgi">cgi</a></li>
+      <li><a href="#cpanify">cpanify</a></li>
+      <li><a href="#daemon">daemon</a></li>
+      <li><a href="#eval">eval</a></li>
+      <li><a href="#generate">generate</a></li>
+      <li><a href="#generate-app">generate app</a></li>
+      <li><a href="#generate-lite_app">generate lite_app</a></li>
+      <li><a href="#generate-makefile">generate makefile</a></li>
+      <li><a href="#generate-plugin">generate plugin</a></li>
+      <li><a href="#get">get</a></li>
+      <li><a href="#help">help</a></li>
+      <li><a href="#inflate">inflate</a></li>
+      <li><a href="#prefork">prefork</a></li>
+      <li><a href="#psgi">psgi</a></li>
+      <li><a href="#routes">routes</a></li>
+      <li><a href="#test">test</a></li>
+      <li><a href="#version">version</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#hint">hint</a></li>
+      <li><a href="#message">message</a></li>
+      <li><a href="#namespaces">namespaces</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#detect">detect</a></li>
+      <li><a href="#run">run</a></li>
+      <li><a href="#start_app">start_app</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Commands - Command line interface</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  Usage: APPLICATION COMMAND [OPTIONS]
+
+    mojo version
+    mojo generate lite_app
+    ./myapp.pl daemon -m production -l http://*:8080
+    ./myapp.pl get /foo
+    ./myapp.pl routes -v
+
+  Tip: CGI and PSGI environments can be automatically detected very often and
+       work without commands.
+
+  Options (for all commands):
+    -h, --help          Get more information on a specific command
+        --home &lt;path&gt;   Path to home directory of your application, defaults to
+                        the value of MOJO_HOME or auto-detection
+    -m, --mode &lt;name&gt;   Operating mode for your application, defaults to the
+                        value of MOJO_MODE/PLACK_ENV or &quot;development&quot;</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Commands.html">Mojolicious::Commands</a> is the interactive command line interface for the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> framework. It will automatically detect available commands in the <code>Mojolicious::Command</code> namespace.</p>
+
+<h1 id="COMMANDS">COMMANDS</h1>
+
+<p>These commands are available by default.</p>
+
+<h2 id="cgi">cgi</h2>
+
+<pre><code>  $ ./myapp.pl cgi</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/cgi.html">Mojolicious::Command::cgi</a> to start application with CGI backend, usually auto detected.</p>
+
+<h2 id="cpanify">cpanify</h2>
+
+<pre><code>  $ mojo cpanify -u sri -p secr3t Mojolicious-Plugin-Fun-0.1.tar.gz</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/cpanify.html">Mojolicious::Command::cpanify</a> for uploading files to CPAN.</p>
+
+<h2 id="daemon">daemon</h2>
+
+<pre><code>  $ ./myapp.pl daemon</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/daemon.html">Mojolicious::Command::daemon</a> to start application with standalone HTTP and WebSocket server.</p>
+
+<h2 id="eval">eval</h2>
+
+<pre><code>  $ ./myapp.pl eval &#39;say app-&gt;home&#39;</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/eval.html">Mojolicious::Command::eval</a> to run code against application.</p>
+
+<h2 id="generate">generate</h2>
+
+<pre><code>  $ mojo generate
+  $ mojo generate help
+  $ ./myapp.pl generate help</code></pre>
+
+<p>List available generator commands with short descriptions.</p>
+
+<pre><code>  $ mojo generate help &lt;generator&gt;
+  $ ./myapp.pl generate help &lt;generator&gt;</code></pre>
+
+<p>List available options for generator command with short descriptions.</p>
+
+<h2 id="generate-app">generate app</h2>
+
+<pre><code>  $ mojo generate app &lt;AppName&gt;</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate/app.html">Mojolicious::Command::generate::app</a> to generate application directory structure for a fully functional <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application.</p>
+
+<h2 id="generate-lite_app">generate lite_app</h2>
+
+<pre><code>  $ mojo generate lite_app</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate/lite_app.html">Mojolicious::Command::generate::lite_app</a> to generate a fully functional <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> application.</p>
+
+<h2 id="generate-makefile">generate makefile</h2>
+
+<pre><code>  $ mojo generate makefile
+  $ ./myapp.pl generate makefile</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate/makefile.html">Mojolicious::Command::generate::makefile</a> to generate <code>Makefile.PL</code> file for application.</p>
+
+<h2 id="generate-plugin">generate plugin</h2>
+
+<pre><code>  $ mojo generate plugin &lt;PluginName&gt;</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate/plugin.html">Mojolicious::Command::generate::plugin</a> to generate directory structure for a fully functional <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> plugin.</p>
+
+<h2 id="get">get</h2>
+
+<pre><code>  $ mojo get http://mojolicious.org
+  $ ./myapp.pl get /foo</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/get.html">Mojolicious::Command::get</a> to perform requests to remote host or local application.</p>
+
+<h2 id="help">help</h2>
+
+<pre><code>  $ mojo
+  $ mojo help
+  $ ./myapp.pl help</code></pre>
+
+<p>List available commands with short descriptions.</p>
+
+<pre><code>  $ mojo help &lt;command&gt;
+  $ ./myapp.pl help &lt;command&gt;</code></pre>
+
+<p>List available options for the command with short descriptions.</p>
+
+<h2 id="inflate">inflate</h2>
+
+<pre><code>  $ ./myapp.pl inflate</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/inflate.html">Mojolicious::Command::inflate</a> to turn templates and static files embedded in the <code>DATA</code> sections of your application into real files.</p>
+
+<h2 id="prefork">prefork</h2>
+
+<pre><code>  $ ./myapp.pl prefork</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/prefork.html">Mojolicious::Command::prefork</a> to start application with standalone preforking HTTP and WebSocket server.</p>
+
+<h2 id="psgi">psgi</h2>
+
+<pre><code>  $ ./myapp.pl psgi</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/psgi.html">Mojolicious::Command::psgi</a> to start application with PSGI backend, usually auto detected.</p>
+
+<h2 id="routes">routes</h2>
+
+<pre><code>  $ ./myapp.pl routes</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/routes.html">Mojolicious::Command::routes</a> to list application routes.</p>
+
+<h2 id="test">test</h2>
+
+<pre><code>  $ ./myapp.pl test
+  $ ./myapp.pl test t/fun.t</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/test.html">Mojolicious::Command::test</a> to run application tests from the <code>t</code> directory.</p>
+
+<h2 id="version">version</h2>
+
+<pre><code>  $ mojo version
+  $ ./myapp.pl version</code></pre>
+
+<p>Use <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/version.html">Mojolicious::Command::version</a> to show version information for available core and optional modules, very useful for debugging.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Commands.html">Mojolicious::Commands</a> inherits all attributes from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command.html">Mojolicious::Command</a> and implements the following new ones.</p>
+
+<h2 id="hint">hint</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$hint</span>  <span class="operator">=</span> <span class="variable">$commands</span><span class="operator">-&gt;</span><span class="variable">hint</span><span class="operator">;</span>
+  <span class="variable">$commands</span> <span class="operator">=</span> <span class="variable">$commands</span><span class="operator">-&gt;</span><span class="variable">hint</span><span class="operator">(</span><span class="string">'Foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Short hint shown after listing available commands.</p>
+
+<h2 id="message">message</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$msg</span>   <span class="operator">=</span> <span class="variable">$commands</span><span class="operator">-&gt;</span><span class="variable">message</span><span class="operator">;</span>
+  <span class="variable">$commands</span> <span class="operator">=</span> <span class="variable">$commands</span><span class="operator">-&gt;</span><span class="variable">message</span><span class="operator">(</span><span class="string">'Hello World!'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Short usage message shown before listing available commands.</p>
+
+<h2 id="namespaces">namespaces</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$namespaces</span> <span class="operator">=</span> <span class="variable">$commands</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">;</span>
+  <span class="variable">$commands</span>      <span class="operator">=</span> <span class="variable">$commands</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">(</span><span class="operator">[</span><span class="string">'MyApp::Command'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Namespaces to load commands from, defaults to <code>Mojolicious::Command</code>.</p>
+
+<pre><code>  <span class="comment"># Add another namespace to load commands from</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$commands</span><span class="operator">-&gt;</span><span class="variable">namespaces</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'MyApp::Command'</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Commands.html">Mojolicious::Commands</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command.html">Mojolicious::Command</a> and implements the following new ones.</p>
+
+<h2 id="detect">detect</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$env</span> <span class="operator">=</span> <span class="variable">$commands</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">;</span>
+</code></pre>
+
+<p>Try to detect environment, or return <code>undef</code> if none could be detected.</p>
+
+<h2 id="run">run</h2>
+
+<pre><code>  <span class="variable">$commands</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">;</span>
+  <span class="variable">$commands</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">(</span><span class="variable">@ARGV</span><span class="operator">);</span>
+</code></pre>
+
+<p>Load and run commands. Automatic deployment environment detection can be disabled with the <code>MOJO_NO_DETECT</code> environment variable.</p>
+
+<h2 id="start_app">start_app</h2>
+
+<pre><code>  <span class="variable">Mojolicious::Commands</span><span class="operator">-&gt;</span><span class="variable">start_app</span><span class="operator">(</span><span class="string">'MyApp'</span><span class="operator">);</span>
+  <span class="variable">Mojolicious::Commands</span><span class="operator">-&gt;</span><span class="variable">start_app</span><span class="operator">(</span><span class="string">MyApp</span> <span class="operator">=&gt;</span> <span class="variable">@ARGV</span><span class="operator">);</span>
+</code></pre>
+
+<p>Load application from class and start the command line interface for it. Note that the options <code>-h</code>/<code>--help</code>, <code>--home</code> and <code>-m</code>/<code>--mode</code>, which are shared by all commands, will be parsed from <code>@ARGV</code> during compile time.</p>
+
+<pre><code>  <span class="comment"># Always start daemon for application</span>
+  <span class="variable">Mojolicious::Commands</span><span class="operator">-&gt;</span><span class="variable">start_app</span><span class="operator">(</span><span class="string">'MyApp'</span><span class="operator">,</span> <span class="string">'daemon'</span><span class="operator">,</span> <span class="string">'-l'</span><span class="operator">,</span> <span class="string">'http://*:8080'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

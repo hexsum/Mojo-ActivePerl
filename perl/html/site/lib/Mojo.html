@@ -1,0 +1,165 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../displayToc.js"></script>
+<script language="JavaScript" src="../../tocParas.js"></script>
+<script language="JavaScript" src="../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#home">home</a></li>
+      <li><a href="#log">log</a></li>
+      <li><a href="#ua">ua</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#build_tx">build_tx</a></li>
+      <li><a href="#config">config</a></li>
+      <li><a href="#handler">handler</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo - Web development toolkit</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">MyApp</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojo'</span><span class="operator">;</span>
+  
+  <span class="comment"># All the complexities of CGI, PSGI, HTTP and WebSockets get reduced to a</span>
+  <span class="comment"># single method call!</span>
+  <span class="keyword">sub</span><span class="variable"> handler </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Request</span>
+    <span class="keyword">my</span> <span class="variable">$method</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">method</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$path</span>   <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">;</span>
+  
+    <span class="comment"># Response</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">(</span><span class="string">"</span><span class="variable">$method</span><span class="string"> request for </span><span class="variable">$path</span><span class="string">!"</span><span class="operator">);</span>
+  
+    <span class="comment"># Resume transaction</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">resume</span><span class="operator">;</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>A powerful web development toolkit, with all the basic tools and helpers needed to write simple web applications and higher level web frameworks, such as <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>. Some of the most commonly used tools are <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>, <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a>, <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a>, <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a>, <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a>, <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> and <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a>.</p>
+
+<p>See <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a> for more!</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a> implements the following attributes.</p>
+
+<h2 id="home">home</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$home</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">home</span><span class="operator">;</span>
+  <span class="variable">$app</span>     <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">home</span><span class="operator">(</span><span class="variable">Mojo::Home</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>The home directory of your application, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Home.html">Mojo::Home</a> object which stringifies to the actual path.</p>
+
+<pre><code>  <span class="comment"># Generate portable path relative to home directory</span>
+  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">home</span><span class="operator">-&gt;</span><span class="variable">rel_file</span><span class="operator">(</span><span class="string">'data/important.txt'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="log">log</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">;</span>
+  <span class="variable">$app</span>    <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">(</span><span class="variable">Mojo::Log</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>The logging layer of your application, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Log.html">Mojo::Log</a> object.</p>
+
+<pre><code>  <span class="comment"># Log debug message</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">'It works'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="ua">ua</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$ua</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">;</span>
+  <span class="variable">$app</span>   <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">(</span><span class="variable">Mojo::UserAgent</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>A full featured HTTP user agent for use in your applications, defaults to a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a> object.</p>
+
+<pre><code>  <span class="comment"># Perform blocking request</span>
+  <span class="keyword">say</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'example.com'</span><span class="operator">)-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a> inherits all methods from <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="build_tx">build_tx</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">;</span>
+</code></pre>
+
+<p>Transaction builder, defaults to building a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object.</p>
+
+<h2 id="config">config</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$hash</span> <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">config</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span>  <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">config</span><span class="operator">(</span><span class="string">'foo'</span><span class="operator">);</span>
+  <span class="variable">$app</span>     <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">config</span><span class="operator">(</span><span class="operator">{</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$app</span>     <span class="operator">=</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">config</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">baz</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+</code></pre>
+
+<p>Application configuration.</p>
+
+<pre><code>  <span class="comment"># Remove value</span>
+  <span class="keyword">my</span> <span class="variable">$foo</span> <span class="operator">=</span> <span class="keyword">delete</span> <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">config</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">foo</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Assign multiple values at once</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">config</span><span class="operator">(</span><span class="string">foo</span> <span class="operator">=&gt;</span> <span class="string">'test'</span><span class="operator">,</span> <span class="string">bar</span> <span class="operator">=&gt;</span> <span class="number">23</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="handler">handler</h2>
+
+<pre><code>  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">handler</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>The handler is the main entry point to your application or framework and will be called for each new transaction, which will usually be a <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> or <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> object. Meant to be overloaded in a subclass.</p>
+
+<pre><code>  <span class="keyword">sub</span><span class="variable"> handler </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,640 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DONT-PANIC">DON&#39;T PANIC!</a></li>
+  <li><a href="#BASICS">BASICS</a></li>
+  <li><a href="#CONVENTIONS">CONVENTIONS</a></li>
+  <li><a href="#TUTORIAL">TUTORIAL</a></li>
+  <li><a href="#GUIDES">GUIDES</a></li>
+  <li><a href="#HIGHLIGHTS">HIGHLIGHTS</a></li>
+  <li><a href="#SPIN-OFFS">SPIN-OFFS</a></li>
+  <li><a href="#REFERENCE">REFERENCE</a></li>
+  <li><a href="#MORE">MORE</a></li>
+  <li><a href="#SUPPORT">SUPPORT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Guides - The Mojolicious Guide to the Galaxy</p>
+
+<h1 id="DONT-PANIC">DON&#39;T PANIC!</h1>
+
+<p>We are constantly working on new documentation. Follow us on <a href="http://github.com/kraih/mojo">GitHub</a> or join the official IRC channel <code><span class="comment">#mojo</span>
+</code> on <code>irc.perl.org</code> to get all the latest updates.</p>
+
+<h1 id="BASICS">BASICS</h1>
+
+<dl>
+
+<dt id="Learning-Perl">Learning Perl</dt>
+<dd>
+
+<p>If you are new to Perl, we recommend <a href="http://qntm.org/files/perl/perl.html">Learn Perl in 2 hours 30 minutes</a> for a quick introduction, or the <a href="https://pragprog.com/book/swperl/modern-perl-fourth-edition">Modern Perl book</a>, freely available in many formats. Both are excellent introductions to the language. For more books and documentation, check out <a href="http://learn.perl.org/">learn.perl.org</a>.</p>
+
+</dd>
+<dt id="Learning-Web-Technologies">Learning Web Technologies</dt>
+<dd>
+
+<p>All web development starts with HTML, CSS and JavaScript, to learn the basics we recommend the <a href="https://developer.mozilla.org/en-US/docs/Web">Mozilla Developer Network</a>. And if you want to know more about how browsers and web servers actually communicate, there&#39;s also a very nice introduction to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">HTTP</a>.</p>
+
+</dd>
+</dl>
+
+<h1 id="CONVENTIONS">CONVENTIONS</h1>
+
+<dl>
+
+<dt id="Modern-Perl">Modern Perl</dt>
+<dd>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> uses a modern subset of Perl exclusively, and therefore all documentation assumes that <a href="../../../lib/strict.html">strict</a>, <a href="../../../lib/warnings.html">warnings</a>, <a href="../../../lib/utf8.html">utf8</a> and Perl 5.10 <a href="../../../lib/feature.html">features</a> are enabled, even if examples don&#39;t specifically mention it.</p>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">strict</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">warnings</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">utf8</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">feature</span> <span class="string">':5.10'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Some modules, like <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a>, will enable them for you automatically, whenever they are used.</p>
+
+</dd>
+</dl>
+
+<h1 id="TUTORIAL">TUTORIAL</h1>
+
+<dl>
+
+<dt id="Mojolicious::Guides::Tutorial"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Tutorial.html">Mojolicious::Guides::Tutorial</a></dt>
+<dd>
+
+<p>A fast and fun way to get started developing web applications with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>. The tutorial introduces the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> micro web framework, which is only a thin wrapper around the full web framework. The simplified notation introduced in the tutorial is commonly used throughout the guides and is therefore considered a prerequisite, you should definitely take a look!</p>
+
+</dd>
+</dl>
+
+<h1 id="GUIDES">GUIDES</h1>
+
+<dl>
+
+<dt id="Mojolicious::Guides::Growing"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Growing.html">Mojolicious::Guides::Growing</a></dt>
+<dd>
+
+<p>Starting a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> prototype from scratch and growing it into a well-structured <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application.</p>
+
+</dd>
+<dt id="Mojolicious::Guides::Routing"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Routing.html">Mojolicious::Guides::Routing</a></dt>
+<dd>
+
+<p>Simple and fun introduction to the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> router.</p>
+
+</dd>
+<dt id="Mojolicious::Guides::Rendering"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Rendering.html">Mojolicious::Guides::Rendering</a></dt>
+<dd>
+
+<p>Generating content with the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> renderer.</p>
+
+</dd>
+<dt id="Mojolicious::Guides::Cookbook"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Cookbook.html">Mojolicious::Guides::Cookbook</a></dt>
+<dd>
+
+<p>Cooking with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, recipes for every taste.</p>
+
+</dd>
+<dt id="Mojolicious::Guides::Contributing"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Contributing.html">Mojolicious::Guides::Contributing</a></dt>
+<dd>
+
+<p>Become a part of the ongoing <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> development.</p>
+
+</dd>
+<dt id="Mojolicious::Guides::FAQ"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/FAQ.html">Mojolicious::Guides::FAQ</a></dt>
+<dd>
+
+<p>Answers to the most frequently asked questions.</p>
+
+</dd>
+</dl>
+
+<h1 id="HIGHLIGHTS">HIGHLIGHTS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a> are the sum of many parts, built on top of the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a> web development toolkit. Small building blocks that can be used independently for all kinds of applications, these are the most prominent ones.</p>
+
+<dl>
+
+<dt id="Mojo::UserAgent"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a></dt>
+<dd>
+
+<p>Full featured non-blocking I/O HTTP and WebSocket user agent.</p>
+
+</dd>
+<dt id="Mojo::DOM"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a></dt>
+<dd>
+
+<p>Very fun and minimalistic HTML/XML DOM parser with CSS selector support.</p>
+
+</dd>
+<dt id="Mojo::JSON"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a></dt>
+<dd>
+
+<p>Minimalistic JSON implementation that just works.</p>
+
+</dd>
+<dt id="Mojo::Server::Daemon"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a></dt>
+<dd>
+
+<p>Full featured, highly portable non-blocking I/O HTTP and WebSocket server, with self-restart support through <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Morbo.html">Mojo::Server::Morbo</a>, perfect for development and testing.</p>
+
+</dd>
+<dt id="Mojo::Server::Prefork"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a></dt>
+<dd>
+
+<p>Full featured, UNIX optimized, preforking non-blocking I/O HTTP and WebSocket server with support for zero downtime software upgrades (hot deployment) through <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Hypnotoad.html">Mojo::Server::Hypnotoad</a>.</p>
+
+</dd>
+<dt id="Mojo::Server::CGI-Mojo::Server::PSGI"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/CGI.html">Mojo::Server::CGI</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">Mojo::Server::PSGI</a></dt>
+<dd>
+
+<p>Transparent CGI and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">PSGI</a> support out of the box.</p>
+
+</dd>
+<dt id="Mojo::IOLoop"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a></dt>
+<dd>
+
+<p>A minimalistic event loop with support for multiple reactor backends.</p>
+
+</dd>
+<dt id="Mojo::Template"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a></dt>
+<dd>
+
+<p>Very Perl-ish and minimalistic template system.</p>
+
+</dd>
+<dt id="Test::Mojo"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Test/Mojo.html">Test::Mojo</a></dt>
+<dd>
+
+<p>Testing toolkit for web applications.</p>
+
+</dd>
+<dt id="ojo"><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/ojo.html">ojo</a></dt>
+<dd>
+
+<p>Fun one-liners using everything above.</p>
+
+</dd>
+</dl>
+
+<h1 id="SPIN-OFFS">SPIN-OFFS</h1>
+
+<p>These modules are not part of the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> distribution, but have been designed to be used with it and are being developed under the same umbrella.</p>
+
+<dl>
+
+<dt id="Mojo::Pg"><a>Mojo::Pg</a></dt>
+<dd>
+
+<p>A tiny wrapper around <a href="../../../lib/DBD/Pg.html">DBD::Pg</a> that makes <a href="http://www.postgresql.org">PostgreSQL</a> a lot of fun to use with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>.</p>
+
+</dd>
+<dt id="Minion"><a>Minion</a></dt>
+<dd>
+
+<p>A job queue for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> with support for multiple backends.</p>
+
+</dd>
+</dl>
+
+<h1 id="REFERENCE">REFERENCE</h1>
+
+<p>This is the class hierarchy of the <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> distribution.</p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Lite.html">Mojolicious::Lite</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/HelloWorld.html">Mojo::HelloWorld</a></p>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cache.html">Mojo::Cache</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie.html">Mojo::Cookie</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie/Request.html">Mojo::Cookie::Request</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Cookie/Response.html">Mojo::Cookie::Response</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/CSS.html">Mojo::DOM::CSS</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM/HTML.html">Mojo::DOM::HTML</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Date.html">Mojo::Date</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset.html">Mojo::Asset</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/File.html">Mojo::Asset::File</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Asset/Memory.html">Mojo::Asset::Memory</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content.html">Mojo::Content</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/MultiPart.html">Mojo::Content::MultiPart</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Content/Single.html">Mojo::Content::Single</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Client.html">Mojo::IOLoop::Client</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Delay.html">Mojo::IOLoop::Delay</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Server.html">Mojo::IOLoop::Server</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Stream.html">Mojo::IOLoop::Stream</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Log.html">Mojo::Log</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message.html">Mojo::Message</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Request.html">Mojo::Message::Request</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Message/Response.html">Mojo::Message::Response</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor.html">Mojo::Reactor</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/Poll.html">Mojo::Reactor::Poll</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">Mojo::Reactor::EV</a></p>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/CGI.html">Mojo::Server::CGI</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">Mojo::Server::PSGI</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction.html">Mojo::Transaction</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html">Mojolicious::Plugins</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Headers.html">Mojo::Headers</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Home.html">Mojo::Home</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON/Pointer.html">Mojo::JSON::Pointer</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Parameters.html">Mojo::Parameters</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Path.html">Mojo::Path</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Hypnotoad.html">Mojo::Server::Hypnotoad</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Morbo.html">Mojo::Server::Morbo</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Upload.html">Mojo::Upload</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/CookieJar.html">Mojo::UserAgent::CookieJar</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Proxy.html">Mojo::UserAgent::Proxy</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Server.html">Mojo::UserAgent::Server</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html">Mojo::UserAgent::Transactor</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command.html">Mojolicious::Command</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/cgi.html">Mojolicious::Command::cgi</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/cpanify.html">Mojolicious::Command::cpanify</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/daemon.html">Mojolicious::Command::daemon</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/eval.html">Mojolicious::Command::eval</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate/app.html">Mojolicious::Command::generate::app</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate/lite_app.html">Mojolicious::Command::generate::lite_app</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate/makefile.html">Mojolicious::Command::generate::makefile</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate/plugin.html">Mojolicious::Command::generate::plugin</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/get.html">Mojolicious::Command::get</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/inflate.html">Mojolicious::Command::inflate</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/prefork.html">Mojolicious::Command::prefork</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/psgi.html">Mojolicious::Command::psgi</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/routes.html">Mojolicious::Command::routes</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/test.html">Mojolicious::Command::test</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/version.html">Mojolicious::Command::version</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Commands.html">Mojolicious::Commands</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command/generate.html">Mojolicious::Command::generate</a></p>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Controller.html">Mojolicious::Controller</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin.html">Mojolicious::Plugin</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Charset.html">Mojolicious::Plugin::Charset</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Config.html">Mojolicious::Plugin::Config</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/JSONConfig.html">Mojolicious::Plugin::JSONConfig</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/DefaultHelpers.html">Mojolicious::Plugin::DefaultHelpers</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/EPLRenderer.html">Mojolicious::Plugin::EPLRenderer</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/EPRenderer.html">Mojolicious::Plugin::EPRenderer</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/HeaderCondition.html">Mojolicious::Plugin::HeaderCondition</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/Mount.html">Mojolicious::Plugin::Mount</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/PODRenderer.html">Mojolicious::Plugin::PODRenderer</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/TagHelpers.html">Mojolicious::Plugin::TagHelpers</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Renderer.html">Mojolicious::Renderer</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Match.html">Mojolicious::Routes::Match</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Pattern.html">Mojolicious::Routes::Pattern</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes/Route.html">Mojolicious::Routes::Route</a></p>
+
+<ul>
+
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Routes.html">Mojolicious::Routes</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Sessions.html">Mojolicious::Sessions</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Static.html">Mojolicious::Static</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Types.html">Mojolicious::Types</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator.html">Mojolicious::Validator</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Validator/Validation.html">Mojolicious::Validator::Validation</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Test/Mojo.html">Test::Mojo</a></p>
+
+</li>
+</ul>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/ByteStream.html">Mojo::ByteStream</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Collection.html">Mojo::Collection</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/DOM.html">Mojo::DOM</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/JSON.html">Mojo::JSON</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Loader.html">Mojo::Loader</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Util.html">Mojo::Util</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/WebSocket.html">Mojo::WebSocket</a></p>
+
+</li>
+<li><p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/ojo.html">ojo</a></p>
+
+</li>
+</ul>
+
+<h1 id="MORE">MORE</h1>
+
+<p>A lot more documentation and examples by many different authors can be found in the <a href="http://github.com/kraih/mojo/wiki">Mojolicious wiki</a>.</p>
+
+<h1 id="SUPPORT">SUPPORT</h1>
+
+<p>If you have any questions the documentation might not yet answer, don&#39;t hesitate to ask on the <a href="http://groups.google.com/group/mojolicious">mailing-list</a> or the official IRC channel <code><span class="comment">#mojo</span>
+</code> on <code>irc.perl.org</code>.</p>
+
+
+</body>
+
+</html>
+
+

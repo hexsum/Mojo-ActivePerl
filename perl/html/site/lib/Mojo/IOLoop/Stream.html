@@ -1,0 +1,260 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#close">close</a></li>
+      <li><a href="#drain">drain</a></li>
+      <li><a href="#error">error</a></li>
+      <li><a href="#read">read</a></li>
+      <li><a href="#timeout">timeout</a></li>
+      <li><a href="#write">write</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#reactor">reactor</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#close1">close</a></li>
+      <li><a href="#close_gracefully">close_gracefully</a></li>
+      <li><a href="#handle">handle</a></li>
+      <li><a href="#is_readable">is_readable</a></li>
+      <li><a href="#is_writing">is_writing</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#start">start</a></li>
+      <li><a href="#steal_handle">steal_handle</a></li>
+      <li><a href="#stop">stop</a></li>
+      <li><a href="#timeout1">timeout</a></li>
+      <li><a href="#write1">write</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::IOLoop::Stream - Non-blocking I/O stream</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::IOLoop::Stream</span><span class="operator">;</span>
+  
+  <span class="comment"># Create stream</span>
+  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop::Stream</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">);</span>
+  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">read</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$stream</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">close</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">error</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$stream</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Start and stop watching for new data</span>
+  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">stop</span><span class="operator">;</span>
+  
+  <span class="comment"># Start reactor if necessary</span>
+  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Stream.html">Mojo::IOLoop::Stream</a> is a container for I/O streams used by <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Stream.html">Mojo::IOLoop::Stream</a> inherits all events from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones.</p>
+
+<h2 id="close">close</h2>
+
+<pre><code>  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">close</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted if the stream gets closed.</p>
+
+<h2 id="drain">drain</h2>
+
+<pre><code>  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">drain</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted once all data has been written.</p>
+
+<h2 id="error">error</h2>
+
+<pre><code>  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">error</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$stream</span><span class="operator">,</span> <span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted if an error occurs on the stream, fatal if unhandled.</p>
+
+<h2 id="read">read</h2>
+
+<pre><code>  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">read</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$stream</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted if new data arrives on the stream.</p>
+
+<h2 id="timeout">timeout</h2>
+
+<pre><code>  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">timeout</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted if the stream has been inactive for too long and will get closed automatically.</p>
+
+<h2 id="write">write</h2>
+
+<pre><code>  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">write</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$stream</span><span class="operator">,</span> <span class="variable">$bytes</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted if new data has been written to the stream.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Stream.html">Mojo::IOLoop::Stream</a> implements the following attributes.</p>
+
+<h2 id="reactor">reactor</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$reactor</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">;</span>
+  <span class="variable">$stream</span>     <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">reactor</span><span class="operator">(</span><span class="variable">Mojo::Reactor::Poll</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Low-level event reactor, defaults to the <code>reactor</code> attribute value of the global <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> singleton.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Stream.html">Mojo::IOLoop::Stream</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="close1">close</h2>
+
+<pre><code>  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">close</span><span class="operator">;</span>
+</code></pre>
+
+<p>Close stream immediately.</p>
+
+<h2 id="close_gracefully">close_gracefully</h2>
+
+<pre><code>  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">close_gracefully</span><span class="operator">;</span>
+</code></pre>
+
+<p>Close stream gracefully.</p>
+
+<h2 id="handle">handle</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$handle</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">handle</span><span class="operator">;</span>
+</code></pre>
+
+<p>Get handle for stream, usually an <a href="../../../../lib/IO/Socket/IP.html">IO::Socket::IP</a> or <a href="../../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> object.</p>
+
+<h2 id="is_readable">is_readable</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">is_readable</span><span class="operator">;</span>
+</code></pre>
+
+<p>Quick non-blocking check if stream is readable, useful for identifying tainted sockets.</p>
+
+<h2 id="is_writing">is_writing</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">is_writing</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if stream is writing.</p>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">Mojo::IOLoop::Stream</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="variable">$handle</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop/Stream.html">Mojo::IOLoop::Stream</a> object.</p>
+
+<h2 id="start">start</h2>
+
+<pre><code>  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">;</span>
+</code></pre>
+
+<p>Start or resume watching for new data on the stream.</p>
+
+<h2 id="steal_handle">steal_handle</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$handle</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">steal_handle</span><span class="operator">;</span>
+</code></pre>
+
+<p>Steal <a href="#handle">&quot;handle&quot;</a> and prevent it from getting closed automatically.</p>
+
+<h2 id="stop">stop</h2>
+
+<pre><code>  <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">stop</span><span class="operator">;</span>
+</code></pre>
+
+<p>Stop watching for new data on the stream.</p>
+
+<h2 id="timeout1">timeout</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$timeout</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">timeout</span><span class="operator">;</span>
+  <span class="variable">$stream</span>     <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">timeout</span><span class="operator">(</span><span class="number">45</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum amount of time in seconds stream can be inactive before getting closed automatically, defaults to <code>15</code>. Setting the value to <code>0</code> will allow this stream to be inactive indefinitely.</p>
+
+<h2 id="write1">write</h2>
+
+<pre><code>  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="variable">$bytes</span><span class="operator">);</span>
+  <span class="variable">$stream</span> <span class="operator">=</span> <span class="variable">$stream</span><span class="operator">-&gt;</span><span class="variable">write</span><span class="operator">(</span><span class="variable">$bytes</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Write data to stream, the optional drain callback will be executed once all data has been written.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

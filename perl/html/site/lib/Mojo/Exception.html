@@ -1,0 +1,217 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#frames">frames</a></li>
+      <li><a href="#line">line</a></li>
+      <li><a href="#lines_after">lines_after</a></li>
+      <li><a href="#lines_before">lines_before</a></li>
+      <li><a href="#message">message</a></li>
+      <li><a href="#verbose">verbose</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#inspect">inspect</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#to_string">to_string</a></li>
+      <li><a href="#throw">throw</a></li>
+      <li><a href="#trace">trace</a></li>
+    </ul>
+  </li>
+  <li><a href="#OPERATORS">OPERATORS</a>
+    <ul>
+      <li><a href="#bool">bool</a></li>
+      <li><a href="#stringify">stringify</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Exception - Exceptions with context</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Exception</span><span class="operator">;</span>
+  
+  <span class="comment"># Throw exception and show stack trace</span>
+  <span class="keyword">eval</span> <span class="operator">{</span> <span class="variable">Mojo::Exception</span><span class="operator">-&gt;</span><span class="variable">throw</span><span class="operator">(</span><span class="string">'Something went wrong!'</span><span class="operator">)</span> <span class="operator">};</span>
+  <span class="keyword">say</span> <span class="string">"</span><span class="variable">$_</span><span class="string">-&gt;[1]:</span><span class="variable">$_</span><span class="string">-&gt;[2]"</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$@</span><span class="operator">-&gt;</span><span class="variable">frames</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Customize exception</span>
+  <span class="keyword">eval</span> <span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">Mojo::Exception</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'Died at test.pl line 3.'</span><span class="operator">);</span>
+    <span class="keyword">die</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">trace</span><span class="operator">(</span><span class="number">2</span><span class="operator">)-&gt;</span><span class="variable">inspect</span><span class="operator">-&gt;</span><span class="variable">verbose</span><span class="operator">(</span><span class="number">1</span><span class="operator">);</span>
+  <span class="operator">};</span>
+  <span class="keyword">say</span> <span class="variable">$@</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a> is a container for exceptions with context information.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a> implements the following attributes.</p>
+
+<h2 id="frames">frames</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$frames</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">frames</span><span class="operator">;</span>
+  <span class="variable">$e</span>         <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">frames</span><span class="operator">(</span><span class="operator">[</span><span class="variable">$frame1</span><span class="operator">,</span> <span class="variable">$frame2</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Stack trace if available.</p>
+
+<pre><code>  <span class="comment"># Extract information from the last frame</span>
+  <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$package</span><span class="operator">,</span> <span class="variable">$filename</span><span class="operator">,</span> <span class="variable">$line</span><span class="operator">,</span> <span class="variable">$subroutine</span><span class="operator">,</span> <span class="variable">$hasargs</span><span class="operator">,</span> <span class="variable">$wantarray</span><span class="operator">,</span> <span class="variable">$evaltext</span><span class="operator">,</span>
+      <span class="variable">$is_require</span><span class="operator">,</span> <span class="variable">$hints</span><span class="operator">,</span> <span class="variable">$bitmask</span><span class="operator">,</span> <span class="variable">$hinthash</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">frames</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="operator">-</span><span class="number">1</span><span class="operator">]}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="line">line</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$line</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">line</span><span class="operator">;</span>
+  <span class="variable">$e</span>       <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">line</span><span class="operator">(</span><span class="operator">[</span><span class="number">3</span><span class="operator">,</span> <span class="string">'die;'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>The line where the exception occurred if available.</p>
+
+<h2 id="lines_after">lines_after</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$lines</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">lines_after</span><span class="operator">;</span>
+  <span class="variable">$e</span>        <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">lines_after</span><span class="operator">(</span><span class="operator">[[</span><span class="number">4</span><span class="operator">,</span> <span class="string">'say $foo;'</span><span class="operator">]</span><span class="operator">,</span> <span class="operator">[</span><span class="number">5</span><span class="operator">,</span> <span class="string">'say $bar;'</span><span class="operator">]]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Lines after the line where the exception occurred if available.</p>
+
+<h2 id="lines_before">lines_before</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$lines</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">lines_before</span><span class="operator">;</span>
+  <span class="variable">$e</span>        <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">lines_before</span><span class="operator">(</span><span class="operator">[[</span><span class="number">1</span><span class="operator">,</span> <span class="string">'my $foo = 23;'</span><span class="operator">]</span><span class="operator">,</span> <span class="operator">[</span><span class="number">2</span><span class="operator">,</span> <span class="string">'my $bar = 24;'</span><span class="operator">]]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Lines before the line where the exception occurred if available.</p>
+
+<h2 id="message">message</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">message</span><span class="operator">;</span>
+  <span class="variable">$e</span>      <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">message</span><span class="operator">(</span><span class="string">'Died at test.pl line 3.'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Exception message, defaults to <code>Exception!</code>.</p>
+
+<h2 id="verbose">verbose</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">verbose</span><span class="operator">;</span>
+  <span class="variable">$e</span>       <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">verbose</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Enable context information for <a href="#to_string">&quot;to_string&quot;</a>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="inspect">inspect</h2>
+
+<pre><code>  <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">inspect</span><span class="operator">;</span>
+  <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">inspect</span><span class="operator">(</span><span class="variable">$source1</span><span class="operator">,</span> <span class="variable">$source2</span><span class="operator">);</span>
+</code></pre>
+
+<p>Inspect <a href="#message">&quot;message&quot;</a>, <a href="#frames">&quot;frames&quot;</a> and optional additional sources to fill <a href="#lines_before">&quot;lines_before&quot;</a>, <a href="#line">&quot;line&quot;</a> and <a href="#lines_after">&quot;lines_after&quot;</a> with context information.</p>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">Mojo::Exception</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">Mojo::Exception</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'Died at test.pl line 3.'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a> object and assign <a href="#message">&quot;message&quot;</a> if necessary.</p>
+
+<h2 id="to_string">to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Render exception.</p>
+
+<pre><code>  <span class="comment"># Render exception with context</span>
+  <span class="keyword">say</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">verbose</span><span class="operator">(</span><span class="number">1</span><span class="operator">)-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="throw">throw</h2>
+
+<pre><code>  <span class="variable">Mojo::Exception</span><span class="operator">-&gt;</span><span class="variable">throw</span><span class="operator">(</span><span class="string">'Something went wrong!'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Throw exception from the current execution context.</p>
+
+<pre><code>  <span class="comment"># Longer version</span>
+  <span class="keyword">die</span> <span class="variable">Mojo::Exception</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'Something went wrong!'</span><span class="operator">)-&gt;</span><span class="variable">trace</span><span class="operator">-&gt;</span><span class="variable">inspect</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="trace">trace</h2>
+
+<pre><code>  <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">trace</span><span class="operator">;</span>
+  <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">trace</span><span class="operator">(</span><span class="variable">$skip</span><span class="operator">);</span>
+</code></pre>
+
+<p>Generate stack trace and store all <a href="#frames">&quot;frames&quot;</a>, defaults to skipping <code>1</code> call frame.</p>
+
+<pre><code>  <span class="comment"># Skip 3 call frames</span>
+  <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">trace</span><span class="operator">(</span><span class="number">3</span><span class="operator">);</span>
+  
+  <span class="comment"># Skip no call frames</span>
+  <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">trace</span><span class="operator">(</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="OPERATORS">OPERATORS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a> overloads the following operators.</p>
+
+<h2 id="bool">bool</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="operator">!!</span><span class="variable">$e</span><span class="operator">;</span>
+</code></pre>
+
+<p>Always true.</p>
+
+<h2 id="stringify">stringify</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="string">"</span><span class="variable">$e</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#to_string">&quot;to_string&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

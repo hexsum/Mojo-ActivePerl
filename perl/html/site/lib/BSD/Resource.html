@@ -1,0 +1,377 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#getrusage">getrusage</a></li>
+      <li><a href="#getrlimit">getrlimit</a></li>
+      <li><a href="#getpriority">getpriority</a></li>
+      <li><a href="#setrlimit">setrlimit</a></li>
+      <li><a href="#setpriority">setpriority</a></li>
+      <li><a href="#times">times</a></li>
+      <li><a href="#get_rlimits">get_rlimits</a></li>
+    </ul>
+  </li>
+  <li><a href="#ERRORS">ERRORS</a></li>
+  <li><a href="#EXAMPLES">EXAMPLES</a></li>
+  <li><a href="#KNOWN-ISSUES">KNOWN ISSUES</a></li>
+  <li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>BSD::Resource - BSD process resource limit and priority functions</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>        <span class="keyword">use</span> <span class="variable">BSD::Resource</span><span class="operator">;</span>
+        
+        <span class="comment">#</span>
+        <span class="comment"># the process resource consumption so far</span>
+        <span class="comment">#</span>
+        
+        <span class="operator">(</span><span class="variable">$usertime</span><span class="operator">,</span> <span class="variable">$systemtime</span><span class="operator">,</span>
+         <span class="variable">$maxrss</span><span class="operator">,</span> <span class="variable">$ixrss</span><span class="operator">,</span> <span class="variable">$idrss</span><span class="operator">,</span> <span class="variable">$isrss</span><span class="operator">,</span> <span class="variable">$minflt</span><span class="operator">,</span> <span class="variable">$majflt</span><span class="operator">,</span> <span class="variable">$nswap</span><span class="operator">,</span>
+         <span class="variable">$inblock</span><span class="operator">,</span> <span class="variable">$oublock</span><span class="operator">,</span> <span class="variable">$msgsnd</span><span class="operator">,</span> <span class="variable">$msgrcv</span><span class="operator">,</span>
+         <span class="variable">$nsignals</span><span class="operator">,</span> <span class="variable">$nvcsw</span><span class="operator">,</span> <span class="variable">$nivcsw</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">getrusage</span><span class="operator">(</span><span class="variable">$ru_who</span><span class="operator">);</span>
+        
+        <span class="variable">$rusage</span> <span class="operator">=</span> <span class="variable">getrusage</span><span class="operator">(</span><span class="variable">$ru_who</span><span class="operator">);</span>
+        
+        <span class="comment">#</span>
+        <span class="comment"># the process resource limits</span>
+        <span class="comment">#</span>
+        
+        <span class="operator">(</span><span class="variable">$nowsoft</span><span class="operator">,</span> <span class="variable">$nowhard</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">getrlimit</span><span class="operator">(</span><span class="variable">$resource</span><span class="operator">);</span>
+        
+        <span class="variable">$rlimit</span> <span class="operator">=</span> <span class="variable">getrlimit</span><span class="operator">(</span><span class="variable">$resource</span><span class="operator">);</span>
+        
+        <span class="variable">$success</span> <span class="operator">=</span> <span class="variable">setrlimit</span><span class="operator">(</span><span class="variable">$resource</span><span class="operator">,</span> <span class="variable">$newsoft</span><span class="operator">,</span> <span class="variable">$newhard</span><span class="operator">);</span>
+        
+        <span class="comment">#</span>
+        <span class="comment"># the process scheduling priority</span>
+        <span class="comment">#</span>
+        
+        <span class="variable">$nowpriority</span> <span class="operator">=</span> <span class="keyword">getpriority</span><span class="operator">(</span><span class="variable">$pr_which</span><span class="operator">,</span> <span class="variable">$pr_who</span><span class="operator">);</span>
+        
+        <span class="variable">$success</span> <span class="operator">=</span> <span class="keyword">setpriority</span><span class="operator">(</span><span class="variable">$pr_which</span><span class="operator">,</span> <span class="variable">$pr_who</span><span class="operator">,</span> <span class="variable">$priority</span><span class="operator">);</span>
+        
+        <span class="comment"># The following is not a BSD function.</span>
+        <span class="comment"># It is a Perlish utility for the users of BSD::Resource.</span>
+        
+        <span class="variable">$rlimits</span> <span class="operator">=</span> <span class="variable">get_rlimits</span><span class="operator">();</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<h2 id="getrusage">getrusage</h2>
+
+<pre><code>        <span class="operator">(</span><span class="variable">$usertime</span><span class="operator">,</span> <span class="variable">$systemtime</span><span class="operator">,</span>
+         <span class="variable">$maxrss</span><span class="operator">,</span> <span class="variable">$ixrss</span><span class="operator">,</span> <span class="variable">$idrss</span><span class="operator">,</span> <span class="variable">$isrss</span><span class="operator">,</span> <span class="variable">$minflt</span><span class="operator">,</span> <span class="variable">$majflt</span><span class="operator">,</span> <span class="variable">$nswap</span><span class="operator">,</span>
+         <span class="variable">$inblock</span><span class="operator">,</span> <span class="variable">$oublock</span><span class="operator">,</span> <span class="variable">$msgsnd</span><span class="operator">,</span> <span class="variable">$msgrcv</span><span class="operator">,</span>
+         <span class="variable">$nsignals</span><span class="operator">,</span> <span class="variable">$nvcsw</span><span class="operator">,</span> <span class="variable">$nivcsw</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">getrusage</span><span class="operator">(</span><span class="variable">$ru_who</span><span class="operator">);</span>
+        
+        <span class="variable">$rusage</span> <span class="operator">=</span> <span class="variable">getrusage</span><span class="operator">(</span><span class="variable">$ru_who</span><span class="operator">);</span>
+        
+        <span class="comment"># $ru_who argument is optional; it defaults to RUSAGE_SELF</span>
+        
+        <span class="variable">$rusage</span> <span class="operator">=</span> <span class="variable">getrusage</span><span class="operator">();</span>
+</code></pre>
+
+<p>The $ru_who argument is either <code>RUSAGE_SELF</code> (the current process) or <code>RUSAGE_CHILDREN</code> (all the child processes of the current process) or it maybe left away in which case <code>RUSAGE_SELF</code> is used.</p>
+
+<p>The <code>RUSAGE_CHILDREN</code> is the total sum of all the so far <i>terminated</i> (either successfully or unsuccessfully) child processes: there is no way to find out information about child processes still running.</p>
+
+<p>On some systems (those supporting both getrusage() with the POSIX threads) there can also be <code>RUSAGE_THREAD</code>. The BSD::Resource supports the <code>RUSAGE_THREAD</code> if it is present but understands nothing more about the POSIX threads themselves. Similarly for <code>RUSAGE_BOTH</code>: some systems support retrieving the sums of the self and child resource consumptions simultaneously.</p>
+
+<p>In list context getrusage() returns the current resource usages as a list. On failure it returns an empty list.</p>
+
+<p>The elements of the list are, in order: index name meaning usually (quite system dependent)</p>
+
+<pre><code>         0      utime           user time
+         1      stime           system time
+         2      maxrss          maximum shared memory or current resident set
+         3      ixrss           integral shared memory
+         4      idrss           integral or current unshared data
+         5      isrss           integral or current unshared stack
+         6      minflt          page reclaims
+         7      majflt          page faults
+         8      nswap           swaps
+         9      inblock         block input operations
+        10      oublock         block output operations
+        11      msgsnd          messages sent
+        12      msgrcv          messaged received
+        13      nsignals        signals received
+        14      nvcsw           voluntary context switches
+        15      nivcsw          involuntary context switches</code></pre>
+
+<p>In scalar context getrusage() returns the current resource usages as a an object. The object can be queried via methods named exactly like the middle column, <i>name</i>, in the above table.</p>
+
+<pre><code>        <span class="variable">$ru</span> <span class="operator">=</span> <span class="variable">getrusage</span><span class="operator">();</span>
+        <span class="keyword">print</span> <span class="variable">$ru</span><span class="operator">-&gt;</span><span class="variable">stime</span><span class="operator">,</span> <span class="string">"\n"</span><span class="operator">;</span>
+        
+        <span class="variable">$total_context_switches</span> <span class="operator">=</span> <span class="variable">$ru</span><span class="operator">-&gt;</span><span class="variable">nvcsw</span> <span class="operator">+</span> <span class="variable">$ru</span><span class="operator">-&gt;</span><span class="variable">nivcsw</span><span class="operator">;</span>
+</code></pre>
+
+<p>For a detailed description about the values returned by getrusage() please consult your usual C programming documentation about getrusage() and also the header file <code>&lt;sys/resource.h&gt;</code>. (In <b>Solaris</b>, this might be <code>&lt;sys/rusage.h&gt;</code>).</p>
+
+<p>See also <a href="#KNOWN-ISSUES">&quot;KNOWN ISSUES&quot;</a>.</p>
+
+<h2 id="getrlimit">getrlimit</h2>
+
+<pre><code>        <span class="operator">(</span><span class="variable">$nowsoft</span><span class="operator">,</span> <span class="variable">$nowhard</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">getrlimit</span><span class="operator">(</span><span class="variable">$resource</span><span class="operator">);</span>
+        
+        <span class="variable">$rlimit</span> <span class="operator">=</span> <span class="variable">getrlimit</span><span class="operator">(</span><span class="variable">$resource</span><span class="operator">);</span>
+</code></pre>
+
+<p>The $resource argument can be one of</p>
+
+<pre><code>        $resource               usual meaning           usual unit
+
+        RLIMIT_CPU              CPU time                seconds
+
+        RLIMIT_FSIZE            file size               bytes
+
+        RLIMIT_DATA             data size               bytes
+        RLIMIT_STACK            stack size              bytes
+        RLIMIT_CORE             coredump size           bytes
+        RLIMIT_RSS              resident set size       bytes
+        RLIMIT_MEMLOCK          memory locked data size bytes
+
+        RLIMIT_NPROC            number of processes     1
+
+        RLIMIT_NOFILE           number of open files    1
+        RLIMIT_OFILE            number of open files    1
+        RLIMIT_OPEN_MAX         number of open files    1
+
+        RLIMIT_LOCKS            number of file locks    1
+
+        RLIMIT_AS               (virtual) address space bytes
+        RLIMIT_VMEM             virtual memory (space)  bytes
+
+        RLIMIT_PTHREAD          number of pthreads      1
+        RLIMIT_TCACHE           maximum number of       1
+                                cached threads
+
+        RLIMIT_AIO_MEM          maximum memory locked   bytes
+                                for POSIX AIO
+        RLIMIT_AIO_OPS          maximum number          1
+                                for POSIX AIO ops
+
+        RLIMIT_NPTS             maximum number of       1
+                                pseudo-terminals
+
+        RLIMIT_SBSIZE           socket buffer size      bytes
+
+        RLIMIT_SWAP             maximum swap size       bytes
+
+        RLIMIT_MSGQUEUE         POSIX mq size           bytes
+
+        RLIMIT_RTPRIO           maximum RT priority     1
+        RLIMIT_RTTIME           maximum RT time         microseconds
+        RLIMIT_SIGPENDING       pending signals         1</code></pre>
+
+<p><b>What limits are available depends on the operating system</b>.</p>
+
+<p>See below for <code>get_rlimits()</code> on how to find out which limits are available, for the exact documentation consult the documentation of your operating system (setrlimit documentation, usually).</p>
+
+<p>The two groups (<code>NOFILE</code>, <code>OFILE</code>, <code>OPEN_MAX</code>) and (<code>AS</code>, <code>VMEM</code>) are aliases within themselves.</p>
+
+<p>Two meta-resource-symbols might exist</p>
+
+<pre><code>        RLIM_NLIMITS
+        RLIM_INFINITY</code></pre>
+
+<p><code>RLIM_NLIMITS</code> being the number of possible (but not necessarily fully supported) resource limits, see also the get_rlimits() call below. <code>RLIM_INFINITY</code> is useful in setrlimit(), the <code>RLIM_INFINITY</code> is often represented as minus one (-1).</p>
+
+<p>In list context <code>getrlimit()</code> returns the current soft and hard resource limits as a list. On failure it returns an empty list.</p>
+
+<p>Processes have soft and hard resource limits. On crossing the soft limit they receive a signal (for example the <code>SIGXCPU</code> or <code>SIGXFSZ</code>, corresponding to the <code>RLIMIT_CPU</code> and <code>RLIMIT_FSIZE</code>, respectively). The processes can trap and handle some of these signals, please see <a href="../../../lib/pod/perlipc.html#Signals">&quot;Signals&quot; in perlipc</a>. After the hard limit the processes will be ruthlessly killed by the <code>KILL</code> signal which cannot be caught.</p>
+
+<p><b>NOTE</b>: the level of &#39;support&#39; for a resource varies. Not all the systems</p>
+
+<pre><code>        a) even recognise all those limits
+        b) really track the consumption of a resource
+        c) care (send those signals) if a resource limit is exceeded</code></pre>
+
+<p>Again, please consult your usual C programming documentation.</p>
+
+<p>One notable exception for the better: officially <b>HP-UX</b> does not support getrlimit() at all but for the time being, it does seem to.</p>
+
+<p>In scalar context <code>getrlimit()</code> returns the current soft limit. On failure it returns <code>undef</code>.</p>
+
+<h2 id="getpriority">getpriority</h2>
+
+<pre><code>        <span class="comment"># $pr_which can be PRIO_USER, PRIO_PROCESS, or PRIO_PGRP,</span>
+        <span class="comment"># and in some systems PRIO_THREAD</span>
+        
+        <span class="variable">$nowpriority</span> <span class="operator">=</span> <span class="keyword">getpriority</span><span class="operator">(</span><span class="variable">$pr_which</span><span class="operator">,</span> <span class="variable">$pr_who</span><span class="operator">);</span>
+        
+        <span class="comment"># the default $pr_who is 0 (the current $pr_which)</span>
+        
+        <span class="variable">$nowpriority</span> <span class="operator">=</span> <span class="keyword">getpriority</span><span class="operator">(</span><span class="variable">$pr_which</span><span class="operator">);</span>
+        
+        <span class="comment"># the default $pr_which is PRIO_PROCESS (the process priority)</span>
+        
+        <span class="variable">$nowpriority</span> <span class="operator">=</span> <span class="keyword">getpriority</span><span class="operator">();</span>
+</code></pre>
+
+<p>getpriority() returns the current priority. <b>NOTE</b>: getpriority() can return zero or negative values completely legally. On failure getpriority() returns <code>undef</code> (and <code>$!</code> is set as usual).</p>
+
+<p>The priorities returned by getpriority() are in the (inclusive) range <code>PRIO_MIN</code>...<code>PRIO_MAX</code>. The $pr_which argument can be any of PRIO_PROCESS (a process) <code>PRIO_USER</code> (a user), or <code>PRIO_PGRP</code> (a process group). The $pr_who argument tells which process/user/process group, 0 signifying the current one.</p>
+
+<p>Usual values for <code>PRIO_MIN</code>, <code>PRIO_MAX</code>, are -20, 20. A negative value means better priority (more impolite process), a positive value means worse priority (more polite process).</p>
+
+<h2 id="setrlimit">setrlimit</h2>
+
+<pre><code>        <span class="variable">$success</span> <span class="operator">=</span> <span class="variable">setrlimit</span><span class="operator">(</span><span class="variable">$resource</span><span class="operator">,</span> <span class="variable">$newsoft</span><span class="operator">,</span> <span class="variable">$newhard</span><span class="operator">);</span>
+</code></pre>
+
+<p>setrlimit() returns true on success and <code>undef</code> on failure.</p>
+
+<p><b>NOTE</b>: A normal user process can only lower its resource limits. Soft or hard limit <code>RLIM_INFINITY</code> means as much as possible, the real hard limits are normally buried inside the kernel and are <b>very</b> system-dependent.</p>
+
+<p><b>NOTE</b>: Even the soft limit that is actually set might be lower than what requested for various reasons. One possibility is that the actual limit on a resource might be controlled by some system variable (e.g. in BSD systems the RLIMIT_NPROC can be capped by the system variable <code>maxprocperuid</code>, try <code>sysctl -a kern.maxprocperuid</code>), or in many environments core dumping has been disabled from normal user processes. Another possibility is that a limit is rounded down to some alignment or granularity, for example the memory limits might be rounded down to the closest 4 kilobyte boundary. In other words, do not expect to be able to setrlimit() a limit to a value and then be able to read back the same value with getrlimit().</p>
+
+<h2 id="setpriority">setpriority</h2>
+
+<pre><code>        <span class="variable">$success</span> <span class="operator">=</span> <span class="keyword">setpriority</span><span class="operator">(</span><span class="variable">$pr_which</span><span class="operator">,</span> <span class="variable">$pr_who</span><span class="operator">,</span> <span class="variable">$priority</span><span class="operator">);</span>
+        
+        <span class="comment"># NOTE! If there are two arguments the second one is</span>
+        <span class="comment"># the new $priority (not $pr_who) and the $pr_who is</span>
+        <span class="comment"># defaulted to 0 (the current $pr_which)</span>
+        
+        <span class="variable">$success</span> <span class="operator">=</span> <span class="keyword">setpriority</span><span class="operator">(</span><span class="variable">$pr_which</span><span class="operator">,</span> <span class="variable">$priority</span><span class="operator">);</span>
+        
+        <span class="comment"># The $pr_who defaults to 0 (the current $pr_which) and</span>
+        <span class="comment"># the $priority defaults to half of the PRIO_MAX, usually</span>
+        <span class="comment"># that amounts to 10 (being a nice $pr_which).</span>
+        
+        <span class="variable">$success</span> <span class="operator">=</span> <span class="keyword">setpriority</span><span class="operator">(</span><span class="variable">$pr_which</span><span class="operator">);</span>
+        
+        <span class="comment"># The $pr_which defaults to PRIO_PROCESS.</span>
+        
+        <span class="variable">$success</span> <span class="operator">=</span> <span class="keyword">setpriority</span><span class="operator">();</span>
+</code></pre>
+
+<p>setpriority() is used to change the scheduling priority. A positive priority means a more polite process/process group/user; a negative priority means a more impolite process/process group/user. The priorities handled by setpriority() are [<code>PRIO_MIN</code>,<code>PRIO_MAX</code>]. A normal user process can only lower its priority (make it more positive).</p>
+
+<p><b>NOTE</b>: A successful call returns <code>1</code>, a failed one <code>0</code>.</p>
+
+<p>See also <a href="#KNOWN-ISSUES">&quot;KNOWN ISSUES&quot;</a>.</p>
+
+<h2 id="times">times</h2>
+
+<pre><code>        <span class="keyword">use</span> <span class="variable">BSD::Resource</span> <span class="string">qw(times)</span><span class="operator">;</span>
+        
+        <span class="operator">(</span><span class="variable">$user</span><span class="operator">,</span> <span class="variable">$system</span><span class="operator">,</span> <span class="variable">$child_user</span><span class="operator">,</span> <span class="variable">$child_system</span><span class="operator">)</span> <span class="operator">=</span> <span class="keyword">times</span><span class="operator">();</span>
+</code></pre>
+
+<p>The BSD::Resource module offers a times() implementation that has usually slightly better time granularity than the times() by Perl core. The time granularity of the latter is usually 1/60 seconds while the former may achieve submilliseconds.</p>
+
+<p><b>NOTE</b>: The current implementation uses two getrusage() system calls: one with RUSAGE_SELF and one with RUSAGE_CHILDREN. Therefore the operation is not `atomic&#39;: the times for the children are recorded a little bit later.</p>
+
+<p><b>NOTE</b>: times() is not imported by default by BSD::Resource. You need to tell that you want to use it.</p>
+
+<p><b>NOTE: times() is not a &quot;real BSD&quot; function. It is older UNIX.</b></p>
+
+<h2 id="get_rlimits">get_rlimits</h2>
+
+<pre><code>        <span class="keyword">use</span> <span class="variable">BSD::Resource</span> <span class="string">qw{get_rlimits}</span><span class="operator">;</span>
+        <span class="keyword">my</span> <span class="variable">$limits</span> <span class="operator">=</span> <span class="variable">get_rlimits</span><span class="operator">();</span>
+</code></pre>
+
+<p><b>NOTE: This is not a real BSD function. It is a convenience function introduced by BSD::Resource.</b></p>
+
+<p>get_rlimits() returns a reference to hash which has the names of the available resource limits as keys and their indices (those which are needed as the first argument to getrlimit() and setrlimit()) as values. For example:</p>
+
+<pre><code>        <span class="keyword">use</span> <span class="variable">BSD::Resource</span> <span class="string">qw{get_rlimits}</span><span class="operator">;</span>
+        <span class="keyword">my</span> <span class="variable">$limits</span> <span class="operator">=</span> <span class="variable">get_rlimits</span><span class="operator">();</span>
+        <span class="keyword">for</span> <span class="keyword">my</span> <span class="variable">$name</span> <span class="operator">(</span><span class="keyword">keys</span> <span class="variable">%$limits</span><span class="operator">)</span> <span class="operator">{</span>
+          <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$soft</span><span class="operator">,</span> <span class="variable">$hard</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">BSD::Resource::getrlimit</span><span class="operator">(</span><span class="variable">$limits</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="variable">$name</span><span class="operator">}</span><span class="operator">);</span>
+          <span class="keyword">print</span> <span class="string">"</span><span class="variable">$name</span><span class="string"> soft </span><span class="variable">$soft</span><span class="string"> hard </span><span class="variable">$hard</span><span class="string">\n"</span><span class="operator">;</span>
+        <span class="operator">}</span>
+</code></pre>
+
+<p>Note that a limit of -1 means unlimited.</p>
+
+<h1 id="ERRORS">ERRORS</h1>
+
+<ul>
+
+<li><p></p>
+
+<pre><code>        Your vendor has not defined BSD::Resource macro ...</code></pre>
+
+<p>The code tried to call getrlimit/setrlimit for a resource limit that your operating system vendor/supplier does not support. Portable code should use get_rlimits() to check which resource limits are defined.</p>
+
+</li>
+</ul>
+
+<h1 id="EXAMPLES">EXAMPLES</h1>
+
+<pre><code>        <span class="comment"># the user and system times so far by the process itself</span>
+        
+        <span class="operator">(</span><span class="variable">$usertime</span><span class="operator">,</span> <span class="variable">$systemtime</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">getrusage</span><span class="operator">();</span>
+        
+        <span class="comment"># ditto in OO way</span>
+        
+        <span class="variable">$ru</span> <span class="operator">=</span> <span class="variable">getrusage</span><span class="operator">();</span>
+        
+        <span class="variable">$usertime</span>   <span class="operator">=</span> <span class="variable">$ru</span><span class="operator">-&gt;</span><span class="variable">utime</span><span class="operator">;</span>
+        <span class="variable">$systemtime</span> <span class="operator">=</span> <span class="variable">$ru</span><span class="operator">-&gt;</span><span class="variable">stime</span><span class="operator">;</span>
+        
+        <span class="comment"># get the current priority level of this process</span>
+        
+        <span class="variable">$currprio</span> <span class="operator">=</span> <span class="keyword">getpriority</span><span class="operator">();</span>
+</code></pre>
+
+<h1 id="KNOWN-ISSUES">KNOWN ISSUES</h1>
+
+<p>In <b>AIX</b> (at least version 3, maybe later also releases) if the BSD compatibility library is not installed or not found by the BSD::Resource installation procedure and when using the getpriority() or setpriority(), the <code>PRIO_MIN</code> is 0 (corresponding to -20) and <code>PRIO_MAX</code> is 39 (corresponding to 19, the BSD priority 20 is unreachable).</p>
+
+<p>In <b>HP-UX</b> the getrusage() is not Officially Supported at all but for the time being, it does seem to be.</p>
+
+<p>In <b>Mac OS X</b> a normal user cannot raise the <code>RLIM_NPROC</code> over the maxprocperuid limit (the default value is 266, try the command <code>sysctl -a kern.maxprocperuid</code>).</p>
+
+<p>In <b>NetBSD</b> <code>RLIMIT_STACK</code> setrlimit() calls fail.</p>
+
+<p>In <b>Cygwin</b> <code>RLIMIT_STACK</code> setrlimit calls fail. Also, setrlimit() <code>RLIMIT_NOFILE/RLIMIT_OFILE/RLIMIT_OFILE</code> calls return success, but then the subsequent getrlimit calls show that the limits didn&#39;t really change.</p>
+
+<p>Because not all UNIX kernels are BSD and also because of the sloppy support of getrusage() by many vendors many of the getrusage() values may not be correctly updated. For example <b>Solaris 1</b> claims in <code>&lt;sys/rusage.h&gt;</code> that the <code>ixrss</code> and the <code>isrss</code> fields are always zero. In <b>SunOS 5.5 and 5.6</b> the getrusage() leaves most of the fields zero and therefore getrusage() is not even used, instead of that the <b>/proc</b> interface is used. The mapping is not perfect: the <code>maxrss</code> field is really the <b>current</b> resident size instead of the maximum, the <code>idrss</code> is really the <b>current</b> heap size instead of the integral data, and the <code>isrss</code> is really the <b>current</b> stack size instead of the integral stack. The ixrss has no sensible counterpart at all so it stays zero.</p>
+
+<h1 id="COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</h1>
+
+<p>Copyright 1995-2015 Jarkko Hietaniemi All Rights Reserved</p>
+
+<p>This module free software; you can redistribute it and/or modify it under the terms of the Artistic License 2.0 or GNU Lesser General Public License 2.0. For more details, see the full text of the licenses at &lt;http://www.perlfoundation.org/artistic_license_2_0&gt;, and &lt;http://www.gnu.org/licenses/gpl-2.0.html&gt;.</p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Jarkko Hietaniemi, <code>jhi@iki.fi</code></p>
+
+
+</body>
+
+</html>
+
+

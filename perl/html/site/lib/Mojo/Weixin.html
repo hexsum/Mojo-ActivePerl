@@ -1,0 +1,1151 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#">&#x6E90;&#x7801;&#x5BFC;&#x8BFB;</a></li>
+  <li><a href="#1">&#x5BF9;&#x8C61;&#x548C;&#x65B9;&#x6CD5;</a>
+    <ul>
+      <li><a href="#2">&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;</a>
+        <ul>
+          <li><a href="#3">&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;&#x5C5E;&#x6027;</a></li>
+          <li><a href="#4">&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;&#x65B9;&#x6CD5;</a>
+            <ul>
+              <li><a href="#new">new &#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x5FAE;&#x4FE1;&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;</a></li>
+              <li><a href="#login">login &#x5BA2;&#x6237;&#x7AEF;&#x767B;&#x5F55;</a></li>
+              <li><a href="#relogin">relogin &#x5BA2;&#x6237;&#x7AEF;&#x91CD;&#x65B0;&#x767B;&#x5F55;</a></li>
+              <li><a href="#logout">logout &#x5BA2;&#x6237;&#x7AEF;&#x6CE8;&#x9500;</a></li>
+              <li><a href="#stop">stop &#x5BA2;&#x6237;&#x7AEF;&#x505C;&#x6B62;&#x8FD0;&#x884C;</a></li>
+              <li><a href="#run">run &#x542F;&#x52A8;&#x4E3B;&#x4E8B;&#x4EF6;&#x5FAA;&#x73AF;</a></li>
+              <li><a href="#on">on &#x6CE8;&#x518C;&#x4E8B;&#x4EF6;</a></li>
+              <li><a href="#timer">timer &#x5B9A;&#x65F6;&#x6267;&#x884C;</a></li>
+              <li><a href="#interval">interval</a></li>
+              <li><a href="#add_job">add_job &#x5B9A;&#x65F6;&#x6267;&#x884C;&#x4EFB;&#x52A1;</a></li>
+              <li><a href="#spawn-opt">spawn(%opt) &#x6267;&#x884C;&#x5916;&#x90E8;&#x547D;&#x4EE4;</a></li>
+              <li><a href="#mail-opt-callback">mail(%opt,[$callback]) &#x975E;&#x963B;&#x585E;&#x53D1;&#x9001;&#x90AE;&#x4EF6;</a></li>
+              <li><a href="#http_get-httphttp-get">http_get http&#x963B;&#x585E;&#x6216;&#x975E;&#x963B;&#x585E;http get&#x8BF7;&#x6C42;</a></li>
+              <li><a href="#http_post-http-post">http_post &#x963B;&#x585E;&#x6216;&#x975E;&#x963B;&#x585E;http post&#x8BF7;&#x6C42;</a></li>
+              <li><a href="#search_friend">search_friend() &#x641C;&#x7D22;&#x597D;&#x53CB;</a></li>
+              <li><a href="#search_group">search_group() &#x641C;&#x7D22;&#x7FA4;&#x7EC4;</a></li>
+              <li><a href="#send_message-friend-group-content-callback">send_message($friend|$group,$content,$callback) &#x53D1;&#x9001;&#x6587;&#x672C;&#x6D88;&#x606F;</a></li>
+              <li><a href="#send_media-friend-group-media_path-media_hash-callback">send_media($friend|$group,$media_path|$media_hash,$callback) &#x53D1;&#x9001;&#x5A92;&#x4F53;&#x6587;&#x4EF6;</a></li>
+              <li><a href="#reply_message-msg-content-callback">reply_message($msg,$content,$callback) &#x56DE;&#x590D;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#5">&#x4E2A;&#x4EBA;&#x5BF9;&#x8C61;</a></li>
+      <li><a href="#6">&#x597D;&#x53CB;&#x5BF9;&#x8C61;</a></li>
+      <li><a href="#7">&#x7FA4;&#x7EC4;&#x5BF9;&#x8C61;</a></li>
+      <li><a href="#8">&#x7FA4;&#x6210;&#x5458;&#x5BF9;&#x8C61;</a></li>
+      <li><a href="#9">&#x6D88;&#x606F;&#x5BF9;&#x8C61;</a></li>
+    </ul>
+  </li>
+  <li><a href="#10">&#x4E8B;&#x4EF6;</a>
+    <ul>
+      <li><a href="#receive_message">receive_message &#x63A5;&#x6536;&#x5230;&#x6D88;&#x606F;</a></li>
+      <li><a href="#send_message">send_message &#x6D88;&#x606F;&#x53D1;&#x9001;&#x5B8C;&#x6210;</a></li>
+      <li><a href="#input_qrcode">input_qrcode &#x9700;&#x8981;&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;</a></li>
+      <li><a href="#ready">ready &#x5BA2;&#x6237;&#x7AEF;&#x51C6;&#x5907;&#x5C31;&#x7EEA;</a></li>
+      <li><a href="#group_property_change">group_property_change &#x7FA4;&#x7EC4;&#x5C5E;&#x6027;&#x6539;&#x53D8;</a></li>
+      <li><a href="#group_member_property_change">group_member_property_change &#x7FA4;&#x6210;&#x5458;&#x5C5E;&#x6027;&#x6539;&#x53D8;</a></li>
+      <li><a href="#friend_property_change">friend_property_change &#x597D;&#x53CB;&#x5C5E;&#x6027;&#x6539;&#x53D8;</a></li>
+      <li><a href="#user_property_change">user_property_change &#x7528;&#x6237;&#x5C5E;&#x6027;&#x6539;&#x53D8;</a></li>
+      <li><a href="#new_group_member">new_group_member &#x65B0;&#x589E;&#x7FA4;&#x6210;&#x5458;</a></li>
+      <li><a href="#new_friend">new_friend &#x65B0;&#x589E;&#x597D;&#x53CB;</a></li>
+      <li><a href="#new_group">new_group &#x65B0;&#x589E;&#x7FA4;&#x7EC4;</a></li>
+    </ul>
+  </li>
+  <li><a href="#11">&#x5173;&#x4E8E;&#x63D2;&#x4EF6;</a>
+    <ul>
+      <li><a href="#load">load</a></li>
+      <li><a href="#call">call</a></li>
+    </ul>
+  </li>
+  <li><a href="#12">&#x63D2;&#x4EF6;&#x5217;&#x8868;</a>
+    <ul>
+      <li><a href="#Mojo::Weixin::Plugin::ShowMsg">Mojo::Weixin::Plugin::ShowMsg</a></li>
+      <li><a href="#Mojo::Weixin::Plugin::IRCShell">Mojo::Weixin::Plugin::IRCShell</a></li>
+      <li><a href="#Mojo::Weixin::Plugin::Perldoc">Mojo::Weixin::Plugin::Perldoc</a></li>
+      <li><a href="#Mojo::Weixin::Plugin::Perlcode">Mojo::Weixin::Plugin::Perlcode</a></li>
+      <li><a href="#Mojo::Weixin::Plugin::PostQRcode">Mojo::Weixin::Plugin::PostQRcode</a></li>
+      <li><a href="#Mojo::Weixin::Plugin::Beauty">Mojo::Weixin::Plugin::Beauty</a></li>
+      <li><a href="#Mojo::Webqq::Plugin::Riddle">Mojo::Webqq::Plugin::Riddle</a></li>
+      <li><a href="#Mojo::Weixin::Plugin::Translation">Mojo::Weixin::Plugin::Translation</a></li>
+      <li><a href="#Mojo::Weixin::Plugin::Weather">Mojo::Weixin::Plugin::Weather</a></li>
+      <li><a href="#Mojo::Weixin::Plugin::SmartReply">Mojo::Weixin::Plugin::SmartReply</a></li>
+      <li><a href="#Mojo::Weixin::Plugin::Openwx">Mojo::Weixin::Plugin::Openwx</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+  <li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Weixin - A Weixin Client Framework base on Mojolicious</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>    <span class="keyword">use</span> <span class="variable">Mojo::Weixin</span><span class="operator">;</span>
+    <span class="keyword">my</span> <span class="variable">$client</span> <span class="operator">=</span> <span class="variable">Mojo::Weixin</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+        <span class="string">ua_debug</span>  <span class="operator">=&gt;</span> <span class="number">0</span><span class="operator">,</span>       <span class="comment">#æ¯å¦æå°è¯¦ç»çdebugä¿¡æ¯</span>
+        <span class="string">log_level</span> <span class="operator">=&gt;</span> <span class="string">"info"</span><span class="operator">,</span>  <span class="comment">#æ¥å¿æå°çº§å«ï¼debug|info|warn|error|fatal </span>
+    <span class="operator">);</span>
+    
+    <span class="comment">#å®¢æ·ç«¯è¿è¡ç»å½</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">();</span>
+    
+    <span class="comment">#å®¢æ·ç«¯å è½½ShowMsgæä»¶ï¼ç¨äºæå°åéåæ¥æ¶çæ¶æ¯å°ç»ç«¯</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowMsg"</span><span class="operator">);</span>
+    
+    
+    <span class="comment">#readyäºä»¶è§¦åæ¶ è¡¨ç¤ºå®¢æ·ç«¯ä¸ååå¤å°±ç»ªï¼å·²ç»æåç»å½ãå·²ç»å è½½å®ä¸ªäºº/å¥½å/ç¾¤ä¿¡æ¯ç­</span>
+    <span class="comment">#ä½ çä»£ç å»ºè®®å°½éåå¨ ready äºä»¶ä¸­</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">ready</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span> <span class="variable">$client</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    
+        <span class="comment">#è®¾ç½®æ¥æ¶æ¶æ¯äºä»¶çåè°å½æ°ï¼å¨åè°å½æ°ä¸­å¯¹æ¶æ¯ä»¥ç¸ååå®¹è¿è¡åå¤</span>
+        <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">receive_message</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+            <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$msg</span><span class="operator">)=</span><span class="variable">@_</span><span class="operator">;</span>
+            <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">(</span><span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">);</span> <span class="comment">#å·²ä»¥ç¸ååå®¹åå¤æ¥æ¶å°çæ¶æ¯</span>
+            <span class="comment">#ä½ ä¹å¯ä»¥ä½¿ç¨$msg-&gt;dump() æ¥æå°æ¶æ¯ç»æ</span>
+        <span class="operator">});</span>
+    
+        <span class="comment">#ä½ çå¶ä»ä»£ç åå¨æ­¤å¤</span>
+    
+    <span class="operator">});</span>
+    
+    <span class="comment">#å®¢æ·ç«¯å¼å§è¿è¡</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">();</span>
+    
+    <span class="comment">#runç¸å½äºæ§è¡ä¸ä¸ªæ­»å¾ªç¯ï¼ä¸ä¼è·³åºå¾ªç¯ä¹å¤</span>
+    <span class="comment">#æä»¥runåºè¯¥æ»æ¯æ¾å¨ä»£ç æåæ§è¡ï¼å¹¶ä¸ä¸è¦å¨runä¹ååæ·»å ä»»ä½èªå·±çä»£ç äº    </span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>&#x901A;&#x8FC7;&#x8BE5;&#x9879;&#x76EE;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x5B8C;&#x6210;&#x5FAE;&#x4FE1;&#x57FA;&#x672C;&#x7684;&#x767B;&#x5F55;&#x3001;&#x63A5;&#x6536;&#x548C;&#x53D1;&#x9001;&#x6D88;&#x606F;&#xFF0C;&#x5728;&#x6B64;&#x57FA;&#x7840;&#x4E0A;&#x4F60;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x63D2;&#x4EF6;&#x7684;&#x5F62;&#x5F0F;&#x5B9E;&#x73B0;&#x66F4;&#x591A;&#x9644;&#x52A0;&#x529F;&#x80FD;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;</p>
+
+<p>&#x7FA4;&#x7BA1;&#x7406;&#x3001;&#x804A;&#x5929;&#x8BB0;&#x5F55;&#x7EDF;&#x8BA1;&#x3001;&#x6D88;&#x606F;&#x62A5;&#x8B66;&#x3001;&#x667A;&#x80FD;&#x95EE;&#x7B54;&#x673A;&#x5668;&#x4EBA;&#x3001;&#x5728;&#x7FA4;&#x804A;&#x4E2D;&#x6267;&#x884C; Perl &#x4EE3;&#x7801;&#xFF0C;&#x67E5;&#x8BE2; Perldoc &#x6587;&#x6863;&#x3001;&#x6D88;&#x606F;&#x8F6C;&#x53D1;&#x3001;&#x5FAE;&#x4FE1;&#x548C;IRC&#x8054;&#x901A;&#x7B49;</p>
+
+<p>&#x6B64;&#x9879;&#x76EE;&#x662F;<a>Weixin::Client</a>&#x6A21;&#x5757;&#x7684;&#x91CD;&#x6784;&#xFF0C;&#x57FA;&#x4E8E;<a href="../../../site/lib/Mojolicious.html">Mojolicious</a>&#x6846;&#x67B6;&#xFF0C;&#x5177;&#x4F53;&#x66F4;&#x591A;&#x826F;&#x597D;&#x7279;&#x6027;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;</p>
+
+<p>&#x57FA;&#x4E8E;<a href="../../../site/lib/Mojo/Base.html">Mojo::Base</a>&#x66F4;&#x597D;&#x7684;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x3001;&#x57FA;&#x4E8E;<a href="../../../site/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a>&#x7075;&#x6D3B;&#x7684;&#x4E8B;&#x4EF6;&#x7BA1;&#x7406;&#x673A;&#x5236;&#x3001;</p>
+
+<p>&#x57FA;&#x4E8E;<a href="../../../site/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>&#x7EDF;&#x4E00;&#x7684;&#x963B;&#x585E;&#x548C;&#x975E;&#x963B;&#x585E;HTTP&#x8BF7;&#x6C42;&#x3001;&#x57FA;&#x4E8E;<a href="../../../site/lib/Mojo/Log.html">Mojo::Log</a>&#x8F7B;&#x91CF;&#x7EA7;&#x7684;&#x65E5;&#x5FD7;&#x8BB0;&#x5F55;&#x6846;&#x67B6; &#x7B49;&#x7B49;</p>
+
+<p>&#x63A8;&#x8350;&#x4F60;&#x5728;&#x4F7F;&#x7528;&#x672C;&#x6A21;&#x5757;&#x7684;&#x540C;&#x65F6;&#x4E5F;&#x66F4;&#x591A;&#x7684;&#x4E86;&#x89E3;<a href="../../../site/lib/Mojolicious.html">Mojolicious</a></p>
+
+<h1 id="">&#x6E90;&#x7801;&#x5BFC;&#x8BFB;</h1>
+
+<pre><code>    &#x251C;&#x2500;&#x2500; Changes #&#x66F4;&#x65B0;&#x8BB0;&#x5F55;
+    &#x251C;&#x2500;&#x2500; demo    #&#x5B58;&#x653E;&#x6F14;&#x793A;&#x7A0B;&#x5E8F;
+    &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; echo-reply.pl     
+    &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; openwx-client.pl
+    &#x251C;&#x2500;&#x2500; doc     #&#x6A21;&#x5757;&#x6587;&#x6863;
+    &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; Weixin.pod
+    &#x251C;&#x2500;&#x2500; lib
+    &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; Mojo
+    &#x2502;&nbsp;&nbsp;     &#x251C;&#x2500;&#x2500; Weixin
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Base.pm       #&#x6240;&#x6709;&#x5BF9;&#x8C61;&#x57FA;&#x7C7B;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Cache.pm      #&#x7F13;&#x5B58;&#x4EFB;&#x610F;&#x4FE1;&#x606F;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Client
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Cron.pm   #&#x5B9A;&#x65F6;&#x6267;&#x884C;&#x4EFB;&#x52A1;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; Remote
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp;     &#x251C;&#x2500;&#x2500; _get_qrcode_image.pm  #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x83B7;&#x53D6;&#x767B;&#x5F55;&#x4E8C;&#x7EF4;&#x7801;&#x56FE;&#x7247;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp;     &#x251C;&#x2500;&#x2500; _get_qrcode_uuid.pm   #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x83B7;&#x53D6;&#x767B;&#x5F55;&#x4E8C;&#x7EF4;&#x7801;uuid
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp;     &#x251C;&#x2500;&#x2500; _is_need_login.pm     #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x5224;&#x65AD;&#x662F;&#x5426;&#x9700;&#x8981;&#x626B;&#x63CF;&#x767B;&#x5F55;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp;     &#x251C;&#x2500;&#x2500; _login.pm             #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x767B;&#x5F55;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp;     &#x251C;&#x2500;&#x2500; _logout.pm            #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x6CE8;&#x9500;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp;     &#x251C;&#x2500;&#x2500; _synccheck.pm         #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x6709;&#x6D88;&#x606F;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp;     &#x2514;&#x2500;&#x2500; _sync.pm              #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x63A5;&#x6536;&#x6D88;&#x606F;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Client.pm  #&#x8D1F;&#x8D23;&#x5BA2;&#x6237;&#x7684;&#x767B;&#x5F55;&#x3001;&#x8FD0;&#x884C;&#x3001;&#x9000;&#x51FA;&#x7B49;&#x57FA;&#x672C;&#x63A7;&#x5236;&#x529F;&#x80FD;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Const.pm   #&#x4FDD;&#x5B58;&#x5E38;&#x91CF;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Friend.pm  #&#x597D;&#x53CB;&#x5BF9;&#x8C61;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Group     
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; Member.pm  #&#x7FA4;&#x6210;&#x5458;&#x5BF9;&#x8C61;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Group.pm   #&#x7FA4;&#x5BF9;&#x8C61;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Log.pm     #&#x65E5;&#x5FD7;&#x7C7B;&#xFF0C;&#x63D0;&#x4F9B;&#x65E5;&#x5FD7;&#x8BB0;&#x5F55;&#x76F8;&#x5173;&#x529F;&#x80FD;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Message
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Base.pm    #&#x6D88;&#x606F;&#x57FA;&#x7C7B;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Handle.pm  #&#x63A5;&#x6536;&#x6D88;&#x606F;&#x3001;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x5904;&#x7406;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Queue.pm   #&#x6D88;&#x606F;&#x961F;&#x5217;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Remote 
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; _send_text_message.pm  #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x53D1;&#x9001;&#x597D;&#x53CB;&#x548C;&#x7FA4;&#x6587;&#x672C;&#x6D88;&#x606F;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; SendStatus.pm  #&#x53D1;&#x9001;&#x72B6;&#x6001;&#x5BF9;&#x8C61;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Message.pm #&#x6D88;&#x606F;&#x5BF9;&#x8C61;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Model
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Base.pm  #&#x4E2A;&#x4EBA;&#x3001;&#x597D;&#x53CB;&#x3001;&#x7FA4;&#x5BF9;&#x8C61;&#x57FA;&#x7C7B;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; Remote
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp;     &#x251C;&#x2500;&#x2500; _webwxbatchgetcontact.pm #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x6279;&#x91CF;&#x83B7;&#x53D6;&#x7FA4;&#x7EC4;&#x4FE1;&#x606F;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp;     &#x251C;&#x2500;&#x2500; _webwxgetcontact.pm      #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x83B7;&#x53D6;&#x901A;&#x8BAF;&#x5F55;&#x4FE1;&#x606F;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp;     &#x2514;&#x2500;&#x2500; _webwxinit.pm            #&#x5FAE;&#x4FE1;&#x5E95;&#x5C42;&#x63A5;&#x53E3;&#xFF0C;&#x83B7;&#x53D6;&#x9996;&#x5C4F;&#x8FD1;&#x671F;&#x4F1A;&#x8BDD;&#x4FE1;&#x606F;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Model.pm  #&#x6A21;&#x578B;&#xFF0C;&#x8D1F;&#x8D23;&#x66F4;&#x65B0;&#x3001;&#x5220;&#x9664;&#x3001;&#x641C;&#x7D22;&#x597D;&#x53CB;&#x3001;&#x7FA4;&#x7EC4;&#x7B49;&#x5BF9;&#x8C61;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Plugin       #&#x63D2;&#x4EF6;&#x96C6;&#x5408;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; FuckDaShen.pm
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; IRCShell.pm
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; KnowledgeBase.pm
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Openwx.pm
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Perlcode.pm
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Perldoc.pm
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; PostQRcode.pm
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; ShowMsg.pm
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; SmartReply.pm
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; Translation.pm
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Plugin.pm #&#x63D2;&#x4EF6;&#x7C7B;&#xFF0C;&#x63D0;&#x4F9B;&#x57FA;&#x672C;&#x7684;&#x63D2;&#x4EF6;&#x52A0;&#x8F7D;&#xFF0C;&#x6267;&#x884C;&#x6846;&#x67B6;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Request.pm #HTTP&#x8BF7;&#x6C42;&#x7C7B;&#xFF0C;&#x63D0;&#x4F9B;&#x57FA;&#x672C;&#x7684;HTTP GET POST&#x8BF7;&#x6C42;&#xFF0C;&#x652F;&#x6301;&#x963B;&#x585E;&#x548C;&#x975E;&#x963B;&#x585E;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Run.pm  #&#x63D0;&#x4F9B;&#x5F02;&#x6B65;&#x6267;&#x884C;&#x5916;&#x90E8;&#x7A0B;&#x5E8F;&#x7684;&#x529F;&#x80FD;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; Server.pm #&#x4EA7;&#x751F;HTTP&#x670D;&#x52A1;&#x5668;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x251C;&#x2500;&#x2500; User.pm #&#x767B;&#x5F55;&#x5E10;&#x53F7;&#x4E2A;&#x4EBA;&#x5BF9;&#x8C61;
+    &#x2502;&nbsp;&nbsp;     &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; Util.pm #&#x4F7F;&#x7528;&#x51FD;&#x6570;&#x96C6;&#x5408;
+    &#x2502;&nbsp;&nbsp;     &#x251C;&#x2500;&#x2500; Weixin.pm #&#x6A21;&#x5757;&#x4E3B;&#x6587;&#x4EF6;
+    &#x2502;&nbsp;&nbsp;     &#x2514;&#x2500;&#x2500; Weixin.pod #&#x6A21;&#x5757;&#x6587;&#x6863;&#xFF0C;&#x540C;doc/Weixin.pod&#x76F8;&#x540C;
+    &#x251C;&#x2500;&#x2500; Makefile.PL  #&#x6A21;&#x5757;&#x5B89;&#x88C5;&#x6240;&#x9700;Makefile&#x6587;&#x672C;
+    &#x251C;&#x2500;&#x2500; README.md    #README&#x6587;&#x6863;&#xFF0C;markdown&#x683C;&#x5F0F;
+    &#x251C;&#x2500;&#x2500; screenshot   #&#x8FD0;&#x884C;&#x6548;&#x679C;&#x622A;&#x56FE;
+    &#x2502;&nbsp;&nbsp; &#x2514;&#x2500;&#x2500; IRCShell.jpg
+    &#x2514;&#x2500;&#x2500; t  #&#x6D4B;&#x8BD5;&#x7A0B;&#x5E8F;
+        &#x251C;&#x2500;&#x2500; https.t
+        &#x2514;&#x2500;&#x2500; load_module.t</code></pre>
+
+<h1 id="1">&#x5BF9;&#x8C61;&#x548C;&#x65B9;&#x6CD5;</h1>
+
+<h2 id="2">&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;</h2>
+
+<h3 id="3">&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;&#x5C5E;&#x6027;</h3>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">log_level</span>  <span class="comment">#æ¥å¿è®°å½ç­çº§ é»è®¤info</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">log_path</span>   <span class="comment">#æ¥å¿è®°å½è·¯å¾ï¼é»è®¤undefï¼æå°å°STDERR</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">version</span>    <span class="comment">#å®¢æ·ç«¯çæ¬</span>
+    
+    <span class="comment">#è·åå®¢æ·ç«¯å±æ§</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">log_level</span>  <span class="comment">#è¿åç»æä¸º "info"</span>
+    
+    <span class="comment">#è®¾ç½®å®¢æ·ç«¯å±æ§</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">log_level</span><span class="operator">(</span><span class="string">"debug"</span><span class="operator">);</span>  <span class="comment">#è®¾ç½®å®¢æ·çlog_levelç­çº§ä¸º debug</span>
+</code></pre>
+
+<h3 id="4">&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;&#x65B9;&#x6CD5;</h3>
+
+<h4 id="new">new &#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x5FAE;&#x4FE1;&#x5BA2;&#x6237;&#x7AEF;&#x5BF9;&#x8C61;</h4>
+
+<pre><code>    <span class="variable">$client</span> <span class="operator">=</span> <span class="variable">Mojo::Weixin</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">ua_debug</span><span class="operator">=&gt;</span><span class="number">0</span><span class="operator">,</span> <span class="string">log_level</span><span class="operator">=&gt;</span><span class="string">"info"</span><span class="operator">,</span> <span class="operator">);</span>
+    
+    <span class="comment">#æ¯æçåæ°ï¼</span>
+    
+    <span class="variable">ua_debug</span>        <span class="comment">#è®¾ç½®è¯¥åæ°ï¼æå°è°è¯ä¿¡æ¯</span>
+    <span class="variable">keep_cookie</span>     <span class="comment">#é»è®¤ä¸º1ï¼0è¡¨ç¤ºä¸ä¿å­ç»å½cookieï¼1è¡¨ç¤ºä¿å­ç»å½cookieæ¹ä¾¿ä¸æ¬¡ç´æ¥æ¢å¤ç»å½</span>
+    
+    <span class="variable">log_level</span>       <span class="comment">#é»è®¤çº§å«ä¸ºinfoï¼å¯ä»¥è®¾ç½®debug|info|warn|error|fatal</span>
+    <span class="variable">log_path</span>        <span class="comment">#é»è®¤å®¢æ·ç«¯è¾åºåå®¹æå°å°STDERR è®¾ç½®è¯¥åæ°å¯ä»¥å°å®¢æ·ç«¯è¾åºéå®åå°æä»¶</span>
+    <span class="variable">log_encoding</span>    <span class="comment">#è¾åºæ¥å¿çç¼ç ï¼é»è®¤èªå¨æ£æµï¼å¦æåºç°ä¹±ç å¯ä»¥å°è¯æå¨è®¾ç½®ä¸ä¸è¾åºç¼ç </span>
+                    <span class="comment">#ç¼ç å¿é¡»æ¯ Encode æ¨¡åæ¯æçæ ¼å¼ï¼æ¯å¦utf8 gbkç­</span>
+    
+    <span class="variable">tmpdir</span>          <span class="comment">#ç¨åºä½¿ç¨çä¸´æ¶ç®å½ï¼ä¸»è¦ç¨äºä¿å­ä¸äºéªè¯ç ãäºç»´ç ç­æ°æ®ï¼é»è®¤ä¸ºç³»ç»ä¸´æ¶ç®å½</span>
+    <span class="variable">cookie_path</span>     <span class="comment">#ç»å½cookieçä¿å­æä»¶ï¼é»è®¤ä¸º tmpdir/mojo_weixin_cookie.datï¼å¤è´¦å·è¿è¡æ¶éè¦è®¾ç½®ä¸åçcookie_pathï¼</span>
+    <span class="variable">pic_dir</span>         <span class="comment">#å¾çæ¥æ¶é»è®¤å°åï¼é»è®¤ä¸º tmpdir åæ°æè®¾ç½®çç®å½</span>
+    
+    <span class="variable">qrcode_path</span>     <span class="comment">#äºç»´ç ä¿å­è·¯å¾ï¼é»è®¤æ¯ tmpdir ç®å½ä¸åºå®æä»¶å</span>
+</code></pre>
+
+<h4 id="login">login &#x5BA2;&#x6237;&#x7AEF;&#x767B;&#x5F55;</h4>
+
+<h4 id="relogin">relogin &#x5BA2;&#x6237;&#x7AEF;&#x91CD;&#x65B0;&#x767B;&#x5F55;</h4>
+
+<h4 id="logout">logout &#x5BA2;&#x6237;&#x7AEF;&#x6CE8;&#x9500;</h4>
+
+<h4 id="stop">stop &#x5BA2;&#x6237;&#x7AEF;&#x505C;&#x6B62;&#x8FD0;&#x884C;</h4>
+
+<h4 id="run">run &#x542F;&#x52A8;&#x4E3B;&#x4E8B;&#x4EF6;&#x5FAA;&#x73AF;</h4>
+
+<h4 id="on">on &#x6CE8;&#x518C;&#x4E8B;&#x4EF6;</h4>
+
+<p>&#x57FA;&#x4E8E;Mojo::EventEmitter&#x7684;&#x4E8B;&#x4EF6;&#x6CE8;&#x518C;&#x65B9;&#x6CD5;&#xFF0C;&#x53EF;&#x652F;&#x6301;&#x540C;&#x65F6;&#x8BBE;&#x7F6E;&#x591A;&#x4E2A;&#x4E8B;&#x4EF6;&#x56DE;&#x8C03;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">"event1"</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{...},</span><span class="string">"event2"</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{...},);</span>
+</code></pre>
+
+<p>&#x53C2;&#x8003;&#x4E0B;&#x6587;&#x5BA2;&#x6237;&#x7AEF;&#x652F;&#x6301;&#x7684;&#x4E8B;&#x4EF6;</p>
+
+<h4 id="timer">timer &#x5B9A;&#x65F6;&#x6267;&#x884C;</h4>
+
+<p>&#x6307;&#x5B9A;&#x591A;&#x5C11;&#x79D2;&#x4E4B;&#x540E;&#x6267;&#x884C;&#x5BF9;&#x5E94;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">timer</span><span class="operator">(</span><span class="number">10</span><span class="operator">,</span><span class="keyword">sub</span><span class="operator">{</span> <span class="keyword">print</span> <span class="string">"hello world\n"</span> <span class="operator">});</span> <span class="comment">#10såæå°hello world</span>
+</code></pre>
+
+<h4 id="interval">interval</h4>
+
+<p>&#x8BBE;&#x7F6E;&#x6BCF;&#x9694;&#x591A;&#x5C11;&#x79D2;&#x91CD;&#x590D;&#x6267;&#x884C;&#x5BF9;&#x5E94;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">interval</span><span class="operator">(</span><span class="number">10</span><span class="operator">,</span><span class="keyword">sub</span><span class="operator">{</span> <span class="keyword">print</span> <span class="string">"hello world\n"</span> <span class="operator">});</span> <span class="comment">#æ¯é10såæå°hello world</span>
+</code></pre>
+
+<h4 id="add_job">add_job &#x5B9A;&#x65F6;&#x6267;&#x884C;&#x4EFB;&#x52A1;</h4>
+
+<pre><code>    <span class="comment">#æ¯æçæ¶é´æ ¼å¼ä¸º HH:MM æ HH:MM:SS</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">add_job</span><span class="operator">(</span><span class="string">"å®æ¶æé"</span><span class="operator">,</span><span class="string">"07:00"</span><span class="operator">,</span><span class="keyword">sub</span><span class="operator">{</span><span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">send_message</span><span class="operator">(</span><span class="variable">$friend</span><span class="operator">,</span><span class="string">"èµ·åºå¦"</span><span class="operator">);});</span>
+</code></pre>
+
+<h4 id="spawn-opt">spawn(%opt) &#x6267;&#x884C;&#x5916;&#x90E8;&#x547D;&#x4EE4;</h4>
+
+<p>&#x5728;&#x5355;&#x72EC;&#x7684;&#x8FDB;&#x7A0B;&#x4E2D;&#x6267;&#x884C;&#x4EE3;&#x7801;&#x6216;&#x547D;&#x4EE4;</p>
+
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x91C7;&#x7528;&#x7684;&#x662F;&#x5355;&#x8FDB;&#x7A0B;&#x5F02;&#x6B65;&#x4E8B;&#x4EF6;&#x9A71;&#x52A8;&#x6A21;&#x5F0F;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x6267;&#x884C;system/exec&#x7B49;&#x6765;&#x8C03;&#x7528;&#x5176;&#x4ED6;&#x547D;&#x4EE4;</p>
+
+<p>&#x6216;&#x8005;&#x6267;&#x884C;&#x67D0;&#x4E9B;&#x963B;&#x585E;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x6BD4;&#x5982;sleep&#x7B49; &#x5747;&#x4F1A;&#x5BFC;&#x81F4;&#x5BA2;&#x6237;&#x7AEF;&#x4E3B;&#x8FDB;&#x7A0B;&#x88AB;&#x963B;&#x585E;&#x800C;&#x5F71;&#x54CD;&#x6B63;&#x5E38;&#x63A5;&#x6536;&#x548C;&#x53D1;&#x9001;&#x6D88;&#x606F;</p>
+
+<p>&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x53EF;&#x4EE5;&#x91C7;&#x7528;&#x5BA2;&#x6237;&#x7AEF;&#x63D0;&#x4F9B;&#x7684;spawn&#x65B9;&#x6CD5;&#xFF0C;&#x5C06;&#x963B;&#x585E;&#x7684;&#x4EE3;&#x7801;&#x653E;&#x7F6E;&#x5230;&#x5355;&#x72EC;&#x7684;&#x8FDB;&#x7A0B;&#x4E2D;&#x6267;&#x884C;&#xFF0C;&#x6355;&#x83B7;&#x8FDB;&#x7A0B;&#x7684;&#x6807;&#x51C6;&#x8F93;&#x51FA;&#x548C;&#x6807;&#x51C6;&#x9519;&#x8BEF;</p>
+
+<p>&#x5728;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x4E2D;&#x83B7;&#x53D6;&#x5230;&#x8FDB;&#x7A0B;&#x6267;&#x884C;&#x7684;&#x7ED3;&#x679C;</p>
+
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x5B9E;&#x9645;&#x4E0A;&#x53C2;&#x8003;<a>Mojo::Run</a>&#x6A21;&#x5757; &#x5E76;&#x5728;&#x8BE5;&#x6A21;&#x5757;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x505A;&#x4E86;&#x8FDB;&#x4E00;&#x6B65;&#x5B8C;&#x5584;</p>
+
+<pre><code>    <span class="comment">#æ¯æçåæ°ï¼</span>
+    <span class="variable">max_forks</span>       <span class="comment">#äº§ççæå¤§è¿ç¨æ°</span>
+    <span class="variable">cmd</span>             <span class="comment">#è¦æ§è¡çå½ä»¤æä»£ç </span>
+    <span class="variable">param</span>           <span class="comment">#å½ä»¤çåæ°</span>
+    <span class="variable">exec_timeout</span>    <span class="comment">#å½ä»¤æä»£ç çæ§è¡è¶æ¶æ¶é´</span>
+    <span class="variable">stdout_cb</span>       <span class="comment">#å½ä»¤æä»£ç æ§è¡è¿ç¨ä¸­ STDOUT ä¸æ¦ææ°æ®åä¼è§¦åæ­¤åè°</span>
+    <span class="variable">stderr_cb</span>       <span class="comment">#å½ä»¤æä»£ç æ§è¡è¿ç¨ä¸­ STDERR ä¸æ¦ææ°æ®åä¼è§¦åæ­¤åè°</span>
+    <span class="variable">exit_cb</span>         <span class="comment">#å½ä»¤æä»£ç æ§è¡ç»æçåè°</span>
+    
+    ä»£ç ç¤ºä¾ï¼
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">spawn</span><span class="operator">(</span>
+        <span class="string">cmd</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span><span class="keyword">print</span> <span class="string">"hello world"</span><span class="operator">;</span><span class="keyword">return</span> <span class="string">"ok"</span><span class="operator">},</span>
+        <span class="string">exec_timeout</span> <span class="operator">=&gt;</span> <span class="number">3</span><span class="operator">,</span>
+        <span class="string">exit_cb</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="operator">{</span>
+            <span class="keyword">my</span><span class="operator">(</span><span class="variable">$pid</span><span class="operator">,</span><span class="variable">$hash</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+            <span class="comment">#$pid æ¯æ§è¡ç¨åºçè¿ç¨å·</span>
+            <span class="comment">#$hashæ¯ä¸ä¸ªæ§è¡ç»æçhashå¼ç¨ï¼ç»æå¦ä¸ï¼</span>
+            <span class="comment">#{</span>
+            <span class="comment">#    'cmd'                  =&gt; 'CODE',              #æ§è¡çå½ä»¤æä»£ç </span>
+            <span class="comment">#    'time_stopped'         =&gt; '1441011558.30559',  #è¿ç¨åæ­¢æ¶é´</span>
+            <span class="comment">#    'time_started'         =&gt; '1441011557.30242',  #è¿ç¨å¼å§æ¶é´</span>
+            <span class="comment">#    'time_duration_total'  =&gt; '1.00345897674561',  #è¿ç¨æ§è¡æ»æ¶é´</span>
+            <span class="comment">#    'time_duration_exec'   =&gt; '1.00317192077637',  #è¿ç¨æ§è¡æ¶é¿</span>
+            <span class="comment">#    'is_timeout'           =&gt; undef,               #æ¯å¦æ¯è¶æ¶éåº</span>
+            <span class="comment">#    'exit_status'          =&gt; 1,                   #è¿ç¨éåºè¿åå¼</span>
+            <span class="comment">#    'exit_core'            =&gt; 0,                   #æ¯å¦æcore</span>
+            <span class="comment">#    'exit_signal'          =&gt; 0,                   #è¿ç¨éåºä¿¡å·</span>
+            <span class="comment">#    'param'                =&gt; undef,               #å½ä»¤æä»£ç æ§è¡åæ°</span>
+            <span class="comment">#    'stderr'               =&gt; '',                  #è¿ç¨çæ åéè¯¯è¾åºç»æ</span>
+            <span class="comment">#    'stdout'               =&gt; 'hello world',       #è¿ç¨çæ åè¾åºç»æ</span>
+            <span class="comment">#    'result'               =&gt; [                    #ä»£ç çè¿åå¼</span>
+            <span class="comment">#                                   'ok'</span>
+            <span class="comment">#                              ]</span>
+            <span class="comment">#}</span>
+    
+        <span class="operator">},</span>
+    <span class="operator">);</span>
+    
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">spawn</span><span class="operator">(</span>
+        <span class="string">cmd</span>             <span class="operator">=&gt;</span> <span class="string">"ping www.qq.com"</span><span class="operator">,</span> <span class="comment">#æèåæ ['ping','www.qq.com']</span>
+        <span class="string">exec_timeout</span>    <span class="operator">=&gt;</span> <span class="number">3</span><span class="operator">,</span>
+        <span class="string">stdout_cb</span>       <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="operator">{</span>
+            <span class="keyword">my</span><span class="operator">(</span><span class="variable">$pid</span><span class="operator">,</span><span class="variable">$chunk</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+            <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">print</span><span class="operator">(</span><span class="string">"ä»æ åè¾åºä¸­å®æ¶æ¶å°æ°æ®:"</span><span class="operator">,</span><span class="variable">$chunk</span><span class="operator">,</span><span class="string">"\n"</span><span class="operator">);</span>
+        <span class="operator">},</span>
+        <span class="string">stderr_cb</span>       <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+            <span class="keyword">my</span><span class="operator">(</span><span class="variable">$pid</span><span class="operator">,</span><span class="variable">$chunk</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+            <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">print</span><span class="operator">(</span><span class="string">"ä»æ åéè¯¯ä¸­å®æ¶æ¶å°æ°æ®:"</span><span class="operator">,</span><span class="variable">$chunk</span><span class="operator">,</span><span class="string">"\n"</span><span class="operator">);</span>
+        <span class="operator">},</span>
+        <span class="string">exit_cb</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="operator">{</span>
+            <span class="keyword">my</span><span class="operator">(</span><span class="variable">$pid</span><span class="operator">,</span><span class="variable">$res</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+            <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">print</span><span class="operator">(</span><span class="string">"ä»æ åè¾åºä¸­æ¥æ¶çå¨é¨æ°æ®:"</span><span class="operator">,</span><span class="variable">$res</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">stdout</span><span class="operator">}</span><span class="operator">,</span><span class="string">"\n"</span><span class="operator">);</span>
+            <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">print</span><span class="operator">(</span><span class="string">"ä»æ åéè¯¯ä¸­æ¥æ¶çå¨é¨æ°æ®:"</span><span class="operator">,</span><span class="variable">$res</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">stderr</span><span class="operator">}</span><span class="operator">,</span><span class="string">"\n"</span><span class="operator">);</span>
+        <span class="operator">}</span>
+    <span class="operator">);</span>
+</code></pre>
+
+<h4 id="mail-opt-callback">mail(%opt,[$callback]) &#x975E;&#x963B;&#x585E;&#x53D1;&#x9001;&#x90AE;&#x4EF6;</h4>
+
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x5B9E;&#x9645;&#x4E0A;&#x662F;<a>Mojo::SMTP::Client</a>&#x7684;&#x5C01;&#x88C5;&#xFF0C;&#x4F7F;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#x4E4B;&#x524D;&#x8BF7;&#x786E;&#x4FDD;&#x4F60;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x4E86;<a>Mojo::SMTP::Client</a>&#x6A21;&#x5757;</p>
+
+<pre><code>    åéé®ä»¶éè¦è®¾ç½®çåæ°ï¼
+    <span class="variable">smtp</span>        <span class="comment">#smtpæå¡å¨å°åï¼ä¾å¦smtp.163.com</span>
+    <span class="variable">port</span>        <span class="comment">#smtpæå¡å¨ç«¯å£ï¼é»è®¤25</span>
+    <span class="variable">tls</span>         <span class="comment">#0|1 æ¯å¦ä½¿ç¨tlsï¼é»è®¤ä¸º 0</span>
+    <span class="variable">tls_ca</span>      <span class="comment">#tlsè¯ä¹¦è·¯å¾</span>
+    <span class="variable">tls_cert</span>    <span class="comment">#tlså¬é¥è·¯å¾</span>
+    <span class="variable">tls_key</span>     <span class="comment">#tlså¯é¥è·¯å¾</span>
+    <span class="variable">user</span>        <span class="comment">#smtpå¸å·</span>
+    <span class="variable">pass</span>        <span class="comment">#smtpå¯ç </span>
+    <span class="variable">from</span>        <span class="comment">#åéé®ç®±</span>
+    <span class="variable">to</span>          <span class="comment">#æ¥æ¶é®ç®±</span>
+    <span class="variable">cc</span>          <span class="comment">#æéé®ç®±</span>
+    <span class="variable">subject</span>     <span class="comment">#ä¸»é¢</span>
+    <span class="variable">html</span>        <span class="comment">#é®ä»¶æ­£æåå®¹ï¼htmlæ ¼å¼</span>
+    <span class="variable">text</span>        <span class="comment">#é®ä»¶æ­£æåå®¹ï¼çº¯ææ¬æ ¼å¼</span>
+    <span class="variable">charset</span>     <span class="comment">#ä¸»é¢ï¼é®ä»¶æ­£æçç¼ç æ ¼å¼ï¼é»è®¤UTF-8</span>
+    <span class="variable">data</span>        <span class="comment">#è®¾ç½®è¯¥éé¡¹è¡¨ç¤ºä½¿ç¨MIME::Liteçæçåéæ°æ®</span>
+    
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">mail</span><span class="operator">(</span><span class="string">smtp</span><span class="operator">=&gt;</span><span class="variable">smtp</span><span class="number">.163</span><span class="operator">.</span><span class="variable">com</span><span class="operator">,</span><span class="string">user</span><span class="operator">=&gt;</span><span class="variable">xxx</span><span class="operator">,</span><span class="string">pass</span><span class="operator">=&gt;</span><span class="variable">xxx</span><span class="operator">,</span><span class="string">from</span><span class="operator">=&gt;</span><span class="variable">xxx</span><span class="operator">,</span><span class="string">to</span><span class="operator">=&gt;</span><span class="variable">xxx</span><span class="operator">,</span><span class="string">subject</span><span class="operator">=&gt;</span><span class="string">"é®ä»¶æµè¯"</span><span class="operator">,</span><span class="string">text</span><span class="operator">=&gt;</span><span class="string">"hello world"</span><span class="operator">,</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$send_status</span><span class="operator">,</span><span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+        <span class="keyword">if</span><span class="operator">(</span><span class="variable">$send_status</span><span class="operator">){</span><span class="keyword">print</span> <span class="string">"åéæå"</span><span class="operator">}</span>
+        <span class="keyword">else</span><span class="operator">{</span><span class="keyword">print</span> <span class="string">"åéå¤±è´¥"</span><span class="operator">}</span>
+    <span class="operator">});</span>
+    
+    å¶å®ä¹æ¯æé»å¡åé
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$send_status</span><span class="operator">,</span><span class="variable">$err</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">mail</span><span class="operator">(...);</span>
+</code></pre>
+
+<h4 id="http_get-httphttp-get">http_get http&#x963B;&#x585E;&#x6216;&#x975E;&#x963B;&#x585E;http get&#x8BF7;&#x6C42;</h4>
+
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x4E3A;<a href="../../../site/lib/Mojo/UserAgent.html">Mojo::UserAgent</a>&#x7684;get&#x65B9;&#x6CD5;&#x7684;&#x5C01;&#x88C5;&#xFF0C;&#x8C03;&#x7528;&#x65B9;&#x5F0F;&#x57FA;&#x672C;&#x548C;Mojo::UserAgent-&gt;get&#x76F8;&#x540C;&#xFF0C;&#x4F46;&#x4E5F;&#x5B58;&#x5728;&#x7EC6;&#x5FAE;&#x5DEE;&#x522B;</p>
+
+<p>&#x963B;&#x585E;http&#x8BF7;&#x6C42;&#xFF1A;</p>
+
+<pre><code>    <span class="comment">#æ éä¸ä¸æ  è¿åhttpè¯·æ±åå®¹ï¼è¥è¯·æ±å¤±è´¥ï¼è¿ååå®¹ä¸ºundef</span>
+    <span class="keyword">my</span> <span class="variable">$http_body</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">http_get</span><span class="operator">(</span><span class="variable">$url</span><span class="operator">,</span><span class="variable">$header</span><span class="operator">);</span>
+    
+    <span class="comment">#åè¡¨ä¸ä¸æï¼è¿åhttpè¯·æ±åå®¹ä»¥å$ua,$tx</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$http_body</span><span class="operator">,</span><span class="variable">$ua</span><span class="operator">,</span><span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">http_get</span><span class="operator">(</span><span class="variable">$url</span><span class="operator">,</span><span class="variable">$header</span><span class="operator">);</span>
+    
+    <span class="comment">#å¯ä»¥å¨http headerè®¾ç½®ä¸äºè¯·æ±ç¸å³çéé¡¹ï¼æ¯å¦ï¼</span>
+    <span class="comment">#json=&gt;1 è¡¨ç¤ºå°ååºçjsonæ°æ®è¿è¡json decodeå¾å°perlçhashå¼ç¨</span>
+    <span class="comment">#retry_times=&gt;3 è¡¨ç¤ºè¯·æ±å¤±è´¥èªå¨éè¯æ¬¡æ°ï¼é»è®¤ä½¿ç¨$client-&gt;ua_retry_timesçå¼</span>
+    <span class="keyword">my</span> <span class="variable">$json_decode_hash</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">http_get</span><span class="operator">(</span><span class="variable">$url</span><span class="operator">,</span><span class="operator">{</span><span class="string">json</span><span class="operator">=&gt;</span><span class="number">1</span><span class="operator">,</span><span class="string">retry_times</span><span class="operator">=&gt;</span><span class="number">3</span><span class="operator">,</span><span class="string">Host</span><span class="operator">=&gt;</span><span class="string">"www.qq.com"</span><span class="operator">}</span><span class="operator">);</span>
+    
+    <span class="comment">#http postè¯·æ±</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">http_post</span><span class="operator">(</span><span class="variable">$url</span><span class="operator">,</span><span class="variable">$header</span><span class="operator">,</span><span class="string">form</span><span class="operator">=&gt;</span><span class="variable">$post_data</span><span class="operator">);</span>
+</code></pre>
+
+<p>&#x975E;&#x963B;&#x585E;http&#x8BF7;&#x6C42;&#xFF1A;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">http_get</span><span class="operator">(</span><span class="variable">$url</span><span class="operator">,</span><span class="variable">$header</span><span class="operator">,</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$http_body</span><span class="operator">,</span><span class="variable">$ua</span><span class="operator">,</span><span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+        <span class="comment">#è¯·æ±å¤±è´¥ $http_body è¿åundef</span>
+    <span class="operator">});</span>
+</code></pre>
+
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x7531;&#x4E8E;&#x91C7;&#x7528;&#x4E8B;&#x4EF6;&#x9A71;&#x52A8;&#xFF0C;&#x56E0;&#x6B64;&#xFF0C;&#x4F60;&#x5E94;&#x8BE5;&#x59CB;&#x7EC8;&#x9009;&#x62E9;&#x4F7F;&#x7528;&#x975E;&#x963B;&#x585E;&#x7684;http&#x8BF7;&#x6C42;&#x6A21;&#x5F0F;&#xFF0C;&#x5982;&#x679C;&#x91C7;&#x7528;&#x963B;&#x585E;&#x7684;http&#x8BF7;&#x6C42;&#xFF0C;&#x5728;http&#x8BF7;&#x6C42;&#x5B8C;&#x6210;&#x4E4B;&#x524D;</p>
+
+<p>&#x6574;&#x4E2A;&#x7A0B;&#x5E8F;&#x90FD;&#x662F;&#x88AB;&#x963B;&#x585E;&#x7684;&#xFF0C;&#x65E0;&#x6CD5;&#x505A;&#x5176;&#x4ED6;&#x4EFB;&#x4F55;&#x4E8B;&#xFF08;&#x5305;&#x62EC;&#x63A5;&#x6536;&#x548C;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7B49;&#xFF09;</p>
+
+<h4 id="http_post-http-post">http_post &#x963B;&#x585E;&#x6216;&#x975E;&#x963B;&#x585E;http post&#x8BF7;&#x6C42;</h4>
+
+<p>&#x548C; http_get &#x65B9;&#x6CD5;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E0D;&#x518D;&#x8D58;&#x8FF0;</p>
+
+<h4 id="search_friend">search_friend() &#x641C;&#x7D22;&#x597D;&#x53CB;</h4>
+
+<pre><code>    <span class="comment">#æ¯ææä»»æå¥½åå¯¹è±¡å±æ§è¿è¡ç»åæç´¢ï¼æ éä¸ä¸æè¿åç¬¦åæ¡ä»¶çç¬¬ä¸ä¸ªå¥½åå¯¹è±¡ï¼åè¡¨ä¸ä¸æè¿åå¨é¨å¯¹è±¡</span>
+    <span class="keyword">my</span> <span class="variable">$friend</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">search_friend</span><span class="operator">(</span><span class="string">name</span><span class="operator">=&gt;</span><span class="variable">xxx</span><span class="operator">,</span><span class="string">id</span><span class="operator">=&gt;</span><span class="variable">xxx</span><span class="operator">,);</span>
+    <span class="keyword">my</span> <span class="variable">@friends</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">search_friend</span><span class="operator">(</span><span class="string">city</span><span class="operator">=&gt;</span><span class="string">"åäº¬"</span><span class="operator">);</span>
+</code></pre>
+
+<h4 id="search_group">search_group() &#x641C;&#x7D22;&#x7FA4;&#x7EC4;</h4>
+
+<pre><code>    <span class="comment">#æ¯ææä»»æç¾¤å¯¹è±¡å±æ§è¿è¡ç»åæç´¢ï¼æ éä¸ä¸æè¿åç¬¦åæ¡ä»¶çç¬¬ä¸ä¸ªå¥½åå¯¹è±¡ï¼åè¡¨ä¸ä¸æè¿åå¨é¨å¯¹è±¡</span>
+    <span class="keyword">my</span> <span class="variable">$group</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">search_group</span><span class="operator">(</span><span class="string">name</span><span class="operator">=&gt;</span><span class="variable">xxx</span><span class="operator">);</span>
+</code></pre>
+
+<h4 id="send_message-friend-group-content-callback">send_message($friend|$group,$content,$callback) &#x53D1;&#x9001;&#x6587;&#x672C;&#x6D88;&#x606F;</h4>
+
+<pre><code>    <span class="comment">#ç»æå®çå¥½åå¯¹è±¡åéå¥½åæ¶æ¯</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">send_message</span><span class="operator">(</span><span class="variable">$friend</span><span class="operator">,</span><span class="string">"hello world"</span><span class="operator">);</span> <span class="comment">#ç»æå®çå¥½ååéå¥½åæ¶æ¯</span>
+    <span class="variable">$friend</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">"hello world"</span><span class="operator">);</span>                 <span class="comment">#ç´æ¥å©ç¨å¥½åå¯¹è±¡çæ¹æ³ï¼æ´ç®æ´</span>
+    
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">send_message</span><span class="operator">(</span><span class="variable">$group</span><span class="operator">,</span><span class="string">"hello world"</span><span class="operator">);</span>  <span class="comment">#ç»æå®çç¾¤å¯¹è±¡åéç¾¤æ¶æ¯</span>
+    <span class="variable">$group</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">"hello world"</span><span class="operator">);</span>                  <span class="comment">#ç´æ¥å©ç¨ç¾¤å¯¹è±¡çæ¹æ³ï¼æ´ç®æ´</span>
+    
+    <span class="comment">#å¨åè°ä¸­å¯¹åå§å³å°åéçæ¶æ¯å¯¹è±¡è¿è¡åæ¬¡çä¿®æ¹</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">send_message</span><span class="operator">(</span><span class="variable">$friend</span><span class="operator">,</span><span class="string">"hello world"</span><span class="operator">,</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$msg</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+        <span class="keyword">my</span> <span class="variable">$content</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+        <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">(</span><span class="variable">$content</span> <span class="operator">.</span> <span class="string">"ææ¯æ¶æ¯å°å°¾å·´"</span><span class="operator">);</span>
+    <span class="operator">});</span>
+</code></pre>
+
+<h4 id="send_media-friend-group-media_path-media_hash-callback">send_media($friend|$group,$media_path|$media_hash,$callback) &#x53D1;&#x9001;&#x5A92;&#x4F53;&#x6587;&#x4EF6;</h4>
+
+<pre><code>    <span class="comment">#åéæ¬å°æä»¶ï¼æå®æ¬å°æä»¶è·¯å¾</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">send_media</span><span class="operator">(</span><span class="variable">$friend</span><span class="operator">|</span><span class="variable">$group</span><span class="operator">,</span><span class="string">"/tmp/test.jpg"</span><span class="operator">);</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">send_media</span><span class="operator">(</span><span class="variable">$friend</span><span class="operator">|</span><span class="variable">$group</span><span class="operator">,</span><span class="string">"/tmp/test.txt"</span><span class="operator">);</span>
+    
+    <span class="comment">#åéurlæå®çæä»¶</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">send_media</span><span class="operator">(</span><span class="variable">$friend</span><span class="operator">|</span><span class="variable">$group</span><span class="operator">,</span><span class="string">"http://www.example.com/test.jpg"</span><span class="operator">);</span>
+    
+    <span class="comment">#é»è®¤æåµä¸ï¼ç¨åºä¾é æä»¶æ©å±åæèurlååºä¸­çcontent-typeç­ä¿¡æ¯æ¥è¯å«åªä½çæ ¼å¼ï¼å¯è½ä¼å¯¼è´è¯å«ä¸åç¡®èå½±ååé</span>
+    <span class="comment">#è¿ç§æåµä¸ä½ å¯ä»¥ä¼ éä¸ä¸ªhashçç»æï¼æå¨æå®åªä½çç¸å³ä¿¡æ¯</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">send_media</span><span class="operator">(</span><span class="variable">$friend</span><span class="operator">|</span><span class="variable">$group</span><span class="operator">,</span><span class="operator">{</span>
+        <span class="string">media_path</span> <span class="operator">=&gt;</span> <span class="string">'/tmp/hello.txt'</span><span class="operator">,</span> <span class="comment">#åªä½è·¯å¾ï¼å¯ä»¥æ¯æ¬å°æä»¶è·¯å¾æèhttpåè®®çurl</span>
+        <span class="string">media_data</span> <span class="operator">=&gt;</span> <span class="string">'hello world'</span><span class="operator">,</span>    <span class="comment">#å¯éï¼ç¨äºç´æ¥åéåå­æ°æ®ï¼ä¼åçº§é«äº media_pathï¼</span>
+        <span class="string">media_mime</span> <span class="operator">=&gt;</span> <span class="string">'text/plain'</span><span class="operator">,</span>     <span class="comment">#å¯éï¼é»è®¤æ¯ application/octet-streamï¼ç¨äºæå®</span>
+        <span class="string">media_mtime</span> <span class="operator">=&gt;</span> <span class="number">1457169652</span> <span class="operator">,</span>     <span class="comment">#æ¶é´æ³ï¼æä»¶ä¿®æ¹æ¶é´ï¼éæ</span>
+        <span class="string">media_ext</span>  <span class="operator">=&gt;</span> <span class="string">'txt'</span><span class="operator">,</span>            <span class="comment">#æä»¶æ©å±å</span>
+        <span class="string">media_size</span> <span class="operator">=&gt;</span> <span class="number">1024</span><span class="operator">,</span>             <span class="comment">#å¯éï¼æ°æ®å¤§å°ï¼é»è®¤ä¼èªå¨è®¡ç®</span>
+        <span class="string">media_name</span> <span class="operator">=&gt;</span> <span class="string">'hello.txt'</span><span class="operator">,</span>      <span class="comment">#å¯éï¼åªä½åç§°ï¼é»è®¤æ¯åæä»¶åä½ä¸ºåç§°</span>
+    <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h4 id="reply_message-msg-content-callback">reply_message($msg,$content,$callback) &#x56DE;&#x590D;&#x6307;&#x5B9A;&#x7684;&#x6D88;&#x606F;</h4>
+
+<pre><code>    <span class="comment">#åå¤æ¶æ¯ï¼å¦ææ¯ç¾¤æ¶æ¯ï¼å°±åå¤ç»è¯¥ç¾¤ï¼å¦ææ¯å¥½åæ¶æ¯ï¼å°±åå¤ç»è¯¥å¥½å</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">reply_message</span><span class="operator">(</span><span class="variable">$msg</span><span class="operator">,</span><span class="variable">$content</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="5">&#x4E2A;&#x4EBA;&#x5BF9;&#x8C61;</h2>
+
+<pre><code>    å±æ§ï¼
+    <span class="variable">id</span>          <span class="comment">#å¯ä¸æ è¯ï¼æ¯æ¬¡ç»å½æé´ææï¼å¤æ¬¡ç»å½ä¼åçåå</span>
+    <span class="variable">name</span>        <span class="comment">#æµç§°</span>
+    <span class="variable">account</span>       <span class="comment">#å¸å·</span>
+    <span class="variable">province</span>    <span class="comment">#çä»½</span>
+    <span class="variable">city</span>        <span class="comment">#åå¸</span>
+    <span class="variable">sex</span>         <span class="comment">#æ§å«</span>
+    <span class="variable">signature</span>   <span class="comment">#ä¸ªæ§ç­¾å</span>
+    <span class="variable">displayname</span> <span class="comment">#æ¾ç¤ºåç§°ï¼ånameç¸å</span>
+    <span class="variable">markname</span>    <span class="comment">#å¤æ³¨åç§°</span>
+    
+    æ¹æ³ï¼
+    <span class="keyword">dump</span>        <span class="comment">#æå°å¯¹è±¡ç»æ</span>
+    
+    æåç»å½åï¼å¯ä»¥éè¿ <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">user</span> æ¥è·åå°ä¸ªäººå¯¹è±¡
+    
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">user</span><span class="operator">-&gt;</span><span class="variable">name</span><span class="operator">;</span>   <span class="comment">#è·åä¸ªäººæµç§°</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">user</span><span class="operator">-&gt;</span><span class="variable">dump</span><span class="operator">();</span> 
+</code></pre>
+
+<h2 id="6">&#x597D;&#x53CB;&#x5BF9;&#x8C61;</h2>
+
+<pre><code>    å±æ§ï¼
+    <span class="variable">id</span>          <span class="comment">#å¯ä¸æ è¯ï¼æ¯æ¬¡ç»å½æé´ææï¼å¤æ¬¡ç»å½ä¼åçåå</span>
+    <span class="variable">name</span>        <span class="comment">#æµç§°</span>
+    <span class="variable">account</span>     <span class="comment">#å¸å·</span>
+    <span class="variable">province</span>    <span class="comment">#çä»½</span>
+    <span class="variable">city</span>        <span class="comment">#åå¸</span>
+    <span class="variable">sex</span>         <span class="comment">#æ§å«</span>
+    <span class="variable">signature</span>   <span class="comment">#ä¸ªæ§ç­¾å</span>
+    <span class="variable">displayname</span> <span class="comment">#æ¾ç¤ºåç§°ï¼å¦æè®¾ç½®äºå¤æ³¨åç§°å°±è¿åå¤æ³¨åç§°ï¼å¦åè¿åæµç§°</span>
+    <span class="variable">markname</span>    <span class="comment">#å¤æ³¨åç§°</span>
+    
+    æ¹æ³ï¼
+    <span class="keyword">dump</span>        <span class="comment">#æå°å¯¹è±¡ç»æ</span>
+    <span class="keyword">send</span>        <span class="comment">#ç»è¯¥å¥½ååéæ¶æ¯</span>
+    
+    <span class="keyword">my</span> <span class="variable">$friend</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">search_friend</span><span class="operator">(</span><span class="string">name</span><span class="operator">=&gt;</span><span class="string">"å°ç°"</span><span class="operator">);</span>
+    <span class="variable">$friend</span><span class="operator">-&gt;</span><span class="variable">dump</span><span class="operator">();</span>
+    <span class="variable">$friend</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">"hello world"</span><span class="operator">);</span> 
+</code></pre>
+
+<h2 id="7">&#x7FA4;&#x7EC4;&#x5BF9;&#x8C61;</h2>
+
+<pre><code>    å±æ§ï¼
+    <span class="variable">id</span>           <span class="comment">#å¯ä¸æ è¯ï¼æ¯æ¬¡ç»å½æé´ææï¼å¤æ¬¡ç»å½ä¼åçåå</span>
+    <span class="variable">name</span>         <span class="comment">#ç¾¤åç§°</span>
+    <span class="variable">displayname</span>  <span class="comment">#ç¾¤æ¾ç¤ºåç§°</span>
+    
+    æ¹æ³ï¼
+    <span class="variable">search_group_member</span>  <span class="comment">#æç´¢ç¾¤æå</span>
+    <span class="variable">me</span>                   <span class="comment">#è¿åç¾¤æåä¸­çèªå·±å¯¹è±¡</span>
+    <span class="keyword">send</span>                 <span class="comment">#åéæ¶æ¯ç»è¯¥ç¾¤</span>
+    <span class="keyword">dump</span>                 <span class="comment">#æå°ç¾¤å¯¹è±¡ç»æ</span>
+    
+    <span class="keyword">my</span> <span class="variable">$group</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">search_group</span><span class="operator">(</span><span class="string">displayname</span><span class="operator">=&gt;</span><span class="string">"çº¢åç¾¤"</span><span class="operator">);</span>
+    <span class="variable">$group</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">"å¤§å®¶å¥½"</span><span class="operator">);</span>
+    <span class="keyword">print</span> <span class="string">"æå¨ç¾¤ä¸­çç§°å¼æ¯ï¼"</span> <span class="operator">.</span> <span class="variable">$group</span><span class="operator">-&gt;</span><span class="variable">me</span><span class="operator">-&gt;</span><span class="variable">displayname</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="8">&#x7FA4;&#x6210;&#x5458;&#x5BF9;&#x8C61;</h2>
+
+<pre><code>    å±æ§<span class="operator">:</span>
+    <span class="variable">id</span>              <span class="comment">#å¯ä¸æ è¯ï¼æ¯æ¬¡ç»å½æé´ææï¼å¤æ¬¡ç»å½ä¼åçåå</span>
+    <span class="variable">name</span>            <span class="comment">#æµç§°</span>
+    <span class="variable">account</span>         <span class="comment">#å¾®ä¿¡å·</span>
+    <span class="variable">province</span>        <span class="comment">#çä»½</span>
+    <span class="variable">city</span>            <span class="comment">#åå¸</span>
+    <span class="variable">sex</span>             <span class="comment">#æ§å«</span>
+    <span class="variable">signature</span>       <span class="comment">#ä¸ªæ§ç­¾å</span>
+    <span class="variable">displayname</span>     <span class="comment">#æåå¨ç¾¤ç»ä¸­çæ¾ç¤ºåç§°</span>
+    <span class="variable">markname</span>        <span class="comment">#å¤æ³¨åç§°</span>
+    
+    æ¹æ³<span class="operator">:</span>
+    <span class="keyword">dump</span>            <span class="comment">#æå°å¯¹è±¡ç»æ</span>
+    <span class="variable">group</span>           <span class="comment">#è¿åç¾¤æåå¯¹åºçç¾¤ç»å¯¹è±¡</span>
+    
+    <span class="keyword">my</span> <span class="variable">$group</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">search_group</span><span class="operator">(</span><span class="string">displayname</span><span class="operator">=&gt;</span><span class="string">"çº¢åç¾¤"</span><span class="operator">);</span>
+    <span class="keyword">my</span> <span class="variable">$group_member</span> <span class="operator">=</span> <span class="variable">$group</span><span class="operator">-&gt;</span><span class="variable">search_group_member</span><span class="operator">(</span><span class="string">displayname</span><span class="operator">=&gt;</span><span class="string">"å°ç°"</span><span class="operator">);</span>
+    <span class="variable">$group_member</span><span class="operator">-&gt;</span><span class="variable">dump</span><span class="operator">;</span>
+    <span class="variable">$group_member</span><span class="operator">-&gt;</span><span class="variable">group</span><span class="operator">-&gt;</span><span class="variable">displayname</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="9">&#x6D88;&#x606F;&#x5BF9;&#x8C61;</h2>
+
+<pre><code>    å±æ§ï¼
+    <span class="variable">id</span>          <span class="comment">#æ¶æ¯id</span>
+    <span class="variable">type</span>        <span class="comment">#æ¶æ¯ç±»å friend_message|group_message å¥½åæ¶æ¯æç¾¤æ¶æ¯</span>
+    <span class="variable">class</span>       <span class="comment">#æ¶æ¯ç±»å« send|recv åéæ¶æ¯ææ¥æ¶æ¶æ¯</span>
+    <span class="keyword">time</span>        <span class="comment">#æ¶æ¯åéææ¥æ¶çæ¶é´</span>
+    <span class="variable">ttl</span>         <span class="comment">#åéæ¶æ¯çttlï¼é»è®¤æ¯5ï¼å½ttlä¸º0 ä¼è¢«æ¶æ¯éåä¸¢å¼</span>
+    <span class="variable">cb</span>          <span class="comment">#æ¶æ¯åéå®æåçåè°å½æ°ï¼ä¼å¨æ¶æ¯åéå®ä¹åæ§è¡</span>
+    <span class="variable">content</span>     <span class="comment">#æ¶æ¯åå®¹</span>
+    <span class="keyword">format</span>      <span class="comment">#æ¶æ¯æ ¼å¼ï¼å½åä»æ¯æææ¬æ ¼å¼ text</span>
+    
+    æ¹æ³ï¼
+    <span class="variable">sender</span>      <span class="comment">#æ¶æ¯çåéèå¯¹è±¡</span>
+    <span class="variable">receiver</span>    <span class="comment">#æ¶æ¯æ¥æ¶èå¯¹è±¡</span>
+    <span class="variable">group</span>       <span class="comment">#æ¶æ¯å¯¹åºçç¾¤ç»å¯¹è±¡</span>
+    <span class="variable">reply</span>       <span class="comment">#åå¤è¯¥æ¶æ¯</span>
+    
+    <span class="comment">#å½æ¥æ¶å°æ¶æ¯æ¶ ä¼äº§çreceive_messageäºä»¶</span>
+    <span class="comment">#æ³¨åreceive_messageäºä»¶å¯¹åºçåè°å½æ°</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">receive_message</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$msg</span><span class="operator">)</span> <span class="operator">=</span>  <span class="variable">@_</span><span class="operator">;</span> 
+        <span class="keyword">if</span><span class="operator">(</span><span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">type</span> <span class="keyword">eq</span> <span class="string">"friend_message"</span><span class="operator">){</span><span class="comment">#æ¥æ¶å°å¥½åæ¶æ¯</span>
+            <span class="keyword">my</span> <span class="variable">$friend</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">sender</span><span class="operator">;</span> <span class="comment">#è·åå°è¯¥å¥½åå¯¹è±¡</span>
+            <span class="keyword">print</span> <span class="string">"æçå¥½åï¼"</span> <span class="operator">.</span> <span class="variable">$friend</span><span class="operator">-&gt;</span><span class="variable">displayname</span> <span class="operator">.</span> <span class="string">"ç»æåäºä¸ä¸ªæ¶æ¯ï¼æ¶æ¯çåå®¹æ¯ï¼"</span> <span class="operator">.</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+        <span class="operator">}</span>
+        <span class="keyword">elsif</span><span class="operator">(</span><span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">type</span> <span class="keyword">eq</span> <span class="string">"group_message"</span><span class="operator">){</span><span class="comment">#æ¥æ¶å°ç¾¤æ¶æ¯</span>
+            <span class="keyword">my</span> <span class="variable">$group</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">group</span><span class="operator">;</span>    <span class="comment">#è·åå°æ¶æ¯å¯¹åºçç¾¤ç»å¯¹è±¡</span>
+            <span class="keyword">my</span> <span class="variable">$sender</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">sender</span><span class="operator">;</span>  <span class="comment">#è·åå°åéè¯¥æ¶æ¯çç¾¤æåå¯¹è±¡</span>
+    
+            <span class="keyword">print</span> <span class="variable">$sender</span><span class="operator">-&gt;</span><span class="variable">displayname</span> <span class="operator">.</span> <span class="string">"å¨ç¾¤ï¼"</span><span class="operator">,</span> <span class="variable">$group</span><span class="operator">-&gt;</span><span class="variable">displayname</span> <span class="operator">.</span> <span class="string">"ä¸­åäºä¸æ¡æ¶æ¯ï¼æ¶æ¯çåå®¹æ¯ï¼"</span> <span class="operator">.</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">;</span>
+        <span class="operator">}</span>
+    
+        <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">reply</span><span class="operator">(</span><span class="string">"æ¶æ¯å·²æ¶å°"</span><span class="operator">);</span> <span class="comment">#åå¤è¯¥æ¶æ¯</span>
+    <span class="operator">});</span>
+</code></pre>
+
+<h1 id="10">&#x4E8B;&#x4EF6;</h1>
+
+<h2 id="receive_message">receive_message &#x63A5;&#x6536;&#x5230;&#x6D88;&#x606F;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">receive_message</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$msg</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>  <span class="comment">#ä¼ ç»åè°çåæ°æ¯æ¥æ¶å°çæ¶æ¯å¯¹è±¡</span>
+        <span class="operator">...;</span>
+    <span class="operator">});</span>
+</code></pre>
+
+<h2 id="send_message">send_message &#x6D88;&#x606F;&#x53D1;&#x9001;&#x5B8C;&#x6210;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">send_message</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$msg</span><span class="operator">,</span><span class="variable">$status</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span> <span class="comment">#ä¼ ç»åè°çåæ°æ¯åéå®æ¯ç æ¶æ¯å¯¹è±¡ å åéç¶æå¯¹è±¡</span>
+        <span class="keyword">if</span><span class="operator">(</span><span class="variable">$status</span><span class="operator">-&gt;</span><span class="variable">is_success</span><span class="operator">){</span>
+            <span class="keyword">print</span> <span class="string">"æ¶æ¯"</span> <span class="operator">.</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">id</span> <span class="operator">.</span> <span class="string">"åéæå\n"</span><span class="operator">;</span>
+        <span class="operator">}</span>
+        <span class="keyword">else</span><span class="operator">{</span>
+            <span class="keyword">print</span> <span class="string">"æ¶æ¯"</span> <span class="operator">.</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">id</span> <span class="operator">.</span> <span class="string">"åéå¤±è´¥ï¼å¤±è´¥åå ï¼"</span> <span class="operator">.</span> <span class="variable">$status</span><span class="operator">-&gt;</span><span class="variable">info</span> <span class="operator">.</span> <span class="string">"\n"</span><span class="operator">;</span>
+        <span class="operator">}</span>
+    <span class="operator">});</span>
+</code></pre>
+
+<h2 id="input_qrcode">input_qrcode &#x9700;&#x8981;&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">input_qrcode</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$qrcode_path</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span> <span class="comment">#ä¼ ç»åè°çåæ°æ¯äºç»´ç å¾ççè·¯å¾</span>
+        <span class="operator">...;</span>
+    <span class="operator">});</span>
+        
+</code></pre>
+
+<h2 id="ready">ready &#x5BA2;&#x6237;&#x7AEF;&#x51C6;&#x5907;&#x5C31;&#x7EEA;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">input_qrcode</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+        <span class="operator">...;</span>
+    <span class="operator">});</span>
+</code></pre>
+
+<h2 id="group_property_change">group_property_change &#x7FA4;&#x7EC4;&#x5C5E;&#x6027;&#x6539;&#x53D8;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">group_property_change</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$group</span><span class="operator">,</span><span class="variable">$property</span><span class="operator">,</span><span class="variable">$old_value</span><span class="operator">,</span><span class="variable">$new_value</span><span class="operator">)=</span><span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">});</span>
+</code></pre>
+
+<h2 id="group_member_property_change">group_member_property_change &#x7FA4;&#x6210;&#x5458;&#x5C5E;&#x6027;&#x6539;&#x53D8;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">group_member_property_change</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$member</span><span class="operator">,</span><span class="variable">$property</span><span class="operator">,</span><span class="variable">$old_value</span><span class="operator">,</span><span class="variable">$new_value</span><span class="operator">)=</span><span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">});</span>
+</code></pre>
+
+<h2 id="friend_property_change">friend_property_change &#x597D;&#x53CB;&#x5C5E;&#x6027;&#x6539;&#x53D8;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">friend_property_change</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$friend</span><span class="operator">,</span><span class="variable">$property</span><span class="operator">,</span><span class="variable">$old_value</span><span class="operator">,</span><span class="variable">$new_value</span><span class="operator">)=</span><span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">});</span>
+</code></pre>
+
+<h2 id="user_property_change">user_property_change &#x7528;&#x6237;&#x5C5E;&#x6027;&#x6539;&#x53D8;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">user_property_change</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$user</span><span class="operator">,</span><span class="variable">$property</span><span class="operator">,</span><span class="variable">$old_value</span><span class="operator">,</span><span class="variable">$new_value</span><span class="operator">)=</span><span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">});</span>
+</code></pre>
+
+<h2 id="new_group_member">new_group_member &#x65B0;&#x589E;&#x7FA4;&#x6210;&#x5458;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">new_group_member</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span><span class="keyword">my</span> <span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$member</span><span class="operator">)=</span><span class="variable">@_</span><span class="operator">});</span>
+</code></pre>
+
+<h2 id="new_friend">new_friend &#x65B0;&#x589E;&#x597D;&#x53CB;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">new_friend</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span><span class="keyword">my</span> <span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$friend</span><span class="operator">)=</span><span class="variable">@_</span><span class="operator">});</span>
+</code></pre>
+
+<h2 id="new_group">new_group &#x65B0;&#x589E;&#x7FA4;&#x7EC4;</h2>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">new_group</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span><span class="keyword">my</span> <span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$group</span><span class="operator">)=</span><span class="variable">@_</span><span class="operator">});</span>
+</code></pre>
+
+<h1 id="11">&#x5173;&#x4E8E;&#x63D2;&#x4EF6;</h1>
+
+<h2 id="load">load</h2>
+
+<p>&#x52A0;&#x8F7D;&#x4E00;&#x4E2A;&#x6216;&#x8005;&#x591A;&#x4E2A;&#x63D2;&#x4EF6;&#xFF0C;&#x591A;&#x4E2A;&#x63D2;&#x4EF6;&#x4F7F;&#x7528;&#x6570;&#x7EC4;&#x5F15;&#x7528;&#xFF0C;&#x652F;&#x6301;&#x7684;&#x63D2;&#x4EF6;&#x53C2;&#x6570;&#x5305;&#x62EC;:</p>
+
+<pre><code>    <span class="variable">priority</span>        <span class="comment">#å¯éï¼è®¾ç½®æä»¶ä¼åçº§ï¼é»è®¤æ¯0ï¼è¾é«çä¼åçº§è½å¤ä½¿å¾æä»¶ä¼åæ§è¡</span>
+    <span class="variable">auto_call</span>       <span class="comment">#å¯éï¼è®¾ç½®æ¯å¦å è½½å®æåèªå¨æ§è¡ï¼é»è®¤ä¸º1</span>
+    <span class="variable">call_on_load</span>    <span class="comment">#å¯éï¼å è½½å®æä»¶é©¬ä¸æ§è¡ï¼é»è®¤ä¸º0</span>
+    <span class="variable">data</span>            <span class="comment">#å¯éï¼è®¾ç½®å è½½æä»¶æ¶å¯ä»¥æºå¸¦çæ°æ®ï¼å°ä¼å¨callçæ¶åä¼ éç»æä»¶æ¬èº«</span>
+    
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="operator">[</span><span class="string">"plugin1"</span><span class="operator">,</span><span class="string">"plugin2"</span><span class="operator">]</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">[</span><span class="number">1</span><span class="operator">,</span><span class="number">2</span><span class="operator">,</span><span class="number">3</span><span class="operator">,</span><span class="operator">]</span><span class="operator">);</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"plugin"</span><span class="operator">,</span><span class="string">priority</span><span class="operator">=&gt;</span><span class="number">0</span><span class="operator">,</span><span class="string">auto_call</span><span class="operator">=&gt;</span><span class="number">1</span><span class="operator">);</span>
+</code></pre>
+
+<p>&#x52A0;&#x8F7D;&#x63D2;&#x4EF6;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;auto_call&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x81EA;&#x52A8;&#x6267;&#x884C;&#xFF08;&#x9ED8;&#x8BA4;&#x5728;run&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x6267;&#x884C;&#xFF09;&#xFF0C;priority&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x63D2;&#x4EF6;&#x6267;&#x884C;&#x7684;&#x4F18;&#x5148;&#x7EA7;</p>
+
+<p>&#x6570;&#x5B57;&#x8D8A;&#x5927;&#xFF0C;&#x4F18;&#x5148;&#x7EA7;&#x8D8A;&#x9AD8;&#xFF0C;&#x63D2;&#x4EF6;&#x4F1A;&#x88AB;&#x4F18;&#x5148;&#x6267;&#x884C;</p>
+
+<h2 id="call">call</h2>
+
+<p>&#x624B;&#x52A8;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#x3001;&#x9002;&#x5408;auto_call=&gt;0&#x7684;&#x63D2;&#x4EF6;&#x7684;&#x624B;&#x52A8;&#x6267;&#x884C;&#x6A21;&#x5F0F;&#xFF0C;&#x5F53;auto_call=&gt;1&#x65F6;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x6267;&#x884C;call</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">call</span><span class="operator">(</span><span class="string">"plugin"</span><span class="operator">,</span><span class="operator">[</span>å¯éåæ°<span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x63D2;&#x4EF6;&#x7BA1;&#x7406;&#x673A;&#x5236;&#xFF0C;&#x63D2;&#x4EF6;&#x662F;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;call&#x51FD;&#x6570;&#xFF0C;&#x5305;&#x540D;&#x9ED8;&#x8BA4;&#x662F;Mojo:Weixin::Plugin::</p>
+
+<p>&#x6BD4;&#x5982;&#xFF0C;&#x6211;&#x7F16;&#x5199;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;hello world&#x63D2;&#x4EF6;&#xFF0C;&#x6548;&#x679C;&#x662F;&#x5BF9;&#x63A5;&#x6536;&#x5230;&#x7684;&#x4EFB;&#x610F;&#x6D88;&#x606F;&#x56DE;&#x590D;&#x4E00;&#x4E2A;&quot;hello world&quot;</p>
+
+<p>&#x7F16;&#x5199;&#x4E00;&#x4E2A;&#x5305; Mojo:Weixin::Plugin::HelloWorld</p>
+
+<pre><code>    <span class="keyword">package</span> <span class="variable">Mojo</span><span class="operator">:</span><span class="variable">Weixin::Plugin::HelloWorld</span><span class="operator">;</span>
+    <span class="keyword">our</span> <span class="variable">$PRIORITY</span> <span class="operator">=</span> <span class="number">10</span><span class="operator">;</span> <span class="comment">#å¯çç¥ï¼é¤äºå¨loadä¸­ä½¿ç¨priorityè®¾ç½®ä¼åçº§ï¼ä¹å¯ä»¥éè¿ååéè®¾ç½®</span>
+    <span class="keyword">our</span> <span class="variable">$AUTO_CALL</span> <span class="operator">=</span> <span class="number">1</span><span class="operator">;</span> <span class="comment">#å¯çç¥ï¼éè¿ååéè®¾ç½®æä»¶æ¯å¦é»è®¤å è½½åç«å»æ§è¡</span>
+    <span class="keyword">sub</span><span class="variable"> call</span><span class="operator">{</span>
+        <span class="keyword">my</span> <span class="variable">$client</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+        <span class="keyword">my</span> <span class="variable">$data</span>   <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span> <span class="comment">#å¯è½åå«çdataæ°æ®</span>
+        <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">receive_message</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+            <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$msg</span><span class="operator">)=</span><span class="variable">@_</span><span class="operator">;</span>
+            <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">reply_message</span><span class="operator">(</span><span class="variable">$msg</span><span class="operator">,</span><span class="string">"hello world"</span><span class="operator">);</span>
+        <span class="operator">});</span>
+    <span class="operator">}</span>
+    <span class="number">1</span><span class="operator">;</span>
+</code></pre>
+
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x52A0;&#x8F7D;&#x548C;&#x6267;&#x884C;&#x63D2;&#x4EF6;&#x7684;&#x64CD;&#x4F5C;&#xFF1A;</p>
+
+<pre><code>    <span class="comment">#å¦æä½ çæä»¶å¹¶éMojo::Weixin::Plugin::ç¸å¯¹å½åè§åï¼åå¯ä»¥å¨åç§°åä½¿ç¨"+"è¡¨ç¤ºæä»¶ç»å¯¹åç§°</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"HelloWorld"</span><span class="operator">);</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">();</span>
+</code></pre>
+
+<p>&#x5F53;&#x5BA2;&#x6237;&#x7AEF;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x63D2;&#x4EF6;&#x5C06;&#x4F1A;&#x88AB;&#x52A0;&#x8F7D;&#x5E76;&#x81EA;&#x52A8;&#x6267;&#x884C;&#xFF0C;&#x6536;&#x5230;&#x6D88;&#x606F;&#x65F6;&#x4F1A;&#x81EA;&#x52A8;&#x56DE;&#x590D;hello world</p>
+
+<p>&#x6CE8;&#x610F;&#xFF1A;</p>
+
+<p>&#x5F53;&#x591A;&#x4E2A;&#x6D88;&#x606F;&#x5904;&#x7406;&#x7C7B;&#x7684;&#x63D2;&#x4EF6;&#x5BF9;&#x540C;&#x4E00;&#x4E2A;&#x6D88;&#x606F;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x65F6;&#xFF0C;&#x5F80;&#x5F80;&#x5B58;&#x5728;&#x51B2;&#x7A81;&#x7684;&#x60C5;&#x51B5;</p>
+
+<p>&#x6BD4;&#x5982;&#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#x5BF9;&#x6D88;&#x606F;&#x5904;&#x7406;&#x5B8C;&#x5E76;&#x4E0D;&#x5E0C;&#x671B;&#x5176;&#x4ED6;&#x63D2;&#x4EF6;&#x518D;&#x7EE7;&#x7EED;&#x5904;&#x7406;&#x8BE5;&#x6D88;&#x606F;&#xFF08;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;receive_message&#x4E8B;&#x4EF6;&#x4F1A;&#x5E7F;&#x64AD;&#x7ED9;&#x6240;&#x6709;&#x8BA2;&#x9605;&#x8BE5;&#x4E8B;&#x4EF6;&#x7684;&#x56DE;&#x8C03;&#xFF09;</p>
+
+<p>&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;&#x4E0D;&#x540C;&#x7684;&#x63D2;&#x4EF6;&#x4F18;&#x5148;&#x7EA7;&#xFF0C;&#x4F7F;&#x5F97;&#x4E8B;&#x4EF6;&#x88AB;&#x89E6;&#x53D1;&#x65F6;&#xFF0C;&#x4F18;&#x5148;&#x7EA7;&#x8F83;&#x9AD8;&#x7684;&#x63D2;&#x4EF6;&#x83B7;&#x5F97;&#x4F18;&#x5148;&#x6267;&#x884C;</p>
+
+<p>&#x6267;&#x884C;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x518D;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;$msg-&gt;allow_plugin(0) &#x6765;&#x7981;&#x6B62;&#x5176;&#x4ED6;&#x63D2;&#x4EF6;&#x7EE7;&#x7EED;&#x5904;&#x7406;&#x8BE5;&#x6D88;&#x606F;&#xFF0C;&#x6BCF;&#x4E2A;&#x6D88;&#x606F;&#x90FD;&#x5E26;&#x6709;&#x4E00;&#x4E2A;allow_plugin&#x7684;&#x5C5E;&#x6027;</p>
+
+<p>&#x8FD9;&#x662F;&#x4E00;&#x79CD;&#x5EFA;&#x8BAE;&#x6027;&#x7684;&#x63D2;&#x4EF6;&#x534F;&#x8BAE;&#xFF0C;&#x5E76;&#x975E;&#x5F3A;&#x5236;&#x9075;&#x5B88;</p>
+
+<p>&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x91C7;&#x7528;&#x63D2;&#x4EF6;&#x7684;&#x624B;&#x52A8;&#x6267;&#x884C;&#x6A21;&#x5F0F;&#xFF0C;&#x81EA;&#x5DF1;&#x6839;&#x636E;&#x9700;&#x8981;&#x6765;&#x6267;&#x884C;&#x63D2;&#x4EF6;</p>
+
+<h1 id="12">&#x63D2;&#x4EF6;&#x5217;&#x8868;</h1>
+
+<h2 id="Mojo::Weixin::Plugin::ShowMsg">Mojo::Weixin::Plugin::ShowMsg</h2>
+
+<p>&#x6253;&#x5370;&#x6D88;&#x606F;&#x5230;&#x7EC8;&#x7AEF;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowMsg"</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Mojo::Weixin::Plugin::IRCShell">Mojo::Weixin::Plugin::IRCShell</h2>
+
+<p>&#x5C06;&#x5FAE;&#x4FE1;&#x534F;&#x8BAE;&#x8F6C;&#x6362;&#x6210;irc&#x534F;&#x8BAE;&#xFF0C;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x672C;&#x5730;&#x7684;irc&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x4F7F;&#x7528;&#x4EFB;&#x610F;irc&#x5BA2;&#x6237;&#x7AEF;&#xFF08;irc user&#x8BBE;&#x7F6E;&#x4E3A;&#x5FAE;&#x4FE1;&#x5E10;&#x53F7;&#xFF09;&#x8FDE;&#x63A5;&#x540E;&#x5373;&#x53EF;&#x4EE5;&#x6309;&#x7167;irc&#x7684;&#x65B9;&#x5F0F;&#x4F7F;&#x7528;&#x5FAE;&#x4FE1;</p>
+
+<p>&#x9700;&#x8981;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a>Mojo::IRC::Server::Chinese</a></p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"IRCShell"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span><span class="string">host</span><span class="operator">=&gt;</span><span class="string">"127.0.0.1"</span><span class="operator">,</span><span class="string">port</span><span class="operator">=&gt;</span><span class="number">6667</span><span class="operator">,</span><span class="operator">}</span><span class="operator">);</span><span class="comment">#å¼å¯æ¬å°çirc server</span>
+    <span class="comment">#æ¯æçåæ°åæ¬ï¼</span>
+    <span class="variable">host</span>                <span class="comment">#é»è®¤0.0.0.0</span>
+    <span class="variable">port</span>                <span class="comment">#é»è®¤6667</span>
+    <span class="variable">master_irc_user</span>     <span class="comment">#åå¾®ä¿¡å¸å·å¹éçirc userå¸å·ï¼é»è®¤æç§åå¾®ä¿¡å¸å·ç¸åçuseræèå®¢æ·ç«¯ipæ¯æ¬æºå°åä½ä¸ºè¯å«è§å</span>
+    <span class="variable">load_friend</span>         <span class="comment">#0|1 é»è®¤æ¯1 æ¯å¦åå§ä¸ºæ¯ä¸ªå¥½åçæircèæå¸å·å¹¶å å¥é¢é #æçå¥½å</span>
+    <span class="variable">image_api</span>           <span class="comment">#å¼å®¹elimageå¾åºapiå°åï¼å°å¾®ä¿¡å¾çè½¬ä¸ºè¿æ¥ï¼æ¹ä¾¿å¨ircä¸æ¥çå¾çï¼é»è®¤æ²¡æå¯ç¨</span>
+                        <span class="comment">#æ¨èä¾äºçelimage http://img.vim-cn.com/</span>
+</code></pre>
+
+<p>&#x5FAE;&#x4FE1;&#x597D;&#x53CB;&#x4F1A;&#x9ED8;&#x8BA4;&#x52A0;&#x5165;&#x5230;irc&#x7684; &#39;#&#x6211;&#x7684;&#x597D;&#x53CB;&#39; &#x9891;&#x9053;&#x4E2D;</p>
+
+<p>&#x6BCF;&#x4E2A;&#x5FAE;&#x4FE1;&#x7FA4;&#x4E5F;&#x4F1A;&#x5728;irc&#x4E0A;&#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x7684;&#x9891;&#x9053;&#xFF0C;&#x6BD4;&#x5982;&#x5FAE;&#x4FE1;&#x7FA4;[PERL&#x5B66;&#x4E60;&#x4EA4;&#x6D41;]&#x5BF9;&#x5E94;&#x7684;irc&#x9891;&#x9053;&#x4E3A;&#39;#PERL&#x5B66;&#x4E60;&#x4EA4;&#x6D41;&#39;</p>
+
+<p>&#x4F7F;&#x7528;&#x4EFB;&#x610F;&#x7684;irc&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;&#x5230;&#x670D;&#x52A1;&#x5668;,&#x4F60;&#x4FBF;&#x53EF;&#x4EE5;&#x5728;irc&#x4E0A;&#x5B8C;&#x6210;&#x548C;&#x5FAE;&#x4FE1;&#x597D;&#x53CB;&#x7684;&#x804A;&#x5929;&#xFF0C;&#x7FA4;&#x804A;&#x7B49;</p>
+
+<p>&#x672C;&#x63D2;&#x4EF6;&#x66F4;&#x9002;&#x5408;&#x60F3;&#x8981;&#x5728;Linux&#x73AF;&#x5883;&#x4E0B;&#x4F7F;&#x7528;&#x5FAE;&#x4FE1;&#x7684;irc&#x7231;&#x597D;&#x8005;</p>
+
+<h2 id="Mojo::Weixin::Plugin::Perldoc">Mojo::Weixin::Plugin::Perldoc</h2>
+
+<p>&#x5B9E;&#x73B0;&#x901A;&#x8FC7;&#x5FAE;&#x4FE1;&#x6D88;&#x606F;&#x67E5;&#x8BE2;perldoc&#x6587;&#x6863;&#xFF0C;&#x652F;&#x6301;perldoc -f|-v xxx</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Perldoc"</span><span class="operator">);</span>
+    <span class="comment">#ç±äºè¯¥æä»¶å¤çå®çæ¶æ¯ä¸åºè¯¥åç±å¶ä»æä»¶å¤çï¼å æ­¤æä»¶ä¼åçº§åºè¯¥è®¾ç½®ææ¯å¶ä»æä»¶ä¼åçº§æ´é«ï¼æä»¶é»è®¤ä¼åçº§æ¯0</span>
+</code></pre>
+
+<h2 id="Mojo::Weixin::Plugin::Perlcode">Mojo::Weixin::Plugin::Perlcode</h2>
+
+<p>&#x901A;&#x8FC7;&#x5FAE;&#x4FE1;&#x6D88;&#x606F;&#x6267;&#x884C;Perl&#x4EE3;&#x7801;&#xFF0C;&#x4EC5;&#x652F;&#x6301;&#x5728;linux&#x7CFB;&#x7EDF;&#x4E0A;&#x4F7F;&#x7528;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Perlcode"</span><span class="operator">);</span>
+    <span class="comment">#ç±äºè¯¥æä»¶å¤çå®çæ¶æ¯ä¸åºè¯¥åç±å¶ä»æä»¶å¤çï¼å æ­¤æä»¶ä¼åçº§åºè¯¥è®¾ç½®ææ¯å¶ä»æä»¶ä¼åçº§æ´é«ï¼æä»¶é»è®¤ä¼åçº§æ¯0</span>
+</code></pre>
+
+<p>&#x89E6;&#x53D1;&#x6761;&#x4EF6;&#xFF1A;&#x6D88;&#x606F;&#x4EE5; &gt;&gt;&gt; &#x5F00;&#x5934;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;</p>
+
+<pre><code>    <span class="operator">&gt;&gt;&gt;</span> <span class="keyword">print</span> <span class="string">"hello world"</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="Mojo::Weixin::Plugin::PostQRcode">Mojo::Weixin::Plugin::PostQRcode</h2>
+
+<p>&#x767B;&#x5F55;&#x8FC7;&#x7A0B;&#x5982;&#x679C;&#x9700;&#x8981;&#x624B;&#x673A;&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;&#xFF0C;&#x4F1A;&#x5C06;&#x4E8C;&#x7EF4;&#x7801;&#x4EE5;&#x90AE;&#x4EF6;&#x9644;&#x4EF6;&#x7684;&#x5F62;&#x5F0F;&#x53D1;&#x9001;&#x5230;&#x6307;&#x5B9A;&#x90AE;&#x7BB1;&#xFF0C;&#x518D;&#x901A;&#x8FC7;&#x624B;&#x673A;&#x5FAE;&#x4FE1;&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;</p>
+
+<p>&#x6CE8;&#x610F;&#xFF1A; &#x7531;&#x4E8E;&#x9700;&#x8981;&#x53D1;&#x9001;&#x90AE;&#x4EF6;&#x9644;&#x4EF6;&#xFF0C;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a>Mojo::SMTP::Client</a> <a>MIME::Lite</a>&#xFF0C;&#x9700;&#x8981;&#x5355;&#x72EC;&#x5B89;&#x88C5;</p>
+
+<pre><code>    <span class="comment">#æä»¶éè¦ä½¿ç¨å°login()æ¹æ³æ§è¡è¿ç¨ä¸­è§¦åçinput_qrcodeäºä»¶ï¼å æ­¤éè¦å¨login()æ§è¡ä¹åå è½½</span>
+    <span class="comment">#æä»¶èªèº«è®¾ç½®äºcall_on_load=&gt;1ï¼å æ­¤ä¼å¨å è½½åé©¬ä¸æ§è¡</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"PostQRcode"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+        <span class="string">smtp</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#é®ç®±çsmtpå°å</span>
+        <span class="string">port</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#smtpæå¡å¨ç«¯å£ï¼é»è®¤25</span>
+        <span class="string">from</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#åä»¶äºº</span>
+        <span class="string">to</span>      <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#æ¶ä»¶äºº</span>
+        <span class="string">user</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#smtpç»å½å¸å·</span>
+        <span class="string">pass</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#smtpç»å½å¯ç </span>
+    <span class="operator">}</span><span class="operator">);</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">();</span>
+    <span class="operator">...;</span>
+    
+    æ¶å°çé®ä»¶åå®¹å¦ä¸ï¼
+    
+    ä¸»é¢ï¼å¾®ä¿¡å¸å· <span class="variable">xxxx</span> æ«æäºç»´ç 
+    éä»¶ï¼<span class="variable">weixin_qrcode_xxxx</span><span class="operator">.</span><span class="variable">png</span>
+    æ­£æï¼è¯·ä½¿ç¨ææºå¾®ä¿¡æ«æéä»¶ä¸­çäºç»´ç 
+</code></pre>
+
+<h2 id="Mojo::Weixin::Plugin::Beauty">Mojo::Weixin::Plugin::Beauty</h2>
+
+<p>&#x8BC6;&#x522B;&#x5173;&#x952E;&#x5B57;&#x53D1;&#x9001;&#x7F8E;&#x56FE;&#xFF0C;&#x4F8B;&#x5982;&#x53D1;&#x9001;&quot;&#x770B;&#x59B9;&#x5B50;&quot;&#x6D88;&#x606F;&#xFF0C;&#x5C31;&#x81EA;&#x52A8;&#x53D1;&#x9001;&#x7F8E;&#x5973;&#x56FE;&#x7247;</p>
+
+<pre><code>    <span class="comment">#ä½¿ç¨é»è®¤çéç½®</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Beauty"</span><span class="operator">);</span> 
+    
+    <span class="comment">#èªå®ä¹è§¦åå³é®å­åå³é®å­å¯¹åºçå¾çåº</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Beauty"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+        <span class="string">file</span> <span class="operator">=&gt;</span> <span class="string">'./Beauty.dat'</span><span class="operator">,</span> <span class="comment">#å¯éï¼æ°æ®åºä¿å­è·¯å¾ï¼é»è®¤å½åç®å½</span>
+        <span class="string">board</span><span class="operator">=&gt;</span><span class="operator">[</span>
+            <span class="operator">{</span><span class="string">command</span><span class="operator">=&gt;</span><span class="string">"çå¦¹å­"</span><span class="operator">,</span> <span class="string">url</span><span class="operator">=&gt;</span><span class="string">'http://huaban.com/boards/19570858/'</span><span class="operator">}</span><span class="operator">,</span>
+            <span class="operator">{</span><span class="string">command</span><span class="operator">=&gt;</span><span class="string">"æåº"</span>  <span class="operator">,</span> <span class="string">url</span><span class="operator">=&gt;</span><span class="string">'http://huaban.com/boards/28226262/'</span><span class="operator">}</span><span class="operator">,</span>
+            <span class="operator">{</span><span class="string">command</span><span class="operator">=&gt;</span><span class="string">"çå¸å¥"</span><span class="operator">,</span> <span class="string">url</span><span class="operator">=&gt;</span><span class="string">'http://huaban.com/boards/28226490/'</span><span class="operator">}</span><span class="operator">,</span>
+        <span class="operator">]</span>
+    <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Mojo::Webqq::Plugin::Riddle">Mojo::Webqq::Plugin::Riddle</h2>
+
+<p>&#x8F93;&#x5165;&#x5173;&#x952E;&#x5B57;&#x8FDB;&#x884C;&#x731C;&#x8C1C;&#xFF0C;&#x4F5C;&#x8005; limengyu1990 <a href="https://github.com/limengyu1990">https://github.com/limengyu1990</a></p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Riddle"</span><span class="operator">);</span>
+    
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Riddle"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+        <span class="string">command</span>     <span class="operator">=&gt;</span> <span class="string">"çè°"</span><span class="operator">,</span>   <span class="comment">#å¯éï¼è§¦åå³é®å­</span>
+        <span class="string">apikey</span>      <span class="operator">=&gt;</span> <span class="string">"xxxx"</span><span class="operator">,</span>   <span class="comment">#å¯éï¼åè§ http://apistore.baidu.com/apiworks/servicedetail/440.html?qq-pf-to=pcqq.c2c</span>
+        <span class="string">timeout</span>     <span class="operator">=&gt;</span> <span class="number">30</span><span class="operator">,</span> <span class="comment">#ç­å¾ç­æ¡çè¶æ¶æ¶é´ï¼è¶æ¶åä¼èªå¨å¬å¸ç­æ¡</span>
+    <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Mojo::Weixin::Plugin::Translation">Mojo::Weixin::Plugin::Translation</h2>
+
+<p>&#x591A;&#x56FD;&#x8BED;&#x8A00;&#x7FFB;&#x8BD1;&#x529F;&#x80FD;&#xFF0C;&#x81EA;&#x52A8;&#x68C0;&#x6D4B;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x8BED;&#x8A00;&#xFF0C;&#x6D88;&#x606F;&#x6307;&#x4EE4;&#x683C;&#x5F0F;&#xFF1A;</p>
+
+<pre><code>    &#x7FFB;&#x8BD1; hello
+    &#x7FFB;&#x8BD1; &#x4F60;&#x597D;
+    &#x7FFB;&#x8BD1; &#x3053;&#x3093;&#x306B;&#x3061;&#x306F;</code></pre>
+
+<h2 id="Mojo::Weixin::Plugin::Weather">Mojo::Weixin::Plugin::Weather</h2>
+
+<p>&#x8F93;&#x5165;&#x5173;&#x952E;&#x5B57;&#xFF0C;&#x6BD4;&#x5982;&quot;&#x5317;&#x4EAC;&#x5929;&#x6C14;&quot;&#xFF0C;&#x67E5;&#x8BE2;&#x5929;&#x6C14;&#x9884;&#x62A5;&#x3002; &#x4F5C;&#x8005; autodataming <a href="https://github.com/autodataming">https://github.com/autodataming</a></p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Weather"</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Mojo::Weixin::Plugin::SmartReply">Mojo::Weixin::Plugin::SmartReply</h2>
+
+<p>&#x5B9E;&#x73B0;&#x673A;&#x5668;&#x4EBA;&#x7684;&#x667A;&#x80FD;&#x56DE;&#x590D;&#xFF0C;&#x652F;&#x6301;&#x597D;&#x53CB;&#x6D88;&#x606F;&#x3001;&#x7FA4;&#x6D88;&#x606F;</p>
+
+<p>&#x4E3A;&#x907F;&#x514D;&#x5BF9;&#x7FA4;&#x5185;&#x6210;&#x5458;&#x4EA7;&#x751F;&#x5F71;&#x54CD;&#xFF0C;&#x7FA4;&#x5185;&#x9700;&#x8981;&#x4F7F;&#x7528; @&#x5E10;&#x53F7;&#x6635;&#x79F0; &#x6765;&#x89E6;&#x53D1;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"SmartReply"</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Mojo::Weixin::Plugin::Openwx">Mojo::Weixin::Plugin::Openwx</h2>
+
+<p>&#x63D0;&#x4F9B;HTTP API&#x63A5;&#x53E3;&#xFF0C;&#x65B9;&#x4FBF;&#x83B7;&#x53D6;&#x5BA2;&#x6237;&#x7AEF;&#x5E10;&#x53F7;&#x3001;&#x597D;&#x53CB;&#x3001;&#x7FA4;&#x4FE1;&#x606F;&#xFF0C;&#x4EE5;&#x53CA;&#x901A;&#x8FC7;&#x63A5;&#x53E3;&#x53D1;&#x9001;&#x548C;&#x63A5;&#x6536;&#x597D;&#x53CB;&#x6D88;&#x606F;&#x3001;&#x7FA4;&#x6D88;&#x606F;&#x3001;&#x4E8B;&#x4EF6;&#x4FE1;&#x606F;</p>
+
+<pre><code>    <span class="comment">#ataæ¯ä¸ä¸ªHASHå¼ç¨</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Openwx"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+        <span class="string">listen</span> <span class="operator">=&gt;</span> <span class="operator">[</span> <span class="operator">{</span><span class="string">host</span><span class="operator">=&gt;</span><span class="string">"127.0.0.1"</span><span class="operator">,</span><span class="string">port</span><span class="operator">=&gt;</span><span class="number">3000</span><span class="operator">}</span><span class="operator">,</span> <span class="operator">]</span> <span class="operator">,</span> <span class="comment">#çå¬çå°ååç«¯å£ï¼æ¯æå¤ä¸ªï¼é»è®¤çå¬0.0.0.0:3000</span>
+        <span class="string">auth</span>   <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span><span class="keyword">my</span><span class="operator">(</span><span class="variable">$param</span><span class="operator">,</span><span class="variable">$controller</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">},</span>    <span class="comment">#å¯éï¼è®¤è¯åè°å½æ°ï¼ç¨äºè¿è¡è¯·æ±é´æ</span>
+        <span class="string">post_api</span> <span class="operator">=&gt;</span> <span class="string">'http://xxxx'</span><span class="operator">,</span>                      <span class="comment">#å¯éï¼ä½ èªå®ä¹çæ¥æ¶æ¶æ¯ä¸æ¥æ¥å£</span>
+        <span class="string">post_event</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span>                                <span class="comment">#å¯éï¼æ¯å¦ä¸æ¥äºä»¶ï¼ä¸ºäºååå¼å®¹æ§ï¼é»è®¤å¼ä¸º0</span>
+    <span class="operator">}</span><span class="operator">);</span>
+    
+    <span class="comment">#è¥dataä¸­è®¾ç½®äºauthå½æ°å¼ç¨ï¼åè¡¨ç¤ºapiæ¥å£å¼å¯è®¤è¯</span>
+    <span class="comment">#è®¤è¯å½æ°è¿åå¼ä¸ºçï¼è®¤è¯éè¿ï¼å½æ°è¿åå¼ä¸ºåï¼è®¤è¯å¤±è´¥ï¼æ¥å£è¿å403</span>
+    
+    <span class="comment">#è®¤è¯åè°å½æ°çç¬¬ä¸ä¸ªåæ°æ¯ä¸ä¸ªHASHå¼ç¨ï¼åå«getæpostæäº¤çåæ°ä¿¡æ¯</span>
+    <span class="comment">#ç¬¬äºä¸ªåæ°æ¯ä¸ä¸ªMojoliciousçcontrollerå¯¹è±¡ï¼éåå¯¹Mojoliciousæ¯è¾çæçæåµä¸ï¼å©ç¨controllerè¿è¡é«çº§çè®¤è¯æ§å¶</span>
+    
+    <span class="comment">#authå½æ°ç¤ºä¾ï¼</span>
+    
+    <span class="comment">#ç®åçæ¶é´æ³è¿æé²çé¾</span>
+    <span class="comment">#http://127.0.0.1:3000/openwx/send_message?id=xxxx&amp;content=xxxx&amp;key=xxxx&amp;exp=xxxx</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+        <span class="keyword">my</span> <span class="variable">$param</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+        <span class="keyword">my</span> <span class="variable">$secret</span> <span class="operator">=</span> <span class="string">'this is your secret key'</span><span class="operator">;</span>
+        <span class="keyword">return</span> <span class="number">0</span> <span class="keyword">if</span> <span class="keyword">time</span><span class="operator">()</span> <span class="operator">&gt;=</span> <span class="variable">$param</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">exp</span><span class="operator">}</span><span class="operator">;</span> <span class="comment">#åæ°å¼çexpä¸ºè¿ææ¶é´ï¼è¶è¿è¿ææ¶é´é¾æ¥å·²å¤±æ</span>
+        <span class="keyword">if</span><span class="operator">(</span><span class="variable">$param</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">key</span><span class="operator">}</span> <span class="keyword">eq</span> <span class="variable">md5_sum</span><span class="operator">(</span><span class="variable">$secret</span> <span class="operator">.</span> <span class="keyword">join</span> <span class="string">""</span><span class="operator">,</span><span class="variable">@$param</span><span class="operator">{</span><span class="string">qw(id gid did content exp)</span><span class="operator">}</span> <span class="operator">)){</span>
+            <span class="keyword">return</span> <span class="number">1</span><span class="operator">;</span> <span class="comment">#secretåç¸å³åæ°å¼æ¼æ¥æä¸ä¸ªå­ç¬¦ä¸²åè®¡ç®md5 åååæ°keyçå¼è¿è¡æ¯è¾</span>
+        <span class="operator">}</span>
+        <span class="keyword">else</span><span class="operator">{</span>
+            <span class="keyword">return</span> <span class="number">0</span><span class="operator">;</span>
+        <span class="operator">}</span>
+    <span class="operator">}</span>
+    
+    <span class="comment">#å©ç¨controlleråè®¸æå®çIPå¯ä»¥è®¿é®ï¼æ´å¤å³äºcontrollerçèµæï¼å¯ä»¥åè Mojolicious::Controller</span>
+    <span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$param</span><span class="operator">,</span><span class="variable">$controller</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+        <span class="keyword">if</span><span class="operator">(</span><span class="variable">$controller</span><span class="operator">-&gt;</span><span class="variable">tx</span><span class="operator">-&gt;</span><span class="variable">remote_address</span> <span class="keyword">eq</span> <span class="string">"127.0.0.1"</span><span class="operator">){</span>
+            <span class="keyword">return</span> <span class="number">1</span><span class="operator">;</span>
+        <span class="operator">}</span>
+        <span class="keyword">return</span> <span class="number">0</span><span class="operator">;</span>
+    <span class="operator">}</span>
+    
+    <span class="comment">#æ¥æ¶æ¶æ¯ä¸æ¥æ¥å£ç¤ºä¾ï¼</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Openwx"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+        <span class="string">listen</span> <span class="operator">=&gt;</span> <span class="operator">[{</span><span class="string">host</span><span class="operator">=&gt;</span><span class="variable">xxx</span><span class="operator">,</span><span class="string">port</span><span class="operator">=&gt;</span><span class="variable">xxx</span><span class="operator">}]</span><span class="operator">,</span>
+        <span class="string">post_api</span><span class="operator">=&gt;</span> <span class="string">'http://127.0.0.1:4000/post_api'</span><span class="operator">,</span>
+        <span class="string">post_event</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span> 
+    <span class="operator">}</span><span class="operator">);</span>
+    
+    <span class="comment">#æ¥æ¶å°æ¶æ¯åï¼æä»¶ä¼éè¿HTTP POSTè¯·æ±çæ¹å¼å°jsonæ ¼å¼çæ¶æ¯ä¸æ¥å°http://127.0.0.1:4000/post_api</span>
+    
+    <span class="keyword">connect</span> <span class="variable">to</span> <span class="number">127.0</span><span class="operator">.</span><span class="number">0</span><span class="operator">.</span><span class="number">1</span> <span class="variable">port</span> <span class="number">4000</span>
+    <span class="variable">POST</span> <span class="operator">/</span><span class="variable">post_api</span>
+    <span class="variable">Accept</span><span class="operator">:</span> <span class="operator">*</span><span class="regex">/*
+    Content-Length: xxx
+    Content-Type: application/json</span>
+    
+    <span class="operator">{</span>   <span class="string">"receiver"</span><span class="operator">:</span><span class="string">"å°ç°"</span><span class="operator">,</span>
+        <span class="string">"time"</span><span class="operator">:</span><span class="string">"1442542632"</span><span class="operator">,</span>
+        <span class="string">"content"</span><span class="operator">:</span><span class="string">"æµè¯ä¸ä¸"</span><span class="operator">,</span>
+        <span class="string">"class"</span><span class="operator">:</span><span class="string">"recv"</span><span class="operator">,</span>
+        <span class="string">"sender_id"</span><span class="operator">:</span><span class="string">"</span><span class="variable">@2372835507</span><span class="string">"</span><span class="operator">,</span>
+        <span class="string">"receiver_id"</span><span class="operator">:</span><span class="string">"</span><span class="variable">@4072574066</span><span class="string">"</span><span class="operator">,</span>
+        <span class="string">"group"</span><span class="operator">:</span><span class="string">"PERLå­¦ä¹ äº¤æµ"</span><span class="operator">,</span>
+        <span class="string">"group_id"</span><span class="operator">:</span><span class="string">"@</span><span class="variable">@2617047292</span><span class="string">"</span><span class="operator">,</span>
+        <span class="string">"sender"</span><span class="operator">:</span><span class="string">"ç°ç°"</span><span class="operator">,</span>
+        <span class="string">"id"</span><span class="operator">:</span><span class="string">"10856"</span><span class="operator">,</span>
+        <span class="string">"type"</span><span class="operator">:</span><span class="string">"group_message"</span><span class="operator">,</span>
+        <span class="string">"post_type"</span><span class="operator">:</span> <span class="string">"receive_message"</span>
+    <span class="operator">}</span>
+    
+    <span class="comment">#æ¯æå¥½åæ¶æ¯ãç¾¤æ¶æ¯ ä¸æ¥</span>
+    
+    ä¸è¬æåµä¸ï¼<span class="variable">post_api</span>æ¥å£è¿åçååºåå®¹å¯ä»¥æ¯éæï¼ä¼è¢«å¿½ç¥
+    <span class="variable">post_api</span>æ¥å£è¿åçæ°æ®ç±»åå¦ææ¯ <span class="variable">text</span><span class="operator">/</span><span class="variable">json</span> æè <span class="variable">application</span><span class="operator">/</span><span class="variable">json</span>ï¼å¹¶ä¸<span class="variable">json</span>æ ¼å¼å½¢å¼å¦ä¸ï¼
+    
+        <span class="operator">{</span><span class="string">"reply"</span><span class="operator">:</span><span class="string">"xxxxx"</span><span class="operator">,</span><span class="string">"code"</span><span class="operator">:</span><span class="number">0</span><span class="operator">}</span> <span class="comment">#è¦åå¤æ¶æ¯ï¼å¿é¡»åå«replyçå±æ§ï¼å¶ä»å±æ§ææ å¹¶ä¸éè¦</span>
+    
+    åè¡¨ç¤ºå¸æéè¿<span class="variable">post_api</span>ååºçåå®¹æ¥ç´æ¥åå¤è¯¥æ¶æ¯ï¼<span class="variable">post_api</span>çè¿åç»ææ¯å¦
+    
+    <span class="variable">HTTP</span><span class="operator">/</span><span class="number">1.1</span> <span class="number">200</span> <span class="variable">OK</span>
+    <span class="variable">Connection</span><span class="operator">:</span> <span class="keyword">close</span>
+    <span class="variable">Content</span><span class="operator">-</span><span class="variable">Type</span><span class="operator">:</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">json</span><span class="operator">;</span><span class="variable">charset</span><span class="operator">=</span><span class="variable">UTF</span><span class="operator">-</span><span class="number">8</span>
+    <span class="variable">Date</span><span class="operator">:</span> <span class="variable">Mon</span><span class="operator">,</span> <span class="number">29</span> <span class="variable">Feb</span> <span class="number">2016</span> <span class="number">05</span><span class="operator">:</span><span class="number">53</span><span class="operator">:</span><span class="number">31</span> <span class="variable">GMT</span>
+    <span class="variable">Content</span><span class="operator">-</span><span class="variable">Length</span><span class="operator">:</span> <span class="number">27</span>
+    <span class="variable">Server</span><span class="operator">:</span> <span class="variable">Mojolicious</span> <span class="operator">(</span><span class="variable">Perl</span><span class="operator">)</span>
+    
+    <span class="operator">{</span><span class="string">"reply"</span><span class="operator">:</span><span class="string">"ä½ å¥½"</span><span class="operator">,</span><span class="string">"code"</span><span class="operator">:</span><span class="number">0</span><span class="operator">}</span>
+    
+    åä¼ç´æ¥å¯¹ä¸æ¥çæ¶æ¯è¿è¡åå¤ï¼åå¤çåå®¹ä¸º <span class="string">"ä½ å¥½"</span>
+    
+    <span class="comment">#äºä»¶ä¸æ¥ç¤ºä¾</span>
+    
+    å½äºä»¶åçæ¶ï¼ä¼æäºä»¶ç¸å³ä¿¡æ¯ä¸æ¥å°æå®çæ¥å£ï¼å½åæ¯æä¸æ¥çäºä»¶åæ¬
+    
+    <span class="operator">|</span>  äºä»¶åç§°                    <span class="operator">|</span>äºä»¶è¯´æ    <span class="operator">|</span>ä¸æ¥åæ°åè¡¨
+    <span class="operator">|------------------------------|:-----------|:-------------------------------|</span>
+    <span class="operator">|</span><span class="variable">new_group</span>                     <span class="operator">|</span>æ°å å¥ç¾¤è  <span class="operator">|</span> å¯¹åºç¾¤å¯¹è±¡
+    <span class="operator">|</span><span class="variable">new_friend</span>                    <span class="operator">|</span>æ°å¢å¥½å    <span class="operator">|</span> å¯¹åºå¥½åå¯¹è±¡
+    <span class="operator">|</span><span class="variable">new_group_member</span>              <span class="operator">|</span>æ°å¢ç¾¤èæå<span class="operator">|</span> å¯¹åºæåå¯¹è±¡
+    <span class="operator">|</span><span class="variable">lose_group</span>                    <span class="operator">|</span>éåºç¾¤è    <span class="operator">|</span> å¯¹åºç¾¤å¯¹è±¡
+    <span class="operator">|</span><span class="variable">lose_friend</span>                   <span class="operator">|</span>å é¤å¥½å    <span class="operator">|</span> å¯¹åºå¥½åå¯¹è±¡
+    <span class="operator">|</span><span class="variable">lose_group_member</span>             <span class="operator">|</span>æåéåºç¾¤è<span class="operator">|</span> å¯¹åºæåå¯¹è±¡
+    <span class="operator">|</span><span class="variable">group_property_change</span>         <span class="operator">|</span>ç¾¤èå±æ§åå<span class="operator">|</span> ç¾¤å¯¹è±¡ï¼å±æ§ï¼åå§å¼ï¼æ´æ°å¼
+    <span class="operator">|</span><span class="variable">group_member_property_change</span>  <span class="operator">|</span>æåå±æ§åå<span class="operator">|</span> æåå¯¹è±¡ï¼å±æ§ï¼åå§å¼ï¼æ´æ°å¼
+    <span class="operator">|</span><span class="variable">friend_property_change</span>        <span class="operator">|</span>å¥½åå±æ§åå<span class="operator">|</span> å¥½åå¯¹è±¡ï¼å±æ§ï¼åå§å¼ï¼æ´æ°å¼
+    <span class="operator">|</span><span class="variable">user_property_change</span>          <span class="operator">|</span>å¸å·å±æ§åå<span class="operator">|</span> è´¦æ·å¯¹è±¡ï¼å±æ§ï¼åå§å¼ï¼æ´æ°å¼
+    
+    <span class="keyword">connect</span> <span class="variable">to</span> <span class="number">127.0</span><span class="operator">.</span><span class="number">0</span><span class="operator">.</span><span class="number">1</span> <span class="variable">port</span> <span class="number">4000</span>
+    <span class="variable">POST</span> <span class="operator">/</span><span class="variable">post_api</span>
+    <span class="variable">Accept</span><span class="operator">:</span> <span class="operator">*</span><span class="regex">/*
+    Content-Length: xxx
+    Content-Type: application/json</span>
+    
+    <span class="operator">{</span>
+        <span class="string">"post_type"</span><span class="operator">:</span><span class="string">"event"</span><span class="operator">,</span>
+        <span class="string">"event"</span><span class="operator">:</span><span class="string">"new_friend"</span><span class="operator">,</span>
+        <span class="string">"params"</span><span class="operator">:</span><span class="operator">[</span>
+            <span class="operator">{</span>
+                <span class="string">"account"</span><span class="operator">:</span><span class="string">"ms-xiaoice"</span><span class="operator">,</span>
+                <span class="string">"name"</span><span class="operator">:</span><span class="string">"å°å°"</span><span class="operator">,</span>
+                <span class="string">"markname"</span><span class="operator">:</span><span class="string">""</span><span class="operator">,</span>
+                <span class="string">"sex"</span><span class="operator">:</span><span class="string">"0"</span><span class="operator">,</span>
+                <span class="string">"city"</span><span class="operator">:</span><span class="string">"æµ·æ·"</span><span class="operator">,</span>
+                <span class="string">"signature"</span><span class="operator">:</span><span class="string">"ææ¯äººå·¥æºè½å¾®è½¯å°å°ï¼æåæ¥äºï¼å¼å¼~~"</span><span class="operator">,</span>
+                <span class="string">"province"</span><span class="operator">:</span><span class="string">"åäº¬"</span><span class="operator">,</span>
+                <span class="string">"displayname"</span><span class="operator">:</span><span class="string">"å°å°"</span><span class="operator">,</span>
+                <span class="string">"id"</span><span class="operator">:</span><span class="string">"</span><span class="variable">@75b9db5ae52c87361d1800eaaf307f4d</span><span class="string">"</span>
+            <span class="operator">}</span>
+        <span class="operator">]</span><span class="operator">,</span>
+    
+    <span class="operator">}</span>
+    
+    å¯ä»¥éè¿ä¸æ¥ç<span class="variable">json</span>æ°ç»ä¸­ç<span class="string">`post_type`</span>æ¥åºåä¸æ¥çæ°æ®æ°æ¥æ¶å°çæ¶æ¯è¿æ¯äºä»¶
+</code></pre>
+
+<p>&#x5F53;&#x524D;&#x652F;&#x6301;&#x7684;&#x4FE1;&#x606F;&#x83B7;&#x53D6;&#x548C;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;API&#x63A5;&#x53E3;&#xFF08;&#x5747;&#x8FD4;&#x56DE;json&#x683C;&#x5F0F;&#x6570;&#x636E;&#xFF09;&#xFF1A;</p>
+
+<pre><code>    <span class="comment">#ä¿¡æ¯è·å</span>
+    <span class="regex">/openwx/get</span><span class="variable">_user_info</span>           <span class="comment">#æ¥è¯¢ç¨æ·ä¿¡æ¯</span>
+    <span class="operator">/</span><span class="variable">openwx</span><span class="operator">/</span><span class="variable">get_friend_info</span>         <span class="comment">#æ¥è¯¢å¥½åä¿¡æ¯</span>
+    <span class="operator">/</span><span class="variable">openwx</span><span class="operator">/</span><span class="variable">get_group_info</span>          <span class="comment">#æ¥è¯¢ç¾¤ä¿¡æ¯</span>
+    
+    <span class="comment">#æ¶æ¯åéï¼åæ¯æGETåPOST</span>
+    
+    <span class="comment">#å¥½åæ¶æ¯æ¥å£ /openwx/send_friend_message</span>
+    
+    æ¯æçåæ°ï¼
+    <span class="variable">id</span>              <span class="comment">#å¥½åçid</span>
+    <span class="variable">account</span>         <span class="comment">#å¥½åçå¾®ä¿¡å¸å·</span>
+    <span class="variable">displayname</span>     <span class="comment">#å¥½åçæ¾ç¤ºåç§°ï¼å¦æä½ è®¾ç½®äºå¤æ³¨åç§°å°±æ¯å¤æ³¨åç§°ï¼å¦åå°±æ¯å¥½åçæµç§°ï¼</span>
+    <span class="variable">markname</span>        <span class="comment">#å¥½åçå¤æ³¨åç§°</span>
+    
+    <span class="variable">media_path</span>      <span class="comment">#å¯éï¼åªä½çè·¯å¾ï¼æ¯å¦ /tmp/123.jpg, http://www.example.com/123.jpgï¼éè¦åurlencodeï¼</span>
+    <span class="variable">media_mime</span>      <span class="comment">#å¯éï¼åªä½çæä»¶ç±»åï¼æ¯å¦image/jpeg, text/plain</span>
+    <span class="variable">media_ext</span>       <span class="comment">#å¯éï¼åªä½å¯æ©å±åï¼æ¯å¦ jpg,txt</span>
+    
+    <span class="comment">#ç¾¤æ¶æ¯æ¥å£  /openwx/send_group_message</span>
+    
+    æ¯æçåæ°ï¼
+    <span class="variable">id</span>              <span class="comment">#ç¾¤ç»çid</span>
+    <span class="variable">displayname</span>     <span class="comment">#ç¾¤ç»çæ¾ç¤ºåç§°</span>
+    
+    <span class="variable">media_path</span>      <span class="comment">#å¯éï¼åªä½çè·¯å¾ï¼æ¯å¦ /tmp/123.jpg, http://www.example.com/123.jpgï¼éè¦åurlencodeï¼</span>
+    <span class="variable">media_mime</span>      <span class="comment">#å¯éï¼åªä½çæä»¶ç±»åï¼æ¯å¦image/jpeg, text/plain</span>
+    <span class="variable">media_ext</span>       <span class="comment">#å¯éï¼åªä½å¯æ©å±åï¼æ¯å¦ jpg,txt</span>
+    
+    <span class="comment">#å¥½åé®ç­æ¥å£ /openwx/consult</span>
+    
+    æ¯æçåæ°ï¼
+    <span class="variable">id</span>              <span class="comment">#å¥½åçid</span>
+    <span class="variable">account</span>         <span class="comment">#å¥½åçå¾®ä¿¡å¸å·</span>
+    <span class="variable">displayname</span>     <span class="comment">#å¥½åçæ¾ç¤ºåç§°ï¼å¦æä½ è®¾ç½®äºå¤æ³¨åç§°å°±æ¯å¤æ³¨åç§°ï¼å¦åå°±æ¯å¥½åçæµç§°ï¼</span>
+    <span class="variable">markname</span>        <span class="comment">#å¥½åçå¤æ³¨åç§°</span>
+    <span class="variable">timeout</span>         <span class="comment">#ç­å¾åå¤çæ¶é´ï¼é»è®¤30ç§</span>
+    
+    <span class="variable">media_path</span>      <span class="comment">#å¿éï¼åªä½çè·¯å¾ï¼æ¯å¦ /tmp/123.jpg, http://www.example.com/123.jpgï¼éè¦åurlencodeï¼</span>
+    <span class="variable">media_mime</span>      <span class="comment">#å¯éï¼åªä½çæä»¶ç±»åï¼æ¯å¦image/jpeg, text/plain</span>
+    <span class="variable">media_ext</span>       <span class="comment">#å¯éï¼åªä½å¯æ©å±åï¼æ¯å¦ jpg,txt</span>
+    
+    ä¸»è¦åºç¨åºæ¯æ¯æå°å°<span class="operator">(</span>å¾®ä¿¡å¸å·<span class="variable">ms</span><span class="operator">-</span><span class="variable">xiaoice</span><span class="operator">)</span>çæºè½åå¤å°è£ææ¥å£
+    <span class="variable">GET</span> <span class="operator">/</span><span class="variable">openwx</span><span class="operator">/</span><span class="variable">consult</span><span class="operator">?</span><span class="variable">account</span><span class="operator">=</span><span class="variable">ms</span><span class="operator">-</span><span class="variable">xiaoice</span><span class="operator">&amp;</span><span class="variable">content</span><span class="operator">=</span><span class="variable">haha</span> <span class="variable">HTTP</span><span class="operator">/</span><span class="number">1.1</span>
+    <span class="variable">User</span><span class="operator">-</span><span class="variable">Agent</span><span class="operator">:</span> <span class="variable">curl</span><span class="operator">/</span><span class="number">7.29</span><span class="operator">.</span><span class="number">0</span>
+    <span class="variable">Host</span><span class="operator">:</span> <span class="number">127.0</span><span class="operator">.</span><span class="number">0</span><span class="operator">.</span><span class="number">1</span><span class="operator">:</span><span class="number">3000</span>
+    <span class="variable">Accept</span><span class="operator">:</span> <span class="operator">*</span><span class="regex">/*
+    
+    HTTP/</span><span class="number">1.1</span> <span class="number">200</span> <span class="variable">OK</span>
+    <span class="variable">Content</span><span class="operator">-</span><span class="variable">Type</span><span class="operator">:</span> <span class="variable">application</span><span class="operator">/</span><span class="variable">json</span><span class="operator">;</span><span class="variable">charset</span><span class="operator">=</span><span class="variable">UTF</span><span class="operator">-</span><span class="number">8</span>
+    <span class="variable">Date</span><span class="operator">:</span> <span class="variable">Tue</span><span class="operator">,</span> <span class="number">01</span> <span class="variable">Mar</span> <span class="number">2016</span> <span class="number">07</span><span class="operator">:</span><span class="number">25</span><span class="operator">:</span><span class="number">11</span> <span class="variable">GMT</span>
+    <span class="variable">Content</span><span class="operator">-</span><span class="variable">Length</span><span class="operator">:</span> <span class="number">94</span>
+    <span class="variable">Server</span><span class="operator">:</span> <span class="variable">Mojolicious</span> <span class="operator">(</span><span class="variable">Perl</span><span class="operator">)</span>
+    
+    <span class="operator">{</span><span class="string">"reply"</span><span class="operator">:</span><span class="string">"ååï¼æä»ä¹äºæ"</span><span class="operator">,</span><span class="string">"status"</span><span class="operator">:</span><span class="string">"åéæå"</span><span class="operator">,</span><span class="string">"msg_id"</span><span class="operator">:</span><span class="string">"2683625013724723712"</span><span class="operator">,</span><span class="string">"code"</span><span class="operator">:</span><span class="number">0</span><span class="operator">}</span>
+    
+    è¶æ¶å¤±è´¥æ¶çè¿åç»æï¼
+    
+    <span class="operator">{</span><span class="string">"reply"</span><span class="operator">:</span><span class="variable">null</span><span class="operator">,</span><span class="string">"reply_status"</span><span class="operator">:</span><span class="string">"reply timeout"</span><span class="operator">,</span><span class="string">"status"</span><span class="operator">:</span><span class="string">"åéæå"</span><span class="operator">,</span><span class="string">"msg_id"</span><span class="operator">:</span><span class="number">1456817344504</span><span class="operator">,</span><span class="string">"code"</span><span class="operator">:</span><span class="number">0</span><span class="operator">}</span>
+</code></pre>
+
+<p>&#x8C03;&#x7528;&#x793A;&#x4F8B;</p>
+
+<pre><code>    http://127.0.0.1:3000/openwx/get_user_info
+    http://127.0.0.1:3000/openwx/send_friend_message?id=xxx&amp;content=hello
+    http://127.0.0.1:3000/openwx/send_friend_message?account=xxx&amp;content=hello
+    http://127.0.0.1:3000/openwx/send_friend_message?markname=test_friend&amp;content=hello
+    http://127.0.0.1:3000/openwx/send_group_message?displayname=test_group&amp;content=hello
+    http://127.0.0.1:3000/openwx/send_group_message?id=xxx&amp;content=%e4%bd%a0%e5%a5%bd (&#x4E2D;&#x6587;&#x9700;&#x8981;utf8&#x7F16;&#x7801;&#x5E76;&#x8FDB;&#x884C;urlencode)
+    http://127.0.0.1:3000/openwx/consult?account=ms-xiaoice&amp;content=haha
+
+    http://127.0.0.1:3000/openwx/send_friend_message?id=xxx&amp;media_path=https%3a%2f%2fss0.bdstatic.com%2f5aV1bjqh_Q23odCf%2fstatic%2fsuperman%2fimg%2flogo%2fbd_logo1_31bdc765.png
+    http://127.0.0.1:3000/openwx/send_friend_message?id=xxx&amp;media_path=%2ftmp%2fhello.jpg</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../site/lib/Mojo/Webqq.html">Mojo::Webqq</a></p>
+
+<p><a href="https://github.com/sjdy521/Mojo-Weixin">https://github.com/sjdy521/Mojo-Weixin</a></p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>sjdy521, &lt;sjdy521@163.com&gt;</p>
+
+<h1 id="COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</h1>
+
+<p>Copyright (C) 2014 by sjdy521</p>
+
+<p>This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself, either Perl version 5.10.1 or, at your option, any later version of Perl 5 you may have available.</p>
+
+
+</body>
+
+</html>
+
+

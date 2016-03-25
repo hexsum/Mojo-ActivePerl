@@ -1,0 +1,1600 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#WAIT">WAIT!</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EXAMPLES">EXAMPLES</a>
+    <ul>
+      <li><a href="#Create-a-simple-message-containing-just-text">Create a simple message containing just text</a></li>
+      <li><a href="#Create-a-simple-message-containing-just-an-image">Create a simple message containing just an image</a></li>
+      <li><a href="#Create-a-multipart-message">Create a multipart message</a></li>
+      <li><a href="#Attach-a-GIF-to-a-text-message">Attach a GIF to a text message</a></li>
+      <li><a href="#Attach-a-pre-prepared-part-to-a-message">Attach a pre-prepared part to a message</a></li>
+      <li><a href="#Print-a-message-to-a-filehandle">Print a message to a filehandle</a></li>
+      <li><a href="#Print-a-message-into-a-string">Print a message into a string</a></li>
+      <li><a href="#Send-a-message">Send a message</a></li>
+      <li><a href="#Send-an-HTML-document...-with-images-included">Send an HTML document... with images included!</a></li>
+      <li><a href="#Change-how-messages-are-sent">Change how messages are sent</a></li>
+    </ul>
+  </li>
+  <li><a href="#PUBLIC-INTERFACE">PUBLIC INTERFACE</a>
+    <ul>
+      <li><a href="#Global-configuration">Global configuration</a></li>
+      <li><a href="#Construction">Construction</a></li>
+      <li><a href="#Setting-getting-headers-and-attributes">Setting/getting headers and attributes</a></li>
+      <li><a href="#Setting-getting-message-data">Setting/getting message data</a></li>
+      <li><a href="#Output">Output</a></li>
+      <li><a href="#Sending">Sending</a></li>
+      <li><a href="#Miscellaneous">Miscellaneous</a></li>
+    </ul>
+  </li>
+  <li><a href="#NOTES">NOTES</a>
+    <ul>
+      <li><a href="#How-do-I-prevent-Content-headers-from-showing-up-in-my-mail-reader">How do I prevent &quot;Content&quot; headers from showing up in my mail reader?</a></li>
+      <li><a href="#How-do-I-give-my-attachment-a-different-recommended-filename">How do I give my attachment a [different] recommended filename?</a></li>
+      <li><a href="#Benign-limitations">Benign limitations</a></li>
+      <li><a href="#Cheap-and-easy-mailing">Cheap and easy mailing</a></li>
+    </ul>
+  </li>
+  <li><a href="#WARNINGS">WARNINGS</a>
+    <ul>
+      <li><a href="#Good-vs-bad-email-addresses-with-send_by_smtp">Good-vs-bad email addresses with send_by_smtp()</a></li>
+      <li><a href="#Formatting-of-headers-delayed-until-print">Formatting of headers delayed until print()</a></li>
+      <li><a href="#Encoding-of-data-delayed-until-print">Encoding of data delayed until print()</a></li>
+      <li><a href="#MIME-attributes-are-separate-from-header-fields">MIME attributes are separate from header fields!</a></li>
+      <li><a href="#Beware-of-lines-consisting-of-a-single-dot">Beware of lines consisting of a single dot</a></li>
+      <li><a href="#Infinite-loops-may-mean-tainted-data">Infinite loops may mean tainted data!</a></li>
+      <li><a href="#Dont-tweak-the-global-configuration">Don&#39;t tweak the global configuration</a></li>
+    </ul>
+  </li>
+  <li><a href="#A-MIME-PRIMER">A MIME PRIMER</a>
+    <ul>
+      <li><a href="#Content-types">Content types</a></li>
+      <li><a href="#Content-transfer-encodings">Content transfer encodings</a></li>
+    </ul>
+  </li>
+  <li><a href="#HELPER-MODULES">HELPER MODULES</a></li>
+  <li><a href="#BUNDLED-GOODIES">BUNDLED GOODIES</a></li>
+  <li><a href="#BUGS">BUGS</a></li>
+  <li><a href="#VERSION">VERSION</a></li>
+  <li><a href="#CHANGE-LOG">CHANGE LOG</a></li>
+  <li><a href="#TERMS-AND-CONDITIONS">TERMS AND CONDITIONS</a></li>
+  <li><a href="#NUTRITIONAL-INFORMATION">NUTRITIONAL INFORMATION</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>MIME::Lite - low-calorie MIME generator</p>
+
+<h1 id="WAIT">WAIT!</h1>
+
+<p>MIME::Lite is not recommended by its current maintainer. There are a number of alternatives, like Email::MIME or MIME::Entity and Email::Sender, which you should probably use instead. MIME::Lite continues to accrue weird bug reports, and it is not receiving a large amount of refactoring due to the availability of better alternatives. Please consider using something else.</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p>Create and send using the default send method for your OS a single-part message:</p>
+
+<pre><code>    <span class="keyword">use</span> <span class="variable">MIME::Lite</span><span class="operator">;</span>
+    <span class="comment">### Create a new single-part message, to send a GIF file:</span>
+    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+        <span class="string">From</span>     <span class="operator">=&gt;</span> <span class="string">'me@myhost.com'</span><span class="operator">,</span>
+        <span class="string">To</span>       <span class="operator">=&gt;</span> <span class="string">'you@yourhost.com'</span><span class="operator">,</span>
+        <span class="string">Cc</span>       <span class="operator">=&gt;</span> <span class="string">'some@other.com, some@more.com'</span><span class="operator">,</span>
+        <span class="string">Subject</span>  <span class="operator">=&gt;</span> <span class="string">'Helloooooo, nurse!'</span><span class="operator">,</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span> <span class="string">'image/gif'</span><span class="operator">,</span>
+        <span class="string">Encoding</span> <span class="operator">=&gt;</span> <span class="string">'base64'</span><span class="operator">,</span>
+        <span class="string">Path</span>     <span class="operator">=&gt;</span> <span class="string">'hellonurse.gif'</span>
+    <span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">;</span> <span class="comment"># send via default</span>
+</code></pre>
+
+<p>Create a multipart message (i.e., one with attachments) and send it SMTP</p>
+
+<pre><code>    <span class="comment">### Create a new multipart message:</span>
+    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+        <span class="string">From</span>    <span class="operator">=&gt;</span> <span class="string">'me@myhost.com'</span><span class="operator">,</span>
+        <span class="string">To</span>      <span class="operator">=&gt;</span> <span class="string">'you@yourhost.com'</span><span class="operator">,</span>
+        <span class="string">Cc</span>      <span class="operator">=&gt;</span> <span class="string">'some@other.com, some@more.com'</span><span class="operator">,</span>
+        <span class="string">Subject</span> <span class="operator">=&gt;</span> <span class="string">'A message with 2 parts...'</span><span class="operator">,</span>
+        <span class="string">Type</span>    <span class="operator">=&gt;</span> <span class="string">'multipart/mixed'</span>
+    <span class="operator">);</span>
+    
+    <span class="comment">### Add parts (each "attach" has same arguments as "new"):</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span> <span class="string">'TEXT'</span><span class="operator">,</span>
+        <span class="string">Data</span>     <span class="operator">=&gt;</span> <span class="string">"Here's the GIF file you wanted"</span>
+    <span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span> <span class="string">'image/gif'</span><span class="operator">,</span>
+        <span class="string">Path</span>     <span class="operator">=&gt;</span> <span class="string">'aaa000123.gif'</span><span class="operator">,</span>
+        <span class="string">Filename</span> <span class="operator">=&gt;</span> <span class="string">'logo.gif'</span><span class="operator">,</span>
+        <span class="string">Disposition</span> <span class="operator">=&gt;</span> <span class="string">'attachment'</span>
+    <span class="operator">);</span>
+    <span class="comment">### use Net:SMTP to do the sending</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'smtp'</span><span class="operator">,</span><span class="string">'some.host'</span><span class="operator">,</span> <span class="string">Debug</span><span class="operator">=&gt;</span><span class="number">1</span> <span class="operator">);</span>
+</code></pre>
+
+<p>Output a message:</p>
+
+<pre><code>    <span class="comment">### Format as a string:</span>
+    <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">as_string</span><span class="operator">;</span>
+    
+    <span class="comment">### Print to a filehandle (say, a "sendmail" stream):</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">print</span><span class="operator">(\</span><span class="variable">*SENDMAIL</span><span class="operator">);</span>
+</code></pre>
+
+<p>Send a message:</p>
+
+<pre><code>    <span class="comment">### Send in the "best" way (the default is to use "sendmail"):</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">;</span>
+    <span class="comment">### Send a specific way:</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'type'</span><span class="operator">,</span><span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<p>Specify default send method:</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'smtp'</span><span class="operator">,</span><span class="string">'some.host'</span><span class="operator">,</span><span class="string">Debug</span><span class="operator">=&gt;</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<p>with authentication</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'smtp'</span><span class="operator">,</span><span class="string">'some.host'</span><span class="operator">,</span> <span class="string">AuthUser</span><span class="operator">=&gt;</span><span class="variable">$user</span><span class="operator">,</span> <span class="string">AuthPass</span><span class="operator">=&gt;</span><span class="variable">$pass</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>In the never-ending quest for great taste with fewer calories, we proudly present: <i>MIME::Lite</i>.</p>
+
+<p>MIME::Lite is intended as a simple, standalone module for generating (not parsing!) MIME messages... specifically, it allows you to output a simple, decent single- or multi-part message with text or binary attachments. It does not require that you have the Mail:: or MIME:: modules installed, but will work with them if they are.</p>
+
+<p>You can specify each message part as either the literal data itself (in a scalar or array), or as a string which can be given to open() to get a readable filehandle (e.g., &quot;&lt;filename&quot; or &quot;somecommand|&quot;).</p>
+
+<p>You don&#39;t need to worry about encoding your message data: this module will do that for you. It handles the 5 standard MIME encodings.</p>
+
+<h1 id="EXAMPLES">EXAMPLES</h1>
+
+<h2 id="Create-a-simple-message-containing-just-text">Create a simple message containing just text</h2>
+
+<pre><code>    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+        <span class="string">From</span>     <span class="operator">=&gt;</span><span class="string">'me@myhost.com'</span><span class="operator">,</span>
+        <span class="string">To</span>       <span class="operator">=&gt;</span><span class="string">'you@yourhost.com'</span><span class="operator">,</span>
+        <span class="string">Cc</span>       <span class="operator">=&gt;</span><span class="string">'some@other.com, some@more.com'</span><span class="operator">,</span>
+        <span class="string">Subject</span>  <span class="operator">=&gt;</span><span class="string">'Helloooooo, nurse!'</span><span class="operator">,</span>
+        <span class="string">Data</span>     <span class="operator">=&gt;</span><span class="string">"How's it goin', eh?"</span>
+    <span class="operator">);</span>
+</code></pre>
+
+<h2 id="Create-a-simple-message-containing-just-an-image">Create a simple message containing just an image</h2>
+
+<pre><code>    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+        <span class="string">From</span>     <span class="operator">=&gt;</span><span class="string">'me@myhost.com'</span><span class="operator">,</span>
+        <span class="string">To</span>       <span class="operator">=&gt;</span><span class="string">'you@yourhost.com'</span><span class="operator">,</span>
+        <span class="string">Cc</span>       <span class="operator">=&gt;</span><span class="string">'some@other.com, some@more.com'</span><span class="operator">,</span>
+        <span class="string">Subject</span>  <span class="operator">=&gt;</span><span class="string">'Helloooooo, nurse!'</span><span class="operator">,</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span><span class="string">'image/gif'</span><span class="operator">,</span>
+        <span class="string">Encoding</span> <span class="operator">=&gt;</span><span class="string">'base64'</span><span class="operator">,</span>
+        <span class="string">Path</span>     <span class="operator">=&gt;</span><span class="string">'hellonurse.gif'</span>
+    <span class="operator">);</span>
+</code></pre>
+
+<h2 id="Create-a-multipart-message">Create a multipart message</h2>
+
+<pre><code>    <span class="comment">### Create the multipart "container":</span>
+    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+        <span class="string">From</span>    <span class="operator">=&gt;</span><span class="string">'me@myhost.com'</span><span class="operator">,</span>
+        <span class="string">To</span>      <span class="operator">=&gt;</span><span class="string">'you@yourhost.com'</span><span class="operator">,</span>
+        <span class="string">Cc</span>      <span class="operator">=&gt;</span><span class="string">'some@other.com, some@more.com'</span><span class="operator">,</span>
+        <span class="string">Subject</span> <span class="operator">=&gt;</span><span class="string">'A message with 2 parts...'</span><span class="operator">,</span>
+        <span class="string">Type</span>    <span class="operator">=&gt;</span><span class="string">'multipart/mixed'</span>
+    <span class="operator">);</span>
+    
+    <span class="comment">### Add the text message part:</span>
+    <span class="comment">### (Note that "attach" has same arguments as "new"):</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span><span class="string">'TEXT'</span><span class="operator">,</span>
+        <span class="string">Data</span>     <span class="operator">=&gt;</span><span class="string">"Here's the GIF file you wanted"</span>
+    <span class="operator">);</span>
+    
+    <span class="comment">### Add the image part:</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span>
+        <span class="string">Type</span>        <span class="operator">=&gt;</span><span class="string">'image/gif'</span><span class="operator">,</span>
+        <span class="string">Path</span>        <span class="operator">=&gt;</span><span class="string">'aaa000123.gif'</span><span class="operator">,</span>
+        <span class="string">Filename</span>    <span class="operator">=&gt;</span><span class="string">'logo.gif'</span><span class="operator">,</span>
+        <span class="string">Disposition</span> <span class="operator">=&gt;</span> <span class="string">'attachment'</span>
+    <span class="operator">);</span>
+</code></pre>
+
+<h2 id="Attach-a-GIF-to-a-text-message">Attach a GIF to a text message</h2>
+
+<p>This will create a multipart message exactly as above, but using the &quot;attach to singlepart&quot; hack:</p>
+
+<pre><code>    <span class="comment">### Start with a simple text message:</span>
+    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+        <span class="string">From</span>    <span class="operator">=&gt;</span><span class="string">'me@myhost.com'</span><span class="operator">,</span>
+        <span class="string">To</span>      <span class="operator">=&gt;</span><span class="string">'you@yourhost.com'</span><span class="operator">,</span>
+        <span class="string">Cc</span>      <span class="operator">=&gt;</span><span class="string">'some@other.com, some@more.com'</span><span class="operator">,</span>
+        <span class="string">Subject</span> <span class="operator">=&gt;</span><span class="string">'A message with 2 parts...'</span><span class="operator">,</span>
+        <span class="string">Type</span>    <span class="operator">=&gt;</span><span class="string">'TEXT'</span><span class="operator">,</span>
+        <span class="string">Data</span>    <span class="operator">=&gt;</span><span class="string">"Here's the GIF file you wanted"</span>
+    <span class="operator">);</span>
+    
+    <span class="comment">### Attach a part... the make the message a multipart automatically:</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span><span class="string">'image/gif'</span><span class="operator">,</span>
+        <span class="string">Path</span>     <span class="operator">=&gt;</span><span class="string">'aaa000123.gif'</span><span class="operator">,</span>
+        <span class="string">Filename</span> <span class="operator">=&gt;</span><span class="string">'logo.gif'</span>
+    <span class="operator">);</span>
+</code></pre>
+
+<h2 id="Attach-a-pre-prepared-part-to-a-message">Attach a pre-prepared part to a message</h2>
+
+<pre><code>    <span class="comment">### Create a standalone part:</span>
+    <span class="variable">$part</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+        <span class="string">Top</span>      <span class="operator">=&gt;</span> <span class="number">0</span><span class="operator">,</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span><span class="string">'text/html'</span><span class="operator">,</span>
+        <span class="string">Data</span>     <span class="operator">=&gt;</span><span class="string">'&lt;H1&gt;Hello&lt;/H1&gt;'</span><span class="operator">,</span>
+    <span class="operator">);</span>
+    <span class="variable">$part</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">'content-type.charset'</span> <span class="operator">=&gt;</span> <span class="string">'UTF-8'</span><span class="operator">);</span>
+    <span class="variable">$part</span><span class="operator">-&gt;</span><span class="variable">add</span><span class="operator">(</span><span class="string">'X-Comment'</span> <span class="operator">=&gt;</span> <span class="string">'A message for you'</span><span class="operator">);</span>
+    
+    <span class="comment">### Attach it to any message:</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span><span class="variable">$part</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Print-a-message-to-a-filehandle">Print a message to a filehandle</h2>
+
+<pre><code>    <span class="comment">### Write it to a filehandle:</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">print</span><span class="operator">(\</span><span class="variable">*STDOUT</span><span class="operator">);</span>
+    
+    <span class="comment">### Write just the header:</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">print_header</span><span class="operator">(\</span><span class="variable">*STDOUT</span><span class="operator">);</span>
+    
+    <span class="comment">### Write just the encoded body:</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">print_body</span><span class="operator">(\</span><span class="variable">*STDOUT</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Print-a-message-into-a-string">Print a message into a string</h2>
+
+<pre><code>    <span class="comment">### Get entire message as a string:</span>
+    <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">as_string</span><span class="operator">;</span>
+    
+    <span class="comment">### Get just the header:</span>
+    <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">header_as_string</span><span class="operator">;</span>
+    
+    <span class="comment">### Get just the encoded body:</span>
+    <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">body_as_string</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="Send-a-message">Send a message</h2>
+
+<pre><code>    <span class="comment">### Send in the "best" way (the default is to use "sendmail"):</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="Send-an-HTML-document...-with-images-included">Send an HTML document... with images included!</h2>
+
+<pre><code>    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+         <span class="string">To</span>      <span class="operator">=&gt;</span><span class="string">'you@yourhost.com'</span><span class="operator">,</span>
+         <span class="string">Subject</span> <span class="operator">=&gt;</span><span class="string">'HTML with in-line images!'</span><span class="operator">,</span>
+         <span class="string">Type</span>    <span class="operator">=&gt;</span><span class="string">'multipart/related'</span>
+    <span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span>
+        <span class="string">Type</span> <span class="operator">=&gt;</span> <span class="string">'text/html'</span><span class="operator">,</span>
+        <span class="string">Data</span> <span class="operator">=&gt;</span> <span class="string">qq{
+            &lt;body&gt;
+                Here's &lt;i&gt;my&lt;/i&gt; image:
+                &lt;img src="cid:myimage.gif"&gt;
+            &lt;/body&gt;
+        }</span><span class="operator">,</span>
+    <span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span>
+        <span class="string">Type</span> <span class="operator">=&gt;</span> <span class="string">'image/gif'</span><span class="operator">,</span>
+        <span class="string">Id</span>   <span class="operator">=&gt;</span> <span class="string">'myimage.gif'</span><span class="operator">,</span>
+        <span class="string">Path</span> <span class="operator">=&gt;</span> <span class="string">'/path/to/somefile.gif'</span><span class="operator">,</span>
+    <span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">();</span>
+</code></pre>
+
+<h2 id="Change-how-messages-are-sent">Change how messages are sent</h2>
+
+<pre><code>    <span class="comment">### Do something like this in your 'main':</span>
+    <span class="keyword">if</span> <span class="operator">(</span><span class="variable">$I_DONT_HAVE_SENDMAIL</span><span class="operator">)</span> <span class="operator">{</span>
+       <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'smtp'</span><span class="operator">,</span> <span class="variable">$host</span><span class="operator">,</span> <span class="string">Timeout</span><span class="operator">=&gt;</span><span class="number">60</span><span class="operator">,</span>
+           <span class="string">AuthUser</span><span class="operator">=&gt;</span><span class="variable">$user</span><span class="operator">,</span> <span class="string">AuthPass</span><span class="operator">=&gt;</span><span class="variable">$pass</span><span class="operator">);</span>
+    <span class="operator">}</span>
+    
+    <span class="comment">### Now this will do the right thing:</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">;</span>         <span class="comment">### will now use Net::SMTP as shown above</span>
+</code></pre>
+
+<h1 id="PUBLIC-INTERFACE">PUBLIC INTERFACE</h1>
+
+<h2 id="Global-configuration">Global configuration</h2>
+
+<p>To alter the way the entire module behaves, you have the following methods/options:</p>
+
+<dl>
+
+<dt id="MIME::Lite-field_order">MIME::Lite-&gt;field_order()</dt>
+<dd>
+
+<p>When used as a <a href="#field_order">classmethod</a>, this changes the default order in which headers are output for <i>all</i> messages. However, please consider using the instance method variant instead, so you won&#39;t stomp on other message senders in the same application.</p>
+
+</dd>
+<dt id="MIME::Lite-quiet">MIME::Lite-&gt;quiet()</dt>
+<dd>
+
+<p>This <a href="#quiet">classmethod</a> can be used to suppress/unsuppress all warnings coming from this module.</p>
+
+</dd>
+<dt id="MIME::Lite-send">MIME::Lite-&gt;send()</dt>
+<dd>
+
+<p>When used as a <a href="#send">classmethod</a>, this can be used to specify a different default mechanism for sending message. The initial default is:</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">"sendmail"</span><span class="operator">,</span> <span class="string">"/usr/lib/sendmail -t -oi -oem"</span><span class="operator">);</span>
+</code></pre>
+
+<p>However, you should consider the similar but smarter and taint-safe variant:</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">"sendmail"</span><span class="operator">);</span>
+</code></pre>
+
+<p>Or, for non-Unix users:</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">"smtp"</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+<dt id="MIME::Lite::AUTO_CC">$MIME::Lite::AUTO_CC</dt>
+<dd>
+
+<p>If true, automatically send to the Cc/Bcc addresses for send_by_smtp(). Default is <b>true</b>.</p>
+
+</dd>
+<dt id="MIME::Lite::AUTO_CONTENT_TYPE">$MIME::Lite::AUTO_CONTENT_TYPE</dt>
+<dd>
+
+<p>If true, try to automatically choose the content type from the file name in <code>new()</code>/<code>build()</code>. In other words, setting this true changes the default <code>Type</code> from <code>&quot;TEXT&quot;</code> to <code>&quot;AUTO&quot;</code>.</p>
+
+<p>Default is <b>false</b>, since we must maintain backwards-compatibility with prior behavior. <b>Please</b> consider keeping it false, and just using Type &#39;AUTO&#39; when you build() or attach().</p>
+
+</dd>
+<dt id="MIME::Lite::AUTO_ENCODE">$MIME::Lite::AUTO_ENCODE</dt>
+<dd>
+
+<p>If true, automatically choose the encoding from the content type. Default is <b>true</b>.</p>
+
+</dd>
+<dt id="MIME::Lite::AUTO_VERIFY">$MIME::Lite::AUTO_VERIFY</dt>
+<dd>
+
+<p>If true, check paths to attachments right before printing, raising an exception if any path is unreadable. Default is <b>true</b>.</p>
+
+</dd>
+<dt id="MIME::Lite::PARANOID">$MIME::Lite::PARANOID</dt>
+<dd>
+
+<p>If true, we won&#39;t attempt to use MIME::Base64, MIME::QuotedPrint, or MIME::Types, even if they&#39;re available. Default is <b>false</b>. Please consider keeping it false, and trusting these other packages to do the right thing.</p>
+
+</dd>
+</dl>
+
+<h2 id="Construction">Construction</h2>
+
+<dl>
+
+<dt id="new-PARAMHASH">new [PARAMHASH]</dt>
+<dd>
+
+<p><i>Class method, constructor.</i> Create a new message object.</p>
+
+<p>If any arguments are given, they are passed into <code>build()</code>; otherwise, just the empty object is created.</p>
+
+</dd>
+<dt id="attach-PART">attach PART</dt>
+<dd>
+
+</dd>
+<dt id="attach-PARAMHASH">attach PARAMHASH...</dt>
+<dd>
+
+<p><i>Instance method.</i> Add a new part to this message, and return the new part.</p>
+
+<p>If you supply a single PART argument, it will be regarded as a MIME::Lite object to be attached. Otherwise, this method assumes that you are giving in the pairs of a PARAMHASH which will be sent into <code>new()</code> to create the new part.</p>
+
+<p>One of the possibly-quite-useful hacks thrown into this is the &quot;attach-to-singlepart&quot; hack: if you attempt to attach a part (let&#39;s call it &quot;part 1&quot;) to a message that doesn&#39;t have a content-type of &quot;multipart&quot; or &quot;message&quot;, the following happens:</p>
+
+<ul>
+
+<li><p>A new part (call it &quot;part 0&quot;) is made.</p>
+
+</li>
+<li><p>The MIME attributes and data (but <i>not</i> the other headers) are cut from the &quot;self&quot; message, and pasted into &quot;part 0&quot;.</p>
+
+</li>
+<li><p>The &quot;self&quot; is turned into a &quot;multipart/mixed&quot; message.</p>
+
+</li>
+<li><p>The new &quot;part 0&quot; is added to the &quot;self&quot;, and <i>then</i> &quot;part 1&quot; is added.</p>
+
+</li>
+</ul>
+
+<p>One of the nice side-effects is that you can create a text message and then add zero or more attachments to it, much in the same way that a user agent like Netscape allows you to do.</p>
+
+</dd>
+<dt id="build-PARAMHASH">build [PARAMHASH]</dt>
+<dd>
+
+<p><i>Class/instance method, initializer.</i> Create (or initialize) a MIME message object. Normally, you&#39;ll use the following keys in PARAMHASH:</p>
+
+<pre><code>   * Data, FH, or Path      (either one of these, or none if multipart)
+   * Type                   (e.g., &quot;image/jpeg&quot;)
+   * From, To, and Subject  (if this is the &quot;top level&quot; of a message)</code></pre>
+
+<p>The PARAMHASH can contain the following keys:</p>
+
+<dl>
+
+<dt id="fieldname">(fieldname)</dt>
+<dd>
+
+<p>Any field you want placed in the message header, taken from the standard list of header fields (you don&#39;t need to worry about case):</p>
+
+<pre><code>    Approved      Encrypted     Received      Sender
+    Bcc           From          References    Subject
+    Cc            Keywords      Reply-To      To
+    Comments      Message-ID    Resent-*      X-*
+    Content-*     MIME-Version  Return-Path
+    Date                        Organization</code></pre>
+
+<p>To give experienced users some veto power, these fields will be set <i>after</i> the ones I set... so be careful: <i>don&#39;t set any MIME fields</i> (like <code>Content-type</code>) unless you know what you&#39;re doing!</p>
+
+<p>To specify a fieldname that&#39;s <i>not</i> in the above list, even one that&#39;s identical to an option below, just give it with a trailing <code>&quot;:&quot;</code>, like <code>&quot;My-field:&quot;</code>. When in doubt, that <i>always</i> signals a mail field (and it sort of looks like one too).</p>
+
+</dd>
+<dt id="Data">Data</dt>
+<dd>
+
+<p><i>Alternative to &quot;Path&quot; or &quot;FH&quot;.</i> The actual message data. This may be a scalar or a ref to an array of strings; if the latter, the message consists of a simple concatenation of all the strings in the array.</p>
+
+</dd>
+<dt id="Datestamp">Datestamp</dt>
+<dd>
+
+<p><i>Optional.</i> If given true (or omitted), we force the creation of a <code>Date:</code> field stamped with the current date/time if this is a top-level message. You may want this if using <a href="#send_by_smtp">send_by_smtp()</a>. If you don&#39;t want this to be done, either provide your own Date or explicitly set this to false.</p>
+
+</dd>
+<dt id="Disposition">Disposition</dt>
+<dd>
+
+<p><i>Optional.</i> The content disposition, <code>&quot;inline&quot;</code> or <code>&quot;attachment&quot;</code>. The default is <code>&quot;inline&quot;</code>.</p>
+
+</dd>
+<dt id="Encoding">Encoding</dt>
+<dd>
+
+<p><i>Optional.</i> The content transfer encoding that should be used to encode your data:</p>
+
+<pre><code>   Use encoding:     | If your message contains:
+   ------------------------------------------------------------
+   7bit              | Only 7-bit text, all lines &lt;1000 characters
+   8bit              | 8-bit text, all lines &lt;1000 characters
+   quoted-printable  | 8-bit text or long lines (more reliable than &quot;8bit&quot;)
+   base64            | Largely non-textual data: a GIF, a tar file, etc.</code></pre>
+
+<p>The default is taken from the Type; generally it is &quot;binary&quot; (no encoding) for text/*, message/*, and multipart/*, and &quot;base64&quot; for everything else. A value of <code>&quot;binary&quot;</code> is generally <i>not</i> suitable for sending anything but ASCII text files with lines under 1000 characters, so consider using one of the other values instead.</p>
+
+<p>In the case of &quot;7bit&quot;/&quot;8bit&quot;, long lines are automatically chopped to legal length; in the case of &quot;7bit&quot;, all 8-bit characters are automatically <i>removed</i>. This may not be what you want, so pick your encoding well! For more info, see <a href="#A-MIME-PRIMER">&quot;A MIME PRIMER&quot;</a>.</p>
+
+</dd>
+<dt id="FH">FH</dt>
+<dd>
+
+<p><i>Alternative to &quot;Data&quot; or &quot;Path&quot;.</i> Filehandle containing the data, opened for reading. See &quot;ReadNow&quot; also.</p>
+
+</dd>
+<dt id="Filename">Filename</dt>
+<dd>
+
+<p><i>Optional.</i> The name of the attachment. You can use this to supply a recommended filename for the end-user who is saving the attachment to disk. You only need this if the filename at the end of the &quot;Path&quot; is inadequate, or if you&#39;re using &quot;Data&quot; instead of &quot;Path&quot;. You should <i>not</i> put path information in here (e.g., no &quot;/&quot; or &quot;\&quot; or &quot;:&quot; characters should be used).</p>
+
+</dd>
+<dt id="Id">Id</dt>
+<dd>
+
+<p><i>Optional.</i> Same as setting &quot;content-id&quot;.</p>
+
+</dd>
+<dt id="Length">Length</dt>
+<dd>
+
+<p><i>Optional.</i> Set the content length explicitly. Normally, this header is automatically computed, but only under certain circumstances (see <a href="#Benign-limitations">&quot;Benign limitations&quot;</a>).</p>
+
+</dd>
+<dt id="Path">Path</dt>
+<dd>
+
+<p><i>Alternative to &quot;Data&quot; or &quot;FH&quot;.</i> Path to a file containing the data... actually, it can be any open()able expression. If it looks like a path, the last element will automatically be treated as the filename. See &quot;ReadNow&quot; also.</p>
+
+</dd>
+<dt id="ReadNow">ReadNow</dt>
+<dd>
+
+<p><i>Optional, for use with &quot;Path&quot;.</i> If true, will open the path and slurp the contents into core now. This is useful if the Path points to a command and you don&#39;t want to run the command over and over if outputting the message several times. <b>Fatal exception</b> raised if the open fails.</p>
+
+</dd>
+<dt id="Top">Top</dt>
+<dd>
+
+<p><i>Optional.</i> If defined, indicates whether or not this is a &quot;top-level&quot; MIME message. The parts of a multipart message are <i>not</i> top-level. Default is true.</p>
+
+</dd>
+<dt id="Type">Type</dt>
+<dd>
+
+<p><i>Optional.</i> The MIME content type, or one of these special values (case-sensitive):</p>
+
+<pre><code>     &quot;TEXT&quot;   means &quot;text/plain&quot;
+     &quot;BINARY&quot; means &quot;application/octet-stream&quot;
+     &quot;AUTO&quot;   means attempt to guess from the filename, falling back
+              to &#39;application/octet-stream&#39;.  This is good if you have
+              MIME::Types on your system and you have no idea what
+              file might be used for the attachment.</code></pre>
+
+<p>The default is <code>&quot;TEXT&quot;</code>, but it will be <code>&quot;AUTO&quot;</code> if you set $AUTO_CONTENT_TYPE to true (sorry, but you have to enable it explicitly, since we don&#39;t want to break code which depends on the old behavior).</p>
+
+</dd>
+</dl>
+
+<p>A picture being worth 1000 words (which is of course 2000 bytes, so it&#39;s probably more of an &quot;icon&quot; than a &quot;picture&quot;, but I digress...), here are some examples:</p>
+
+<pre><code>    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">build</span><span class="operator">(</span>
+        <span class="string">From</span>     <span class="operator">=&gt;</span> <span class="string">'yelling@inter.com'</span><span class="operator">,</span>
+        <span class="string">To</span>       <span class="operator">=&gt;</span> <span class="string">'stocking@fish.net'</span><span class="operator">,</span>
+        <span class="string">Subject</span>  <span class="operator">=&gt;</span> <span class="string">"Hi there!"</span><span class="operator">,</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span> <span class="string">'TEXT'</span><span class="operator">,</span>
+        <span class="string">Encoding</span> <span class="operator">=&gt;</span> <span class="string">'7bit'</span><span class="operator">,</span>
+        <span class="string">Data</span>     <span class="operator">=&gt;</span> <span class="string">"Just a quick note to say hi!"</span>
+    <span class="operator">);</span>
+    
+    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">build</span><span class="operator">(</span>
+        <span class="string">From</span>     <span class="operator">=&gt;</span> <span class="string">'dorothy@emerald-city.oz'</span><span class="operator">,</span>
+        <span class="string">To</span>       <span class="operator">=&gt;</span> <span class="string">'gesundheit@edu.edu.edu'</span><span class="operator">,</span>
+        <span class="string">Subject</span>  <span class="operator">=&gt;</span> <span class="string">"A gif for U"</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span> <span class="string">'image/gif'</span><span class="operator">,</span>
+        <span class="string">Path</span>     <span class="operator">=&gt;</span> <span class="string">"/home/httpd/logo.gif"</span>
+    <span class="operator">);</span>
+    
+    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">build</span><span class="operator">(</span>
+        <span class="string">From</span>     <span class="operator">=&gt;</span> <span class="string">'laughing@all.of.us'</span><span class="operator">,</span>
+        <span class="string">To</span>       <span class="operator">=&gt;</span> <span class="string">'scarlett@fiddle.dee.de'</span><span class="operator">,</span>
+        <span class="string">Subject</span>  <span class="operator">=&gt;</span> <span class="string">"A gzipp'ed tar file"</span><span class="operator">,</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span> <span class="string">'x-gzip'</span><span class="operator">,</span>
+        <span class="string">Path</span>     <span class="operator">=&gt;</span> <span class="string">"gzip &lt; /usr/inc/somefile.tar |"</span><span class="operator">,</span>
+        <span class="string">ReadNow</span>  <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span>
+        <span class="string">Filename</span> <span class="operator">=&gt;</span> <span class="string">"somefile.tgz"</span>
+    <span class="operator">);</span>
+</code></pre>
+
+<p>To show you what&#39;s really going on, that last example could also have been written:</p>
+
+<pre><code>    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">new</span> <span class="variable">MIME::Lite</span><span class="operator">;</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">build</span><span class="operator">(</span>
+        <span class="string">Type</span>     <span class="operator">=&gt;</span> <span class="string">'x-gzip'</span><span class="operator">,</span>
+        <span class="string">Path</span>     <span class="operator">=&gt;</span> <span class="string">"gzip &lt; /usr/inc/somefile.tar |"</span><span class="operator">,</span>
+        <span class="string">ReadNow</span>  <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span>
+        <span class="string">Filename</span> <span class="operator">=&gt;</span> <span class="string">"somefile.tgz"</span>
+    <span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">add</span><span class="operator">(</span><span class="string">From</span>    <span class="operator">=&gt;</span> <span class="string">"laughing</span><span class="variable">@all</span><span class="string">.of.us"</span><span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">add</span><span class="operator">(</span><span class="string">To</span>      <span class="operator">=&gt;</span> <span class="string">"scarlett</span><span class="variable">@fiddle</span><span class="string">.dee.de"</span><span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">add</span><span class="operator">(</span><span class="string">Subject</span> <span class="operator">=&gt;</span> <span class="string">"A gzipp'ed tar file"</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+</dl>
+
+<h2 id="Setting-getting-headers-and-attributes">Setting/getting headers and attributes</h2>
+
+<dl>
+
+<dt id="add-TAG-VALUE">add TAG,VALUE</dt>
+<dd>
+
+<p><i>Instance method.</i> Add field TAG with the given VALUE to the end of the header. The TAG will be converted to all-lowercase, and the VALUE will be made &quot;safe&quot; (returns will be given a trailing space).</p>
+
+<p><b>Beware:</b> any MIME fields you &quot;add&quot; will override any MIME attributes I have when it comes time to output those fields. Normally, you will use this method to add <i>non-MIME</i> fields:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">add</span><span class="operator">(</span><span class="string">"Subject"</span> <span class="operator">=&gt;</span> <span class="string">"Hi there!"</span><span class="operator">);</span>
+</code></pre>
+
+<p>Giving VALUE as an arrayref will cause all those values to be added. This is only useful for special multiple-valued fields like &quot;Received&quot;:</p>
+
+<pre><code>    $msg-&gt;add(&quot;Received&quot; =&gt; [&quot;here&quot;, &quot;there&quot;, &quot;everywhere&quot;]</code></pre>
+
+<p>Giving VALUE as the empty string adds an invisible placeholder to the header, which can be used to suppress the output of the &quot;Content-*&quot; fields or the special &quot;MIME-Version&quot; field. When suppressing fields, you should use replace() instead of add():</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">replace</span><span class="operator">(</span><span class="string">"Content-disposition"</span> <span class="operator">=&gt;</span> <span class="string">""</span><span class="operator">);</span>
+</code></pre>
+
+<p><i>Note:</i> add() is probably going to be more efficient than <code>replace()</code>, so you&#39;re better off using it for most applications if you are certain that you don&#39;t need to delete() the field first.</p>
+
+<p><i>Note:</i> the name comes from Mail::Header.</p>
+
+</dd>
+<dt id="attr-ATTR-VALUE">attr ATTR,[VALUE]</dt>
+<dd>
+
+<p><i>Instance method.</i> Set MIME attribute ATTR to the string VALUE. ATTR is converted to all-lowercase. This method is normally used to set/get MIME attributes:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">"content-type"</span>         <span class="operator">=&gt;</span> <span class="string">"text/html"</span><span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">"content-type.charset"</span> <span class="operator">=&gt;</span> <span class="string">"US-ASCII"</span><span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">"content-type.name"</span>    <span class="operator">=&gt;</span> <span class="string">"homepage.html"</span><span class="operator">);</span>
+</code></pre>
+
+<p>This would cause the final output to look something like this:</p>
+
+<pre><code>    <span class="variable">Content</span><span class="operator">-</span><span class="variable">type</span><span class="operator">:</span> <span class="variable">text</span><span class="operator">/</span><span class="variable">html</span><span class="operator">;</span> <span class="variable">charset</span><span class="operator">=</span><span class="variable">US</span><span class="operator">-</span><span class="variable">ASCII</span><span class="operator">;</span> <span class="variable">name</span><span class="operator">=</span><span class="string">"homepage.html"</span>
+</code></pre>
+
+<p>Note that the special empty sub-field tag indicates the anonymous first sub-field.</p>
+
+<p>Giving VALUE as undefined will cause the contents of the named subfield to be deleted.</p>
+
+<p>Supplying no VALUE argument just returns the attribute&#39;s value:</p>
+
+<pre><code>    <span class="variable">$type</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">"content-type"</span><span class="operator">);</span>        <span class="comment">### returns "text/html"</span>
+    <span class="variable">$name</span> <span class="operator">=</span> <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attr</span><span class="operator">(</span><span class="string">"content-type.name"</span><span class="operator">);</span>   <span class="comment">### returns "homepage.html"</span>
+</code></pre>
+
+</dd>
+<dt id="delete-TAG">delete TAG</dt>
+<dd>
+
+<p><i>Instance method.</i> Delete field TAG with the given VALUE to the end of the header. The TAG will be converted to all-lowercase.</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">delete</span><span class="operator">(</span><span class="string">"Subject"</span><span class="operator">);</span>
+</code></pre>
+
+<p><i>Note:</i> the name comes from Mail::Header.</p>
+
+</dd>
+<dt id="field_order-FIELD-...FIELD">field_order FIELD,...FIELD</dt>
+<dd>
+
+<p><i>Class/instance method.</i> Change the order in which header fields are output for this object:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">field_order</span><span class="operator">(</span><span class="string">'from'</span><span class="operator">,</span> <span class="string">'to'</span><span class="operator">,</span> <span class="string">'content-type'</span><span class="operator">,</span> <span class="string">'subject'</span><span class="operator">);</span>
+</code></pre>
+
+<p>When used as a class method, changes the default settings for all objects:</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">field_order</span><span class="operator">(</span><span class="string">'from'</span><span class="operator">,</span> <span class="string">'to'</span><span class="operator">,</span> <span class="string">'content-type'</span><span class="operator">,</span> <span class="string">'subject'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Case does not matter: all field names will be coerced to lowercase. In either case, supply the empty array to restore the default ordering.</p>
+
+</dd>
+<dt id="fields">fields</dt>
+<dd>
+
+<p><i>Instance method.</i> Return the full header for the object, as a ref to an array of <code>[TAG, VALUE]</code> pairs, where each TAG is all-lowercase. Note that any fields the user has explicitly set will override the corresponding MIME fields that we would otherwise generate. So, don&#39;t say...</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">set</span><span class="operator">(</span><span class="string">"Content-type"</span> <span class="operator">=&gt;</span> <span class="string">"text/html; charset=US-ASCII"</span><span class="operator">);</span>
+</code></pre>
+
+<p>unless you want the above value to override the &quot;Content-type&quot; MIME field that we would normally generate.</p>
+
+<p><i>Note:</i> I called this &quot;fields&quot; because the header() method of Mail::Header returns something different, but similar enough to be confusing.</p>
+
+<p>You can change the order of the fields: see <a href="#field_order">&quot;field_order&quot;</a>. You really shouldn&#39;t need to do this, but some people have to deal with broken mailers.</p>
+
+</dd>
+<dt id="filename-FILENAME">filename [FILENAME]</dt>
+<dd>
+
+<p><i>Instance method.</i> Set the filename which this data will be reported as. This actually sets both &quot;standard&quot; attributes.</p>
+
+<p>With no argument, returns the filename as dictated by the content-disposition.</p>
+
+</dd>
+<dt id="get-TAG-INDEX">get TAG,[INDEX]</dt>
+<dd>
+
+<p><i>Instance method.</i> Get the contents of field TAG, which might have been set with set() or replace(). Returns the text of the field.</p>
+
+<pre><code>    <span class="variable">$ml</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'Subject'</span><span class="operator">,</span> <span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<p>If the optional 0-based INDEX is given, then we return the INDEX&#39;th occurrence of field TAG. Otherwise, we look at the context: In a scalar context, only the first (0th) occurrence of the field is returned; in an array context, <i>all</i> occurrences are returned.</p>
+
+<p><i>Warning:</i> this should only be used with non-MIME fields. Behavior with MIME fields is TBD, and will raise an exception for now.</p>
+
+</dd>
+<dt id="get_length">get_length</dt>
+<dd>
+
+<p><i>Instance method.</i> Recompute the content length for the message <i>if the process is trivial</i>, setting the &quot;content-length&quot; attribute as a side-effect:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">get_length</span><span class="operator">;</span>
+</code></pre>
+
+<p>Returns the length, or undefined if not set.</p>
+
+<p><i>Note:</i> the content length can be difficult to compute, since it involves assembling the entire encoded body and taking the length of it (which, in the case of multipart messages, means freezing all the sub-parts, etc.).</p>
+
+<p>This method only sets the content length to a defined value if the message is a singlepart with <code>&quot;binary&quot;</code> encoding, <i>and</i> the body is available either in-core or as a simple file. Otherwise, the content length is set to the undefined value.</p>
+
+<p>Since content-length is not a standard MIME field anyway (that&#39;s right, kids: it&#39;s not in the MIME RFCs, it&#39;s an HTTP thing), this seems pretty fair.</p>
+
+</dd>
+<dt id="parts">parts</dt>
+<dd>
+
+<p><i>Instance method.</i> Return the parts of this entity, and this entity only. Returns empty array if this entity has no parts.</p>
+
+<p>This is <b>not</b> recursive! Parts can have sub-parts; use parts_DFS() to get everything.</p>
+
+</dd>
+<dt id="parts_DFS">parts_DFS</dt>
+<dd>
+
+<p><i>Instance method.</i> Return the list of all MIME::Lite objects included in the entity, starting with the entity itself, in depth-first-search order. If this object has no parts, it alone will be returned.</p>
+
+</dd>
+<dt id="preamble-TEXT">preamble [TEXT]</dt>
+<dd>
+
+<p><i>Instance method.</i> Get/set the preamble string, assuming that this object has subparts. Set it to undef for the default string.</p>
+
+</dd>
+<dt id="replace-TAG-VALUE">replace TAG,VALUE</dt>
+<dd>
+
+<p><i>Instance method.</i> Delete all occurrences of fields named TAG, and add a new field with the given VALUE. TAG is converted to all-lowercase.</p>
+
+<p><b>Beware</b> the special MIME fields (MIME-version, Content-*): if you &quot;replace&quot; a MIME field, the replacement text will override the <i>actual</i> MIME attributes when it comes time to output that field. So normally you use attr() to change MIME fields and add()/replace() to change <i>non-MIME</i> fields:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">replace</span><span class="operator">(</span><span class="string">"Subject"</span> <span class="operator">=&gt;</span> <span class="string">"Hi there!"</span><span class="operator">);</span>
+</code></pre>
+
+<p>Giving VALUE as the <i>empty string</i> will effectively <i>prevent</i> that field from being output. This is the correct way to suppress the special MIME fields:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">replace</span><span class="operator">(</span><span class="string">"Content-disposition"</span> <span class="operator">=&gt;</span> <span class="string">""</span><span class="operator">);</span>
+</code></pre>
+
+<p>Giving VALUE as <i>undefined</i> will just cause all explicit values for TAG to be deleted, without having any new values added.</p>
+
+<p><i>Note:</i> the name of this method comes from Mail::Header.</p>
+
+</dd>
+<dt id="scrub">scrub</dt>
+<dd>
+
+<p><i>Instance method.</i> <b>This is Alpha code. If you use it, please let me know how it goes.</b> Recursively goes through the &quot;parts&quot; tree of this message and tries to find MIME attributes that can be removed. With an array argument, removes exactly those attributes; e.g.:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">scrub</span><span class="operator">(</span><span class="operator">[</span><span class="string">'content-disposition'</span><span class="operator">,</span> <span class="string">'content-length'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Is the same as recursively doing:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">replace</span><span class="operator">(</span><span class="string">'Content-disposition'</span> <span class="operator">=&gt;</span> <span class="string">''</span><span class="operator">);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">replace</span><span class="operator">(</span><span class="string">'Content-length'</span>      <span class="operator">=&gt;</span> <span class="string">''</span><span class="operator">);</span>
+</code></pre>
+
+</dd>
+</dl>
+
+<h2 id="Setting-getting-message-data">Setting/getting message data</h2>
+
+<dl>
+
+<dt id="binmode-OVERRIDE">binmode [OVERRIDE]</dt>
+<dd>
+
+<p><i>Instance method.</i> With no argument, returns whether or not it thinks that the data (as given by the &quot;Path&quot; argument of <code>build()</code>) should be read using binmode() (for example, when <code>read_now()</code> is invoked).</p>
+
+<p>The default behavior is that any content type other than <code>text/*</code> or <code>message/*</code> is binmode&#39;d; this should in general work fine.</p>
+
+<p>With a defined argument, this method sets an explicit &quot;override&quot; value. An undefined argument unsets the override. The new current value is returned.</p>
+
+</dd>
+<dt id="data-DATA">data [DATA]</dt>
+<dd>
+
+<p><i>Instance method.</i> Get/set the literal DATA of the message. The DATA may be either a scalar, or a reference to an array of scalars (which will simply be joined).</p>
+
+<p><i>Warning:</i> setting the data causes the &quot;content-length&quot; attribute to be recomputed (possibly to nothing).</p>
+
+</dd>
+<dt id="fh-FILEHANDLE">fh [FILEHANDLE]</dt>
+<dd>
+
+<p><i>Instance method.</i> Get/set the FILEHANDLE which contains the message data.</p>
+
+<p>Takes a filehandle as an input and stores it in the object. This routine is similar to path(); one important difference is that no attempt is made to set the content length.</p>
+
+</dd>
+<dt id="path-PATH">path [PATH]</dt>
+<dd>
+
+<p><i>Instance method.</i> Get/set the PATH to the message data.</p>
+
+<p><i>Warning:</i> setting the path recomputes any existing &quot;content-length&quot; field, and re-sets the &quot;filename&quot; (to the last element of the path if it looks like a simple path, and to nothing if not).</p>
+
+</dd>
+<dt id="resetfh-FILEHANDLE">resetfh [FILEHANDLE]</dt>
+<dd>
+
+<p><i>Instance method.</i> Set the current position of the filehandle back to the beginning. Only applies if you used &quot;FH&quot; in build() or attach() for this message.</p>
+
+<p>Returns false if unable to reset the filehandle (since not all filehandles are seekable).</p>
+
+</dd>
+<dt id="read_now">read_now</dt>
+<dd>
+
+<p><i>Instance method.</i> Forces data from the path/filehandle (as specified by <code>build()</code>) to be read into core immediately, just as though you had given it literally with the <code>Data</code> keyword.</p>
+
+<p>Note that the in-core data will always be used if available.</p>
+
+<p>Be aware that everything is slurped into a giant scalar: you may not want to use this if sending tar files! The benefit of <i>not</i> reading in the data is that very large files can be handled by this module if left on disk until the message is output via <code>print()</code> or <code>print_body()</code>.</p>
+
+</dd>
+<dt id="sign-PARAMHASH">sign PARAMHASH</dt>
+<dd>
+
+<p><i>Instance method.</i> Sign the message. This forces the message to be read into core, after which the signature is appended to it.</p>
+
+<dl>
+
+<dt id="Data1">Data</dt>
+<dd>
+
+<p>As in <code>build()</code>: the literal signature data. Can be either a scalar or a ref to an array of scalars.</p>
+
+</dd>
+<dt id="Path1">Path</dt>
+<dd>
+
+<p>As in <code>build()</code>: the path to the file.</p>
+
+</dd>
+</dl>
+
+<p>If no arguments are given, the default is:</p>
+
+<pre><code>    <span class="string">Path</span> <span class="operator">=&gt;</span> <span class="string">"</span><span class="variable">$ENV</span><span class="string">{HOME}/.signature"</span>
+</code></pre>
+
+<p>The content-length is recomputed.</p>
+
+</dd>
+<dt id="verify_data">verify_data</dt>
+<dd>
+
+<p><i>Instance method.</i> Verify that all &quot;paths&quot; to attached data exist, recursively. It might be a good idea for you to do this before a print(), to prevent accidental partial output if a file might be missing. Raises exception if any path is not readable.</p>
+
+</dd>
+</dl>
+
+<h2 id="Output">Output</h2>
+
+<dl>
+
+<dt id="print-OUTHANDLE">print [OUTHANDLE]</dt>
+<dd>
+
+<p><i>Instance method.</i> Print the message to the given output handle, or to the currently-selected filehandle if none was given.</p>
+
+<p>All OUTHANDLE has to be is a filehandle (possibly a glob ref), or any object that responds to a print() message.</p>
+
+</dd>
+<dt id="print_body-OUTHANDLE-IS_SMTP">print_body [OUTHANDLE] [IS_SMTP]</dt>
+<dd>
+
+<p><i>Instance method.</i> Print the body of a message to the given output handle, or to the currently-selected filehandle if none was given.</p>
+
+<p>All OUTHANDLE has to be is a filehandle (possibly a glob ref), or any object that responds to a print() message.</p>
+
+<p><b>Fatal exception</b> raised if unable to open any of the input files, or if a part contains no data, or if an unsupported encoding is encountered.</p>
+
+<p>IS_SMPT is a special option to handle SMTP mails a little more intelligently than other send mechanisms may require. Specifically this ensures that the last byte sent is NOT &#39;\n&#39; (octal \012) if the last two bytes are not &#39;\r\n&#39; (\015\012) as this will cause some SMTP servers to hang.</p>
+
+</dd>
+<dt id="print_header-OUTHANDLE">print_header [OUTHANDLE]</dt>
+<dd>
+
+<p><i>Instance method.</i> Print the header of the message to the given output handle, or to the currently-selected filehandle if none was given.</p>
+
+<p>All OUTHANDLE has to be is a filehandle (possibly a glob ref), or any object that responds to a print() message.</p>
+
+</dd>
+<dt id="as_string">as_string</dt>
+<dd>
+
+<p><i>Instance method.</i> Return the entire message as a string, with a header and an encoded body.</p>
+
+</dd>
+<dt id="body_as_string">body_as_string</dt>
+<dd>
+
+<p><i>Instance method.</i> Return the encoded body as a string. This is the portion after the header and the blank line.</p>
+
+<p><i>Note:</i> actually prepares the body by &quot;printing&quot; to a scalar. Proof that you can hand the <code>print*()</code> methods any blessed object that responds to a <code>print()</code> message.</p>
+
+</dd>
+<dt id="header_as_string">header_as_string</dt>
+<dd>
+
+<p><i>Instance method.</i> Return the header as a string.</p>
+
+</dd>
+</dl>
+
+<h2 id="Sending">Sending</h2>
+
+<dl>
+
+<dt id="send">send</dt>
+<dd>
+
+</dd>
+<dt id="send-HOW-HOWARGS">send HOW, HOWARGS...</dt>
+<dd>
+
+<p><i>Class/instance method.</i> This is the principal method for sending mail, and for configuring how mail will be sent.</p>
+
+<p><i>As a class method</i> with a HOW argument and optional HOWARGS, it sets the default sending mechanism that the no-argument instance method will use. The HOW is a facility name (<b>see below</b>), and the HOWARGS is interpreted by the facility. The class method returns the previous HOW and HOWARGS as an array.</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'sendmail'</span><span class="operator">,</span> <span class="string">"d:\\programs\\sendmail.exe"</span><span class="operator">);</span>
+    <span class="operator">...</span>
+    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(...);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">;</span>
+</code></pre>
+
+<p><i>As an instance method with arguments</i> (a HOW argument and optional HOWARGS), sends the message in the requested manner; e.g.:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'sendmail'</span><span class="operator">,</span> <span class="string">"d:\\programs\\sendmail.exe"</span><span class="operator">);</span>
+</code></pre>
+
+<p><i>As an instance method with no arguments,</i> sends the message by the default mechanism set up by the class method. Returns whatever the mail-handling routine returns: this should be true on success, false/exception on error:</p>
+
+<pre><code>    <span class="variable">$msg</span> <span class="operator">=</span> <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">From</span><span class="operator">=&gt;...);</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span> <span class="operator">||</span> <span class="keyword">die</span> <span class="string">"you DON'T have mail!"</span><span class="operator">;</span>
+</code></pre>
+
+<p>On Unix systems (or rather non-Win32 systems), the default setting is equivalent to:</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">"sendmail"</span><span class="operator">,</span> <span class="string">"/usr/lib/sendmail -t -oi -oem"</span><span class="operator">);</span>
+</code></pre>
+
+<p>On Win32 systems the default setting is equivalent to:</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">"smtp"</span><span class="operator">);</span>
+</code></pre>
+
+<p>The assumption is that on Win32 your site/lib/Net/libnet.cfg file will be preconfigured to use the appropriate SMTP server. See below for configuring for authentication.</p>
+
+<p>There are three facilities:</p>
+
+<dl>
+
+<dt id="sendmail-ARGS">&quot;sendmail&quot;, ARGS...</dt>
+<dd>
+
+<p>Send a message by piping it into the &quot;sendmail&quot; command. Uses the <a href="#send_by_sendmail">send_by_sendmail()</a> method, giving it the ARGS. This usage implements (and deprecates) the <code>sendmail()</code> method.</p>
+
+</dd>
+<dt id="smtp-HOSTNAME-NAMEDPARMS">&quot;smtp&quot;, [HOSTNAME, [NAMEDPARMS] ]</dt>
+<dd>
+
+<p>Send a message by SMTP, using optional HOSTNAME as SMTP-sending host. <a href="../../../lib/Net/SMTP.html">Net::SMTP</a> will be required. Uses the <a href="#send_by_smtp">send_by_smtp()</a> method. Any additional arguments passed in will also be passed through to send_by_smtp. This is useful for things like mail servers requiring authentication where you can say something like the following</p>
+
+<pre><code>  <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'smtp'</span><span class="operator">,</span> <span class="variable">$host</span><span class="operator">,</span> <span class="string">AuthUser</span><span class="operator">=&gt;</span><span class="variable">$user</span><span class="operator">,</span> <span class="string">AuthPass</span><span class="operator">=&gt;</span><span class="variable">$pass</span><span class="operator">);</span>
+</code></pre>
+
+<p>which will configure things so future uses of</p>
+
+<pre><code>  <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">();</span>
+</code></pre>
+
+<p>do the right thing.</p>
+
+</dd>
+<dt id="sub-SUBREF-ARGS">&quot;sub&quot;, \&amp;SUBREF, ARGS...</dt>
+<dd>
+
+<p>Sends a message MSG by invoking the subroutine SUBREF of your choosing, with MSG as the first argument, and ARGS following.</p>
+
+</dd>
+</dl>
+
+<p><i>For example:</i> let&#39;s say you&#39;re on an OS which lacks the usual Unix &quot;sendmail&quot; facility, but you&#39;ve installed something a lot like it, and you need to configure your Perl script to use this &quot;sendmail.exe&quot; program. Do this following in your script&#39;s setup:</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'sendmail'</span><span class="operator">,</span> <span class="string">"d:\\programs\\sendmail.exe"</span><span class="operator">);</span>
+</code></pre>
+
+<p>Then, whenever you need to send a message $msg, just say:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">;</span>
+</code></pre>
+
+<p>That&#39;s it. Now, if you ever move your script to a Unix box, all you need to do is change that line in the setup and you&#39;re done. All of your $msg-&gt;send invocations will work as expected.</p>
+
+<p>After sending, the method last_send_successful() can be used to determine if the send was successful or not.</p>
+
+</dd>
+<dt id="send_by_sendmail-SENDMAILCMD">send_by_sendmail SENDMAILCMD</dt>
+<dd>
+
+</dd>
+<dt id="send_by_sendmail-PARAM-VALUE-ARRAY-HASH">send_by_sendmail PARAM=&gt;VALUE, ARRAY, HASH...</dt>
+<dd>
+
+<p><i>Instance method.</i> Send message via an external &quot;sendmail&quot; program (this will probably only work out-of-the-box on Unix systems).</p>
+
+<p>Returns true on success, false or exception on error.</p>
+
+<p>You can specify the program and all its arguments by giving a single string, SENDMAILCMD. Nothing fancy is done; the message is simply piped in.</p>
+
+<p>However, if your needs are a little more advanced, you can specify zero or more of the following PARAM/VALUE pairs (or a reference to hash or array of such arguments as well as any combination thereof); a Unix-style, taint-safe &quot;sendmail&quot; command will be constructed for you:</p>
+
+<dl>
+
+<dt id="Sendmail">Sendmail</dt>
+<dd>
+
+<p>Full path to the program to use. Default is &quot;/usr/lib/sendmail&quot;.</p>
+
+</dd>
+<dt id="BaseArgs">BaseArgs</dt>
+<dd>
+
+<p>Ref to the basic array of arguments we start with. Default is <code>[&quot;-t&quot;, &quot;-oi&quot;, &quot;-oem&quot;]</code>.</p>
+
+</dd>
+<dt id="SetSender">SetSender</dt>
+<dd>
+
+<p>Unless this is <i>explicitly</i> given as false, we attempt to automatically set the <code>-f</code> argument to the first address that can be extracted from the &quot;From:&quot; field of the message (if there is one).</p>
+
+<p><i>What is the -f, and why do we use it?</i> Suppose we did <i>not</i> use <code>-f</code>, and you gave an explicit &quot;From:&quot; field in your message: in this case, the sendmail &quot;envelope&quot; would indicate the <i>real</i> user your process was running under, as a way of preventing mail forgery. Using the <code>-f</code> switch causes the sender to be set in the envelope as well.</p>
+
+<p><i>So when would I NOT want to use it?</i> If sendmail doesn&#39;t regard you as a &quot;trusted&quot; user, it will permit the <code>-f</code> but also add an &quot;X-Authentication-Warning&quot; header to the message to indicate a forged envelope. To avoid this, you can either (1) have SetSender be false, or (2) make yourself a trusted user by adding a <code>T</code> configuration command to your <i>sendmail.cf</i> file (e.g.: <code>Teryq</code> if the script is running as user &quot;eryq&quot;).</p>
+
+</dd>
+<dt id="FromSender">FromSender</dt>
+<dd>
+
+<p>If defined, this is identical to setting SetSender to true, except that instead of looking at the &quot;From:&quot; field we use the address given by this option. Thus:</p>
+
+<pre><code>    FromSender =&gt; &#39;me@myhost.com&#39;</code></pre>
+
+</dd>
+</dl>
+
+<p>After sending, the method last_send_successful() can be used to determine if the send was successful or not.</p>
+
+</dd>
+<dt id="send_by_smtp-HOST-ARGS">send_by_smtp HOST, ARGS...</dt>
+<dd>
+
+</dd>
+<dt id="send_by_smtp-REF-HOST-ARGS">send_by_smtp REF, HOST, ARGS</dt>
+<dd>
+
+<p><i>Instance method.</i> Send message via SMTP, using Net::SMTP -- which will be required for this feature.</p>
+
+<p>HOST is the name of SMTP server to connect to, or undef to have <a href="../../../lib/Net/SMTP.html">Net::SMTP</a> use the defaults in Libnet.cfg.</p>
+
+<p>ARGS are a list of key value pairs which may be selected from the list below. Many of these are just passed through to specific <a href="../../../lib/Net/SMTP.html">Net::SMTP</a> commands and you should review that module for details.</p>
+
+<p>Please see <a href="#Good-vs-bad-email-addresses-with-send_by_smtp">Good-vs-bad email addresses with send_by_smtp()</a></p>
+
+<dl>
+
+<dt id="Hello">Hello</dt>
+<dd>
+
+</dd>
+<dt id="LocalAddr">LocalAddr</dt>
+<dd>
+
+</dd>
+<dt id="LocalPort">LocalPort</dt>
+<dd>
+
+</dd>
+<dt id="Timeout">Timeout</dt>
+<dd>
+
+</dd>
+<dt id="Port">Port</dt>
+<dd>
+
+</dd>
+<dt id="ExactAddresses">ExactAddresses</dt>
+<dd>
+
+</dd>
+<dt id="Debug">Debug</dt>
+<dd>
+
+<p>See <a href="../../../lib/Net/SMTP.html#mail">Net::SMTP::new()</a> for details.</p>
+
+</dd>
+<dt id="Size">Size</dt>
+<dd>
+
+</dd>
+<dt id="Return">Return</dt>
+<dd>
+
+</dd>
+<dt id="Bits">Bits</dt>
+<dd>
+
+</dd>
+<dt id="Transaction">Transaction</dt>
+<dd>
+
+</dd>
+<dt id="Envelope">Envelope</dt>
+<dd>
+
+<p>See <a href="../../../lib/Net/SMTP.html#mail">Net::SMTP::mail()</a> for details.</p>
+
+</dd>
+<dt id="SkipBad">SkipBad</dt>
+<dd>
+
+<p>If true doesn&#39;t throw an error when multiple email addresses are provided and some are not valid. See <a href="../../../lib/Net/SMTP.html#recipient">Net::SMTP::recipient()</a> for details.</p>
+
+</dd>
+<dt id="AuthUser">AuthUser</dt>
+<dd>
+
+<p>Authenticate with <a href="../../../lib/Net/SMTP.html#auth">Net::SMTP::auth()</a> using this username.</p>
+
+</dd>
+<dt id="AuthPass">AuthPass</dt>
+<dd>
+
+<p>Authenticate with <a href="../../../lib/Net/SMTP.html#auth">Net::SMTP::auth()</a> using this password.</p>
+
+</dd>
+<dt id="NoAuth">NoAuth</dt>
+<dd>
+
+<p>Normally if AuthUser and AuthPass are defined MIME::Lite will attempt to use them with the <a href="../../../lib/Net/SMTP.html#auth">Net::SMTP::auth()</a> command to authenticate the connection, however if this value is true then no authentication occurs.</p>
+
+</dd>
+<dt id="To">To</dt>
+<dd>
+
+<p>Sets the addresses to send to. Can be a string or a reference to an array of strings. Normally this is extracted from the To: (and Cc: and Bcc: fields if $AUTO_CC is true).</p>
+
+<p>This value overrides that.</p>
+
+</dd>
+<dt id="From">From</dt>
+<dd>
+
+<p>Sets the email address to send from. Normally this value is extracted from the Return-Path: or From: field of the mail itself (in that order).</p>
+
+<p>This value overrides that.</p>
+
+</dd>
+</dl>
+
+<p><i>Returns:</i> True on success, croaks with an error message on failure.</p>
+
+<p>After sending, the method last_send_successful() can be used to determine if the send was successful or not.</p>
+
+</dd>
+<dt id="send_by_testfile-FILENAME">send_by_testfile FILENAME</dt>
+<dd>
+
+<p><i>Instance method.</i> Print message to a file (namely FILENAME), which will default to mailer.testfile If file exists, message will be appended.</p>
+
+</dd>
+<dt id="last_send_successful">last_send_successful</dt>
+<dd>
+
+<p>This method will return TRUE if the last send() or send_by_XXX() method call was successful. It will return defined but false if it was not successful, and undefined if the object had not been used to send yet.</p>
+
+</dd>
+<dt id="sendmail-COMMAND">sendmail COMMAND...</dt>
+<dd>
+
+<p><i>Class method, DEPRECATED.</i> Declare the sender to be &quot;sendmail&quot;, and set up the &quot;sendmail&quot; command. <i>You should use send() instead.</i></p>
+
+</dd>
+</dl>
+
+<h2 id="Miscellaneous">Miscellaneous</h2>
+
+<dl>
+
+<dt id="quiet-ONOFF">quiet ONOFF</dt>
+<dd>
+
+<p><i>Class method.</i> Suppress/unsuppress all warnings coming from this module.</p>
+
+<pre><code>    <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">quiet</span><span class="operator">(</span><span class="number">1</span><span class="operator">);</span>       <span class="comment">### I know what I'm doing</span>
+</code></pre>
+
+<p>I recommend that you include that comment as well. And while you type it, say it out loud: if it doesn&#39;t feel right, then maybe you should reconsider the whole line. <code><span class="operator">;-)</span>
+</code></p>
+
+</dd>
+</dl>
+
+<h1 id="NOTES">NOTES</h1>
+
+<h2 id="How-do-I-prevent-Content-headers-from-showing-up-in-my-mail-reader">How do I prevent &quot;Content&quot; headers from showing up in my mail reader?</h2>
+
+<p>Apparently, some people are using mail readers which display the MIME headers like &quot;Content-disposition&quot;, and they want MIME::Lite not to generate them &quot;because they look ugly&quot;.</p>
+
+<p>Sigh.</p>
+
+<p>Y&#39;know, kids, those headers aren&#39;t just there for cosmetic purposes. They help ensure that the message is <i>understood</i> correctly by mail readers. But okay, you asked for it, you got it... here&#39;s how you can suppress the standard MIME headers. Before you send the message, do this:</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">scrub</span><span class="operator">;</span>
+</code></pre>
+
+<p>You can scrub() any part of a multipart message independently; just be aware that it works recursively. Before you scrub, note the rules that I follow:</p>
+
+<dl>
+
+<dt id="Content-type">Content-type</dt>
+<dd>
+
+<p>You can safely scrub the &quot;content-type&quot; attribute if, and only if, the part is of type &quot;text/plain&quot; with charset &quot;us-ascii&quot;.</p>
+
+</dd>
+<dt id="Content-transfer-encoding">Content-transfer-encoding</dt>
+<dd>
+
+<p>You can safely scrub the &quot;content-transfer-encoding&quot; attribute if, and only if, the part uses &quot;7bit&quot;, &quot;8bit&quot;, or &quot;binary&quot; encoding. You are far better off doing this if your lines are under 1000 characters. Generally, that means you <i>can</i> scrub it for plain text, and you can <i>not</i> scrub this for images, etc.</p>
+
+</dd>
+<dt id="Content-disposition">Content-disposition</dt>
+<dd>
+
+<p>You can safely scrub the &quot;content-disposition&quot; attribute if you trust the mail reader to do the right thing when it decides whether to show an attachment inline or as a link. Be aware that scrubbing both the content-disposition and the content-type means that there is no way to &quot;recommend&quot; a filename for the attachment!</p>
+
+<p><b>Note:</b> there are reports of brain-dead MUAs out there that do the wrong thing if you <i>provide</i> the content-disposition. If your attachments keep showing up inline or vice-versa, try scrubbing this attribute.</p>
+
+</dd>
+<dt id="Content-length">Content-length</dt>
+<dd>
+
+<p>You can always scrub &quot;content-length&quot; safely.</p>
+
+</dd>
+</dl>
+
+<h2 id="How-do-I-give-my-attachment-a-different-recommended-filename">How do I give my attachment a [different] recommended filename?</h2>
+
+<p>By using the Filename option (which is different from Path!):</p>
+
+<pre><code>    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">attach</span><span class="operator">(</span><span class="string">Type</span> <span class="operator">=&gt;</span> <span class="string">"image/gif"</span><span class="operator">,</span>
+                 <span class="string">Path</span> <span class="operator">=&gt;</span> <span class="string">"/here/is/the/real/file.GIF"</span><span class="operator">,</span>
+                 <span class="string">Filename</span> <span class="operator">=&gt;</span> <span class="string">"logo.gif"</span><span class="operator">);</span>
+</code></pre>
+
+<p>You should <i>not</i> put path information in the Filename.</p>
+
+<h2 id="Benign-limitations">Benign limitations</h2>
+
+<p>This is &quot;lite&quot;, after all...</p>
+
+<ul>
+
+<li><p>There&#39;s no parsing. Get MIME-tools if you need to parse MIME messages.</p>
+
+</li>
+<li><p>MIME::Lite messages are currently <i>not</i> interchangeable with either Mail::Internet or MIME::Entity objects. This is a completely separate module.</p>
+
+</li>
+<li><p>A content-length field is only inserted if the encoding is binary, the message is a singlepart, and all the document data is available at <code>build()</code> time by virtue of residing in a simple path, or in-core. Since content-length is not a standard MIME field anyway (that&#39;s right, kids: it&#39;s not in the MIME RFCs, it&#39;s an HTTP thing), this seems pretty fair.</p>
+
+</li>
+<li><p>MIME::Lite alone cannot help you lose weight. You must supplement your use of MIME::Lite with a healthy diet and exercise.</p>
+
+</li>
+</ul>
+
+<h2 id="Cheap-and-easy-mailing">Cheap and easy mailing</h2>
+
+<p>I thought putting in a default &quot;sendmail&quot; invocation wasn&#39;t too bad an idea, since a lot of Perlers are on UNIX systems. (As of version 3.02 this is default only on Non-Win32 boxen. On Win32 boxen the default is to use SMTP and the defaults specified in the site/lib/Net/libnet.cfg)</p>
+
+<p>The out-of-the-box configuration is:</p>
+
+<pre><code>     <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'sendmail'</span><span class="operator">,</span> <span class="string">"/usr/lib/sendmail -t -oi -oem"</span><span class="operator">);</span>
+</code></pre>
+
+<p>By the way, these arguments to sendmail are:</p>
+
+<pre><code>     -t      Scan message for To:, Cc:, Bcc:, etc.
+
+     -oi     Do NOT treat a single &quot;.&quot; on a line as a message terminator.
+             As in, &quot;-oi vey, it truncated my message... why?!&quot;
+
+     -oem    On error, mail back the message (I assume to the
+             appropriate address, given in the header).
+             When mail returns, circle is complete.  Jai Guru Deva -oem.</code></pre>
+
+<p>Note that these are the same arguments you get if you configure to use the smarter, taint-safe mailing:</p>
+
+<pre><code>     <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'sendmail'</span><span class="operator">);</span>
+</code></pre>
+
+<p>If you get &quot;X-Authentication-Warning&quot; headers from this, you can forgo diddling with the envelope by instead specifying:</p>
+
+<pre><code>     <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'sendmail'</span><span class="operator">,</span> <span class="string">SetSender</span><span class="operator">=&gt;</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<p>And, if you&#39;re not on a Unix system, or if you&#39;d just rather send mail some other way, there&#39;s always SMTP, which these days probably requires authentication so you probably need to say</p>
+
+<pre><code>     <span class="variable">MIME::Lite</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'smtp'</span><span class="operator">,</span> <span class="string">"smtp.myisp.net"</span><span class="operator">,</span>
+        <span class="string">AuthUser</span><span class="operator">=&gt;</span><span class="string">"YourName"</span><span class="operator">,</span><span class="string">AuthPass</span><span class="operator">=&gt;</span><span class="string">"YourPass"</span> <span class="operator">);</span>
+</code></pre>
+
+<p>Or you can set up your own subroutine to call. In any case, check out the <a href="#send">send()</a> method.</p>
+
+<h1 id="WARNINGS">WARNINGS</h1>
+
+<h2 id="Good-vs-bad-email-addresses-with-send_by_smtp">Good-vs-bad email addresses with send_by_smtp()</h2>
+
+<p>If using <a href="#send_by_smtp">send_by_smtp()</a>, be aware that unless you explicitly provide the email addresses to send to and from you will be forcing MIME::Lite to extract email addresses out of a possible list provided in the <code>To:</code>, <code>Cc:</code>, and <code>Bcc:</code> fields. This is tricky stuff, and as such only the following sorts of addresses will work reliably:</p>
+
+<pre><code>    username
+    full.name@some.host.com
+    &quot;Name, Full&quot; &lt;full.name@some.host.com&gt;</code></pre>
+
+<p><b>Disclaimer:</b> MIME::Lite was never intended to be a Mail User Agent, so please don&#39;t expect a full implementation of RFC-822. Restrict yourself to the common forms of Internet addresses described herein, and you should be fine. If this is not feasible, then consider using MIME::Lite to <i>prepare</i> your message only, and using Net::SMTP explicitly to <i>send</i> your message.</p>
+
+<p><b>Note:</b> As of MIME::Lite v3.02 the mail name extraction routines have been beefed up considerably. Furthermore if Mail::Address if provided then name extraction is done using that. Accordingly the above advice is now less true than it once was. Funky email names <i>should</i> work properly now. However the disclaimer remains. Patches welcome. :-)</p>
+
+<h2 id="Formatting-of-headers-delayed-until-print">Formatting of headers delayed until print()</h2>
+
+<p>This class treats a MIME header in the most abstract sense, as being a collection of high-level attributes. The actual RFC-822-style header fields are not constructed until it&#39;s time to actually print the darn thing.</p>
+
+<h2 id="Encoding-of-data-delayed-until-print">Encoding of data delayed until print()</h2>
+
+<p>When you specify message bodies (in <a href="#build">build()</a> or <a href="#attach">attach()</a>) -- whether by <b>FH</b>, <b>Data</b>, or <b>Path</b> -- be warned that we don&#39;t attempt to open files, read filehandles, or encode the data until <a href="#print">print()</a> is invoked.</p>
+
+<p>In the past, this created some confusion for users of sendmail who gave the wrong path to an attachment body, since enough of the print() would succeed to get the initial part of the message out. Nowadays, $AUTO_VERIFY is used to spot-check the Paths given before the mail facility is employed. A whisker slower, but tons safer.</p>
+
+<p>Note that if you give a message body via FH, and try to print() a message twice, the second print() will not do the right thing unless you explicitly rewind the filehandle.</p>
+
+<p>You can get past these difficulties by using the <b>ReadNow</b> option, provided that you have enough memory to handle your messages.</p>
+
+<h2 id="MIME-attributes-are-separate-from-header-fields">MIME attributes are separate from header fields!</h2>
+
+<p><b>Important:</b> the MIME attributes are stored and manipulated separately from the message header fields; when it comes time to print the header out, <i>any explicitly-given header fields override the ones that would be created from the MIME attributes.</i> That means that this:</p>
+
+<pre><code>    <span class="comment">### DANGER ### DANGER ### DANGER ### DANGER ### DANGER ###</span>
+    <span class="variable">$msg</span><span class="operator">-&gt;</span><span class="variable">add</span><span class="operator">(</span><span class="string">"Content-type"</span><span class="operator">,</span> <span class="string">"text/html; charset=US-ASCII"</span><span class="operator">);</span>
+</code></pre>
+
+<p>will set the exact <code>&quot;Content-type&quot;</code> field in the header I write, <i>regardless of what the actual MIME attributes are.</i></p>
+
+<p><i>This feature is for experienced users only,</i> as an escape hatch in case the code that normally formats MIME header fields isn&#39;t doing what you need. And, like any escape hatch, it&#39;s got an alarm on it: MIME::Lite will warn you if you attempt to <code>set()</code> or <code>replace()</code> any MIME header field. Use <code>attr()</code> instead.</p>
+
+<h2 id="Beware-of-lines-consisting-of-a-single-dot">Beware of lines consisting of a single dot</h2>
+
+<p>Julian Haight noted that MIME::Lite allows you to compose messages with lines in the body consisting of a single &quot;.&quot;. This is true: it should be completely harmless so long as &quot;sendmail&quot; is used with the -oi option (see <a href="#Cheap-and-easy-mailing">&quot;Cheap and easy mailing&quot;</a>).</p>
+
+<p>However, I don&#39;t know if using Net::SMTP to transfer such a message is equally safe. Feedback is welcomed.</p>
+
+<p>My perspective: I don&#39;t want to magically diddle with a user&#39;s message unless absolutely positively necessary. Some users may want to send files with &quot;.&quot; alone on a line; my well-meaning tinkering could seriously harm them.</p>
+
+<h2 id="Infinite-loops-may-mean-tainted-data">Infinite loops may mean tainted data!</h2>
+
+<p>Stefan Sautter noticed a bug in 2.106 where a m//gc match was failing due to tainted data, leading to an infinite loop inside MIME::Lite.</p>
+
+<p>I am attempting to correct for this, but be advised that my fix will silently untaint the data (given the context in which the problem occurs, this should be benign: I&#39;ve labelled the source code with UNTAINT comments for the curious).</p>
+
+<p>So: don&#39;t depend on taint-checking to save you from outputting tainted data in a message.</p>
+
+<h2 id="Dont-tweak-the-global-configuration">Don&#39;t tweak the global configuration</h2>
+
+<p>Global configuration variables are bad, and should go away. Until they do, please follow the hints with each setting on how <i>not</i> to change it.</p>
+
+<h1 id="A-MIME-PRIMER">A MIME PRIMER</h1>
+
+<h2 id="Content-types">Content types</h2>
+
+<p>The &quot;Type&quot; parameter of <code>build()</code> is a <i>content type</i>. This is the actual type of data you are sending. Generally this is a string of the form <code>&quot;majortype/minortype&quot;</code>.</p>
+
+<p>Here are the major MIME types. A more-comprehensive listing may be found in RFC-2046.</p>
+
+<dl>
+
+<dt id="application">application</dt>
+<dd>
+
+<p>Data which does not fit in any of the other categories, particularly data to be processed by some type of application program. <code>application/octet-stream</code>, <code>application/gzip</code>, <code>application/postscript</code>...</p>
+
+</dd>
+<dt id="audio">audio</dt>
+<dd>
+
+<p>Audio data. <code>audio/basic</code>...</p>
+
+</dd>
+<dt id="image">image</dt>
+<dd>
+
+<p>Graphics data. <code>image/gif</code>, <code>image/jpeg</code>...</p>
+
+</dd>
+<dt id="message">message</dt>
+<dd>
+
+<p>A message, usually another mail or MIME message. <code>message/rfc822</code>...</p>
+
+</dd>
+<dt id="multipart">multipart</dt>
+<dd>
+
+<p>A message containing other messages. <code>multipart/mixed</code>, <code>multipart/alternative</code>...</p>
+
+</dd>
+<dt id="text">text</dt>
+<dd>
+
+<p>Textual data, meant for humans to read. <code>text/plain</code>, <code>text/html</code>...</p>
+
+</dd>
+<dt id="video">video</dt>
+<dd>
+
+<p>Video or video+audio data. <code>video/mpeg</code>...</p>
+
+</dd>
+</dl>
+
+<h2 id="Content-transfer-encodings">Content transfer encodings</h2>
+
+<p>The &quot;Encoding&quot; parameter of <code>build()</code>. This is how the message body is packaged up for safe transit.</p>
+
+<p>Here are the 5 major MIME encodings. A more-comprehensive listing may be found in RFC-2045.</p>
+
+<dl>
+
+<dt id="bit">7bit</dt>
+<dd>
+
+<p>Basically, no <i>real</i> encoding is done. However, this label guarantees that no 8-bit characters are present, and that lines do not exceed 1000 characters in length.</p>
+
+</dd>
+<dt id="bit1">8bit</dt>
+<dd>
+
+<p>Basically, no <i>real</i> encoding is done. The message might contain 8-bit characters, but this encoding guarantees that lines do not exceed 1000 characters in length.</p>
+
+</dd>
+<dt id="binary">binary</dt>
+<dd>
+
+<p>No encoding is done at all. Message might contain 8-bit characters, and lines might be longer than 1000 characters long.</p>
+
+<p>The most liberal, and the least likely to get through mail gateways. Use sparingly, or (better yet) not at all.</p>
+
+</dd>
+<dt id="base64">base64</dt>
+<dd>
+
+<p>Like &quot;uuencode&quot;, but very well-defined. This is how you should send essentially binary information (tar files, GIFs, JPEGs, etc.).</p>
+
+</dd>
+<dt id="quoted-printable">quoted-printable</dt>
+<dd>
+
+<p>Useful for encoding messages which are textual in nature, yet which contain non-ASCII characters (e.g., Latin-1, Latin-2, or any other 8-bit alphabet).</p>
+
+</dd>
+</dl>
+
+<h1 id="HELPER-MODULES">HELPER MODULES</h1>
+
+<p>MIME::Lite works nicely with other certain other modules if they are present. Good to have installed are the latest <a href="../../../site/lib/MIME/Types.html">MIME::Types</a>, <a href="../../../site/lib/Mail/Address.html">Mail::Address</a>, <a href="../../../lib/MIME/Base64.html">MIME::Base64</a>, <a href="../../../lib/MIME/QuotedPrint.html">MIME::QuotedPrint</a>, and <a href="../../../lib/Net/SMTP.html">Net::SMTP</a>. <a href="../../../site/lib/Email/Date/Format.html">Email::Date::Format</a> is strictly required.</p>
+
+<p>If they aren&#39;t present then some functionality won&#39;t work, and other features wont be as efficient or up to date as they could be. Nevertheless they are optional extras.</p>
+
+<h1 id="BUNDLED-GOODIES">BUNDLED GOODIES</h1>
+
+<p>MIME::Lite comes with a number of extra files in the distribution bundle. This includes examples, and utility modules that you can use to get yourself started with the module.</p>
+
+<p>The ./examples directory contains a number of snippets in prepared form, generally they are documented, but they should be easy to understand.</p>
+
+<p>The ./contrib directory contains a companion/tool modules that come bundled with MIME::Lite, they don&#39;t get installed by default. Please review the POD they come with.</p>
+
+<h1 id="BUGS">BUGS</h1>
+
+<p>The whole reason that version 3.0 was released was to ensure that MIME::Lite is up to date and patched. If you find an issue please report it.</p>
+
+<p>As far as I know MIME::Lite doesn&#39;t currently have any serious bugs, but my usage is hardly comprehensive.</p>
+
+<p>Having said that there are a number of open issues for me, mostly caused by the progress in the community as whole since Eryq last released. The tests are based around an interesting but non standard test framework. I&#39;d like to change it over to using Test::More.</p>
+
+<p>Should tests fail please review the ./testout directory, and in any bug reports please include the output of the relevant file. This is the only redeeming feature of not using Test::More that I can see.</p>
+
+<p>Bug fixes / Patches / Contribution are welcome, however I probably won&#39;t apply them unless they also have an associated test. This means that if I don&#39;t have the time to write the test the patch wont get applied, so please, include tests for any patches you provide.</p>
+
+<h1 id="VERSION">VERSION</h1>
+
+<p>Version: 3.030</p>
+
+<h1 id="CHANGE-LOG">CHANGE LOG</h1>
+
+<p>Moved to ./changes.pod</p>
+
+<p>NOTE: Users of the &quot;advanced features&quot; of 3.01_0x smtp sending should take care: These features have been REMOVED as they never really fit the purpose of the module. Redundant SMTP delivery is a task that should be handled by another module.</p>
+
+<h1 id="TERMS-AND-CONDITIONS">TERMS AND CONDITIONS</h1>
+
+<pre><code>  Copyright (c) 1997 by Eryq.
+  Copyright (c) 1998 by ZeeGee Software Inc.
+  Copyright (c) 2003,2005 Yves Orton. (demerphq)</code></pre>
+
+<p>All rights reserved. This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.</p>
+
+<p>This software comes with <b>NO WARRANTY</b> of any kind. See the COPYING file in the distribution for details.</p>
+
+<h1 id="NUTRITIONAL-INFORMATION">NUTRITIONAL INFORMATION</h1>
+
+<p>For some reason, the US FDA says that this is now required by law on any products that bear the name &quot;Lite&quot;...</p>
+
+<p>Version 3.0 is now new and improved! The distribution is now 30% smaller!</p>
+
+<pre><code>    MIME::Lite                |
+    ------------------------------------------------------------
+    Serving size:             | 1 module
+    Servings per container:   | 1
+    Calories:                 | 0
+    Fat:                      | 0g
+      Saturated Fat:          | 0g</code></pre>
+
+<p>Warning: for consumption by hardware only! May produce indigestion in humans if taken internally.</p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Eryq (<i>eryq@zeegee.com</i>). President, ZeeGee Software Inc. (<i>http://www.zeegee.com</i>).</p>
+
+<p>Go to <i>http://www.cpan.org</i> for the latest downloads and on-line documentation for this module. Enjoy.</p>
+
+<p>Patches And Maintenance by Yves Orton and many others. Consult ./changes.pod</p>
+
+
+</body>
+
+</html>
+
+

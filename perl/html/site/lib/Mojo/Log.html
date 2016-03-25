@@ -1,0 +1,241 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#message">message</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#format">format</a></li>
+      <li><a href="#handle">handle</a></li>
+      <li><a href="#history">history</a></li>
+      <li><a href="#level">level</a></li>
+      <li><a href="#max_history_size">max_history_size</a></li>
+      <li><a href="#path">path</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#append">append</a></li>
+      <li><a href="#debug">debug</a></li>
+      <li><a href="#error">error</a></li>
+      <li><a href="#fatal">fatal</a></li>
+      <li><a href="#info">info</a></li>
+      <li><a href="#is_level">is_level</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#warn">warn</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Log - Simple logger</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Log</span><span class="operator">;</span>
+  
+  <span class="comment"># Log to STDERR</span>
+  <span class="keyword">my</span> <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">Mojo::Log</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  
+  <span class="comment"># Customize log file location and minimum log level</span>
+  <span class="keyword">my</span> <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">Mojo::Log</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">path</span> <span class="operator">=&gt;</span> <span class="string">'/var/log/mojo.log'</span><span class="operator">,</span> <span class="string">level</span> <span class="operator">=&gt;</span> <span class="string">'warn'</span><span class="operator">);</span>
+  
+  <span class="comment"># Log messages</span>
+  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">'Not sure what is happening here'</span><span class="operator">);</span>
+  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">info</span><span class="operator">(</span><span class="string">'FYI: it happened again'</span><span class="operator">);</span>
+  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">warn</span><span class="operator">(</span><span class="string">'This might be a problem'</span><span class="operator">);</span>
+  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="string">'Garden variety error'</span><span class="operator">);</span>
+  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">fatal</span><span class="operator">(</span><span class="string">'Boom'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Log.html">Mojo::Log</a> is a simple logger for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo.html">Mojo</a> projects.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Log.html">Mojo::Log</a> inherits all events from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones.</p>
+
+<h2 id="message">message</h2>
+
+<pre><code>  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$log</span><span class="operator">,</span> <span class="variable">$level</span><span class="operator">,</span> <span class="variable">@lines</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a new message gets logged.</p>
+
+<pre><code>  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">unsubscribe</span><span class="operator">(</span><span class="string">'message'</span><span class="operator">)-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$log</span><span class="operator">,</span> <span class="variable">$level</span><span class="operator">,</span> <span class="variable">@lines</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">"</span><span class="variable">$level</span><span class="string">: "</span><span class="operator">,</span> <span class="variable">@lines</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Log.html">Mojo::Log</a> implements the following attributes.</p>
+
+<h2 id="format">format</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cb</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">format</span><span class="operator">;</span>
+  <span class="variable">$log</span>   <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">format</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>A callback for formatting log messages.</p>
+
+<pre><code>  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">format</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$time</span><span class="operator">,</span> <span class="variable">$level</span><span class="operator">,</span> <span class="variable">@lines</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="string">"[Thu May 15 17:47:04 2014] [info] I â¥ Mojolicious\n"</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h2 id="handle">handle</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$handle</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">handle</span><span class="operator">;</span>
+  <span class="variable">$log</span>       <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">handle</span><span class="operator">(</span><span class="variable">IO::Handle</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Log filehandle used by default <a href="#message">&quot;message&quot;</a> event, defaults to opening <a href="#path">&quot;path&quot;</a> or <code>STDERR</code>.</p>
+
+<h2 id="history">history</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$history</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">history</span><span class="operator">;</span>
+  <span class="variable">$log</span>        <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">history</span><span class="operator">(</span><span class="operator">[[</span><span class="keyword">time</span><span class="operator">,</span> <span class="string">'debug'</span><span class="operator">,</span> <span class="string">'That went wrong'</span><span class="operator">]]</span><span class="operator">);</span>
+</code></pre>
+
+<p>The last few logged messages.</p>
+
+<h2 id="level">level</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$level</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">level</span><span class="operator">;</span>
+  <span class="variable">$log</span>      <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">level</span><span class="operator">(</span><span class="string">'debug'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Active log level, defaults to <code>debug</code>. Available log levels are <code>debug</code>, <code>info</code>, <code>warn</code>, <code>error</code> and <code>fatal</code>, in that order. Note that the <code>MOJO_LOG_LEVEL</code> environment variable can override this value.</p>
+
+<h2 id="max_history_size">max_history_size</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$size</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">max_history_size</span><span class="operator">;</span>
+  <span class="variable">$log</span>     <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">max_history_size</span><span class="operator">(</span><span class="number">5</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum number of logged messages to store in <a href="#history">&quot;history&quot;</a>, defaults to <code>10</code>.</p>
+
+<h2 id="path">path</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">path</span>
+  <span class="variable">$log</span>     <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">path</span><span class="operator">(</span><span class="string">'/var/log/mojo.log'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Log file path used by <a href="#handle">&quot;handle&quot;</a>.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Log.html">Mojo::Log</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="append">append</h2>
+
+<pre><code>  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">append</span><span class="operator">(</span><span class="string">"[Thu May 15 17:47:04 2014] [info] I â¥ Mojolicious\n"</span><span class="operator">);</span>
+</code></pre>
+
+<p>Append message to <a href="#handle">&quot;handle&quot;</a>.</p>
+
+<h2 id="debug">debug</h2>
+
+<pre><code>  <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">'You screwed up, but that is ok'</span><span class="operator">);</span>
+  <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">debug</span><span class="operator">(</span><span class="string">'All'</span><span class="operator">,</span> <span class="string">'cool'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Emit <a href="#message">&quot;message&quot;</a> event and log <code>debug</code> message.</p>
+
+<h2 id="error">error</h2>
+
+<pre><code>  <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="string">'You really screwed up this time'</span><span class="operator">);</span>
+  <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="string">'Wow'</span><span class="operator">,</span> <span class="string">'seriously'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Emit <a href="#message">&quot;message&quot;</a> event and log <code>error</code> message.</p>
+
+<h2 id="fatal">fatal</h2>
+
+<pre><code>  <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">fatal</span><span class="operator">(</span><span class="string">'Its over...'</span><span class="operator">);</span>
+  <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">fatal</span><span class="operator">(</span><span class="string">'Bye'</span><span class="operator">,</span> <span class="string">'bye'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Emit <a href="#message">&quot;message&quot;</a> event and log <code>fatal</code> message.</p>
+
+<h2 id="info">info</h2>
+
+<pre><code>  <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">info</span><span class="operator">(</span><span class="string">'You are bad, but you prolly know already'</span><span class="operator">);</span>
+  <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">info</span><span class="operator">(</span><span class="string">'Ok'</span><span class="operator">,</span> <span class="string">'then'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Emit <a href="#message">&quot;message&quot;</a> event and log <code>info</code> message.</p>
+
+<h2 id="is_level">is_level</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">is_level</span><span class="operator">(</span><span class="string">'debug'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check active log <a href="#level">&quot;level&quot;</a>.</p>
+
+<pre><code>  <span class="comment"># True</span>
+  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">level</span><span class="operator">(</span><span class="string">'debug'</span><span class="operator">)-&gt;</span><span class="variable">is_level</span><span class="operator">(</span><span class="string">'debug'</span><span class="operator">);</span>
+  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">level</span><span class="operator">(</span><span class="string">'debug'</span><span class="operator">)-&gt;</span><span class="variable">is_level</span><span class="operator">(</span><span class="string">'info'</span><span class="operator">);</span>
+  
+  <span class="comment"># False</span>
+  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">level</span><span class="operator">(</span><span class="string">'info'</span><span class="operator">)-&gt;</span><span class="variable">is_level</span><span class="operator">(</span><span class="string">'debug'</span><span class="operator">);</span>
+  <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">level</span><span class="operator">(</span><span class="string">'fatal'</span><span class="operator">)-&gt;</span><span class="variable">is_level</span><span class="operator">(</span><span class="string">'warn'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">Mojo::Log</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Log.html">Mojo::Log</a> object and subscribe to <a href="#message">&quot;message&quot;</a> event with default logger.</p>
+
+<h2 id="warn">warn</h2>
+
+<pre><code>  <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">warn</span><span class="operator">(</span><span class="string">'Dont do that Dave...'</span><span class="operator">);</span>
+  <span class="variable">$log</span> <span class="operator">=</span> <span class="variable">$log</span><span class="operator">-&gt;</span><span class="variable">warn</span><span class="operator">(</span><span class="string">'No'</span><span class="operator">,</span> <span class="string">'really'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Emit <a href="#message">&quot;message&quot;</a> event and log <code>warn</code> message.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

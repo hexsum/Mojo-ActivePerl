@@ -1,0 +1,175 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#request">request</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#app">app</a></li>
+      <li><a href="#reverse_proxy">reverse_proxy</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#build_app">build_app</a></li>
+      <li><a href="#build_tx">build_tx</a></li>
+      <li><a href="#daemonize">daemonize</a></li>
+      <li><a href="#load_app">load_app</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#run">run</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Server - HTTP/WebSocket server base class</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Mojo::Server::MyServer</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojo::Server'</span><span class="operator">;</span>
+  
+  <span class="keyword">sub</span><span class="variable"> run </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$self</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+  
+    <span class="comment"># Get a transaction</span>
+    <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">;</span>
+  
+    <span class="comment"># Emit "request" event</span>
+    <span class="variable">$self</span><span class="operator">-&gt;</span><span class="variable">emit</span><span class="operator">(</span><span class="string">request</span> <span class="operator">=&gt;</span> <span class="variable">$tx</span><span class="operator">);</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a> is an abstract base class for HTTP/WebSocket servers and server interfaces, like <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/CGI.html">Mojo::Server::CGI</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Daemon.html">Mojo::Server::Daemon</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Hypnotoad.html">Mojo::Server::Hypnotoad</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Morbo.html">Mojo::Server::Morbo</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/Prefork.html">Mojo::Server::Prefork</a> and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server/PSGI.html">Mojo::Server::PSGI</a>.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a> inherits all events from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones.</p>
+
+<h2 id="request">request</h2>
+
+<pre><code>  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">request</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$server</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted when a request is ready and needs to be handled.</p>
+
+<pre><code>  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">unsubscribe</span><span class="operator">(</span><span class="string">'request'</span><span class="operator">)-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">request</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$server</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="number">200</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">content_type</span><span class="operator">(</span><span class="string">'text/plain'</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">(</span><span class="string">'Hello World!'</span><span class="operator">);</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">resume</span><span class="operator">;</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a> implements the following attributes.</p>
+
+<h2 id="app">app</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">;</span>
+  <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">(</span><span class="variable">MojoSubclass</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Application this server handles, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/HelloWorld.html">Mojo::HelloWorld</a> object.</p>
+
+<h2 id="reverse_proxy">reverse_proxy</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">reverse_proxy</span><span class="operator">;</span>
+  <span class="variable">$server</span>  <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">reverse_proxy</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>This server operates behind a reverse proxy, defaults to the value of the <code>MOJO_REVERSE_PROXY</code> environment variable.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="build_app">build_app</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">build_app</span><span class="operator">(</span><span class="string">'MyApp'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Build application from class and assign it to <a href="#app">&quot;app&quot;</a>.</p>
+
+<h2 id="build_tx">build_tx</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">;</span>
+</code></pre>
+
+<p>Let application build a transaction.</p>
+
+<h2 id="daemonize">daemonize</h2>
+
+<pre><code>  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">daemonize</span><span class="operator">;</span>
+</code></pre>
+
+<p>Daemonize server process.</p>
+
+<h2 id="load_app">load_app</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$app</span> <span class="operator">=</span> <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">load_app</span><span class="operator">(</span><span class="string">'/home/sri/myapp.pl'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Load application from script and assign it to <a href="#app">&quot;app&quot;</a>.</p>
+
+<pre><code>  <span class="keyword">say</span> <span class="variable">Mojo::Server</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">-&gt;</span><span class="variable">load_app</span><span class="operator">(</span><span class="string">'./myapp.pl'</span><span class="operator">)-&gt;</span><span class="variable">home</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">Mojo::Server</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">Mojo::Server</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">reverse_proxy</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">Mojo::Server</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="operator">{</span><span class="string">reverse_proxy</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Server.html">Mojo::Server</a> object and subscribe to <a href="#request">&quot;request&quot;</a> event with default request handling.</p>
+
+<h2 id="run">run</h2>
+
+<pre><code>  <span class="variable">$server</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">;</span>
+</code></pre>
+
+<p>Run server. Meant to be overloaded in a subclass.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

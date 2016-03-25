@@ -1,0 +1,242 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#app">app</a></li>
+      <li><a href="#description">description</a></li>
+      <li><a href="#quiet">quiet</a></li>
+      <li><a href="#usage">usage</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#chmod_file">chmod_file</a></li>
+      <li><a href="#chmod_rel_file">chmod_rel_file</a></li>
+      <li><a href="#create_dir">create_dir</a></li>
+      <li><a href="#create_rel_dir">create_rel_dir</a></li>
+      <li><a href="#extract_usage">extract_usage</a></li>
+      <li><a href="#help">help</a></li>
+      <li><a href="#rel_dir">rel_dir</a></li>
+      <li><a href="#rel_file">rel_file</a></li>
+      <li><a href="#render_data">render_data</a></li>
+      <li><a href="#render_to_file">render_to_file</a></li>
+      <li><a href="#render_to_rel_file">render_to_rel_file</a></li>
+      <li><a href="#run">run</a></li>
+      <li><a href="#write_file">write_file</a></li>
+      <li><a href="#write_rel_file">write_rel_file</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Command - Command base class</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="comment"># Lowercase command name</span>
+  <span class="keyword">package</span> <span class="variable">Mojolicious::Command::mycommand</span><span class="operator">;</span>
+  <span class="keyword">use</span> <span class="variable">Mojo::Base</span> <span class="string">'Mojolicious::Command'</span><span class="operator">;</span>
+  
+  <span class="comment"># Short description</span>
+  <span class="variable">has</span> <span class="string">description</span> <span class="operator">=&gt;</span> <span class="string">'My first Mojo command'</span><span class="operator">;</span>
+  
+  <span class="comment"># Short usage message</span>
+  <span class="variable">has</span> <span class="string">usage</span> <span class="operator">=&gt;</span> <span class="operator">&lt;&lt;</span><span class="default">EOF</span><span class="operator">;</span><span class="string">
+  Usage: APPLICATION mycommand [OPTIONS]
+  
+  Options:
+    -s, --something   Does something
+  </span><span class="default">EOF</span>
+  
+  <span class="keyword">sub</span><span class="variable"> run </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$self</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+  
+    <span class="comment"># Magic here! :)</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command.html">Mojolicious::Command</a> is an abstract base class for <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> commands.</p>
+
+<p>See <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Commands.html#COMMANDS">&quot;COMMANDS&quot; in Mojolicious::Commands</a> for a list of commands that are available by default.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command.html">Mojolicious::Command</a> implements the following attributes.</p>
+
+<h2 id="app">app</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$app</span>  <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">;</span>
+  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Application for command, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/HelloWorld.html">Mojo::HelloWorld</a> object.</p>
+
+<pre><code>  <span class="comment"># Introspect</span>
+  <span class="keyword">say</span> <span class="string">"Template path: </span><span class="variable">$_</span><span class="string">"</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">renderer</span><span class="operator">-&gt;</span><span class="variable">paths</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="description">description</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$description</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">description</span><span class="operator">;</span>
+  <span class="variable">$command</span>        <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">description</span><span class="operator">(</span><span class="string">'Foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Short description of command, used for the command list.</p>
+
+<h2 id="quiet">quiet</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">quiet</span><span class="operator">;</span>
+  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">quiet</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Limited command output.</p>
+
+<h2 id="usage">usage</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$usage</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">usage</span><span class="operator">;</span>
+  <span class="variable">$command</span>  <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">usage</span><span class="operator">(</span><span class="string">'Foo'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Usage information for command, used for the help screen.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Command.html">Mojolicious::Command</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="chmod_file">chmod_file</h2>
+
+<pre><code>  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">chmod_file</span><span class="operator">(</span><span class="string">'/home/sri/foo.txt'</span><span class="operator">,</span> <span class="number">0644</span><span class="operator">);</span>
+</code></pre>
+
+<p>Change mode of a file.</p>
+
+<h2 id="chmod_rel_file">chmod_rel_file</h2>
+
+<pre><code>  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">chmod_rel_file</span><span class="operator">(</span><span class="string">'foo/foo.txt'</span><span class="operator">,</span> <span class="number">0644</span><span class="operator">);</span>
+</code></pre>
+
+<p>Portably change mode of a file relative to the current working directory.</p>
+
+<h2 id="create_dir">create_dir</h2>
+
+<pre><code>  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">create_dir</span><span class="operator">(</span><span class="string">'/home/sri/foo/bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Create a directory.</p>
+
+<h2 id="create_rel_dir">create_rel_dir</h2>
+
+<pre><code>  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">create_rel_dir</span><span class="operator">(</span><span class="string">'foo/bar/baz'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Portably create a directory relative to the current working directory.</p>
+
+<h2 id="extract_usage">extract_usage</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$usage</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">extract_usage</span><span class="operator">;</span>
+</code></pre>
+
+<p>Extract usage message from the SYNOPSIS section of the file this method was called from.</p>
+
+<h2 id="help">help</h2>
+
+<pre><code>  <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">help</span><span class="operator">;</span>
+</code></pre>
+
+<p>Print usage information for command.</p>
+
+<h2 id="rel_dir">rel_dir</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">rel_dir</span><span class="operator">(</span><span class="string">'foo/bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Portably generate an absolute path for a directory relative to the current working directory.</p>
+
+<h2 id="rel_file">rel_file</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">rel_file</span><span class="operator">(</span><span class="string">'foo/bar.txt'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Portably generate an absolute path for a file relative to the current working directory.</p>
+
+<h2 id="render_data">render_data</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$data</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">render_data</span><span class="operator">(</span><span class="string">'foo_bar'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$data</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">render_data</span><span class="operator">(</span><span class="string">'foo_bar'</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<p>Render a template from the <code>DATA</code> section of the command class with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Loader.html">Mojo::Loader</a> and <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a>.</p>
+
+<h2 id="render_to_file">render_to_file</h2>
+
+<pre><code>  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">render_to_file</span><span class="operator">(</span><span class="string">'foo_bar'</span><span class="operator">,</span> <span class="string">'/home/sri/foo.txt'</span><span class="operator">);</span>
+  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">render_to_file</span><span class="operator">(</span><span class="string">'foo_bar'</span><span class="operator">,</span> <span class="string">'/home/sri/foo.txt'</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<p>Render a template from the <code>DATA</code> section of the command class with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> to a file and create directory if necessary.</p>
+
+<h2 id="render_to_rel_file">render_to_rel_file</h2>
+
+<pre><code>  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">render_to_rel_file</span><span class="operator">(</span><span class="string">'foo_bar'</span><span class="operator">,</span> <span class="string">'foo/bar.txt'</span><span class="operator">);</span>
+  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">render_to_rel_file</span><span class="operator">(</span><span class="string">'foo_bar'</span><span class="operator">,</span> <span class="string">'foo/bar.txt'</span><span class="operator">,</span> <span class="variable">@args</span><span class="operator">);</span>
+</code></pre>
+
+<p>Portably render a template from the <code>DATA</code> section of the command class with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> to a file relative to the current working directory and create directory if necessary.</p>
+
+<h2 id="run">run</h2>
+
+<pre><code>  <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">;</span>
+  <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">run</span><span class="operator">(</span><span class="variable">@ARGV</span><span class="operator">);</span>
+</code></pre>
+
+<p>Run command. Meant to be overloaded in a subclass.</p>
+
+<h2 id="write_file">write_file</h2>
+
+<pre><code>  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">write_file</span><span class="operator">(</span><span class="string">'/home/sri/foo.txt'</span><span class="operator">,</span> <span class="string">'Hello World!'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Write text to a file and create directory if necessary.</p>
+
+<h2 id="write_rel_file">write_rel_file</h2>
+
+<pre><code>  <span class="variable">$command</span> <span class="operator">=</span> <span class="variable">$command</span><span class="operator">-&gt;</span><span class="variable">write_rel_file</span><span class="operator">(</span><span class="string">'foo/bar.txt'</span><span class="operator">,</span> <span class="string">'Hello World!'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Portably write text to a file relative to the current working directory and create directory if necessary.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

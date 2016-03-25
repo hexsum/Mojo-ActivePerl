@@ -1,0 +1,617 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#EVENTS">EVENTS</a>
+    <ul>
+      <li><a href="#start">start</a></li>
+    </ul>
+  </li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#ca">ca</a></li>
+      <li><a href="#cert">cert</a></li>
+      <li><a href="#connect_timeout">connect_timeout</a></li>
+      <li><a href="#cookie_jar">cookie_jar</a></li>
+      <li><a href="#inactivity_timeout">inactivity_timeout</a></li>
+      <li><a href="#ioloop">ioloop</a></li>
+      <li><a href="#key">key</a></li>
+      <li><a href="#local_address">local_address</a></li>
+      <li><a href="#max_connections">max_connections</a></li>
+      <li><a href="#max_redirects">max_redirects</a></li>
+      <li><a href="#proxy">proxy</a></li>
+      <li><a href="#request_timeout">request_timeout</a></li>
+      <li><a href="#server">server</a></li>
+      <li><a href="#transactor">transactor</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#build_tx">build_tx</a></li>
+      <li><a href="#build_websocket_tx">build_websocket_tx</a></li>
+      <li><a href="#delete">delete</a></li>
+      <li><a href="#get">get</a></li>
+      <li><a href="#head">head</a></li>
+      <li><a href="#options">options</a></li>
+      <li><a href="#patch">patch</a></li>
+      <li><a href="#post">post</a></li>
+      <li><a href="#put">put</a></li>
+      <li><a href="#start1">start</a></li>
+      <li><a href="#websocket">websocket</a></li>
+    </ul>
+  </li>
+  <li><a href="#DEBUGGING">DEBUGGING</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::UserAgent - Non-blocking I/O HTTP and WebSocket user agent</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::UserAgent</span><span class="operator">;</span>
+  
+  <span class="comment"># Say hello to the Unicode snowman and include an Accept header</span>
+  <span class="keyword">my</span> <span class="variable">$ua</span> <span class="operator">=</span> <span class="variable">Mojo::UserAgent</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'www.â.net?hello=there'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span><span class="operator">)-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  
+  <span class="comment"># Form POST (application/x-www-form-urlencoded) with exception handling</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">post</span><span class="operator">(</span><span class="string">'https://metacpan.org/search'</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">q =&gt; 'mojo'});
+  if (my $res =</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">success</span><span class="operator">)</span> <span class="operator">{</span> <span class="keyword">say</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">body</span> <span class="operator">}</span>
+  <span class="keyword">else</span> <span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$err</span> <span class="operator">=</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">;</span>
+    <span class="keyword">die</span> <span class="string">"</span><span class="variable">$err</span><span class="string">-&gt;{code} response: </span><span class="variable">$err</span><span class="string">-&gt;{message}"</span> <span class="keyword">if</span> <span class="variable">$err</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">code</span><span class="operator">}</span><span class="operator">;</span>
+    <span class="keyword">die</span> <span class="string">"Connection error: </span><span class="variable">$err</span><span class="string">-&gt;{message}"</span><span class="operator">;</span>
+  <span class="operator">}</span>
+  
+  <span class="comment"># Extract data from HTML and XML resources with CSS selectors</span>
+  <span class="keyword">say</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'www.perl.org'</span><span class="operator">)-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+  
+  <span class="comment"># Scrape the latest headlines from a news site</span>
+  <span class="keyword">say</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'blogs.perl.org'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">-&gt;</span><span class="variable">find</span><span class="operator">(</span><span class="string">'h2 &gt; a'</span><span class="operator">)-&gt;</span><span class="variable">map</span><span class="operator">(</span><span class="string">'text'</span><span class="operator">)-&gt;</span><span class="variable">join</span><span class="operator">(</span><span class="string">"\n"</span><span class="operator">);</span>
+  
+  <span class="comment"># IPv6 PUT request with Content-Type header and content</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">put</span><span class="operator">(</span><span class="string">'[::1]:3000'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">'Content-Type'</span> <span class="operator">=&gt;</span> <span class="string">'text/plain'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  
+  <span class="comment"># Quick JSON API request with Basic authentication</span>
+  <span class="keyword">my</span> <span class="variable">$value</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'https://sri:s3cret@example.com/test.json'</span><span class="operator">)-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">json</span><span class="operator">;</span>
+  
+  <span class="comment"># JSON POST (application/json) with TLS certificate authentication</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">cert</span><span class="operator">(</span><span class="string">'tls.crt'</span><span class="operator">)-&gt;</span><span class="variable">key</span><span class="operator">(</span><span class="string">'tls.key'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">post</span><span class="operator">(</span><span class="string">'https://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">top</span> <span class="operator">=&gt;</span> <span class="string">'secret'</span><span class="operator">}</span><span class="operator">);</span>
+  
+  <span class="comment"># Search DuckDuckGo anonymously through Tor</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">proxy</span><span class="operator">-&gt;</span><span class="variable">http</span><span class="operator">(</span><span class="string">'socks://127.0.0.1:9050'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'api.3g2upl4pq6kufc4m.onion/?q=mojolicious&amp;format=json'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">json</span><span class="operator">(</span><span class="string">'/Abstract'</span><span class="operator">);</span>
+  
+  <span class="comment"># Follow redirects to download Mojolicious from GitHub</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">max_redirects</span><span class="operator">(</span><span class="number">5</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'https://www.github.com/kraih/mojo/tarball/master'</span><span class="operator">)</span>
+    <span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">content</span><span class="operator">-&gt;</span><span class="variable">asset</span><span class="operator">-&gt;</span><span class="variable">move_to</span><span class="operator">(</span><span class="string">'/home/sri/mojo.tar.gz'</span><span class="operator">);</span>
+  
+  <span class="comment"># Non-blocking request</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'mojolicious.org'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+  
+  <span class="comment"># Concurrent non-blocking requests (synchronized with a delay)</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">delay</span><span class="operator">(</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="variable">$delay</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+      <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'mojolicious.org'</span> <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+      <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'cpan.org'</span>        <span class="operator">=&gt;</span> <span class="variable">$delay</span><span class="operator">-&gt;</span><span class="variable">begin</span><span class="operator">);</span>
+    <span class="operator">},</span>
+    <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$delay</span><span class="operator">,</span> <span class="variable">$mojo</span><span class="operator">,</span> <span class="variable">$cpan</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="keyword">say</span> <span class="variable">$mojo</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+      <span class="keyword">say</span> <span class="variable">$cpan</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">dom</span><span class="operator">-&gt;</span><span class="variable">at</span><span class="operator">(</span><span class="string">'title'</span><span class="operator">)-&gt;</span><span class="variable">text</span><span class="operator">;</span>
+    <span class="operator">}</span>
+  <span class="operator">)-&gt;</span><span class="variable">wait</span><span class="operator">;</span>
+  
+  <span class="comment"># WebSocket connection sending and receiving JSON messages</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">websocket</span><span class="operator">(</span><span class="string">'ws://example.com/echo.json'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">'WebSocket handshake failed!'</span> <span class="keyword">and</span> <span class="keyword">return</span> <span class="keyword">unless</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">is_websocket</span><span class="operator">;</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$tx</span><span class="operator">,</span> <span class="variable">$hash</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="keyword">say</span> <span class="string">"WebSocket message via JSON: </span><span class="variable">$hash</span><span class="string">-&gt;{msg}"</span><span class="operator">;</span>
+      <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">;</span>
+    <span class="operator">});</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="operator">{</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">msg</span> <span class="operator">=&gt;</span> <span class="string">'Hello World!'</span><span class="operator">}}</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a> is a full featured non-blocking I/O HTTP and WebSocket user agent, with IPv6, TLS, SNI, IDNA, HTTP/SOCKS5 proxy, Comet (long polling), keep-alive, connection pooling, timeout, cookie, multipart, gzip compression and multiple event loop support.</p>
+
+<p>All connections will be reset automatically if a new process has been forked, this allows multiple processes to share the same <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a> object safely.</p>
+
+<p>For better scalability (epoll, kqueue) and to provide non-blocking name resolution, SOCKS5 as well as TLS support, the optional modules <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Reactor/EV.html">EV</a> (4.0+), <a>Net::DNS::Native</a> (0.15+), <a>IO::Socket::Socks</a> (0.64+) and <a href="../../../lib/IO/Socket/SSL.html">IO::Socket::SSL</a> (1.94+) will be used automatically if possible. Individual features can also be disabled with the <code>MOJO_NO_NDN</code>, <code>MOJO_NO_SOCKS</code> and <code>MOJO_NO_TLS</code> environment variables.</p>
+
+<p>See <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Cookbook.html#USER-AGENT">&quot;USER AGENT&quot; in Mojolicious::Guides::Cookbook</a> for more.</p>
+
+<h1 id="EVENTS">EVENTS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a> inherits all events from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and can emit the following new ones.</p>
+
+<h2 id="start">start</h2>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">start</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="operator">...</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<p>Emitted whenever a new transaction is about to start, this includes automatically prepared proxy <code>CONNECT</code> requests and followed redirects.</p>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">start</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">header</span><span class="operator">(</span><span class="string">'X-Bender'</span> <span class="operator">=&gt;</span> <span class="string">'Bite my shiny metal ass!'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+</code></pre>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a> implements the following attributes.</p>
+
+<h2 id="ca">ca</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$ca</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">ca</span><span class="operator">;</span>
+  <span class="variable">$ua</span>    <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">ca</span><span class="operator">(</span><span class="string">'/etc/tls/ca.crt'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Path to TLS certificate authority file used to verify the peer certificate, defaults to the value of the <code>MOJO_CA_FILE</code> environment variable. Also activates hostname verification.</p>
+
+<pre><code>  <span class="comment"># Show certificate authorities for debugging</span>
+  <span class="variable">IO::Socket::SSL::set_defaults</span><span class="operator">(</span>
+    <span class="string">SSL_verify_callback</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="keyword">say</span> <span class="string">"Authority: </span><span class="variable">$_</span><span class="string">[2]"</span> <span class="keyword">and</span> <span class="keyword">return</span> <span class="variable">$_</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="operator">});</span>
+</code></pre>
+
+<h2 id="cert">cert</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cert</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">cert</span><span class="operator">;</span>
+  <span class="variable">$ua</span>      <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">cert</span><span class="operator">(</span><span class="string">'/etc/tls/client.crt'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Path to TLS certificate file, defaults to the value of the <code>MOJO_CERT_FILE</code> environment variable.</p>
+
+<h2 id="connect_timeout">connect_timeout</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$timeout</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">connect_timeout</span><span class="operator">;</span>
+  <span class="variable">$ua</span>         <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">connect_timeout</span><span class="operator">(</span><span class="number">5</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum amount of time in seconds establishing a connection may take before getting canceled, defaults to the value of the <code>MOJO_CONNECT_TIMEOUT</code> environment variable or <code>10</code>.</p>
+
+<h2 id="cookie_jar">cookie_jar</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$cookie_jar</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">cookie_jar</span><span class="operator">;</span>
+  <span class="variable">$ua</span>            <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">cookie_jar</span><span class="operator">(</span><span class="variable">Mojo::UserAgent::CookieJar</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Cookie jar to use for requests performed by this user agent, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/CookieJar.html">Mojo::UserAgent::CookieJar</a> object.</p>
+
+<pre><code>  <span class="comment"># Ignore all cookies</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">cookie_jar</span><span class="operator">-&gt;</span><span class="variable">ignore</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span> <span class="number">1</span> <span class="operator">});</span>
+  
+  <span class="comment"># Ignore cookies for public suffixes</span>
+  <span class="keyword">my</span> <span class="variable">$ps</span> <span class="operator">=</span> <span class="variable">IO::Socket::SSL::PublicSuffix</span><span class="operator">-&gt;</span><span class="variable">default</span><span class="operator">;</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">cookie_jar</span><span class="operator">-&gt;</span><span class="variable">ignore</span><span class="operator">(</span><span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$cookie</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="keyword">undef</span> <span class="keyword">unless</span> <span class="keyword">my</span> <span class="variable">$domain</span> <span class="operator">=</span> <span class="variable">$cookie</span><span class="operator">-&gt;</span><span class="variable">domain</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="operator">(</span><span class="variable">$ps</span><span class="operator">-&gt;</span><span class="variable">public_suffix</span><span class="operator">(</span><span class="variable">$domain</span><span class="operator">))</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span> <span class="keyword">eq</span> <span class="string">''</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  
+  <span class="comment"># Add custom cookie to the jar</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">cookie_jar</span><span class="operator">-&gt;</span><span class="variable">add</span><span class="operator">(</span>
+    <span class="variable">Mojo::Cookie::Response</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span>
+      <span class="string">name</span>   <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">,</span>
+      <span class="string">value</span>  <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span>
+      <span class="string">domain</span> <span class="operator">=&gt;</span> <span class="string">'mojolicious.org'</span><span class="operator">,</span>
+      <span class="string">path</span>   <span class="operator">=&gt;</span> <span class="string">'/perldoc'</span>
+    <span class="operator">)</span>
+  <span class="operator">);</span>
+</code></pre>
+
+<h2 id="inactivity_timeout">inactivity_timeout</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$timeout</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">inactivity_timeout</span><span class="operator">;</span>
+  <span class="variable">$ua</span>         <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">inactivity_timeout</span><span class="operator">(</span><span class="number">15</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum amount of time in seconds a connection can be inactive before getting closed, defaults to the value of the <code>MOJO_INACTIVITY_TIMEOUT</code> environment variable or <code>20</code>. Setting the value to <code>0</code> will allow connections to be inactive indefinitely.</p>
+
+<h2 id="ioloop">ioloop</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$loop</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">ioloop</span><span class="operator">;</span>
+  <span class="variable">$ua</span>      <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">ioloop</span><span class="operator">(</span><span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Event loop object to use for blocking I/O operations, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/IOLoop.html">Mojo::IOLoop</a> object.</p>
+
+<h2 id="key">key</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$key</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">key</span><span class="operator">;</span>
+  <span class="variable">$ua</span>     <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">key</span><span class="operator">(</span><span class="string">'/etc/tls/client.crt'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Path to TLS key file, defaults to the value of the <code>MOJO_KEY_FILE</code> environment variable.</p>
+
+<h2 id="local_address">local_address</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$address</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">local_address</span><span class="operator">;</span>
+  <span class="variable">$ua</span>         <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">local_address</span><span class="operator">(</span><span class="string">'127.0.0.1'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Local address to bind to.</p>
+
+<h2 id="max_connections">max_connections</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$max</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">max_connections</span><span class="operator">;</span>
+  <span class="variable">$ua</span>     <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">max_connections</span><span class="operator">(</span><span class="number">5</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum number of keep-alive connections that the user agent will retain before it starts closing the oldest ones, defaults to <code>5</code>. Setting the value to <code>0</code> will prevent any connections from being kept alive.</p>
+
+<h2 id="max_redirects">max_redirects</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$max</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">max_redirects</span><span class="operator">;</span>
+  <span class="variable">$ua</span>     <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">max_redirects</span><span class="operator">(</span><span class="number">3</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum number of redirects the user agent will follow before it fails, defaults to the value of the <code>MOJO_MAX_REDIRECTS</code> environment variable or <code>0</code>.</p>
+
+<h2 id="proxy">proxy</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$proxy</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">proxy</span><span class="operator">;</span>
+  <span class="variable">$ua</span>       <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">proxy</span><span class="operator">(</span><span class="variable">Mojo::UserAgent::Proxy</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Proxy manager, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Proxy.html">Mojo::UserAgent::Proxy</a> object.</p>
+
+<pre><code>  <span class="comment"># Detect proxy servers from environment</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">proxy</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">;</span>
+  
+  <span class="comment"># Manually configure HTTP proxy (using CONNECT for HTTPS)</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">proxy</span><span class="operator">-&gt;</span><span class="variable">http</span><span class="operator">(</span><span class="string">'http://127.0.0.1:8080'</span><span class="operator">)-&gt;</span><span class="variable">https</span><span class="operator">(</span><span class="string">'http://127.0.0.1:8080'</span><span class="operator">);</span>
+  
+  <span class="comment"># Manually configure Tor (SOCKS5)</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">proxy</span><span class="operator">-&gt;</span><span class="variable">http</span><span class="operator">(</span><span class="string">'socks://127.0.0.1:9050'</span><span class="operator">)-&gt;</span><span class="variable">https</span><span class="operator">(</span><span class="string">'socks://127.0.0.1:9050'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="request_timeout">request_timeout</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$timeout</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">request_timeout</span><span class="operator">;</span>
+  <span class="variable">$ua</span>         <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">request_timeout</span><span class="operator">(</span><span class="number">5</span><span class="operator">);</span>
+</code></pre>
+
+<p>Maximum amount of time in seconds establishing a connection, sending the request and receiving a whole response may take before getting canceled, defaults to the value of the <code>MOJO_REQUEST_TIMEOUT</code> environment variable or <code>0</code>. Setting the value to <code>0</code> will allow the user agent to wait indefinitely. The timeout will reset for every followed redirect.</p>
+
+<pre><code>  <span class="comment"># Total limit of 5 seconds, of which 3 seconds may be spent connecting</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">max_redirects</span><span class="operator">(</span><span class="number">0</span><span class="operator">)-&gt;</span><span class="variable">connect_timeout</span><span class="operator">(</span><span class="number">3</span><span class="operator">)-&gt;</span><span class="variable">request_timeout</span><span class="operator">(</span><span class="number">5</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="server">server</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">;</span>
+  <span class="variable">$ua</span>        <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">(</span><span class="variable">Mojo::UserAgent::Server</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Application server relative URLs will be processed with, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Server.html">Mojo::UserAgent::Server</a> object.</p>
+
+<pre><code>  <span class="comment"># Mock web service</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">routes</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/time'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$c</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="variable">$c</span><span class="operator">-&gt;</span><span class="variable">render</span><span class="operator">(</span><span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">now</span> <span class="operator">=&gt;</span> <span class="keyword">time</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  <span class="keyword">my</span> <span class="variable">$time</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'/time'</span><span class="operator">)-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">json</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">now</span><span class="operator">}</span><span class="operator">;</span>
+  
+  <span class="comment"># Change log level</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">-&gt;</span><span class="variable">app</span><span class="operator">-&gt;</span><span class="variable">log</span><span class="operator">-&gt;</span><span class="variable">level</span><span class="operator">(</span><span class="string">'fatal'</span><span class="operator">);</span>
+  
+  <span class="comment"># Port currently used for processing relative URLs blocking</span>
+  <span class="keyword">say</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">-&gt;</span><span class="variable">url</span><span class="operator">-&gt;</span><span class="variable">port</span><span class="operator">;</span>
+  
+  <span class="comment"># Port currently used for processing relative URLs non-blocking</span>
+  <span class="keyword">say</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">-&gt;</span><span class="variable">nb_url</span><span class="operator">-&gt;</span><span class="variable">port</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="transactor">transactor</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$t</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">transactor</span><span class="operator">;</span>
+  <span class="variable">$ua</span>   <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">transactor</span><span class="operator">(</span><span class="variable">Mojo::UserAgent::Transactor</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Transaction builder, defaults to a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html">Mojo::UserAgent::Transactor</a> object.</p>
+
+<pre><code>  <span class="comment"># Change name of user agent</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">transactor</span><span class="operator">-&gt;</span><span class="variable">name</span><span class="operator">(</span><span class="string">'MyUA 1.0'</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent.html">Mojo::UserAgent</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/EventEmitter.html">Mojo::EventEmitter</a> and implements the following new ones.</p>
+
+<h2 id="build_tx">build_tx</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">(</span><span class="string">GET</span> <span class="operator">=&gt;</span> <span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">(</span>
+    <span class="string">PUT</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">(</span>
+    <span class="string">PUT</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">(</span>
+    <span class="string">PUT</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Generate <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html#tx">&quot;tx&quot; in Mojo::UserAgent::Transactor</a>.</p>
+
+<pre><code>  <span class="comment"># Request with custom cookie</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">(</span><span class="string">GET</span> <span class="operator">=&gt;</span> <span class="string">'https://example.com/account'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">(</span><span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'user'</span><span class="operator">,</span> <span class="string">value</span> <span class="operator">=&gt;</span> <span class="string">'sri'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">(</span><span class="variable">$tx</span><span class="operator">);</span>
+  
+  <span class="comment"># Deactivate gzip compression</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">(</span><span class="string">GET</span> <span class="operator">=&gt;</span> <span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">remove</span><span class="operator">(</span><span class="string">'Accept-Encoding'</span><span class="operator">);</span>
+  <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">(</span><span class="variable">$tx</span><span class="operator">);</span>
+  
+  <span class="comment"># Interrupt response by raising an error</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">(</span><span class="string">GET</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">progress</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="variable">$res</span> <span class="operator">=</span> <span class="keyword">shift</span><span class="operator">;</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> <span class="keyword">my</span> <span class="variable">$server</span> <span class="operator">=</span> <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">headers</span><span class="operator">-&gt;</span><span class="variable">server</span><span class="operator">;</span>
+    <span class="variable">$res</span><span class="operator">-&gt;</span><span class="variable">error</span><span class="operator">(</span><span class="operator">{</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="string">'Oh noes, it is IIS!'</span><span class="operator">}</span><span class="operator">)</span> <span class="keyword">if</span> <span class="variable">$server</span> <span class="operator">=~</span> <span class="regex">/IIS/</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">(</span><span class="variable">$tx</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="build_websocket_tx">build_websocket_tx</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_websocket_tx</span><span class="operator">(</span><span class="string">'ws://example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_websocket_tx</span><span class="operator">(</span>
+    <span class="string">'ws://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">DNT</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'v1.proto'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Generate <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object with <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html#websocket">&quot;websocket&quot; in Mojo::UserAgent::Transactor</a>.</p>
+
+<pre><code>  <span class="comment"># Custom WebSocket handshake with cookie</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_websocket_tx</span><span class="operator">(</span><span class="string">'wss://example.com/echo'</span><span class="operator">);</span>
+  <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">req</span><span class="operator">-&gt;</span><span class="variable">cookies</span><span class="operator">(</span><span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'user'</span><span class="operator">,</span> <span class="string">value</span> <span class="operator">=&gt;</span> <span class="string">'sri'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">(</span><span class="variable">$tx</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">'WebSocket handshake failed!'</span> <span class="keyword">and</span> <span class="keyword">return</span> <span class="keyword">unless</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">is_websocket</span><span class="operator">;</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$tx</span><span class="operator">,</span> <span class="variable">$msg</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="keyword">say</span> <span class="string">"WebSocket message: </span><span class="variable">$msg</span><span class="string">"</span><span class="operator">;</span>
+      <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">;</span>
+    <span class="operator">});</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="delete">delete</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">delete</span><span class="operator">(</span><span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">delete</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">delete</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">delete</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform blocking <code>DELETE</code> request and return resulting <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html#tx">&quot;tx&quot; in Mojo::UserAgent::Transactor</a> (except for the <code>DELETE</code> method, which is implied). You can also append a callback to perform requests non-blocking.</p>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">delete</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="get">get</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform blocking <code>GET</code> request and return resulting <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html#tx">&quot;tx&quot; in Mojo::UserAgent::Transactor</a> (except for the <code>GET</code> method, which is implied). You can also append a callback to perform requests non-blocking.</p>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">get</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="head">head</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">head</span><span class="operator">(</span><span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">head</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">head</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">head</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform blocking <code>HEAD</code> request and return resulting <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html#tx">&quot;tx&quot; in Mojo::UserAgent::Transactor</a> (except for the <code>HEAD</code> method, which is implied). You can also append a callback to perform requests non-blocking.</p>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">head</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="options">options</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">options</span><span class="operator">(</span><span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">options</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">options</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">options</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform blocking <code>OPTIONS</code> request and return resulting <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html#tx">&quot;tx&quot; in Mojo::UserAgent::Transactor</a> (except for the <code>OPTIONS</code> method, which is implied). You can also append a callback to perform requests non-blocking.</p>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">options</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="patch">patch</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">patch</span><span class="operator">(</span><span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">patch</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">patch</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">patch</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform blocking <code>PATCH</code> request and return resulting <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html#tx">&quot;tx&quot; in Mojo::UserAgent::Transactor</a> (except for the <code>PATCH</code> method, which is implied). You can also append a callback to perform requests non-blocking.</p>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">patch</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="post">post</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">post</span><span class="operator">(</span><span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">post</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">post</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">post</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform blocking <code>POST</code> request and return resulting <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html#tx">&quot;tx&quot; in Mojo::UserAgent::Transactor</a> (except for the <code>POST</code> method, which is implied). You can also append a callback to perform requests non-blocking.</p>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">post</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="put">put</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">put</span><span class="operator">(</span><span class="string">'example.com'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">put</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">put</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">form</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">put</span><span class="operator">(</span>
+    <span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">Accept</span> <span class="operator">=&gt;</span> <span class="string">'*/*'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform blocking <code>PUT</code> request and return resulting <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html#tx">&quot;tx&quot; in Mojo::UserAgent::Transactor</a> (except for the <code>PUT</code> method, which is implied). You can also append a callback to perform requests non-blocking.</p>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">put</span><span class="operator">(</span><span class="string">'http://example.com'</span> <span class="operator">=&gt;</span> <span class="string">json</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">a</span> <span class="operator">=&gt;</span> <span class="string">'b'</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="start1">start</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">(</span><span class="variable">Mojo::Transaction::HTTP</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Perform blocking request for a custom <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object, which can be prepared manually or with <a href="#build_tx">&quot;build_tx&quot;</a>. You can also append a callback to perform requests non-blocking.</p>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$tx</span> <span class="operator">=</span> <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">build_tx</span><span class="operator">(</span><span class="string">GET</span> <span class="operator">=&gt;</span> <span class="string">'http://example.com'</span><span class="operator">);</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">start</span><span class="operator">(</span><span class="variable">$tx</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">res</span><span class="operator">-&gt;</span><span class="variable">body</span><span class="operator">;</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="websocket">websocket</h2>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">websocket</span><span class="operator">(</span><span class="string">'ws://example.com'</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">websocket</span><span class="operator">(</span>
+    <span class="string">'ws://example.com'</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">DNT</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'v1.proto'</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<p>Open a non-blocking WebSocket connection with transparent handshake, takes the same arguments as <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/UserAgent/Transactor.html#websocket">&quot;websocket&quot; in Mojo::UserAgent::Transactor</a>. The callback will receive either a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/WebSocket.html">Mojo::Transaction::WebSocket</a> or <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Transaction/HTTP.html">Mojo::Transaction::HTTP</a> object, depending on if the handshake was successful.</p>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">websocket</span><span class="operator">(</span><span class="string">'wss://example.com/echo'</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">'v1.proto'</span><span class="operator">]</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+    <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$ua</span><span class="operator">,</span> <span class="variable">$tx</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">'WebSocket handshake failed!'</span> <span class="keyword">and</span> <span class="keyword">return</span> <span class="keyword">unless</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">is_websocket</span><span class="operator">;</span>
+    <span class="keyword">say</span> <span class="string">'Subprotocol negotiation failed!'</span> <span class="keyword">and</span> <span class="keyword">return</span> <span class="keyword">unless</span> <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">protocol</span><span class="operator">;</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">finish</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$tx</span><span class="operator">,</span> <span class="variable">$code</span><span class="operator">,</span> <span class="variable">$reason</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="keyword">say</span> <span class="string">"WebSocket closed with status </span><span class="variable">$code</span><span class="string">."</span><span class="operator">;</span>
+    <span class="operator">});</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">message</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{</span>
+      <span class="keyword">my</span> <span class="operator">(</span><span class="variable">$tx</span><span class="operator">,</span> <span class="variable">$msg</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+      <span class="keyword">say</span> <span class="string">"WebSocket message: </span><span class="variable">$msg</span><span class="string">"</span><span class="operator">;</span>
+      <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">finish</span><span class="operator">;</span>
+    <span class="operator">});</span>
+    <span class="variable">$tx</span><span class="operator">-&gt;</span><span class="variable">send</span><span class="operator">(</span><span class="string">'Hi!'</span><span class="operator">);</span>
+  <span class="operator">});</span>
+  <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">start</span> <span class="keyword">unless</span> <span class="variable">Mojo::IOLoop</span><span class="operator">-&gt;</span><span class="variable">is_running</span><span class="operator">;</span>
+</code></pre>
+
+<p>You can activate <code>permessage-deflate</code> compression by setting the <code>Sec-WebSocket-Extensions</code> header, this can result in much better performance, but also increases memory usage by up to 300KB per connection.</p>
+
+<pre><code>  <span class="variable">$ua</span><span class="operator">-&gt;</span><span class="variable">websocket</span><span class="operator">(</span><span class="string">'ws://example.com/foo'</span> <span class="operator">=&gt;</span> <span class="operator">{</span>
+    <span class="string">'Sec-WebSocket-Extensions'</span> <span class="operator">=&gt;</span> <span class="string">'permessage-deflate'</span>
+  <span class="operator">}</span> <span class="operator">=&gt;</span> <span class="keyword">sub</span><span class="variable"> </span><span class="operator">{...});</span>
+</code></pre>
+
+<h1 id="DEBUGGING">DEBUGGING</h1>
+
+<p>You can set the <code>MOJO_USERAGENT_DEBUG</code> environment variable to get some advanced diagnostics information printed to <code>STDERR</code>.</p>
+
+<pre><code>  MOJO_USERAGENT_DEBUG=1</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OPTIONS">OPTIONS</a>
+    <ul>
+      <li><a href="#name">name</a></li>
+      <li><a href="#template">template</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#register">register</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojolicious::Plugin::EPRenderer - Embedded Perl renderer plugin</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="comment"># Mojolicious</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">'EPRenderer'</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">EPRenderer</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">}</span><span class="operator">);</span>
+  <span class="variable">$app</span><span class="operator">-&gt;</span><span class="variable">plugin</span><span class="operator">(</span><span class="string">EPRenderer</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">template</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">line_start</span> <span class="operator">=&gt;</span> <span class="string">'.'</span><span class="operator">}}</span><span class="operator">);</span>
+  
+  <span class="comment"># Mojolicious::Lite</span>
+  <span class="variable">plugin</span> <span class="string">'EPRenderer'</span><span class="operator">;</span>
+  <span class="variable">plugin</span> <span class="string">EPRenderer</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">}</span><span class="operator">;</span>
+  <span class="variable">plugin</span> <span class="string">EPRenderer</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'bar'</span><span class="operator">,</span> <span class="string">template</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">line_start</span> <span class="operator">=&gt;</span> <span class="string">'.'</span><span class="operator">}}</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/EPRenderer.html">Mojolicious::Plugin::EPRenderer</a> is a renderer for Embedded Perl templates. For more information see <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides/Rendering.html#Embedded-Perl">&quot;Embedded Perl&quot; in Mojolicious::Guides::Rendering</a>.</p>
+
+<p>This is a core plugin, that means it is always enabled and its code a good example for learning to build new plugins, you&#39;re welcome to fork it.</p>
+
+<p>See <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugins.html#PLUGINS">&quot;PLUGINS&quot; in Mojolicious::Plugins</a> for a list of plugins that are available by default.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/EPRenderer.html">Mojolicious::Plugin::EPRenderer</a> supports the following options.</p>
+
+<h2 id="name">name</h2>
+
+<pre><code>  <span class="comment"># Mojolicious::Lite</span>
+  <span class="variable">plugin</span> <span class="string">EPRenderer</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<p>Handler name, defaults to <code>ep</code>.</p>
+
+<h2 id="template">template</h2>
+
+<pre><code>  <span class="comment"># Mojolicious::Lite</span>
+  <span class="variable">plugin</span> <span class="string">EPRenderer</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">template</span> <span class="operator">=&gt;</span> <span class="operator">{</span><span class="string">line_start</span> <span class="operator">=&gt;</span> <span class="string">'.'</span><span class="operator">}}</span><span class="operator">;</span>
+</code></pre>
+
+<p>Attribute values passed to <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Template.html">Mojo::Template</a> object used to render templates.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/EPRenderer.html">Mojolicious::Plugin::EPRenderer</a> inherits all methods from <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Plugin/EPLRenderer.html">Mojolicious::Plugin::EPLRenderer</a> and implements the following new ones.</p>
+
+<h2 id="register">register</h2>
+
+<pre><code>  <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">register</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+  <span class="variable">$plugin</span><span class="operator">-&gt;</span><span class="variable">register</span><span class="operator">(</span><span class="variable">Mojolicious</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">,</span> <span class="operator">{</span><span class="string">name</span> <span class="operator">=&gt;</span> <span class="string">'foo'</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Register renderer in <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> application.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

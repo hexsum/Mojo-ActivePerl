@@ -1,0 +1,104 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#Mojo::SMTP::Client::Exception::Stream">Mojo::SMTP::Client::Exception::Stream</a></li>
+  <li><a href="#DESCRIPTION1">DESCRIPTION</a></li>
+  <li><a href="#Mojo::SMTP::Client::Exception::Response">Mojo::SMTP::Client::Exception::Response</a></li>
+  <li><a href="#DESCRIPTION2">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#code">code</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#throw">throw</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::SMTP::Client::Exception - base class for Mojo::SMTP::Client exceptions</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><code>Mojo::SMTP::Client::Exception</code> is a base class for <code>Mojo::SMTP::Client</code> exceptions. It inherits all events, attributes and methods from <a href="../../../../../site/lib/Mojo/Exception.html">Mojo::Exception</a></p>
+
+<h1 id="Mojo::SMTP::Client::Exception::Stream">Mojo::SMTP::Client::Exception::Stream</h1>
+
+<p>Mojo::SMTP::Client::Exception::Stream - stream exceptions for Mojo::SMTP::Client.</p>
+
+<h1 id="DESCRIPTION1">DESCRIPTION</h1>
+
+<p><code>Mojo::SMTP::Client::Exception::Stream</code> is a class for stream exceptions inside <code>Mojo::SMTP::Client</code>. It inherits all events, attributes and methods from <a href="../../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Exception.html">Mojo::SMTP::Client::Exception</a>.</p>
+
+<h1 id="Mojo::SMTP::Client::Exception::Response">Mojo::SMTP::Client::Exception::Response</h1>
+
+<p>Mojo::SMTP::Client::Exception::Response - response exceptions for Mojo::SMTP::Client.</p>
+
+<h1 id="DESCRIPTION2">DESCRIPTION</h1>
+
+<p><code>Mojo::SMTP::Client::Exception::Response</code> is a class for response exceptions inside <code>Mojo::SMTP::Client</code>. It inherits all events, attributes and methods from <a href="../../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Exception.html">Mojo::SMTP::Client::Exception</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><code>Mojo::SMTP::Client::Exception::Response</code> implements the following new attributes</p>
+
+<h2 id="code">code</h2>
+
+<pre><code>        <span class="keyword">my</span> <span class="variable">$resp_code</span> <span class="operator">=</span> <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">;</span>
+        <span class="variable">$e</span><span class="operator">-&gt;</span><span class="variable">code</span><span class="operator">(</span><span class="variable">$resp_code</span><span class="operator">);</span>
+</code></pre>
+
+<p>Response code</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><code>Mojo::SMTP::Client::Exception::Response</code> redefines the following methods</p>
+
+<h2 id="throw">throw</h2>
+
+<pre><code>        <span class="variable">Mojo::SMTP::Client::Exception::Response</span><span class="operator">-&gt;</span><span class="variable">throw</span><span class="operator">(</span><span class="variable">$resp_code</span><span class="operator">,</span> <span class="variable">$msg</span><span class="operator">);</span>
+        <span class="variable">Mojo::SMTP::Client::Exception::Response</span><span class="operator">-&gt;</span><span class="variable">throw</span><span class="operator">(</span><span class="variable">$resp_code</span><span class="operator">,</span> <span class="variable">$msg</span><span class="operator">,</span> <span class="variable">$files</span><span class="operator">);</span>
+</code></pre>
+
+<p>Throw exception with stacktrace. First argument should contain response code.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client.html">Mojo::SMTP::Client</a>, <a href="../../../../../../../root/.cpanm/work/1458884159.5838/Mojo-SMTP-Client-0.10/blib/lib/Mojo/SMTP/Client/Response.html">Mojo::SMTP::Client::Response</a>, <a href="../../../../../site/lib/Mojo/Exception.html">Mojo::Exception</a></p>
+
+<h1 id="COPYRIGHT">COPYRIGHT</h1>
+
+<p>Copyright Oleg G &lt;oleg@cpan.org&gt;.</p>
+
+<p>This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.</p>
+
+
+</body>
+
+</html>
+
+

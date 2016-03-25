@@ -1,0 +1,138 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a>
+    <ul>
+      <li><a href="#data_section">data_section</a></li>
+      <li><a href="#file_is_binary">file_is_binary</a></li>
+      <li><a href="#find_packages">find_packages</a></li>
+      <li><a href="#find_modules">find_modules</a></li>
+      <li><a href="#load_class">load_class</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Loader - Load all kinds of things</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Loader</span> <span class="string">qw(data_section find_modules load_class)</span><span class="operator">;</span>
+  
+  <span class="comment"># Find modules in a namespace</span>
+  <span class="keyword">for</span> <span class="keyword">my</span> <span class="variable">$module</span> <span class="operator">(</span><span class="variable">find_modules</span> <span class="string">'Some::Namespace'</span><span class="operator">)</span> <span class="operator">{</span>
+  
+    <span class="comment"># Load them safely</span>
+    <span class="keyword">my</span> <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">load_class</span> <span class="variable">$module</span><span class="operator">;</span>
+    <span class="keyword">warn</span> <span class="string">qq{Loading "</span><span class="variable">$module</span><span class="string">" failed: </span><span class="variable">$e</span><span class="string">}</span> <span class="keyword">and</span> <span class="keyword">next</span> <span class="keyword">if</span> <span class="keyword">ref</span> <span class="variable">$e</span><span class="operator">;</span>
+  
+    <span class="comment"># And extract files from the DATA section</span>
+    <span class="keyword">say</span> <span class="variable">data_section</span><span class="operator">(</span><span class="variable">$module</span><span class="operator">,</span> <span class="string">'some_file.txt'</span><span class="operator">);</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Loader.html">Mojo::Loader</a> is a class loader and plugin framework. Aside from finding modules and loading classes, it allows multiple files to be stored in the <code>DATA</code> section of a class, which can then be accessed individually.</p>
+
+<pre><code>  <span class="keyword">package</span> <span class="variable">Foo</span><span class="operator">;</span>
+  
+  <span class="number">1</span><span class="operator">;</span>
+  <span class="comment">__DATA__
+  
+  @@ test.txt
+  This is the first file.
+  
+  @@ test2.html (base64)
+  VGhpcyBpcyB0aGUgc2Vjb25kIGZpbGUu
+  
+  @@ test
+  This is the
+  third file.
+  </span>
+</code></pre>
+
+<p>Each file has a header starting with <code>@@</code>, followed by the file name and optional instructions for decoding its content. Currently only the Base64 encoding is supported, which can be quite convenient for the storage of binary data.</p>
+
+<h1 id="FUNCTIONS">FUNCTIONS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Loader.html">Mojo::Loader</a> implements the following functions, which can be imported individually.</p>
+
+<h2 id="data_section">data_section</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$all</span>   <span class="operator">=</span> <span class="variable">data_section</span> <span class="string">'Foo::Bar'</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$index</span> <span class="operator">=</span> <span class="variable">data_section</span> <span class="string">'Foo::Bar'</span><span class="operator">,</span> <span class="string">'index.html'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Extract embedded file from the <code>DATA</code> section of a class, all files will be cached once they have been accessed for the first time.</p>
+
+<pre><code>  <span class="comment"># List embedded files</span>
+  <span class="keyword">say</span> <span class="keyword">for</span> <span class="keyword">keys</span> <span class="variable">%</span><span class="operator">{</span><span class="variable">data_section</span> <span class="string">'Foo::Bar'</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="file_is_binary">file_is_binary</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">file_is_binary</span> <span class="string">'Foo::Bar'</span><span class="operator">,</span> <span class="string">'test.png'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Check if embedded file from the <code>DATA</code> section of a class was Base64 encoded.</p>
+
+<h2 id="find_packages">find_packages</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">@pkgs</span> <span class="operator">=</span> <span class="variable">find_packages</span> <span class="string">'MyApp::Namespace'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Search for packages in a namespace non-recursively.</p>
+
+<h2 id="find_modules">find_modules</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">@modules</span> <span class="operator">=</span> <span class="variable">find_modules</span> <span class="string">'MyApp::Namespace'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Search for modules in a namespace non-recursively.</p>
+
+<h2 id="load_class">load_class</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">load_class</span> <span class="string">'Foo::Bar'</span><span class="operator">;</span>
+</code></pre>
+
+<p>Load a class and catch exceptions, returns a false value if loading was successful, a true value if the class has already been loaded, or a <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Exception.html">Mojo::Exception</a> object if loading failed. Note that classes are checked for a <code>new</code> method to see if they are already loaded.</p>
+
+<pre><code>  <span class="comment"># Handle exceptions</span>
+  <span class="keyword">if</span> <span class="operator">(</span><span class="keyword">my</span> <span class="variable">$e</span> <span class="operator">=</span> <span class="variable">load_class</span> <span class="string">'Foo::Bar'</span><span class="operator">)</span> <span class="operator">{</span>
+    <span class="keyword">die</span> <span class="keyword">ref</span> <span class="variable">$e</span> <span class="operator">?</span> <span class="string">"Exception: </span><span class="variable">$e</span><span class="string">"</span> <span class="operator">:</span> <span class="string">'Not found!'</span><span class="operator">;</span>
+  <span class="operator">}</span>
+</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,199 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#parts">parts</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#detect">detect</a></li>
+      <li><a href="#lib_dir">lib_dir</a></li>
+      <li><a href="#list_files">list_files</a></li>
+      <li><a href="#mojo_lib_dir">mojo_lib_dir</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#rel_dir">rel_dir</a></li>
+      <li><a href="#rel_file">rel_file</a></li>
+      <li><a href="#to_string">to_string</a></li>
+    </ul>
+  </li>
+  <li><a href="#OPERATORS">OPERATORS</a>
+    <ul>
+      <li><a href="#bool">bool</a></li>
+      <li><a href="#stringify">stringify</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Home - Home sweet home</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Home</span><span class="operator">;</span>
+  
+  <span class="comment"># Find and manage the project root directory</span>
+  <span class="keyword">my</span> <span class="variable">$home</span> <span class="operator">=</span> <span class="variable">Mojo::Home</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">lib_dir</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">rel_file</span><span class="operator">(</span><span class="string">'templates/layouts/default.html.ep'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="string">"</span><span class="variable">$home</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Home.html">Mojo::Home</a> is a container for home directories.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Home.html">Mojo::Home</a> implements the following attributes.</p>
+
+<h2 id="parts">parts</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$parts</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">parts</span><span class="operator">;</span>
+  <span class="variable">$home</span>     <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">parts</span><span class="operator">(</span><span class="operator">[</span><span class="string">'home'</span><span class="operator">,</span> <span class="string">'sri'</span><span class="operator">,</span> <span class="string">'myapp'</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>Home directory parts.</p>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Home.html">Mojo::Home</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="detect">detect</h2>
+
+<pre><code>  <span class="variable">$home</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">;</span>
+  <span class="variable">$home</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">detect</span><span class="operator">(</span><span class="string">'My::App'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Detect home directory from the value of the <code>MOJO_HOME</code> environment variable or application class.</p>
+
+<h2 id="lib_dir">lib_dir</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">lib_dir</span><span class="operator">;</span>
+</code></pre>
+
+<p>Path to <code>lib</code> directory of application.</p>
+
+<h2 id="list_files">list_files</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$files</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">list_files</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$files</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">list_files</span><span class="operator">(</span><span class="string">'foo/bar'</span><span class="operator">);</span>
+  <span class="keyword">my</span> <span class="variable">$files</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">list_files</span><span class="operator">(</span><span class="string">'foo/bar'</span><span class="operator">,</span> <span class="operator">{</span><span class="string">hidden</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<p>Portably list all files recursively in directory relative to the home directory.</p>
+
+<pre><code>  <span class="comment"># List layouts</span>
+  <span class="keyword">say</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">rel_file</span><span class="operator">(</span><span class="variable">$_</span><span class="operator">)</span> <span class="keyword">for</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">list_files</span><span class="operator">(</span><span class="string">'templates/layouts'</span><span class="operator">)</span><span class="operator">}</span><span class="operator">;</span>
+</code></pre>
+
+<p>These options are currently available:</p>
+
+<dl>
+
+<dt id="hidden">hidden</dt>
+<dd>
+
+<pre><code>  hidden =&gt; 1</code></pre>
+
+<p>Include hidden files and directories.</p>
+
+</dd>
+</dl>
+
+<h2 id="mojo_lib_dir">mojo_lib_dir</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">mojo_lib_dir</span><span class="operator">;</span>
+</code></pre>
+
+<p>Path to <code>lib</code> directory in which <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a> is installed.</p>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$home</span> <span class="operator">=</span> <span class="variable">Mojo::Home</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$home</span> <span class="operator">=</span> <span class="variable">Mojo::Home</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/home/sri/my_app'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Home.html">Mojo::Home</a> object and <a href="#parse">&quot;parse&quot;</a> home directory if necessary.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$home</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'/home/sri/my_app'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse home directory.</p>
+
+<h2 id="rel_dir">rel_dir</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">rel_dir</span><span class="operator">(</span><span class="string">'foo/bar'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Portably generate an absolute path for a directory relative to the home directory.</p>
+
+<h2 id="rel_file">rel_file</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">rel_file</span><span class="operator">(</span><span class="string">'foo/bar.html'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Portably generate an absolute path for a file relative to the home directory.</p>
+
+<h2 id="to_string">to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$home</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Home directory.</p>
+
+<h1 id="OPERATORS">OPERATORS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Home.html">Mojo::Home</a> overloads the following operators.</p>
+
+<h2 id="bool">bool</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="operator">!!</span><span class="variable">$home</span><span class="operator">;</span>
+</code></pre>
+
+<p>Always true.</p>
+
+<h2 id="stringify">stringify</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="string">"</span><span class="variable">$home</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#to_string">&quot;to_string&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+

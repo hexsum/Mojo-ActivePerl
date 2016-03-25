@@ -1,0 +1,397 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../displayToc.js"></script>
+<script language="JavaScript" src="../../tocParas.js"></script>
+<script language="JavaScript" src="../../tocTab.js"></script>
+<title>ActivePerl FAQ - Web Server Information</title>
+<link rel="STYLESHEET" href="../../Active.css" type="text/css" media="screen">
+</head>
+
+<body>
+
+<script>writelinks('__top__',2);</script>
+<h1>Web Server Information</h1>
+
+<ul>
+  <li><a class="doc" href="#NAME">NAME</a></li>
+  <li><a class="doc" href="#DESCRIPTION">DESCRIPTION</a>
+  <ul>
+    <li><a class="doc" href="#general_issues">General Web Server Configuration
+      Issues</a></li>
+    <ul>
+      <li><a class="doc" href="#supported_web_servers">What web servers support
+        ActivePerl?</a></li>
+      <li><a class="doc" href="#command_line_but_not_cgi">Why does my
+        ActivePerl script run from the command line, but not as a CGI script?</a></li>
+      <li><a class="doc" href="#calling_perl_in_the_url">Can't I put
+        perl.exe in my CGI directory and call it in the URL? NO!</a></li>
+    </ul>
+    <li><a class="doc" href="#apache_web_server">Using the Apache Web Server</a></li>
+    <ul>
+      <li><a class="doc" href="#configure_Apache20x">How do I configure
+        Apache 2.0.x to support ActivePerl?</a></li>
+      <li><a class="doc" href="#configure_Apache13x">How do I configure
+        Apache 1.3.x to support ActivePerl?</a></li>
+    </ul>
+    <li><a class="doc" href="#microsoft_web_servers">Using IIS</a></li>
+    <li><a class="doc" href="#other_web_servers">Using Other Web Servers</a></li>
+    <ul>
+      <li><a class="doc" href="#configure_other_web_servers">How do I configure other
+        web servers to support ActivePerl?</a></li>
+    </ul>
+    <li><a class="doc" href="#test_config">Testing Your Web Server Configuration</a></li>
+  </ul>
+  <li><a class="doc" href="#AUTHOR_AND_COPYRIGHT">AUTHOR AND COPYRIGHT</a></li>
+</ul>
+
+<h2><a name="NAME">NAME</a></h2>
+<p>ActivePerl-faq6 - Web server information</p>
+
+
+<h2><a name="DESCRIPTION">DESCRIPTION</a></h2>
+<p>ActivePerl Web Server Configuration and Troubleshooting</p>
+
+
+<h3><a name="general_issues">General Web Server Configuration Issues</a></h3>
+
+<h4><a name="supported_web_servers">What web servers support ActivePerl?</a></h4>
+
+<p>Most Windows web servers that use the CGI standard or ISAPI will run
+ActivePerl scripts. The following servers are known to work with ActivePerl
+(known protocols in brackets):</p>
+<dl>
+  <dt><a name="item_Apache">Apache for Win32 [CGI, mod_perl]</a></dt>
+  <dd><a class="doc" href="http://www.apache.org">http://www.apache.org</a><br>
+    mod_perl home page: <a class="doc" href="http://perl.apache.org">http://perl.apache.org</a><br>
+    &nbsp;</dd>
+  <dt><a name="item_Microsoft">Microsoft Internet Information Server [CGI, ISAPI]</a></dt>
+  <dd><a class="doc" href="http://www.microsoft.com/WindowsServer2003/iis/default.mspx">http://www.microsoft.com/WindowsServer2003/iis/default.mspx</a><br>
+    &nbsp;</dd>
+</dl>
+
+
+<h4><a name="command_line_but_not_cgi">Why does my ActivePerl script run from
+the command line, but not as a CGI script?</a></h4>
+<p>Usually, this means one of two things: either your system is misconfigured,
+or your script does not send the correct output for a CGI script.</p>
+<p>Before you do anything else, check this list:</p>
+<ul>
+  <li>Make sure you have correctly configured your server for <i>perl.exe</i>
+    or <i>PerlIS.dll</i>. This is often accomplished by mapping a specific
+    extension, such as <i>.pl</i> or <i>.plx</i>, to <i>perl.exe</i> or <i>
+    PerlIS.dll</i>.
+    Usually, web servers rely on their own mappings, rather than the Windows
+    command-line mappings.</li>
+  <li>If your web server depends on the <code>PATH</code> variable to find <i>perl.exe</i>,
+    make sure that you put <i>perl.exe</i> in your system <code>PATH</code>,
+    not just your user <code>PATH</code>. This only applies to Windows NT/200x/XP.</li>
+  <li>If your web server requires directories to be marked as executable, make
+    sure the directory that contains the script is marked as such.</li>
+  <li>Since the web server can be configured to run as a local user, be sure
+    that the user has access to the script file and the Perl binaries and
+    libraries. Many web servers run as the ``Local System'' account, which
+    generally has sufficient permissions.</li>
+  <li>If <i>Perl.exe</i> or Perl for ISAPI fail to work as expected check
+    your event logs for clues.</li>
+  <li>Ensure that HTTP headers are being output correctly. Use the following
+    script as a test:
+    <pre>
+    #!C:\perl\bin\perl.exe
+    # previous line added to support Apache 1/2
+    # please adjust to your own Perl path!
+    use strict;
+    use CGI;
+
+    my $page = new CGI;
+    my $msg = "Hello from ActivePerl CGI!";
+
+    # print header and start the markup output
+    print $page->header( "text/html" ),$page->start_html( $msg );
+    print $page->h2($msg);
+    print $page->end_html;
+    # end code
+    </pre></li>
+</ul>
+
+<p>Check the information above with a script that you know produces the right
+output for the CGI protocol (scripts in this FAQ are a good first choice). Try
+it with your own script after you're sure the test script will work.</p>
+<p>If you are sure the server is running the script, but it only generates error
+messages in your browser, there are some tools that may help you out. CGI::Carp
+is used to send debugging information to the browser or log file. Even if your
+script has a compilation error, it can usually intercept and report errors. To
+use CGI::Carp, include the following lines in your program:</p>
+<pre>
+    # The code in the BEGIN block will be executed very early
+    # on, even before the rest of this script is parsed.
+    #
+    BEGIN {
+
+        # Use the CGI::Carp module and import the carpout() function.
+        #
+        use CGI::Carp qw(carpout);
+
+        # Send warnings and die messages to the browser.
+        #
+        carpout(STDOUT);
+
+    }
+</pre>
+<p>If your script has an error, you may see something like this in the browser:</p>
+<pre>    [Wed Jun 3 09:32:28 1998] C:\inetpub\scripts\test.pl: Error message! at
+    C:\inetpub\scripts\test.pl line 38.</pre>
+<p>Sometimes, it can be helpful to put yourself in somebody else's position. The
+libwww-perl bundle (LWP) is available from CPAN, but you can install it using
+the Perl Package Manager (PPM). LWP may be included with future releases of
+ActivePerl.</p>
+<p>LWP includes the powerful <i>lwp-request</i> script, which lets you see
+things from the browser's perspective. Invoke <i>lwp-request</i> with the name
+of a URL to see the content of the response, as in <code>lwp-request
+http://localhost</code>. To inspect the headers of an HTTP response, invoke <i>lwp-request</i>
+with the <code>-de</code> switch:</p>
+<pre>    C:\&gt;lwp-request -de http://localhost
+    Date: Wed, 03 Jun 1998 13:37:31 GMT
+    Accept-Ranges: bytes
+    Server: Microsoft-IIS/4.0
+    Content-Length: 4325
+    Content-Location: http://localhost/Default.htm
+    Content-Type: text/html
+    ETag: &quot;0c1e58b063bd1:1237&quot;
+    Last-Modified: Thu, 09 Apr 1998 12:09:28 GMT
+    Client-Date: Wed, 03 Jun 1998 13:37:31 GMT
+    Client-Peer: 127.0.0.1:0</pre>
+<p>This tool can be very helpful in figuring out exactly what your scripts are
+doing. Whatever you do, don't give up hope. It is, in fact, possible to get a
+Perl script running on your web server. Really.</p>
+
+<h4><a name="calling_perl_in_the_url">Can't I put perl.exe in my CGI directory
+and call it in the URL? <i>No!</i></a></h4>
+<p>First, the warning: do <strong><i>not</i></strong> do this. Really. Even if you don't
+understand why not, don't.</p>
+<p>Now the explanation: the idea here is to put <i>perl.exe</i> in your CGI
+directory (however you configure that on your server), and use URL syntax like
+the following:</p>
+<pre>    http://soon.to.be.a.victim.net/cgi-bin/perl.exe?myscript.pl</pre>
+<p>to run <i>myscript.pl</i>. This keeps you from having to figure out how to
+configure your server to associate extensions like <i>.pl</i> with an
+interpreter like <i>perl.exe</i>.</p>
+<p>In fact, on some early Win32-based web servers (iPlanet 1.x servers in
+particular), it was impossible to associate a script file with an interpreter.
+This method was recommended by vendors as a viable approach to running Perl
+scripts on your web server.</p>
+<p>With this configuration, anyone with a devious mind and a little knowledge of
+Perl could start doing all kinds of destructive things on the server. All they'd
+have to do is send made-up URLs, using the
+<code>-e</code> command line switch in <i>perl.exe</i>, in order to do things
+like delete all files on a drive:</p>
+<pre>    http://aaaugh.that.hurts.net/cgi-bin/perl.exe?-e?'del%20c:\*.*%20/S%20/Q'</pre>
+<p>Of course, a true computer criminal would never do something this crude and
+obvious, but would instead use this as a launching point to cause irreparable
+harm to your organization.</p>
+<p>The following URL covers this issue in more depth:</p>
+<pre>    <a class="doc" href="http://www.cert.org/advisories/CA-1996-11.html">http://www.cert.org/advisories/CA-1996-11.html</a></pre>
+<p>Note that one suggested solution to this problem is wrapping your Perl script
+in a batch file using pl2bat or your own custom batch code. This is also <strong>not</strong>
+a good idea. Most servers that won't allow file associations are also susceptible to a bug that
+allows a user to enter any DOS command after the bat file. </p>
+
+
+<h3><a name="apache_web_server">Using the Apache Web Server</a></h3>
+
+<h4><a name="configure_Apache20x">How do I configure Apache 2.0.x to support
+ActivePerl?</a></h4>
+<p>These instructions assume that you have installed the Apache web server
+according to the instructions for the 2.0.x Windows version.</p>
+<ol>
+  <li>Open the <em>httpd.conf</em> file for editing by selecting <strong>Start >
+  Programs > Apache HTTP Server > Configure Apache Server > Edit the Apache
+  httpd.conf Configuration File</strong>.<br>&nbsp<br>
+  This will open your <em>httpd.conf</em> file in the notepad editor.</li>
+  <li>Make the following changes to the <em>httpd.conf</em> file:</li>
+  <ul>
+    <li>In the DocumentRoot section, set the value of <code>DocumentRoot</code>
+    to the directory in which your web site files will be located on your system's
+    hard drive(s).  Ensure that you use forward slashes (/) in the path, as
+    Apache doesn't understand backward slashes (\) in paths.  For example:<br>
+    <pre>    # DocumentRoot: The directory out of which you will serve your
+    # documents. By default, all requests are taken from this directory, but
+    # symbolic links and aliases may be used to point to other locations.
+    #
+    DocumentRoot "C:/apacheroot"</pre></li>
+    <li>In the main directory section, add <code>ExecCGI</code> to the
+    <code>Options</code> line.  For example:<br>
+    <pre>    Options FollowSymLinks ExecCGI</pre></li>
+    <li>Search for the following line and remove the hash mark character (#) to
+    uncomment this line.  (You can also change <em>.cgi</em> to
+    <em>.pl</em> if you prefer.)  For example:<br>
+    <pre>    #AddHandler cgi-script .cgi</pre>
+    <p>Should look like:</p>
+    <pre>    AddHandler cgi-script .pl</pre></li>
+  </ul>
+  <li>Save your changes to the <em>httpd.conf</em> file, and restart the Apache
+  Service using the Apache Service Monitor.</li>
+  <li>Test your configuration as described in the
+  <a href="#test_config">Testing Your Web Server Configuration</a> section below.</li>
+</ol>
+
+
+<h4><a name="configure_Apache13x">How do I configure Apache 1.3.x to support
+ActivePerl?</a></h4>
+<p>There are two ways to configure Apache to support CGI scripts: by setting the
+directory in which the ActivePerl scripts reside, or by setting the file
+extension that Apache will associate with CGI scripts.</p>
+
+<p><b>To add a directory in which all of your CGI scripts will reside, do the
+following:</b><p>
+<ol>
+  <li>Open the <em>httpd.conf</em> file for editing by selecting <strong>Start >
+  Programs > Apache HTTP Server > Configure Apache Server > Edit the Apache
+  httpd.conf Configuration File</strong>.<br>&nbsp<br>
+  This will open your <em>httpd.conf</em> file in the notepad editor.</li>
+  <li>Make the following changes to the <em>httpd.conf</em> file:</li>
+  <pre>    ScriptAlias /cgi-bin/ &quot;C:/Program Files/Apache Group/Apache/cgi-bin/&quot;</pre>
+  You can choose any directory that you like, but you must ensure that it exists.</li>
+  <li>After you have made this change, stop and restart the Apache service.<br>
+  <strong>Note:</strong> Apache provides an emulation of the UNIX ``shebang'' syntax,
+  where the first two characters on the first line of a script begin with the
+  hash mark ("#") and bang ("!") characters, which is then followed by the path to the script
+  interpreter.  This will ensure that the proper interpreter will always be used to run your
+  script.  You should begin each ActivePerl script that you place in your <i>cgi-bin</i>
+  directory with a valid path to the ActivePerl interpreter. For example:<br>
+  <pre>    #!C:\PERL\5.00464\bin\MSWin32-x86\perl.exe
+
+    use CGI qw(:standard) ;
+    print header();
+    print &quot;Hello, world&quot;;</pre></li>
+  <li>Test your configuration as described in the
+  <a href="#test_config">Testing Your Web Server Configuration</a> section,
+  below.</li>
+</ol>
+
+<p><b>To enable CGI scripts based on an extension, such as <em>.pl</em> or
+<em>.cgi</em>, do the following:</b></p>
+<ol>
+  <li>Add the following line to the <i>httpd.conf</i> file:
+  <pre>    AddHandler cgi-script .pl</pre>
+  <strong>Note:</strong> By default, CGI scripts are not allowed to be in your
+  DocumentRoot directory, but they are allowed in other document directories.
+  Document directories are created with the Alias command in <i>httpd.conf</i>.
+  For example:<br>
+  <pre>    Alias /ResourceKit/ &quot;E:/utilsamp/&quot;</pre>
+  You can then include files that end in <em>.pl</em> (or <em>.cgi</em>, if
+  you set that as the extension in the AddHandler line) within a document
+  directory.  You will still need to include the #! line with the full valid
+  path to the <i>perl.exe</i> interpreter, as shown in the previous procedure.</li>
+  <li>If you want to allow CGI scripts in the DocumentRoot directory, add the
+  ExecCGI option to the Options directive in the &lt;Directory&gt; section for
+  your DocumentRoot in the <i>httpd.conf</i> file; this section appears
+  directly after the comment titled:</li>
+  <pre>    # This should be changed to whatever you set DocumentRoot to.</pre>
+  After you have updated it, your Options directive should look similar to this:</li>
+  <pre>    Options Indexes FollowSymLinks ExecCGI</pre>
+  <li>After you have made these changes, stop and restart the Apache service.</li>
+  <li>Test your configuration as described in the
+  <a href="#test_config">Testing Your Web Server Configuration</a> section,
+  below.</li>
+</ol>
+
+
+<h3><a name="microsoft_web_servers">Using IIS</a></h3>
+
+<p>The ActivePerl MSI installer can configure script mappings for IIS
+during installation, and options for doing so are made available if IIS
+is detected on the system. To configure or re-configure IIS to use
+ActivePerl after installation, use the <a
+href="../../bin/ap-iis-config.html">ap-iis-config</a> utility.</p>
+
+<pre>
+  ap-iis-config add all
+  ap-iis-config delete all
+  ap-iis-config list sites</pre>
+<pre>
+  ap-iis-config add map --ext .cgi --type isapi
+  ap-iis-config delete map --ext .plex</pre>
+<pre>
+  ap-iis-config add vdir --site 1 --name Sample --path C:\www\samples
+  ap-iis-config delete vdir --site 2 --name &quot;My Site&quot;</pre>
+
+<p>See the <a href="../../bin/ap-iis-config.html">ap-iis-config</a>
+documentation for complete descriptions of all the options.</p>
+
+
+<h3><a name="other_web_servers">Using Other Web Servers</a></h3>
+
+
+<h4><a name="configure_other_web_servers">How do I configure other web servers
+to support ActivePerl?</a></h4>
+<p>If your web server isn't listed, check the server's documentation on how to
+set up a CGI interpreter. In general, the process is as follows:</p>
+<ul>
+  <li>Associate a file extension like <i>.pl</i> with the perl binary, and
+    let the server know where the binary is. This may be a shell association,
+    (see <a class="doc" href="ActivePerl-Winfaq4.html#How_do_I_associate_Perl_scripts_">How
+    do I associate Perl scripts with perl?</a>), or a custom association.</li>
+  <li>Set up a directory where executable scripts go, and put your Perl script
+    there.</li>
+  <li>Ensure that the user account used by the web server has permission to read
+    the script as well as any ancillary files (perl binary files, library files,
+    modules, etc.). This usually means making the files available to the Everyone
+    group.</li>
+</ul>
+<p>Because most web servers run as services (see
+<a class="doc" href="#configure_IIS30_or_lower">How
+do I configure IIS 3.0 or lower to support ActivePerl?</a>), you need to take
+special steps to ensure that files and environment variables are available to
+them.</p>
+
+
+<h3><a name="test_config">Testing Your Web Server Configuration</a></h3>
+<p>Regardless of which of the above configurations you performed, you should test your
+configuration to ensure that your web server properly handles ActivePerl
+CGI scripts.  The following script provides a simple test of your configuration:</p>
+<ol>
+  <li>Save the following test script in your DocumentRoot directory as
+  <em>test.pl</em> or <em>test.cgi</em> (depending on your configuration of the
+  <code>AddHandler</code> line) and modify the first line as required to point
+  to your ActivePerl interpreter:<br>
+    <pre>    #!c:\perl\bin\perl.exe
+    # ^^^ this must be the first line of the script! ^^^
+    # start code
+
+    use strict;
+    use CGI;
+    my $q = new CGI;
+
+    # print header and start the markup output
+
+    print $q->header( "text/html" ),$q->start_html( "hello from perl cgi!" );
+    print $q->h2("hello dave...");
+    print $q->end_html;
+    # end code</pre></li>
+  <li>Open the script in your browser to test your configuration.  You should
+  see a page that displays a level two heading with the following text:<br>
+  <h2>hello dave...</h2></li>
+</ol>
+
+
+<h2><a name="AUTHOR_AND_COPYRIGHT">AUTHOR AND COPYRIGHT</a></h2>
+<p>This FAQ was originally assembled and maintained by Evangelo Prodromou.
+It has been revised and updated by Brian Jepson of O'Reilly and Associates, and
+David Grove and David Dmytryshyn of ActiveState.</p>
+<p>This FAQ is in the public domain. If you use it, however, please ensure that
+you give credit to the original authors.</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td class="block" valign="MIDDLE" width="100%" bgcolor="#cccccc">
+      <h3><p class="block">&nbsp;ActivePerl FAQ - Web Server Information</p></h3>
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>

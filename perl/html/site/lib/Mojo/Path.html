@@ -1,0 +1,306 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../scineplex.css">
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#ATTRIBUTES">ATTRIBUTES</a>
+    <ul>
+      <li><a href="#charset">charset</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#canonicalize">canonicalize</a></li>
+      <li><a href="#clone">clone</a></li>
+      <li><a href="#contains">contains</a></li>
+      <li><a href="#leading_slash">leading_slash</a></li>
+      <li><a href="#merge">merge</a></li>
+      <li><a href="#new">new</a></li>
+      <li><a href="#parse">parse</a></li>
+      <li><a href="#to_abs_string">to_abs_string</a></li>
+      <li><a href="#parts">parts</a></li>
+      <li><a href="#to_dir">to_dir</a></li>
+      <li><a href="#to_route">to_route</a></li>
+      <li><a href="#to_string">to_string</a></li>
+      <li><a href="#trailing_slash">trailing_slash</a></li>
+    </ul>
+  </li>
+  <li><a href="#OPERATORS">OPERATORS</a>
+    <ul>
+      <li><a href="#array">array</a></li>
+      <li><a href="#bool">bool</a></li>
+      <li><a href="#stringify">stringify</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Mojo::Path - Path</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>  <span class="keyword">use</span> <span class="variable">Mojo::Path</span><span class="operator">;</span>
+  
+  <span class="comment"># Parse</span>
+  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo%2Fbar%3B/baz.html'</span><span class="operator">);</span>
+  <span class="keyword">say</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+  
+  <span class="comment"># Build</span>
+  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/i/â¥'</span><span class="operator">);</span>
+  <span class="keyword">push</span> <span class="variable">@$path</span><span class="operator">,</span> <span class="string">'mojolicious'</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="string">"</span><span class="variable">$path</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Path.html">Mojo::Path</a> is a container for paths used by <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/URL.html">Mojo::URL</a>, based on <a href="http://tools.ietf.org/html/rfc3986">RFC 3986</a>.</p>
+
+<h1 id="ATTRIBUTES">ATTRIBUTES</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Path.html">Mojo::Path</a> implements the following attributes.</p>
+
+<h2 id="charset">charset</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$charset</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">charset</span><span class="operator">;</span>
+  <span class="variable">$path</span>       <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">charset</span><span class="operator">(</span><span class="string">'UTF-8'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Charset used for encoding and decoding, defaults to <code>UTF-8</code>.</p>
+
+<pre><code>  <span class="comment"># Disable encoding and decoding</span>
+  <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">charset</span><span class="operator">(</span><span class="keyword">undef</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Path.html">Mojo::Path</a> inherits all methods from <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Base.html">Mojo::Base</a> and implements the following new ones.</p>
+
+<h2 id="canonicalize">canonicalize</h2>
+
+<pre><code>  <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">canonicalize</span><span class="operator">;</span>
+</code></pre>
+
+<p>Canonicalize path by resolving <code>.</code> and <code>..</code>, in addition <code>...</code> will be treated as <code>.</code> to protect from path traversal attacks.</p>
+
+<pre><code>  <span class="comment"># "/foo/baz"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/./bar/../baz'</span><span class="operator">)-&gt;</span><span class="variable">canonicalize</span><span class="operator">;</span>
+  
+  <span class="comment"># "/../baz"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/../bar/../../baz'</span><span class="operator">)-&gt;</span><span class="variable">canonicalize</span><span class="operator">;</span>
+  
+  <span class="comment"># "/foo/bar"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/.../bar'</span><span class="operator">)-&gt;</span><span class="variable">canonicalize</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="clone">clone</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$clone</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">clone</span><span class="operator">;</span>
+</code></pre>
+
+<p>Clone path.</p>
+
+<h2 id="contains">contains</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/i/â¥/mojolicious'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Check if path contains given prefix.</p>
+
+<pre><code>  <span class="comment"># True</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/'</span><span class="operator">);</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/foo'</span><span class="operator">);</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">);</span>
+  
+  <span class="comment"># False</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/f'</span><span class="operator">);</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/bar'</span><span class="operator">);</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">contains</span><span class="operator">(</span><span class="string">'/whatever'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="leading_slash">leading_slash</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">leading_slash</span><span class="operator">;</span>
+  <span class="variable">$path</span>    <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">leading_slash</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Path has a leading slash. Note that this method will normalize the path and that <code>%2F</code> will be treated as <code>/</code> for security reasons.</p>
+
+<pre><code>  <span class="comment"># "/foo/bar"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">leading_slash</span><span class="operator">(</span><span class="number">1</span><span class="operator">);</span>
+  
+  <span class="comment"># "foo/bar"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">leading_slash</span><span class="operator">(</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="merge">merge</h2>
+
+<pre><code>  <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">merge</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">);</span>
+  <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">merge</span><span class="operator">(</span><span class="string">'foo/bar'</span><span class="operator">);</span>
+  <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">merge</span><span class="operator">(</span><span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">);</span>
+</code></pre>
+
+<p>Merge paths. Note that this method will normalize both paths if necessary and that <code>%2F</code> will be treated as <code>/</code> for security reasons.</p>
+
+<pre><code>  <span class="comment"># "/baz/yada"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">merge</span><span class="operator">(</span><span class="string">'/baz/yada'</span><span class="operator">);</span>
+  
+  <span class="comment"># "/foo/baz/yada"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">merge</span><span class="operator">(</span><span class="string">'baz/yada'</span><span class="operator">);</span>
+  
+  <span class="comment"># "/foo/bar/baz/yada"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar/'</span><span class="operator">)-&gt;</span><span class="variable">merge</span><span class="operator">(</span><span class="string">'baz/yada'</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="new">new</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">;</span>
+  <span class="keyword">my</span> <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo%2Fbar%3B/baz.html'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Construct a new <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Path.html">Mojo::Path</a> object and <a href="#parse">&quot;parse&quot;</a> path if necessary.</p>
+
+<h2 id="parse">parse</h2>
+
+<pre><code>  <span class="variable">$path</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">parse</span><span class="operator">(</span><span class="string">'/foo%2Fbar%3B/baz.html'</span><span class="operator">);</span>
+</code></pre>
+
+<p>Parse path.</p>
+
+<h2 id="to_abs_string">to_abs_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">to_abs_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Turn path into an absolute string.</p>
+
+<pre><code>  <span class="comment"># "/i/%E2%99%A5/mojolicious"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/i/%E2%99%A5/mojolicious'</span><span class="operator">)-&gt;</span><span class="variable">to_abs_string</span><span class="operator">;</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'i/%E2%99%A5/mojolicious'</span><span class="operator">)-&gt;</span><span class="variable">to_abs_string</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="parts">parts</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$parts</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">parts</span><span class="operator">;</span>
+  <span class="variable">$path</span>     <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">parts</span><span class="operator">(</span><span class="operator">[</span><span class="string">qw(foo bar baz)</span><span class="operator">]</span><span class="operator">);</span>
+</code></pre>
+
+<p>The path parts. Note that this method will normalize the path and that <code>%2F</code> will be treated as <code>/</code> for security reasons.</p>
+
+<pre><code>  <span class="comment"># Part with slash</span>
+  <span class="keyword">push</span> <span class="variable">@</span><span class="operator">{</span><span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">parts</span><span class="operator">}</span><span class="operator">,</span> <span class="string">'foo/bar'</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="to_dir">to_dir</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$dir</span> <span class="operator">=</span> <span class="variable">$route</span><span class="operator">-&gt;</span><span class="variable">to_dir</span><span class="operator">;</span>
+</code></pre>
+
+<p>Clone path and remove everything after the right-most slash.</p>
+
+<pre><code>  <span class="comment"># "/i/%E2%99%A5/"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/i/%E2%99%A5/mojolicious'</span><span class="operator">)-&gt;</span><span class="variable">to_dir</span><span class="operator">-&gt;</span><span class="variable">to_abs_string</span><span class="operator">;</span>
+  
+  <span class="comment"># "i/%E2%99%A5/"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'i/%E2%99%A5/mojolicious'</span><span class="operator">)-&gt;</span><span class="variable">to_dir</span><span class="operator">-&gt;</span><span class="variable">to_abs_string</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="to_route">to_route</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$route</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">to_route</span><span class="operator">;</span>
+</code></pre>
+
+<p>Turn path into a route.</p>
+
+<pre><code>  <span class="comment"># "/i/â¥/mojolicious"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/i/%E2%99%A5/mojolicious'</span><span class="operator">)-&gt;</span><span class="variable">to_route</span><span class="operator">;</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'i/%E2%99%A5/mojolicious'</span><span class="operator">)-&gt;</span><span class="variable">to_route</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="to_string">to_string</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<p>Turn path into a string.</p>
+
+<pre><code>  <span class="comment"># "/i/%E2%99%A5/mojolicious"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/i/%E2%99%A5/mojolicious'</span><span class="operator">)-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+  
+  <span class="comment"># "i/%E2%99%A5/mojolicious"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'i/%E2%99%A5/mojolicious'</span><span class="operator">)-&gt;</span><span class="variable">to_string</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="trailing_slash">trailing_slash</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">trailing_slash</span><span class="operator">;</span>
+  <span class="variable">$path</span>    <span class="operator">=</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="variable">trailing_slash</span><span class="operator">(</span><span class="variable">$bool</span><span class="operator">);</span>
+</code></pre>
+
+<p>Path has a trailing slash. Note that this method will normalize the path and that <code>%2F</code> will be treated as <code>/</code> for security reasons.</p>
+
+<pre><code>  <span class="comment"># "/foo/bar/"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar'</span><span class="operator">)-&gt;</span><span class="variable">trailing_slash</span><span class="operator">(</span><span class="number">1</span><span class="operator">);</span>
+  
+  <span class="comment"># "/foo/bar"</span>
+  <span class="variable">Mojo::Path</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">'/foo/bar/'</span><span class="operator">)-&gt;</span><span class="variable">trailing_slash</span><span class="operator">(</span><span class="number">0</span><span class="operator">);</span>
+</code></pre>
+
+<h1 id="OPERATORS">OPERATORS</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojo/Path.html">Mojo::Path</a> overloads the following operators.</p>
+
+<h2 id="array">array</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">@parts</span> <span class="operator">=</span> <span class="variable">@$path</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#parts">&quot;parts&quot;</a>. Note that this will normalize the path and that <code>%2F</code> will be treated as <code>/</code> for security reasons.</p>
+
+<pre><code>  <span class="keyword">say</span> <span class="variable">$path</span><span class="operator">-&gt;</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>
+  <span class="keyword">say</span> <span class="keyword">for</span> <span class="variable">@$path</span><span class="operator">;</span>
+</code></pre>
+
+<h2 id="bool">bool</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$bool</span> <span class="operator">=</span> <span class="operator">!!</span><span class="variable">$path</span><span class="operator">;</span>
+</code></pre>
+
+<p>Always true.</p>
+
+<h2 id="stringify">stringify</h2>
+
+<pre><code>  <span class="keyword">my</span> <span class="variable">$str</span> <span class="operator">=</span> <span class="string">"</span><span class="variable">$path</span><span class="string">"</span><span class="operator">;</span>
+</code></pre>
+
+<p>Alias for <a href="#to_string">&quot;to_string&quot;</a>.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious.html">Mojolicious</a>, <a href="../../../../../root/.cpanm/work/1458883400.4016/Mojolicious-6.57/blib/lib/Mojolicious/Guides.html">Mojolicious::Guides</a>, <a href="http://mojolicious.org">http://mojolicious.org</a>.</p>
+
+
+</body>
+
+</html>
+
+
