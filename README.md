@@ -17,11 +17,11 @@
 
 1. 下载[ZIP压缩包](https://github.com/sjdy521/Mojo-ActivePerl/archive/master.zip)(约43M)
 
-        $ wget https://github.com/sjdy521/Mojo-ActivePerl/archive/master.zip -O Mojo-ActivePerl.zip
+        $ wget https://github.com/sjdy521/Mojo-ActivePerl/archive/master.zip -O Mojo-ActivePerl-master.zip
 
 2. 解压到当前目录并进入目录
     
-        $ unzip Mojo-ActivePerl
+        $ unzip Mojo-ActivePerl-master.zip
         $ cd Mojo-ActivePerl-master
 
 3. 运行安装脚本，指定安装目录(需要有权限创建和写入)
