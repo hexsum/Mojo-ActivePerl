@@ -1,7 +1,7 @@
 package Mojo::Webqq;
 use strict;
 use Carp ();
-$Mojo::Webqq::VERSION = "1.7.5";
+$Mojo::Webqq::VERSION = "1.7.6";
 use base qw(Mojo::Base);
 use Mojo::Webqq::Log;
 use Mojo::Webqq::Cache;
@@ -43,6 +43,7 @@ has qrcode_path         => sub {File::Spec->catfile($_[0]->tmpdir,join('','mojo_
 has ioloop              => sub {Mojo::IOLoop->singleton};
 has keep_cookie         => 1;
 has max_recent          => 20;
+has msg_ttl             => 5;
 
 has version => $Mojo::Webqq::VERSION;
 has user    => sub {+{}};

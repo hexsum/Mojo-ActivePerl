@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "Mojo::Webqq 3"
-.TH Mojo::Webqq 3 "2016-03-24" "perl v5.22.1" "User Contributed Perl Documentation"
+.TH Mojo::Webqq 3 "2016-03-26" "perl v5.22.1" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -654,6 +654,8 @@ msg_class 是常量\*(L"send\*(R"，你可以通过每个消息的msg_class属�
 \&    is_update_group     #是否定期更新群组信息，默认值 1
 \&    is_update_friend    #是否定期更新好友信息，默认值 1
 \&    is_update_discuss   #是否定期更新讨论组信息，默认值 1
+\&
+\&    msg_ttl             #发送失败的消息，重试次数，默认是5
 \&
 \&    $client\->new(ua_debug=>0,qq=>xxxxxx,login_type=>"qrlogin");
 \&    $client\->new(ua_debug=>0,qq=>xxxxxx,pwd=>xxxxx,login_type=>"login");
@@ -1602,8 +1604,11 @@ julia/lua/nim/ocaml/python
 .IX Subsection "Mojo::Webqq::Plugin::ShowQRcode"
 调用系统的图片查看程序来展示二维码图片，方便扫描，作者 autodataming <https://github.com/autodataming>
 .PP
-.Vb 1
-\&    $client\->load("ShowQRcode");#当前仅支持win
+.Vb 4
+\&    $client\->load("ShowQRcode");#当前仅支持win,并且需要在调用$client\->login()方法之前加载
+\&    $client\->login();
+\&    $client\->load("ShowMsg");
+\&    ...;
 .Ve
 .SS "Mojo::Webqq::Plugin::GasPrice"
 .IX Subsection "Mojo::Webqq::Plugin::GasPrice"

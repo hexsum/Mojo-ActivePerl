@@ -735,6 +735,8 @@
     <span class="variable">is_update_friend</span>    <span class="comment">#æ¯å¦å®ææ´æ°å¥½åä¿¡æ¯ï¼é»è®¤å¼ 1</span>
     <span class="variable">is_update_discuss</span>   <span class="comment">#æ¯å¦å®ææ´æ°è®¨è®ºç»ä¿¡æ¯ï¼é»è®¤å¼ 1</span>
     
+    <span class="variable">msg_ttl</span>             <span class="comment">#åéå¤±è´¥çæ¶æ¯ï¼éè¯æ¬¡æ°ï¼é»è®¤æ¯5</span>
+    
     <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">ua_debug</span><span class="operator">=&gt;</span><span class="number">0</span><span class="operator">,</span><span class="string">qq</span><span class="operator">=&gt;</span><span class="variable">xxxxxx</span><span class="operator">,</span><span class="string">login_type</span><span class="operator">=&gt;</span><span class="string">"qrlogin"</span><span class="operator">);</span>
     <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">ua_debug</span><span class="operator">=&gt;</span><span class="number">0</span><span class="operator">,</span><span class="string">qq</span><span class="operator">=&gt;</span><span class="variable">xxxxxx</span><span class="operator">,</span><span class="string">pwd</span><span class="operator">=&gt;</span><span class="variable">xxxxx</span><span class="operator">,</span><span class="string">login_type</span><span class="operator">=&gt;</span><span class="string">"login"</span><span class="operator">);</span>
 </code></pre>
@@ -901,7 +903,7 @@
 
 <h2 id="mail-opt-callback">mail(%opt,[$callback]) &#x975E;&#x963B;&#x585E;&#x53D1;&#x9001;&#x90AE;&#x4EF6;</h2>
 
-<p>&#x8BE5;&#x65B9;&#x6CD5;&#x5B9E;&#x9645;&#x4E0A;&#x662F;<a>Mojo::SMTP::Client</a>&#x7684;&#x5C01;&#x88C5;&#xFF0C;&#x4F7F;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#x4E4B;&#x524D;&#x8BF7;&#x786E;&#x4FDD;&#x4F60;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x4E86;<a>Mojo::SMTP::Client</a>&#x6A21;&#x5757;</p>
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x5B9E;&#x9645;&#x4E0A;&#x662F;<a href="../../../site/lib/Mojo/SMTP/Client.html">Mojo::SMTP::Client</a>&#x7684;&#x5C01;&#x88C5;&#xFF0C;&#x4F7F;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#x4E4B;&#x524D;&#x8BF7;&#x786E;&#x4FDD;&#x4F60;&#x5DF2;&#x7ECF;&#x5B89;&#x88C5;&#x4E86;<a href="../../../site/lib/Mojo/SMTP/Client.html">Mojo::SMTP::Client</a>&#x6A21;&#x5757;</p>
 
 <pre><code>    åéé®ä»¶éè¦è®¾ç½®çåæ°ï¼
     <span class="variable">smtp</span>        <span class="comment">#smtpæå¡å¨å°åï¼ä¾å¦smtp.163.com</span>
@@ -1505,7 +1507,7 @@
 
 <p>&#x5C06;qq&#x534F;&#x8BAE;&#x8F6C;&#x6362;&#x6210;irc&#x534F;&#x8BAE;&#xFF0C;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x672C;&#x5730;&#x7684;irc&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x4F7F;&#x7528;&#x4EFB;&#x610F;irc&#x5BA2;&#x6237;&#x7AEF;&#xFF08;irc user&#x8BBE;&#x7F6E;&#x4E3A;qq&#x53F7;&#xFF09;&#x8FDE;&#x63A5;&#x540E;&#x5373;&#x53EF;&#x4EE5;&#x6309;&#x7167;irc&#x7684;&#x65B9;&#x5F0F;&#x4F7F;&#x7528;qq</p>
 
-<p>&#x9700;&#x8981;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a>Mojo::IRC::Server::Chinese</a></p>
+<p>&#x9700;&#x8981;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a href="../../../site/lib/Mojo/IRC/Server/Chinese.html">Mojo::IRC::Server::Chinese</a></p>
 
 <pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"IRCShell"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span><span class="string">listen</span><span class="operator">=&gt;</span><span class="operator">[</span> <span class="operator">{</span><span class="string">host</span><span class="operator">=&gt;</span><span class="string">"127.0.0.1"</span><span class="operator">,</span><span class="string">port</span><span class="operator">=&gt;</span><span class="number">6667</span><span class="operator">}</span> <span class="operator">]</span> <span class="operator">}</span> <span class="operator">);</span><span class="comment">#å¼å¯æ¬å°çirc server</span>
     <span class="comment">#æ¯æçåæ°åæ¬ï¼</span>
@@ -1682,7 +1684,10 @@
 
 <p>&#x8C03;&#x7528;&#x7CFB;&#x7EDF;&#x7684;&#x56FE;&#x7247;&#x67E5;&#x770B;&#x7A0B;&#x5E8F;&#x6765;&#x5C55;&#x793A;&#x4E8C;&#x7EF4;&#x7801;&#x56FE;&#x7247;&#xFF0C;&#x65B9;&#x4FBF;&#x626B;&#x63CF;&#xFF0C;&#x4F5C;&#x8005; autodataming <a href="https://github.com/autodataming">https://github.com/autodataming</a></p>
 
-<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowQRcode"</span><span class="operator">);</span><span class="comment">#å½åä»æ¯æwin</span>
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowQRcode"</span><span class="operator">);</span><span class="comment">#å½åä»æ¯æwin,å¹¶ä¸éè¦å¨è°ç¨$client-&gt;login()æ¹æ³ä¹åå è½½</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">();</span>
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowMsg"</span><span class="operator">);</span>
+    <span class="operator">...;</span>
 </code></pre>
 
 <h2 id="Mojo::Webqq::Plugin::GasPrice">Mojo::Webqq::Plugin::GasPrice</h2>
@@ -1739,7 +1744,7 @@
 
 <p>&#x767B;&#x5F55;&#x8FC7;&#x7A0B;&#x5982;&#x679C;&#x9700;&#x8981;&#x624B;&#x673A;&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;&#xFF0C;&#x4F1A;&#x5C06;&#x4E8C;&#x7EF4;&#x7801;&#x4EE5;&#x90AE;&#x4EF6;&#x9644;&#x4EF6;&#x7684;&#x5F62;&#x5F0F;&#x53D1;&#x9001;&#x5230;&#x6307;&#x5B9A;&#x90AE;&#x7BB1;&#xFF0C;&#x518D;&#x901A;&#x8FC7;&#x624B;&#x673A;QQ&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;</p>
 
-<p>&#x6CE8;&#x610F;&#xFF1A; &#x7531;&#x4E8E;&#x9700;&#x8981;&#x53D1;&#x9001;&#x90AE;&#x4EF6;&#x9644;&#x4EF6;&#xFF0C;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a>Mojo::SMTP::Client</a> <a>MIME::Lite</a>&#xFF0C;&#x9700;&#x8981;&#x5355;&#x72EC;&#x5B89;&#x88C5;</p>
+<p>&#x6CE8;&#x610F;&#xFF1A; &#x7531;&#x4E8E;&#x9700;&#x8981;&#x53D1;&#x9001;&#x90AE;&#x4EF6;&#x9644;&#x4EF6;&#xFF0C;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a href="../../../site/lib/Mojo/SMTP/Client.html">Mojo::SMTP::Client</a> <a href="../../../site/lib/MIME/Lite.html">MIME::Lite</a>&#xFF0C;&#x9700;&#x8981;&#x5355;&#x72EC;&#x5B89;&#x88C5;</p>
 
 <pre><code>    <span class="comment">#æä»¶éè¦ä½¿ç¨å°login()æ¹æ³æ§è¡è¿ç¨ä¸­è§¦åçinput_qrcodeäºä»¶ï¼å æ­¤éè¦å¨login()æ§è¡ä¹åå è½½</span>
     <span class="comment">#æä»¶èªèº«è®¾ç½®äºcall_on_load=&gt;1ï¼å æ­¤ä¼å¨å è½½åé©¬ä¸æ§è¡</span>
@@ -1765,7 +1770,7 @@
 
 <p>&#x767B;&#x5F55;&#x8FC7;&#x7A0B;&#x5982;&#x679C;&#x9700;&#x8981;&#x9A8C;&#x8BC1;&#x7801;&#xFF0C;&#x4F1A;&#x53D1;&#x90AE;&#x4EF6;&#x5230;&#x6307;&#x5B9A;&#x7684;&#x90AE;&#x7BB1;&#xFF0C;&#x901A;&#x8FC7;&#x70B9;&#x51FB;&#x90AE;&#x4EF6;&#x4E2D;&#x7684;&#x94FE;&#x63A5;&#x8FDC;&#x7A0B;&#x63D0;&#x4EA4;&#x9A8C;&#x8BC1;&#x7801;&#xFF0C;&#x9002;&#x5408;&#x914D;&#x5408;&#x624B;&#x673A;&#x4F7F;&#x7528;</p>
 
-<p>&#x6CE8;&#x610F;&#xFF1A; &#x7531;&#x4E8E;&#x9700;&#x8981;&#x53D1;&#x9001;&#x90AE;&#x4EF6;&#x9644;&#x4EF6;&#xFF0C;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a>Mojo::SMTP::Client</a> <a>MIME::Lite</a>&#xFF0C;&#x9700;&#x8981;&#x5355;&#x72EC;&#x5B89;&#x88C5;</p>
+<p>&#x6CE8;&#x610F;&#xFF1A; &#x7531;&#x4E8E;&#x9700;&#x8981;&#x53D1;&#x9001;&#x90AE;&#x4EF6;&#x9644;&#x4EF6;&#xFF0C;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a href="../../../site/lib/Mojo/SMTP/Client.html">Mojo::SMTP::Client</a> <a href="../../../site/lib/MIME/Lite.html">MIME::Lite</a>&#xFF0C;&#x9700;&#x8981;&#x5355;&#x72EC;&#x5B89;&#x88C5;</p>
 
 <pre><code>    <span class="comment">#æä»¶éè¦ä½¿ç¨å°login()æ¹æ³æ§è¡è¿ç¨ä¸­è§¦åçinput_img_verifycodeäºä»¶ï¼å æ­¤éè¦å¨login()æ§è¡ä¹åå è½½</span>
     <span class="comment">#æä»¶èªèº«è®¾ç½®äºcall_on_load=&gt;1ï¼å æ­¤ä¼å¨å è½½åé©¬ä¸æ§è¡</span>
