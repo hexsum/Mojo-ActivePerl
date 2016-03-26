@@ -7,7 +7,7 @@
 
 ##包含的组件：
 * Perl 5.22.1
-* Mojo-Webqq 1.7.5
+* Mojo-Webqq 1.7.6
 * Mojo-Weixin 1.0.8
 * Mojo-IRC-Server-Chinese 1.7.7
 * Mojolicious 6.57
