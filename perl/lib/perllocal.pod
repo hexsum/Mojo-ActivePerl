@@ -4376,3 +4376,47 @@ C<EXE_FILES: >
 
 =back
 
+=head2 Thu Oct 20 14:48:35 2016: C<Module> L<Mojo::Webqq|Mojo::Webqq>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.8.6>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Thu Oct 20 14:49:31 2016: C<Module> L<Mojo::Weixin|Mojo::Weixin>
+
+=over 4
+
+=item *
+
+C<installed into: /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.2.1>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+

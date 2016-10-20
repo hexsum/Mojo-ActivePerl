@@ -2,6 +2,7 @@ package Mojo::Webqq::Plugin::SmartReply;
 use POSIX qw(strftime);
 use Encode;
 use List::Util qw(first);
+use Mojo::Util;
 my $api = 'http://www.tuling123.com/openapi/api';
 my %ban;
 my @limit_reply = (
@@ -29,6 +30,9 @@ sub call{
         my $sender_nick = $msg->sender->displayname;
         my $user_nick = $msg->receiver->displayname;
         return if $is_need_at and $msg->type eq "group_message" and !$msg->is_at;
+        if(ref $data->{keyword} eq "ARRAY"){
+            return if not first { $msg->content =~ /\Q$_\E/} @{$data->{keyword}};
+        }
         if($msg->type eq 'group_message'){
             return if $data->{is_need_at} and $msg->type eq "group_message" and !$msg->is_at;
             return if ref $data->{ban_group}  eq "ARRAY" and first {$_=~/^\d+$/?$msg->group->gnumber eq $_:$msg->group->gname eq $_} @{$data->{ban_group}};
@@ -80,7 +84,9 @@ sub call{
                 $reply = encode("utf8","$json->{text}$json->{url}");
             }
             else{return}
-
+            $reply=~s#<br(\s*/)?>#\n#g;
+            eval{$reply= Mojo::Util::html_unescape($reply);};
+            $client->warn("html entities unescape fail: $@") if $@;
             $reply  = "\@$sender_nick " . $reply  if $msg->type eq 'group_message' and rand(100)>20;
             $reply = $client->truncate($reply,max_bytes=>500,max_lines=>10) if ($msg->type eq 'group_message' and $data->{is_truncate_reply});   
             $client->reply_message($msg,$reply,sub{$_[1]->msg_from("bot")}) if $reply;

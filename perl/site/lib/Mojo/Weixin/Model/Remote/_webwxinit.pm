@@ -1,12 +1,12 @@
 use Mojo::Util qw(encode url_escape);
 use strict;
+use List::Util qw(first);
 use Mojo::Weixin::Const qw(%KEY_MAP_USER %KEY_MAP_GROUP %KEY_MAP_GROUP_MEMBER %KEY_MAP_FRIEND);
 sub Mojo::Weixin::_webwxinit{
     my $self = shift;
     my $api = "https://". $self->domain . "/cgi-bin/mmwebwx-bin/webwxinit";
     my @query_string = (
-        r           =>  sub{use integer;~time}->(),
-        lang        =>  'zh_CN',
+        r           =>  sub{use integer;-1*~time}->(),
     );
     push @query_string,(pass_ticket =>  url_escape($self->pass_ticket)) if $self->pass_ticket;
     my $post = {
@@ -18,7 +18,7 @@ sub Mojo::Weixin::_webwxinit{
         },
     };
     
-    my $json = $self->http_post($self->gen_url($api,@query_string),{json=>1,Referer=>'https://'.$self->domain .'/?&lang=zh_CN'},json=>$post);
+    my $json = $self->http_post($self->gen_url($api,@query_string),{json=>1,Referer=>'https://'.$self->domain .'/'},json=>$post);
     return if not defined $json;
     return if $json->{BaseResponse}{Ret}!=0;
     $self->sync_key($json->{SyncKey}) if $json->{SyncKey}{Count} !=0;

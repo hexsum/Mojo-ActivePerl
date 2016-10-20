@@ -26,6 +26,7 @@ use Mojo::Webqq::Model::Remote::_remove_group_admin;
 use Mojo::Webqq::Model::Remote::_kick_group_member;
 use Mojo::Webqq::Model::Remote::_set_group_member_card;
 use Mojo::Webqq::Model::Remote::_shutup_group_member;
+use Mojo::Webqq::Model::Remote::_qiandao;
 
 use base qw(Mojo::Webqq::Base);
 
@@ -407,26 +408,17 @@ sub update_group_ext {
                 }
             }
             else{
-                if($p{is_blocking}){
-                    for my $g (@groups){
-                        my $id = $g->gname;
-                        $g->update($gext->{$id});
+                my $i = -3;
+                for my $g (@groups){
+                    my $id = $g->gname;
+                    next if not exists $gext->{$id};
+                    #$g->{gtype} = $gext->{$id}{gtype};
+                    #$g->{gnumber} = $gext->{$id}{gnumber};
+                    $g->update($gext->{$id});
+                    $self->timer($i+3,sub{
                         $self->update_group_member_ext($g,%p) if $p{is_update_group_member_ext};
-                    }
-                }
-                else{
-                    my $i = -3;
-                    for my $g (@groups){
-                        my $id = $g->gname;
-                        next if not exists $gext->{$id};
-                        #$g->{gtype} = $gext->{$id}{gtype};
-                        #$g->{gnumber} = $gext->{$id}{gnumber};
-                        $g->update($gext->{$id});
-                        $self->timer($i+3,sub{
-                            $self->update_group_member_ext($g,%p) if $p{is_update_group_member_ext};
-                        });
-                        $i++;
-                    }
+                    });
+                    $i++;
                 }
             }
             $self->emit("model_update","group_ext",1);
@@ -505,7 +497,7 @@ sub update_group_member {
             $self->info("更新群组[ ". $group->gname . " ]成员信息");
             if(ref $group_info->{member} eq 'ARRAY'){
                 $group->update($group_info); 
-                #$self->update_group_member_ext($group,%p) if $p{is_update_group_member_ext};
+                $self->update_group_member_ext($group,%p) if $p{is_update_group_member_ext};
             }
             else{$self->debug("更新群组[ " . $group->gname . " ]成员信息无效")}
         }
@@ -1070,6 +1062,26 @@ sub set_group_member_card{
         else{$self->info("取消群名片成功");}
     }
     else{$self->error("设置群名片失败")}
+    return $ret;
+}
+
+sub qiandao {
+    my $self = shift;
+    my $group = shift;
+    if ( not $self->is_support_model_ext){
+        $self->warn("无法支持获取扩展信息, 无法进行签到");
+        return;
+    }
+    $self->die("非群组对象") if not $group->is_group;
+    if(not defined $group->gnumber){
+        $self->error("未获取到群号码，无法进行签到");
+        return;
+    }
+    my $ret = $self->_qiandao($group->gnumber);
+    if($ret){
+        $self->info("群组[ ". $group->displayname ." ]签到成功");
+    }
+    else{$self->error("群组[ ". $group->displayname ." ]签到失败")}
     return $ret;
 }
 

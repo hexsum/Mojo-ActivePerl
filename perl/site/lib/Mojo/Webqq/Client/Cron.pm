@@ -1,9 +1,21 @@
 package Mojo::Webqq::Client::Cron;
 use POSIX qw(mktime);
-use Time::Piece;
-use Time::Seconds;
+BEGIN{
+    our $is_module_ok = 0;
+    eval{
+        require Time::Piece;
+        require Time::Seconds;
+        Time::Piece->import;
+        Time::Seconds->import;
+    };
+    $is_module_ok = 1 if not $@;
+}
 sub add_job{
     my $self = shift;
+    if(not $is_module_ok){
+        $self->error("调用add_job方法请先确保安装模块 Time::Piece 和 Time::Seconds");
+        return;
+    }
     my($type,$nt,$callback) = @_;
     my $t = $nt;
     if(ref $callback ne 'CODE'){ 
@@ -21,6 +33,7 @@ sub add_job{
         $second = 0 if not defined $second ;
         $time = {hour => $hour,minute => $minute,second=> $second};
     }
+    $self->debug("计划任务[$type]添加成功，时间设定: " . join(":",map {$_!=0?$_:"00"} ($time->{hour},$time->{minute},$time->{second})) );
     my $delay;
     #my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime;
     my @now = localtime;
@@ -58,9 +71,8 @@ sub add_job{
         }        
     }    
     
-    $self->debug("[$type]下一次触发时间为：" . $next->strftime("%Y/%m/%d %H:%M:%S\n")); 
+    $self->debug("计划任务[$type]下一次触发时间为：" . $next->strftime("%Y/%m/%d %H:%M:%S")); 
     $delay = $next - $now;
-    my $rand_watcher_id = rand();
     $self->timer($delay,sub{
         eval{
             $callback->();

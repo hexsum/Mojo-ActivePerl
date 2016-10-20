@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "Mojo::Weixin 3"
-.TH Mojo::Weixin 3 "2016-03-23" "perl v5.22.1" "User Contributed Perl Documentation"
+.TH Mojo::Weixin 3 "2016-10-09" "perl v5.22.1" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -83,16 +83,12 @@ Mojo::Weixin \- A Weixin Client Framework base on Mojolicious
 .Vb 5
 \&    use Mojo::Weixin;
 \&    my $client = Mojo::Weixin\->new(
-\&        ua_debug  => 0,       #是否打印详细的debug信息
+\&        http_debug  => 0,       #是否打印详细的debug信息
 \&        log_level => "info",  #日志打印级别，debug|info|warn|error|fatal 
 \&    );
 \&
-\&    #客户端进行登录
-\&    $client\->login();
-\&    
 \&    #客户端加载ShowMsg插件，用于打印发送和接收的消息到终端
 \&    $client\->load("ShowMsg");
-\&
 \&
 \&    #ready事件触发时 表示客户端一切准备就绪：已经成功登录、已经加载完个人/好友/群信息等
 \&    #你的代码建议尽量写在 ready 事件中
@@ -228,11 +224,12 @@ new 初始化一个微信客户端对象
 .IX Subsection "new 初始化一个微信客户端对象"
 .PP
 .Vb 1
-\&    $client = Mojo::Weixin\->new(ua_debug=>0, log_level=>"info", );
+\&    $client = Mojo::Weixin\->new(http_debug=>0, log_level=>"info", );
 \&
 \&    #支持的参数：
 \&
-\&    ua_debug        #设置该参数，打印调试信息
+\&    account         #可选，默认值default, 每个客户端的标识，多账号登录时需要设置，用于区分不同客户端保存的cookie路径
+\&    http_debug      #设置该参数，打印调试信息
 \&    keep_cookie     #默认为1，0表示不保存登录cookie，1表示保存登录cookie方便下次直接恢复登录
 \&
 \&    log_level       #默认级别为info，可以设置debug|info|warn|error|fatal
@@ -241,10 +238,19 @@ new 初始化一个微信客户端对象
 \&                    #编码必须是 Encode 模块支持的格式，比如utf8 gbk等
 \&
 \&    tmpdir          #程序使用的临时目录，主要用于保存一些验证码、二维码等数据，默认为系统临时目录
-\&    cookie_path     #登录cookie的保存文件，默认为 tmpdir/mojo_weixin_cookie.dat（多账号运行时需要设置不同的cookie_path）
+\&    cookie_path     #登录cookie的保存文件，默认为 tmpdir/mojo_weixin_cookie_default.dat（多账号运行时设置不同account）
 \&    pic_dir         #图片接收默认地址，默认为 tmpdir 参数所设置的目录
 \&
 \&    qrcode_path     #二维码保存路径，默认是 tmpdir 目录下固定文件名
+\&    emoji_to_text   #默认为1，是否把emoji表情字符转为 "[微笑]" 形式的文本
+\&                    #如果你的输出设备支持显示原生emoji表情字符，可以把该参数设置为0
+\&    
+\&    stop_with_mobile #设置为1则手机操作退出web微信时客户端也会停止运行，默认值为0，表示客户端不退出重新等待扫码
+\&                     #需要注意，由于手机操作产生的指令和其他情况下服务端产生的退出指令是一样的，无法进行区分
+\&                     #所以开启该选项可能也会导致其他服务端要求客户端重新扫码的情况下客户端停止运行
+\&
+\&    qrcode_count_max #每个二维码都有一个过期时间，过期后会重新下载一个二维码继续等待扫描
+\&                     #如果等待扫码次数超过 qrcode_count_max 客户端会停止运行，默认10次
 .Ve
 .PP
 login 客户端登录
@@ -314,8 +320,9 @@ spawn(%opt) 执行外部命令
 .PP
 该方法实际上参考Mojo::Run模块 并在该模块的基础上做了进一步完善
 .PP
-.Vb 8
+.Vb 9
 \&    #支持的参数：
+\&    is_blocking     #是否阻塞执行命令，默认0
 \&    max_forks       #产生的最大进程数
 \&    cmd             #要执行的命令或代码
 \&    param           #命令的参数
@@ -464,6 +471,23 @@ http_post 阻塞或非阻塞http post请求
 \&    my $group = $client\->search_group(name=>xxx);
 .Ve
 .PP
+\fIcreate_group()\fR  创建群聊
+.IX Subsection "create_group() 创建群聊"
+.PP
+.Vb 5
+\&    #hash传参
+\&    my $group = $client\->create_group({
+\&        friends     =>  [ $friend1, $friend2, ... ], 
+\&        displayname =>  "测试", #可选，群聊名称
+\&    });    
+\&
+\&    #数组引用传参
+\&    my $group = $client\->create_group([ $friend1, $friend2, ... ], "测试",);
+\&
+\&    #列表传参
+\&    my $grouup = $client\->create_group($friend1, $friend2, ...);
+.Ve
+.PP
 send_message($friend|$group,$content,$callback) 发送文本消息
 .IX Subsection "send_message($friend|$group,$content,$callback) 发送文本消息"
 .PP
@@ -507,12 +531,32 @@ send_media($friend|$group,$media_path|$media_hash,$callback) 发送媒体文件
 \&    });
 .Ve
 .PP
-reply_message($msg,$content,$callback) 回复指定的消息
-.IX Subsection "reply_message($msg,$content,$callback) 回复指定的消息"
+reply_message($msg,$content,[$callback]) 回复指定消息文本内容
+.IX Subsection "reply_message($msg,$content,[$callback]) 回复指定消息文本内容"
 .PP
 .Vb 2
 \&    #回复消息，如果是群消息，就回复给该群，如果是好友消息，就回复给该好友
 \&    $client\->reply_message($msg,$content);
+.Ve
+.PP
+reply_media_message($msg,$media,[$callback]) 回复指定消息图片内容
+.IX Subsection "reply_media_message($msg,$media,[$callback]) 回复指定消息图片内容"
+.PP
+.Vb 3
+\&    #回复消息，如果是群消息，就回复给该群，如果是好友消息，就回复给该好友
+\&    $client\->reply_media_message($msg,\*(Aqhttp://www.baidu.com/test.jpg\*(Aq);
+\&    $client\->reply_media_message($msg,\*(Aq/tmp/test.jpg\*(Aq);
+.Ve
+.PP
+accept_friend_request($id,$displayname,$ticket) 同意好友验证申请
+.IX Subsection "accept_friend_request($id,$displayname,$ticket) 同意好友验证申请"
+.PP
+.Vb 5
+\&    #参数说明参见 friend_request 事件
+\&    $client\->on(friend_request=>sub{
+\&        my($client,$id,$displayname,$verify,$ticket) = @_;
+\&        $client\->accept_friend_request($id,$displayname,$ticket);
+\&    });
 .Ve
 .SS "个人对象"
 .IX Subsection "个人对象"
@@ -530,11 +574,15 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&
 \&    方法：
 \&    dump        #打印对象结构
+\&    get_avatar  #获取用户头像
 \&    
 \&    成功登录后，可以通过 $client\->user 来获取到个人对象
 \&
 \&    $client\->user\->name;   #获取个人昵称
-\&    $client\->user\->dump();
+\&    $client\->user\->dump(); 
+\&    $client\->get_avatar(sub{
+\&        my($path,$data,$mime) = @_; #传递给回调参数的分别是头像文件路径，原始数据，Content\-Type
+\&    });
 .Ve
 .SS "好友对象"
 .IX Subsection "好友对象"
@@ -553,10 +601,17 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&    方法：
 \&    dump        #打印对象结构
 \&    send        #给该好友发送消息
+\&    send_media  #发送图片
+\&    set_markname #设置备注名称
+\&    get_avatar  #获取用户头像
 \&
 \&    my $friend = $client\->search_friend(name=>"小灰");
 \&    $friend\->dump();
-\&    $friend\->send("hello world");
+\&    $friend\->send("hello world"); 
+\&    $friend\->set_markname("测试");
+\&    $friend\->get_avatar(sub{
+\&        my($path,$data,$mime) = @_; #传递给回调参数的分别是头像文件路径，原始数据，Content\-Type
+\&    });
 .Ve
 .SS "群组对象"
 .IX Subsection "群组对象"
@@ -570,11 +625,24 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&    search_group_member  #搜索群成员
 \&    me                   #返回群成员中的自己对象
 \&    send                 #发送消息给该群
+\&    send_media           #发送图片
 \&    dump                 #打印群对象结构
+\&    members              #返回所有的群成员对象列表
+\&    invite_friend        #邀请好友入群
+\&    kick_group_member    #移除群成员
+\&    set_displayname      #设置群聊显示名称
+\&    get_avatar           #获取用户头像
 \&
 \&    my $group = $client\->search_group(displayname=>"红包群");
 \&    $group\->send("大家好");
 \&    print "我在群中的称呼是：" . $group\->me\->displayname;
+\&
+\&    $group\->invite_friend($friend1,$friend2,...);
+\&    $group\->kick_group_member($member);
+\&    $group\->set_displayname("测试");
+\&    $group\->get_avatar(sub{
+\&        my($path,$data,$mime) = @_; #传递给回调参数的分别是头像文件路径，原始数据，Content\-Type
+\&    });
 .Ve
 .SS "群成员对象"
 .IX Subsection "群成员对象"
@@ -593,30 +661,60 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&    方法:
 \&    dump            #打印对象结构
 \&    group           #返回群成员对应的群组对象
+\&    make_friend     #发送好友请求
+\&    get_avatar      #获取用户头像
 \&
 \&    my $group = $client\->search_group(displayname=>"红包群");
 \&    my $group_member = $group\->search_group_member(displayname=>"小灰");
 \&    $group_member\->dump;
 \&    $group_member\->group\->displayname;
+\&    $group_member\->make_friend("你好，加个好友吧");
+\&    $group_member\->get_avatar(sub{
+\&        my($path,$data,$mime) = @_; #传递给回调参数的分别是头像文件路径，原始数据，Content\-Type
+\&    });
 .Ve
 .SS "消息对象"
 .IX Subsection "消息对象"
 .Vb 9
 \&    属性：
 \&    id          #消息id
-\&    type        #消息类型 friend_message|group_message 好友消息或群消息
+\&    type        #消息类型 friend_message|group_message|group_notice 好友消息或群消息或者群提示消息
 \&    class       #消息类别 send|recv 发送消息或接收消息
 \&    time        #消息发送或接收的时间
 \&    ttl         #发送消息的ttl，默认是5，当ttl为0 会被消息队列丢弃
 \&    cb          #消息发送完成后的回调函数，会在消息发送完之后执行
 \&    content     #消息内容
-\&    format      #消息格式，当前仅支持文本格式 text
+\&    format      #消息格式，包括 text|media|app 三类
+\&
+\&    sender_id   #群消息中发送对象的id
+\&    receiver_id #消息接收对象的id
+\&    group_id    #群消息的群对象id
+\&    
+\&    #媒体类消息专用属性
+\&    media_id    #媒体id
+\&    media_type  #媒体类型 image|voice|video|emoticon
+\&    media_code  #媒体类型代码
+\&    media_mime  #媒体文件的MIME，比如 image/jpg
+\&    media_name  #媒体文件名称
+\&    media_size  #媒体文件大小
+\&    media_data  #媒体文件原始二进制数据
+\&    media_mtime #媒体文件的修改时间
+\&    media_ext   #媒体文件的扩展名
+\&    media_path  #媒体文件的本地路径
+\&
+\&    #应用分享类消息专用属性
+\&    app_id      #应用id
+\&    app_title   #分享标题
+\&    app_url     #分享链接
+\&    app_name    #应用名称
+\&    app_desc    #分享描述
 \&
 \&    方法：
 \&    sender      #消息的发送者对象
 \&    receiver    #消息接收者对象
 \&    group       #消息对应的群组对象
-\&    reply       #回复该消息
+\&    reply       #回复该消息文本内容
+\&    reply_media #回复该消息图片内容
 \&
 \&    #当接收到消息时 会产生receive_message事件
 \&    #注册receive_message事件对应的回调函数
@@ -632,8 +730,14 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&
 \&            print $sender\->displayname . "在群：", $group\->displayname . "中发了一条消息，消息的内容是：" . $msg\->content;
 \&        }
+\&        elsif($msg\->type eq "group_notice"){
+\&            my $group = $msg\->group;    #获取到消息对应的群组对象
+\&            print "在群：", $group\->displayname . "中收到了一条群提示消息，消息的内容是：" . $msg\->content;
+\&        }
 \&    
-\&        $msg\->reply("消息已收到"); #回复该消息
+\&        $msg\->reply("消息已收到"); #回复该消息(文本形式)
+\&        $msg\->reply_media("http://www.baidu.com/test.jpg"); #回复该消息图片(url形式)
+\&        $msg\->reply_media("/tmp/test.jpg"); #回复该消息图片(本地文件路径)
 \&    });
 .Ve
 .SH "事件"
@@ -643,6 +747,17 @@ reply_message($msg,$content,$callback) 回复指定的消息
 .Vb 4
 \&    $client\->on(receive_message=>sub{
 \&        my($client,$msg) = @_;  #传给回调的参数是接收到的消息对象
+\&        ...;
+\&    });
+.Ve
+.SS "receive_media 接收到图片等媒体消息"
+.IX Subsection "receive_media 接收到图片等媒体消息"
+.Vb 7
+\&    $client\->on(receive_media=>sub{
+\&        my($client,$path,$data,$msg) = @_;
+\&        # $path 图片的本地路径
+\&        # $data 图片的原始二进制数据
+\&        # $msg  图片对应的消息对象
 \&        ...;
 \&    });
 .Ve
@@ -665,6 +780,15 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&    $client\->on(input_qrcode=>sub{
 \&        my($client,$qrcode_path) = @_; #传给回调的参数是二维码图片的路径
 \&        ...;
+\&    });
+.Ve
+.SS "login 客户端发生登录"
+.IX Subsection "login 客户端发生登录"
+.Vb 5
+\&    $client\->on(login=>sub{
+\&        my($client,$is_scann) = @_;
+\&        # $is_scann 值为1表示本次登录经过二维码扫描，好友、群组对象的id可能发生变化
+\&        #           值为0表示本次登录未经过二维码扫描，好友、群组对象的id一般不发生变化
 \&    });
 .Ve
 .SS "ready 客户端准备就绪"
@@ -706,7 +830,7 @@ reply_message($msg,$content,$callback) 回复指定的消息
 .SS "new_group_member 新增群成员"
 .IX Subsection "new_group_member 新增群成员"
 .Vb 1
-\&    $client\->on(new_group_member=>sub{my ($client,$member)=@_});
+\&    $client\->on(new_group_member=>sub{my ($client,$member,$group)=@_});
 .Ve
 .SS "new_friend  新增好友"
 .IX Subsection "new_friend 新增好友"
@@ -717,6 +841,32 @@ reply_message($msg,$content,$callback) 回复指定的消息
 .IX Subsection "new_group 新增群组"
 .Vb 1
 \&    $client\->on(new_group=>sub{my ($client,$group)=@_});
+.Ve
+.SS "lose_friend 失去好友"
+.IX Subsection "lose_friend 失去好友"
+.Vb 1
+\&    $client\->on(lose_friend=>sub{my ($client,$friend)=@_});
+.Ve
+.SS "lose_group 退出群组"
+.IX Subsection "lose_group 退出群组"
+.Vb 1
+\&    $client\->on(lose_group=>sub{my ($client,$group)=@_});
+.Ve
+.SS "lose_group_member 群组成员退出"
+.IX Subsection "lose_group_member 群组成员退出"
+.Vb 1
+\&    $client\->on(lose_group_member=>sub{my ($client,$member,$group)=@_});
+.Ve
+.SS "friend_request 好友验证申请"
+.IX Subsection "friend_request 好友验证申请"
+.Vb 7
+\&    $client\->on(friend_request=>sub{
+\&        my ($client,$id,$displayname,$verify,$ticket) = @_;
+\&        # $id           发送好友验证请求的用户id
+\&        # $displayname  发送好友验证请求的用户名称
+\&        # $verify       发送好友验证请求的验证内容
+\&        # $ticket       ticket在同意好友验证请求时会用到，参见 accept_friend_request 方法
+\&    });
 .Ve
 .SH "关于插件"
 .IX Header "关于插件"
@@ -798,20 +948,43 @@ reply_message($msg,$content,$callback) 回复指定的消息
 .Vb 1
 \&    $client\->load("ShowMsg");
 .Ve
+.SS "Mojo::Weixin::Plugin::ImageStore"
+.IX Subsection "Mojo::Weixin::Plugin::ImageStore"
+按日期目录保存发送和接收的图片
+.PP
+.Vb 2
+\&    my $client = Mojo::Weixin\->new(media_dir=>"/home/test");
+\&    $client\->load("ShowMsg");
+\&
+\&    保存的效果:
+\&    /home/test/20150505/20150505123456.jpg
+\&    /home/test/20150505/20150505124356.jpg
+.Ve
+.SS "Mojo::Weixin::Plugin::AutoVerify"
+.IX Subsection "Mojo::Weixin::Plugin::AutoVerify"
+收到好友验证请求时自动批准同意
+.PP
+.Vb 1
+\&    $client\->load("AutoVerify");
+.Ve
 .SS "Mojo::Weixin::Plugin::IRCShell"
 .IX Subsection "Mojo::Weixin::Plugin::IRCShell"
 将微信协议转换成irc协议，启动一个本地的irc服务器，使用任意irc客户端（irc user设置为微信帐号）连接后即可以按照irc的方式使用微信
 .PP
 需要依赖模块 Mojo::IRC::Server::Chinese
 .PP
-.Vb 8
-\&    $client\->load("IRCShell",data=>{host=>"127.0.0.1",port=>6667,});#开启本地的irc server
+.Vb 12
+\&    $client\->load("IRCShell",data=>{
+\&        listen=>[ {host=>"127.0.0.1",port=>6667},], #可选，IRC服务器监听的地址+端口，默认0.0.0.0:6667
+\&        load_friend => 1, #默认是0 是否初始为每个好友生成irc虚拟帐号并加入频道 #我的好友
+\&    });
 \&    #支持的参数包括：
-\&    host                #默认0.0.0.0
-\&    port                #默认6667
-\&    master_irc_user     #和微信帐号匹配的irc user帐号，默认按照和微信帐号相同的user或者客户端ip是本机地址作为识别规则
-\&    load_friend         #0|1 默认是1 是否初始为每个好友生成irc虚拟帐号并加入频道 #我的好友
-\&    image_api           #兼容elimage图床api地址，将微信图片转为连接，方便在irc上查看图片，默认没有启用
+\&    listen              #监听的地址和端口，数组的形式来支持多个地址
+\&                        # listen=>[ {host=>"127.0.0.1",port=>6667}, {host=>"127.0.0.1",port=>6668}]
+\&                        # 表示监听127.0.0.1:6667和 127.0.0.1:6668两个端口
+\&    master_irc_user     #和qq匹配的irc user帐号，默认按照和qq号相同的user或者客户端ip是本机地址作为识别规则
+\&    load_friend         #0|1 默认是0 是否初始为每个好友生成irc虚拟帐号并加入频道 #我的好友
+\&    image_api           #兼容elimage图床api地址，将qq图片转为连接，方便在irc上查看图片，默认没有启用
 \&                        #推荐依云的elimage http://img.vim\-cn.com/
 .Ve
 .PP
@@ -844,15 +1017,20 @@ reply_message($msg,$content,$callback) 回复指定的消息
 .Vb 1
 \&    >>> print "hello world";
 .Ve
+.SS "Mojo::Weixin::Plugin::UploadQRcode"
+.IX Subsection "Mojo::Weixin::Plugin::UploadQRcode"
+将二维码图片上传至腾讯云对象存储，获取到公网可以访问的url地址
+.PP
+.Vb 1
+\&    $client\->load("UploadQRcode");
+.Ve
 .SS "Mojo::Weixin::Plugin::PostQRcode"
 .IX Subsection "Mojo::Weixin::Plugin::PostQRcode"
 登录过程如果需要手机扫描二维码，会将二维码以邮件附件的形式发送到指定邮箱，再通过手机微信扫描二维码
 .PP
 注意： 由于需要发送邮件附件，依赖模块 Mojo::SMTP::Client MIME::Lite，需要单独安装
 .PP
-.Vb 12
-\&    #插件需要使用到login()方法执行过程中触发的input_qrcode事件，因此需要在login()执行之前加载
-\&    #插件自身设置了call_on_load=>1，因此会在加载后马上执行
+.Vb 11
 \&    $client\->load("PostQRcode",data=>{
 \&        smtp    =>  \*(Aqxxxx\*(Aq, #邮箱的smtp地址
 \&        port    =>  \*(Aqxxxx\*(Aq, #smtp服务器端口，默认25
@@ -860,8 +1038,9 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&        to      =>  \*(Aqxxxx\*(Aq, #收件人
 \&        user    =>  \*(Aqxxxx\*(Aq, #smtp登录帐号
 \&        pass    =>  \*(Aqxxxx\*(Aq, #smtp登录密码
+\&        tls     =>  0,      #可选，是否使用SMTPS协议，默认为0                            
+\&                            #在没有设置的情况下，如果使用的端口为465，则该选项会自动被设置为1
 \&    });
-\&    $client\->login();
 \&    ...;
 \&
 \&    收到的邮件内容如下：
@@ -884,7 +1063,7 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&        board=>[
 \&            {command=>"看妹子", url=>\*(Aqhttp://huaban.com/boards/19570858/\*(Aq},
 \&            {command=>"搞基"  , url=>\*(Aqhttp://huaban.com/boards/28226262/\*(Aq},
-\&            {command=>"看帅哥", url=>\*(Aqhttp://huaban.com/boards/28226490/\*(Aq},
+\&            {command=>"看帅哥", url=>\*(Aqhttp://huaban.com/boards/27865046/\*(Aq},
 \&        ]
 \&    });
 .Ve
@@ -917,6 +1096,20 @@ reply_message($msg,$content,$callback) 回复指定的消息
 .Vb 1
 \&    $client\->load("Weather");
 .Ve
+.SS "Mojo::Weixin::Plugin::XiaoiceReply"
+.IX Subsection "Mojo::Weixin::Plugin::XiaoiceReply"
+利用微软小冰实现智能回复，需要登录的微信帐号先关注微软小冰公众号
+.PP
+该智能回复是独占模式，即一段时间内只能够和某个好友或某个群进行智能对话
+.PP
+.Vb 6
+\&    $client\->load("XiaoiceReply");
+\&    $client\->load("XiaoiceReply",data=>{
+\&        is_need_at  => 1,           #可选，是否需要艾特我来触发智能回复
+\&        comamnd_on  => "小冰启动",  #可选，启动智能回复的命令，在手机端发送给任何人/群该消息内容即可
+\&        comamnd_off => "小冰停止",  #可选，停止智能回复的命令，在手机端发送给任何人/群该消息内容即可
+\&    });
+.Ve
 .SS "Mojo::Weixin::Plugin::SmartReply"
 .IX Subsection "Mojo::Weixin::Plugin::SmartReply"
 实现机器人的智能回复，支持好友消息、群消息
@@ -925,6 +1118,78 @@ reply_message($msg,$content,$callback) 回复指定的消息
 .PP
 .Vb 1
 \&    $client\->load("SmartReply");
+.Ve
+.SS "Mojo::Weixin::Plugin::KnowledgeBase"
+.IX Subsection "Mojo::Weixin::Plugin::KnowledgeBase"
+通过QQ消息自定义问答知识库
+.PP
+.Vb 1
+\&    $client\->load("KnowledgeBase");
+.Ve
+.PP
+触发条件： 消息以如下格式发送可以设定问题和答案，如果问题或答案包含空格可以使用引号 比如：
+.PP
+.Vb 4
+\&    learn 今天天气怎么样  天气很好
+\&    学习  "你吃了吗"      当然吃了
+\&    learn \*(Aq哈哈 你真笨\*(Aq   "就你聪明"
+\&    learn* "你吃了吗"      当然吃了 （指令结尾有*表示添加全局知识库，默认只添加到所在的群组或好友知识库中）
+\&
+\&    del   今天天气怎么样
+\&    删除  \*(Aq哈哈 你真笨\*(Aq
+\&    del*  今天天气怎么样  （删除全局知识库）
+.Ve
+.PP
+其他更多参数设置
+.PP
+.Vb 10
+\&    $client\->load("KnowledgeBase",data=>{
+\&        allow_group => ["PERL学习交流"],  #可选，允许插件的群，可以是群名称或群号码
+\&        ban_group   => ["私人群1","私人群2"], #可选，禁用该插件的群，可以是群名称或群号码
+\&        file => \*(Aq./KnowledgeBase.dat\*(Aq, #数据库保存路径
+\&        learn_command  => \*(Aqlearn\*(Aq,     #自定义学习指令关键字
+\&        delete_command =>\*(Aqdel\*(Aq,      #自定义删除指令关键字
+\&        learn_operator => ["张三","李四"], #允许学习权限的操作人qq号
+\&        delete_operator => ["王五"], #允许删除权限的操作人qq号
+\&        mode => \*(Aqfuzzy\*(Aq, # fuzzy|regex|exact 分别表示模糊|正则|精确, 默认模糊
+\&    });
+.Ve
+.SS "Mojo::Weixin::Plugin::KnowledgeBase2"
+.IX Subsection "Mojo::Weixin::Plugin::KnowledgeBase2"
+使用方法和KnowledgeBase基本完全一致，存在的差别：
+.PP
+1）知识库采用文本文件形式，可编辑，格式如下：
+.PP
+分组空间（群名称)  #  匹配关键字（或正则表达式） #  回复内容
+.PP
+文件中存储的数据格式示例：
+.PP
+.Vb 8
+\&    _\|_全局_\|_         #   你好                      # 很高兴认识
+\&    _\|_我的好友_\|_     #   多谢                      # 不客气
+\&    我的群组1        #   今天天气怎么样            # 没有雨\en不用带伞 （\en表示换行）
+\&    我的群组1        #   今天天气怎么样            # 不知道
+\&    我的群组1        #   今天天气怎么样            # 自己百度 （相同关键字可以设置多行的回复内容，随机选取）
+\&    我的群组2        #   ^在吗(\e?|)$               # 在呀，啥事
+\&    我的群组2        #   大(神|婶)                 # 大神你妹啊
+\&    我的群组3        #   井号怎么打出来            # 我发给你：\e# 不客气 （井号要转义）
+.Ve
+.PP
+2）定时检查知识库变动，自动实时加载，插件中的check_time参数可以设置定时检测间隔
+.PP
+.Vb 12
+\&    $client\->load("KnowledgeBase2",data=>{
+\&        allow_group => ["PERL学习交流"],  #可选，允许插件的群，可以是群名称或群号码
+\&        ban_group   => ["私人群1","私人群2"], #可选，禁用该插件的群，可以是群名称或群号码
+\&        file => \*(Aq./KnowledgeBase2.txt\*(Aq, #数据库保存路径，纯文本形式，可以编辑
+\&        learn_command  => \*(Aqlearn\*(Aq,     #可选，自定义学习指令关键字
+\&        delete_command =>\*(Aqdel\*(Aq,      #可选，自定义删除指令关键字
+\&        learn_operator => ["张三","李四"], #允许学习权限的操作人显示名称
+\&        delete_operator => ["王五"], #允许删除权限的操作人显示名称
+\&        mode => \*(Aqfuzzy\*(Aq, # fuzzy|regex|exact 分别表示模糊|正则|精确, 默认模糊
+\&        check_time => 10, #默认10秒检查一次文件变更
+\&        show_keyword => 1, #消息是否包含触发关键字信息，默认为0
+\&    });
 .Ve
 .SS "Mojo::Weixin::Plugin::Openwx"
 .IX Subsection "Mojo::Weixin::Plugin::Openwx"
@@ -979,6 +1244,8 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&
 \&    #接收到消息后，插件会通过HTTP POST请求的方式将json格式的消息上报到http://127.0.0.1:4000/post_api
 \&
+\&    普通好友消息或群消息上报
+\&
 \&    connect to 127.0.0.1 port 4000
 \&    POST /post_api
 \&    Accept: */*
@@ -999,7 +1266,78 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&        "post_type": "receive_message"
 \&    }
 \&
-\&    #支持好友消息、群消息 上报
+\&    群提示消息上报
+\&    
+\&    connect to 127.0.0.1 port 4000
+\&    POST /post_api
+\&    Accept: */*
+\&    Content\-Length: xxx
+\&    Content\-Type: application/json
+\&
+\&    {   "receiver":"小灰",
+\&        "time":"1442542632",
+\&        "content":"你邀请灰太狼加入了群聊",
+\&        "class":"recv",
+\&        "receiver_id":"@4072574066",
+\&        "group":"PERL学习交流",
+\&        "group_id":"@@2617047292",
+\&        "id":"10856",
+\&        "type":"group_notice",
+\&        "format": "text",
+\&        "post_type": "receive_message"
+\&    }
+\&    
+\&    发送消息上报（包括从手机或其他设备上发送的消息）
+\&
+\&    发送的消息会通过JSON格式数据POST到该接口
+\&
+\&    connect to 127.0.0.1 port 4000
+\&    POST /post_api
+\&    Accept: */*
+\&    Content\-Length: xxx
+\&    Content\-Type: application/json
+\&
+\&    {   "receiver":"小灰",
+\&        "time":"1442542632",
+\&        "content":"测试一下",
+\&        "class":"send",
+\&        "sender_id":"@2372835507",
+\&        "receiver_id":"@4072574066",
+\&        "group":"PERL学习交流",
+\&        "group_id":"@@2617047292",
+\&        "sender":"灰灰",
+\&        "id":"10856",
+\&        "type":"group_message",
+\&        "format": "text",
+\&        "post_type": "send_message"
+\&    }
+\&
+\&    图片消息上报
+\&
+\&    {   "receiver":"小灰",
+\&        "time":"1442542632",
+\&        "content":"[media](\e/tmp\e/mojo_weixin_media_Ja9l.jpg)",
+\&        "media_path": "\e/tmp\e/mojo_weixin_media_Ja9l.jpg",
+\&        "media_id": "2273934420223351581",
+\&        "media_mime":"image\e/jpg",
+\&        "media_name": "mojo_weixin_media_Ja9l.jpg",
+\&        "media_size": "1234567",
+\&        "media_mtime": "1462763788",
+\&        "media_ext": "jpg",
+\&        "media_data": "%87%60M%B4A%E1%EB%A0%13%E4%C4%5C2%C4%0B%DFV%B7%0B...", #对图片原始二进制数据，使用url encode编码
+\&        "class":"recv",
+\&        "sender_id":"@2372835507",
+\&        "receiver_id":"@4072574066",
+\&        "group":"PERL学习交流",
+\&        "group_id":"@@2617047292",
+\&        "sender":"灰灰",
+\&        "id":"10856",
+\&        "type":"group_message",
+\&        "format": "media",
+\&        "post_type": "receive_message"
+\&    }
+\&
+\&    #支持好友消息、群消息、群提示消息 上报
 \&
 \&    一般情况下，post_api接口返回的响应内容可以是随意，会被忽略
 \&    post_api接口返回的数据类型如果是 text/json 或者 application/json，并且json格式形式如下：
@@ -1019,6 +1357,14 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&
 \&    则会直接对上报的消息进行回复，回复的内容为 "你好"
 \&
+\&    如果想要对消息回复图片内容，可以使用 media 参数，举例:
+\&
+\&    {"media":"http://www.baidu.com/test.jpg","code":0}                          #使用url地址形式
+\&
+\&    {"media":"/tmp/test.jpg","code":0}                                          #使用本地文件地址形式
+\&
+\&    {"reply":"给你发个图片","media":"http://www.baidu.com/test.jpg","code":0}   #文本和图片同时发送
+\&
 \&    #事件上报示例
 \&    
 \&    当事件发生时，会把事件相关信息上报到指定的接口，当前支持上报的事件包括
@@ -1027,10 +1373,10 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&    |\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|:\-\-\-\-\-\-\-\-\-\-\-|:\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-|
 \&    |new_group                     |新加入群聊  | 对应群对象
 \&    |new_friend                    |新增好友    | 对应好友对象
-\&    |new_group_member              |新增群聊成员| 对应成员对象
+\&    |new_group_member              |新增群聊成员| 对应成员对象，对应的群对象
 \&    |lose_group                    |退出群聊    | 对应群对象
 \&    |lose_friend                   |删除好友    | 对应好友对象
-\&    |lose_group_member             |成员退出群聊| 对应成员对象
+\&    |lose_group_member             |成员退出群聊| 对应成员对象，对应的群对象
 \&    |group_property_change         |群聊属性变化| 群对象，属性，原始值，更新值
 \&    |group_member_property_change  |成员属性变化| 成员对象，属性，原始值，更新值
 \&    |friend_property_change        |好友属性变化| 好友对象，属性，原始值，更新值
@@ -1142,6 +1488,8 @@ reply_message($msg,$content,$callback) 回复指定的消息
 \&    http://127.0.0.1:3000/openwx/send_friend_message?id=xxx&media_path=https%3a%2f%2fss0.bdstatic.com%2f5aV1bjqh_Q23odCf%2fstatic%2fsuperman%2fimg%2flogo%2fbd_logo1_31bdc765.png
 \&    http://127.0.0.1:3000/openwx/send_friend_message?id=xxx&media_path=%2ftmp%2fhello.jpg
 .Ve
+.PP
+更多API接口说明参见github：<https://github.com/sjdy521/Mojo\-Weixin/blob/master/API.md>
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 Mojo::Webqq

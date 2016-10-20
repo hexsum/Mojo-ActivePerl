@@ -146,12 +146,15 @@
       </li>
       <li><a href="#Mojo::Webqq::Plugin::MobileInfo">Mojo::Webqq::Plugin::MobileInfo</a></li>
       <li><a href="#Mojo::Webqq::Plugin::KnowledgeBase">Mojo::Webqq::Plugin::KnowledgeBase</a></li>
+      <li><a href="#Mojo::Webqq::Plugin::KnowledgeBase2">Mojo::Webqq::Plugin::KnowledgeBase2</a></li>
       <li><a href="#Mojo::Webqq::Plugin::FuckDaShen">Mojo::Webqq::Plugin::FuckDaShen</a></li>
       <li><a href="#Mojo::Webqq::Plugin::Translation">Mojo::Webqq::Plugin::Translation</a></li>
       <li><a href="#Mojo::Webqq::Plugin::Riddle">Mojo::Webqq::Plugin::Riddle</a></li>
       <li><a href="#Mojo::Webqq::Plugin::ShowQRcode">Mojo::Webqq::Plugin::ShowQRcode</a></li>
       <li><a href="#Mojo::Webqq::Plugin::GasPrice">Mojo::Webqq::Plugin::GasPrice</a></li>
+      <li><a href="#Mojo::Webqq::Plugin::Qiandao">Mojo::Webqq::Plugin::Qiandao</a></li>
       <li><a href="#Mojo::Webqq::Plugin::GroupManage">Mojo::Webqq::Plugin::GroupManage</a></li>
+      <li><a href="#Mojo::Webqq::Plugin::UploadQRcode">Mojo::Webqq::Plugin::UploadQRcode</a></li>
       <li><a href="#Mojo::Webqq::Plugin::PostQRcode">Mojo::Webqq::Plugin::PostQRcode</a></li>
       <li><a href="#Mojo::Webqq::Plugin::PostImgVerifycode">Mojo::Webqq::Plugin::PostImgVerifycode</a></li>
       <li><a href="#Mojo::Webqq::Plugin::SmartReply">Mojo::Webqq::Plugin::SmartReply</a></li>
@@ -200,9 +203,7 @@
         <span class="string">login_type</span>  <span class="operator">=&gt;</span>  <span class="string">"qrlogin"</span><span class="operator">,</span> <span class="comment">#"qrlogin"è¡¨ç¤ºäºç»´ç ç»å½ï¼"login"è¡¨ç¤ºå¸å·å¯ç ç»å½</span>
     <span class="operator">);</span>
     <span class="comment">#æ³¨æ: è¾è®¯å¯è½å·²ç»å³é­äºå¸å·å¯ç çç»å½æ¹å¼ï¼è¿ç§æåµä¸åªè½ä½¿ç¨äºç»´ç æ«æç»å½</span>
-    
-    <span class="comment">#å®¢æ·ç«¯è¿è¡ç»å½</span>
-    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">();</span> <span class="comment">#è¯·å³é­å¸å·çå¯ä¿åè½ï¼ä¸æ¯æå¯ä¿ç»å½</span>
+    <span class="comment">#è¯·å³é­å¸å·çå¯ä¿åè½ï¼ä¸æ¯æå¯ä¿ç»å½</span>
     
     <span class="comment">#å®¢æ·ç«¯å è½½ShowMsgæä»¶ï¼ç¨äºæå°åéåæ¥æ¶çæ¶æ¯å°ç»ç«¯</span>
     <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowMsg"</span><span class="operator">);</span>
@@ -367,6 +368,7 @@
     <span class="variable">me</span>                      <span class="comment">#è¿åèªå·±å¨ç¾¤æåä¸­çå¯¹è±¡ (Mojo::Webqq::Group::Member)</span>
     <span class="variable">is_group</span>                <span class="comment">#å¤æ­å¯¹è±¡æ¯å¦æ¯ä¸ä¸ªç¾¤</span>
     <span class="keyword">dump</span>                    <span class="comment">#æå°ç¾¤å¯¹è±¡ç»æï¼æ¹ä¾¿è°è¯</span>
+    <span class="variable">qiandao</span>                 <span class="comment">#ç­¾å°</span>
     
     ç¤ºä¾ä»£ç ï¼
     <span class="keyword">my</span> <span class="variable">$group</span> <span class="operator">=</span> <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">search_group</span><span class="operator">(</span><span class="string">gname</span><span class="operator">=&gt;</span><span class="string">"PERLå­¦ä¹ äº¤æµç¾¤"</span><span class="operator">);</span> <span class="comment">#è¿åä¸ä¸ªMojo::Webqq::Groupå¯¹è±¡</span>
@@ -697,10 +699,10 @@
 
 <h2 id="new">new()</h2>
 
-<pre><code>    <span class="string">qq              #ç»å½çqqå·ï¼å¿é
+<pre><code>    <span class="string">qq              #ç»å½çqqå·ï¼å¯é
     pwd             #</span>ä½¿ç¨å¸å·å¯ç ç»å½æ¶ï¼<span class="keyword">qq</span>å·å¯¹åºå¯ç ç<span class="number">32</span>ä½<span class="variable">md5</span>
     <span class="variable">security</span>        <span class="comment">#è®¾ç½®è¯¥åæ°ï¼å°ä½¿å¾åéåæ¥æ¶æ¶æ¯ä½¿ç¨httpså å¯</span>
-    <span class="keyword">state</span>           <span class="comment">#è®¾ç½®ç»å½ç¶æï¼é»è®¤æ¯onlineï¼æ¯æonline|away|busy|silent|hidden|offline</span>
+    <span class="keyword">state</span>           <span class="comment">#è®¾ç½®ç»å½ç¶æï¼é»è®¤æ¯onlineï¼æ¯æonline|away|busy|silent|hidden|offline|callme</span>
     <span class="variable">ua_debug</span>        <span class="comment">#è®¾ç½®è¯¥åæ°ï¼æå°è°è¯ä¿¡æ¯</span>
     <span class="variable">keep_cookie</span>     <span class="comment">#é»è®¤ä¸º1ï¼0è¡¨ç¤ºä¸ä¿å­ç»å½cookieï¼1è¡¨ç¤ºä¿å­ç»å½cookieæ¹ä¾¿ä¸æ¬¡ç´æ¥æ¢å¤ç»å½</span>
     
@@ -734,6 +736,7 @@
     <span class="variable">is_update_group</span>     <span class="comment">#æ¯å¦å®ææ´æ°ç¾¤ç»ä¿¡æ¯ï¼é»è®¤å¼ 1</span>
     <span class="variable">is_update_friend</span>    <span class="comment">#æ¯å¦å®ææ´æ°å¥½åä¿¡æ¯ï¼é»è®¤å¼ 1</span>
     <span class="variable">is_update_discuss</span>   <span class="comment">#æ¯å¦å®ææ´æ°è®¨è®ºç»ä¿¡æ¯ï¼é»è®¤å¼ 1</span>
+    <span class="variable">update_interval</span>     <span class="comment">#å®æ¶æ´æ°ç¾¤ç»ãå¥½åãè®¨è®ºç»ç­ä¿¡æ¯çæ¶é´é´éï¼é»è®¤600ç§</span>
     
     <span class="variable">msg_ttl</span>             <span class="comment">#åéå¤±è´¥çæ¶æ¯ï¼éè¯æ¬¡æ°ï¼é»è®¤æ¯5</span>
     
@@ -754,12 +757,10 @@
 
 <p>&#x5BA2;&#x6237;&#x7AEF;&#x767B;&#x5F55;</p>
 
-<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">(</span><span class="operator">[</span><span class="string">delay</span><span class="operator">=&gt;</span><span class="number">0</span><span class="operator">|</span><span class="number">1</span><span class="operator">]</span><span class="operator">);</span>    
-    
-    <span class="variable">delay</span>  å¯é<span class="operator">,</span><span class="number">0</span>è¡¨ç¤ºä¸å»¶è¿ï¼ç«å³ç»å½ <span class="number">1</span>è¡¨ç¤ºå¨<span class="variable">after_load_plugin</span>äºä»¶è§¦ååç»å½ï¼å³å¨é¨æä»¶å è½½å®æ¯ååæ§è¡ç»å½<span class="operator">,</span>é»è®¤å¼ä¸º<span class="number">0</span>
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">();</span>    
 </code></pre>
 
-<p>&#x6CE8;&#x610F;&#xFF1A;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x5E10;&#x53F7;&#x5BC6;&#x7801;&#x7684;&#x767B;&#x5F55;&#x65B9;&#x5F0F;&#xFF0C;&#x9700;&#x8981;&#x4F9D;&#x8D56;<a>Webqq::Encryption</a>&#x6A21;&#x5757;</p>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x7A0B;&#x5E8F;&#x4F1A;&#x81EA;&#x52A8;&#x8C03;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#xFF0C;&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#x4F60;&#x4E0D;&#x9700;&#x8981;&#x81EA;&#x5DF1;&#x8C03;&#x7528;&#xFF0C;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x5E10;&#x53F7;&#x5BC6;&#x7801;&#x7684;&#x767B;&#x5F55;&#x65B9;&#x5F0F;&#xFF0C;&#x9700;&#x8981;&#x4F9D;&#x8D56;<a>Webqq::Encryption</a>&#x6A21;&#x5757;</p>
 
 <p>&#x63A8;&#x8350;&#x5B89;&#x88C5;<a>Crypt::RSA</a> &#x6216;&#x8005; <a>Crypt::OpenSSL::RSA</a> + <a>Crypt::OpenSSL::Bignum</a>&#x6A21;&#x5757;</p>
 
@@ -806,8 +807,8 @@
     <span class="keyword">my</span> <span class="variable">$client1</span> <span class="operator">=</span> <span class="variable">Mojo::Webqq</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">qq</span><span class="operator">=&gt;</span><span class="variable">xxx1</span><span class="operator">);</span>
     <span class="keyword">my</span> <span class="variable">$client2</span> <span class="operator">=</span> <span class="variable">Mojo::Webqq</span><span class="operator">-&gt;</span><span class="variable">new</span><span class="operator">(</span><span class="string">qq</span><span class="operator">=&gt;</span><span class="variable">xxx2</span><span class="operator">);</span>
     
-    <span class="variable">$client1</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">();</span>
-    <span class="variable">$client2</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">();</span>
+    <span class="variable">$client1</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowMsg"</span><span class="operator">);</span>
+    <span class="variable">$client2</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowMsg"</span><span class="operator">);</span>
     
     <span class="variable">$client1</span><span class="operator">-&gt;</span><span class="variable">ready</span><span class="operator">;</span>
     <span class="variable">$client2</span><span class="operator">-&gt;</span><span class="variable">ready</span><span class="operator">;</span>
@@ -845,6 +846,7 @@
 <p>&#x8BE5;&#x65B9;&#x6CD5;&#x5B9E;&#x9645;&#x4E0A;&#x53C2;&#x8003;<a>Mojo::Run</a>&#x6A21;&#x5757; &#x5E76;&#x5728;&#x8BE5;&#x6A21;&#x5757;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x505A;&#x4E86;&#x8FDB;&#x4E00;&#x6B65;&#x5B8C;&#x5584;</p>
 
 <pre><code>    <span class="comment">#æ¯æçåæ°ï¼</span>
+    <span class="variable">is_blocking</span>     <span class="comment">#æ¯å¦é»å¡æ§è¡å½ä»¤ï¼é»è®¤0</span>
     <span class="variable">max_forks</span>       <span class="comment">#äº§ççæå¤§è¿ç¨æ°</span>
     <span class="variable">cmd</span>             <span class="comment">#è¦æ§è¡çå½ä»¤æä»£ç </span>
     <span class="variable">param</span>           <span class="comment">#å½ä»¤çåæ°</span>
@@ -1185,7 +1187,14 @@
 
 <h2 id="login1">login &#x767B;&#x5F55;&#x6210;&#x529F;&#x4E8B;&#x4EF6;</h2>
 
-<p>&#x767B;&#x5F55;&#x5B8C;&#x6210;&#x65F6;&#x89E6;&#x53D1;&#x4E8B;&#x4EF6;&#xFF0C;&#x65E0;&#x989D;&#x5916;&#x7684;&#x56DE;&#x8C03;&#x53C2;&#x6570;</p>
+<p>&#x767B;&#x5F55;&#x5B8C;&#x6210;&#x65F6;&#x89E6;&#x53D1;&#x4E8B;&#x4EF6;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">on</span><span class="operator">(</span><span class="string">login</span><span class="operator">=&gt;</span><span class="keyword">sub</span><span class="operator">{</span>
+        <span class="keyword">my</span><span class="operator">(</span><span class="variable">$client</span><span class="operator">,</span><span class="variable">$is_scan</span><span class="operator">)</span> <span class="operator">=</span> <span class="variable">@_</span><span class="operator">;</span>
+        <span class="comment">#$is_scan   å¼ä¸º1è¡¨ç¤ºæ¬æ¬¡ç»å½æ¯æ«æäºç»´ç ç»å½ç å¥½åï¼ç¾¤ç»å¯¹è±¡çidå¯è½ä¼åçåå</span>
+        <span class="comment">#           å¼ä¸º0è¡¨ç¤ºæ¬æ¬¡ç»å½æ¯ä½¿ç¨cookieç´æ¥æ¢å¤ç»å½ï¼æªç»è¿äºç»´ç æ«æï¼å¯¹è±¡idä¸è¬ä¸ä¼åçåå</span>
+    <span class="operator">});</span>
+</code></pre>
 
 <h2 id="relogin1">relogin &#x91CD;&#x65B0;&#x767B;&#x5F55;&#x6210;&#x529F;&#x4E8B;&#x4EF6;</h2>
 
@@ -1197,7 +1206,7 @@
 
 <h2 id="input_qrcode">input_qrcode &#x7B49;&#x5F85;&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;</h2>
 
-<p>&#x767B;&#x5F55;&#x9700;&#x8981;&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;&#xFF0C;&#x53C2;&#x6570;&#x4E3A;&#x4E8C;&#x7EF4;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;</p>
+<p>&#x767B;&#x5F55;&#x9700;&#x8981;&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;&#xFF0C;&#x53C2;&#x6570;&#x5206;&#x522B;&#x4E3A;&#x4E8C;&#x7EF4;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x672C;&#x5730;&#x8DEF;&#x5F84;</p>
 
 <h2 id="ready1">ready &#x51C6;&#x5907;&#x5C31;&#x7EEA;</h2>
 
@@ -1424,13 +1433,13 @@
 <pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">call</span><span class="operator">(</span><span class="string">"plugin"</span><span class="operator">,</span><span class="operator">[</span>å¯éåæ°<span class="operator">]</span><span class="operator">);</span>
 </code></pre>
 
-<p>&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x63D2;&#x4EF6;&#x7BA1;&#x7406;&#x673A;&#x5236;&#xFF0C;&#x63D2;&#x4EF6;&#x662F;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;call&#x51FD;&#x6570;&#xFF0C;&#x5305;&#x540D;&#x9ED8;&#x8BA4;&#x662F;Mojo:Webqq::Plugin::</p>
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x63D2;&#x4EF6;&#x7BA1;&#x7406;&#x673A;&#x5236;&#xFF0C;&#x63D2;&#x4EF6;&#x662F;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;call&#x51FD;&#x6570;&#xFF0C;&#x5305;&#x540D;&#x9ED8;&#x8BA4;&#x662F;Mojo::Webqq::Plugin::</p>
 
 <p>&#x6BD4;&#x5982;&#xFF0C;&#x6211;&#x7F16;&#x5199;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;hello world&#x63D2;&#x4EF6;&#xFF0C;&#x6548;&#x679C;&#x662F;&#x5BF9;&#x63A5;&#x6536;&#x5230;&#x7684;&#x4EFB;&#x610F;&#x6D88;&#x606F;&#x56DE;&#x590D;&#x4E00;&#x4E2A;&quot;hello world&quot;</p>
 
-<p>&#x7F16;&#x5199;&#x4E00;&#x4E2A;&#x5305; Mojo:Webqq::Plugin::HelloWorld</p>
+<p>&#x7F16;&#x5199;&#x4E00;&#x4E2A;&#x5305; Mojo::Webqq::Plugin::HelloWorld</p>
 
-<pre><code>    <span class="keyword">package</span> <span class="variable">Mojo</span><span class="operator">:</span><span class="variable">Webqq::Plugin::HelloWorld</span><span class="operator">;</span>
+<pre><code>    <span class="keyword">package</span> <span class="variable">Mojo::Webqq::Plugin::HelloWorld</span><span class="operator">;</span>
     <span class="keyword">our</span> <span class="variable">$PRIORITY</span> <span class="operator">=</span> <span class="number">10</span><span class="operator">;</span> <span class="comment">#å¯çç¥ï¼é¤äºå¨loadä¸­ä½¿ç¨priorityè®¾ç½®ä¼åçº§ï¼ä¹å¯ä»¥éè¿ååéè®¾ç½®</span>
     <span class="keyword">our</span> <span class="variable">$AUTO_CALL</span> <span class="operator">=</span> <span class="number">1</span><span class="operator">;</span> <span class="comment">#å¯çç¥ï¼éè¿ååéè®¾ç½®æä»¶æ¯å¦é»è®¤å è½½åç«å»æ§è¡</span>
     <span class="keyword">sub</span><span class="variable"> call</span><span class="operator">{</span>
@@ -1509,17 +1518,22 @@
 
 <p>&#x9700;&#x8981;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a href="../../../site/lib/Mojo/IRC/Server/Chinese.html">Mojo::IRC::Server::Chinese</a></p>
 
-<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"IRCShell"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span><span class="string">listen</span><span class="operator">=&gt;</span><span class="operator">[</span> <span class="operator">{</span><span class="string">host</span><span class="operator">=&gt;</span><span class="string">"127.0.0.1"</span><span class="operator">,</span><span class="string">port</span><span class="operator">=&gt;</span><span class="number">6667</span><span class="operator">}</span> <span class="operator">]</span> <span class="operator">}</span> <span class="operator">);</span><span class="comment">#å¼å¯æ¬å°çirc server</span>
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"IRCShell"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+        <span class="string">listen</span><span class="operator">=&gt;</span><span class="operator">[</span> <span class="operator">{</span><span class="string">host</span><span class="operator">=&gt;</span><span class="string">"127.0.0.1"</span><span class="operator">,</span><span class="string">port</span><span class="operator">=&gt;</span><span class="number">6667</span><span class="operator">}</span><span class="operator">,</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#å¯éï¼IRCæå¡å¨çå¬çå°å+ç«¯å£ï¼é»è®¤0.0.0.0:6667</span>
+        <span class="string">load_friend</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span> <span class="comment">#é»è®¤æ¯0 æ¯å¦åå§ä¸ºæ¯ä¸ªå¥½åçæircèæå¸å·å¹¶å å¥é¢é #æçå¥½å</span>
+        <span class="string">master_irc_user</span> <span class="operator">=&gt;</span> <span class="string">"ä½ çQQå·ç "</span><span class="operator">,</span> <span class="comment">#ç¨äºè¯å«åªä¸ªircç¨æ·æ¯ä½ èªå·±</span>
+    <span class="operator">}</span><span class="operator">);</span>
     <span class="comment">#æ¯æçåæ°åæ¬ï¼</span>
-    <span class="variable">host</span>                <span class="comment">#é»è®¤0.0.0.0</span>
-    <span class="variable">port</span>                <span class="comment">#é»è®¤6667</span>
+    <span class="keyword">listen</span>              <span class="comment">#çå¬çå°ååç«¯å£ï¼æ°ç»çå½¢å¼æ¥æ¯æå¤ä¸ªå°å</span>
+                        <span class="comment"># listen=&gt;[ {host=&gt;"127.0.0.1",port=&gt;6667}, {host=&gt;"127.0.0.1",port=&gt;6668}]</span>
+                        <span class="comment"># è¡¨ç¤ºçå¬127.0.0.1:6667å 127.0.0.1:6668ä¸¤ä¸ªç«¯å£</span>
     <span class="variable">master_irc_user</span>     <span class="comment">#åqqå¹éçirc userå¸å·ï¼é»è®¤æç§åqqå·ç¸åçuseræèå®¢æ·ç«¯ipæ¯æ¬æºå°åä½ä¸ºè¯å«è§å</span>
     <span class="variable">load_friend</span>         <span class="comment">#0|1 é»è®¤æ¯0 æ¯å¦åå§ä¸ºæ¯ä¸ªå¥½åçæircèæå¸å·å¹¶å å¥é¢é #æçå¥½å</span>
     <span class="variable">image_api</span>           <span class="comment">#å¼å®¹elimageå¾åºapiå°åï¼å°qqå¾çè½¬ä¸ºè¿æ¥ï¼æ¹ä¾¿å¨ircä¸æ¥çå¾çï¼é»è®¤æ²¡æå¯ç¨</span>
                         <span class="comment">#æ¨èä¾äºçelimage http://img.vim-cn.com/</span>
 </code></pre>
 
-<p>qq&#x597D;&#x53CB;&#x4F1A;&#x9ED8;&#x8BA4;&#x52A0;&#x5165;&#x5230;irc&#x7684; &#39;#&#x6211;&#x7684;&#x597D;&#x53CB;&#39; &#x9891;&#x9053;&#x4E2D;</p>
+<p>&#x5F53;&#x8BBE;&#x7F6E;&#x4E86; load_friend =&gt;1 &#x53C2;&#x6570;&#xFF0C;qq&#x597D;&#x53CB;&#x4F1A;&#x9ED8;&#x8BA4;&#x52A0;&#x5165;&#x5230;irc&#x7684; &#39;#&#x6211;&#x7684;&#x597D;&#x53CB;&#39; &#x9891;&#x9053;&#x4E2D;</p>
 
 <p>&#x6BCF;&#x4E2A;qq&#x7FA4;&#x4E5F;&#x4F1A;&#x5728;irc&#x4E0A;&#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x7684;&#x9891;&#x9053;&#xFF0C;&#x6BD4;&#x5982;qq&#x7FA4;[PERL&#x5B66;&#x4E60;&#x4EA4;&#x6D41;]&#x5BF9;&#x5E94;&#x7684;irc&#x9891;&#x9053;&#x4E3A;&#39;#PERL&#x5B66;&#x4E60;&#x4EA4;&#x6D41;&#39;</p>
 
@@ -1632,9 +1646,11 @@
 <pre><code>    learn &#x4ECA;&#x5929;&#x5929;&#x6C14;&#x600E;&#x4E48;&#x6837;  &#x5929;&#x6C14;&#x5F88;&#x597D;
     &#x5B66;&#x4E60;  &quot;&#x4F60;&#x5403;&#x4E86;&#x5417;&quot;      &#x5F53;&#x7136;&#x5403;&#x4E86;
     learn &#39;&#x54C8;&#x54C8; &#x4F60;&#x771F;&#x7B28;&#39;   &quot;&#x5C31;&#x4F60;&#x806A;&#x660E;&quot;
+    learn* &quot;&#x4F60;&#x5403;&#x4E86;&#x5417;&quot;      &#x5F53;&#x7136;&#x5403;&#x4E86; &#xFF08;&#x6307;&#x4EE4;&#x7ED3;&#x5C3E;&#x6709;*&#x8868;&#x793A;&#x6DFB;&#x52A0;&#x5168;&#x5C40;&#x77E5;&#x8BC6;&#x5E93;&#xFF0C;&#x9ED8;&#x8BA4;&#x53EA;&#x6DFB;&#x52A0;&#x5230;&#x6240;&#x5728;&#x7684;&#x7FA4;&#x7EC4;&#x6216;&#x597D;&#x53CB;&#x77E5;&#x8BC6;&#x5E93;&#x4E2D;&#xFF09;
 
     del   &#x4ECA;&#x5929;&#x5929;&#x6C14;&#x600E;&#x4E48;&#x6837;
-    &#x5220;&#x9664;  &#39;&#x54C8;&#x54C8; &#x4F60;&#x771F;&#x7B28;&#39;</code></pre>
+    &#x5220;&#x9664;  &#39;&#x54C8;&#x54C8; &#x4F60;&#x771F;&#x7B28;&#39;
+    del*  &#x4ECA;&#x5929;&#x5929;&#x6C14;&#x600E;&#x4E48;&#x6837;  &#xFF08;&#x5220;&#x9664;&#x5168;&#x5C40;&#x77E5;&#x8BC6;&#x5E93;&#xFF09;</code></pre>
 
 <p>&#x5176;&#x4ED6;&#x66F4;&#x591A;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;</p>
 
@@ -1642,10 +1658,46 @@
         <span class="string">allow_group</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">"PERLå­¦ä¹ äº¤æµ"</span><span class="operator">]</span><span class="operator">,</span>  <span class="comment">#å¯éï¼åè®¸æä»¶çç¾¤ï¼å¯ä»¥æ¯ç¾¤åç§°æç¾¤å·ç </span>
         <span class="string">ban_group</span>   <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">"ç§äººç¾¤"</span><span class="operator">,</span><span class="number">123456</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#å¯éï¼ç¦ç¨è¯¥æä»¶çç¾¤ï¼å¯ä»¥æ¯ç¾¤åç§°æç¾¤å·ç </span>
         <span class="string">file</span> <span class="operator">=&gt;</span> <span class="string">'./KnowledgeBase.dat'</span><span class="operator">,</span> <span class="comment">#æ°æ®åºä¿å­è·¯å¾</span>
-        <span class="string">learn_command</span>  <span class="operator">=&gt;</span> <span class="string">'study'</span><span class="operator">,</span>     <span class="comment">#èªå®ä¹å­¦ä¹ æä»¤å³é®å­</span>
-        <span class="string">delete_command</span> <span class="operator">=&gt;</span><span class="string">'clear'</span><span class="operator">,</span>      <span class="comment">#èªå®ä¹å é¤æä»¤å³é®å­</span>
+        <span class="string">learn_command</span>  <span class="operator">=&gt;</span> <span class="string">'learn'</span><span class="operator">,</span>     <span class="comment">#èªå®ä¹å­¦ä¹ æä»¤å³é®å­</span>
+        <span class="string">delete_command</span> <span class="operator">=&gt;</span><span class="string">'del'</span><span class="operator">,</span>      <span class="comment">#èªå®ä¹å é¤æä»¤å³é®å­</span>
         <span class="string">learn_operator</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">12345</span><span class="operator">,</span><span class="number">678910</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#åè®¸å­¦ä¹ æéçæä½äººqqå·</span>
         <span class="string">delete_operator</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">12345</span><span class="operator">,</span><span class="number">678910</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#åè®¸å é¤æéçæä½äººqqå·</span>
+        <span class="string">mode</span> <span class="operator">=&gt;</span> <span class="string">'fuzzy'</span><span class="operator">,</span> <span class="comment"># fuzzy|regex|exact åå«è¡¨ç¤ºæ¨¡ç³|æ­£å|ç²¾ç¡®, é»è®¤æ¨¡ç³</span>
+    <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Mojo::Webqq::Plugin::KnowledgeBase2">Mojo::Webqq::Plugin::KnowledgeBase2</h2>
+
+<p>&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#x548C;KnowledgeBase&#x57FA;&#x672C;&#x5B8C;&#x5168;&#x4E00;&#x81F4;&#xFF0C;&#x5B58;&#x5728;&#x7684;&#x5DEE;&#x522B;&#xFF1A;</p>
+
+<p>1&#xFF09;&#x77E5;&#x8BC6;&#x5E93;&#x91C7;&#x7528;&#x6587;&#x672C;&#x6587;&#x4EF6;&#x5F62;&#x5F0F;&#xFF0C;&#x53EF;&#x7F16;&#x8F91;&#xFF0C;&#x683C;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</p>
+
+<p>&#x5206;&#x7EC4;&#x7A7A;&#x95F4;&#xFF08;&#x7FA4;&#x540D;&#x79F0;) # &#x5339;&#x914D;&#x5173;&#x952E;&#x5B57;&#xFF08;&#x6216;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#xFF09; # &#x56DE;&#x590D;&#x5185;&#x5BB9;</p>
+
+<p>&#x6587;&#x4EF6;&#x4E2D;&#x5B58;&#x50A8;&#x7684;&#x6570;&#x636E;&#x683C;&#x5F0F;&#x793A;&#x4F8B;&#xFF1A;</p>
+
+<pre><code>    __&#x5168;&#x5C40;__         #   &#x4F60;&#x597D;                      # &#x5F88;&#x9AD8;&#x5174;&#x8BA4;&#x8BC6;
+    __&#x6211;&#x7684;&#x597D;&#x53CB;__     #   &#x591A;&#x8C22;                      # &#x4E0D;&#x5BA2;&#x6C14;
+    &#x6211;&#x7684;&#x7FA4;&#x7EC4;1        #   &#x4ECA;&#x5929;&#x5929;&#x6C14;&#x600E;&#x4E48;&#x6837;            # &#x6CA1;&#x6709;&#x96E8;\n&#x4E0D;&#x7528;&#x5E26;&#x4F1E; &#xFF08;\n&#x8868;&#x793A;&#x6362;&#x884C;&#xFF09;
+    &#x6211;&#x7684;&#x7FA4;&#x7EC4;1        #   &#x4ECA;&#x5929;&#x5929;&#x6C14;&#x600E;&#x4E48;&#x6837;            # &#x4E0D;&#x77E5;&#x9053;
+    &#x6211;&#x7684;&#x7FA4;&#x7EC4;1        #   &#x4ECA;&#x5929;&#x5929;&#x6C14;&#x600E;&#x4E48;&#x6837;            # &#x81EA;&#x5DF1;&#x767E;&#x5EA6; &#xFF08;&#x76F8;&#x540C;&#x5173;&#x952E;&#x5B57;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x591A;&#x884C;&#x7684;&#x56DE;&#x590D;&#x5185;&#x5BB9;&#xFF0C;&#x968F;&#x673A;&#x9009;&#x53D6;&#xFF09;
+    &#x6211;&#x7684;&#x7FA4;&#x7EC4;2        #   ^&#x5728;&#x5417;(\?|)$               # &#x5728;&#x5440;&#xFF0C;&#x5565;&#x4E8B;
+    &#x6211;&#x7684;&#x7FA4;&#x7EC4;2        #   &#x5927;(&#x795E;|&#x5A76;)                 # &#x5927;&#x795E;&#x4F60;&#x59B9;&#x554A;
+    &#x6211;&#x7684;&#x7FA4;&#x7EC4;3        #   &#x4E95;&#x53F7;&#x600E;&#x4E48;&#x6253;&#x51FA;&#x6765;            # &#x6211;&#x53D1;&#x7ED9;&#x4F60;&#xFF1A;\# &#x4E0D;&#x5BA2;&#x6C14; &#xFF08;&#x4E95;&#x53F7;&#x8981;&#x8F6C;&#x4E49;&#xFF09;</code></pre>
+
+<p>2&#xFF09;&#x5B9A;&#x65F6;&#x68C0;&#x67E5;&#x77E5;&#x8BC6;&#x5E93;&#x53D8;&#x52A8;&#xFF0C;&#x81EA;&#x52A8;&#x5B9E;&#x65F6;&#x52A0;&#x8F7D;&#xFF0C;&#x63D2;&#x4EF6;&#x4E2D;&#x7684;check_time&#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x5B9A;&#x65F6;&#x68C0;&#x6D4B;&#x95F4;&#x9694;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"KnowledgeBase2"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+        <span class="string">allow_group</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">"PERLå­¦ä¹ äº¤æµ"</span><span class="operator">]</span><span class="operator">,</span>  <span class="comment">#å¯éï¼åè®¸æä»¶çç¾¤ï¼å¯ä»¥æ¯ç¾¤åç§°æç¾¤å·ç </span>
+        <span class="string">ban_group</span>   <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">"ç§äººç¾¤"</span><span class="operator">,</span><span class="number">123456</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#å¯éï¼ç¦ç¨è¯¥æä»¶çç¾¤ï¼å¯ä»¥æ¯ç¾¤åç§°æç¾¤å·ç </span>
+        <span class="string">file</span> <span class="operator">=&gt;</span> <span class="string">'./KnowledgeBase2.txt'</span><span class="operator">,</span> <span class="comment">#æ°æ®åºä¿å­è·¯å¾ï¼çº¯ææ¬å½¢å¼ï¼å¯ä»¥ç¼è¾</span>
+        <span class="string">learn_command</span>  <span class="operator">=&gt;</span> <span class="string">'learn'</span><span class="operator">,</span>     <span class="comment">#å¯éï¼èªå®ä¹å­¦ä¹ æä»¤å³é®å­</span>
+        <span class="string">delete_command</span> <span class="operator">=&gt;</span><span class="string">'del'</span><span class="operator">,</span>      <span class="comment">#å¯éï¼èªå®ä¹å é¤æä»¤å³é®å­</span>
+        <span class="string">learn_operator</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">12345</span><span class="operator">,</span><span class="number">678910</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#åè®¸å­¦ä¹ æéçæä½äººqqå·</span>
+        <span class="string">delete_operator</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="number">12345</span><span class="operator">,</span><span class="number">678910</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#åè®¸å é¤æéçæä½äººqqå·</span>
+        <span class="string">mode</span> <span class="operator">=&gt;</span> <span class="string">'fuzzy'</span><span class="operator">,</span> <span class="comment"># fuzzy|regex|exact åå«è¡¨ç¤ºæ¨¡ç³|æ­£å|ç²¾ç¡®, é»è®¤æ¨¡ç³</span>
+        <span class="string">check_time</span> <span class="operator">=&gt;</span> <span class="number">10</span><span class="operator">,</span> <span class="comment">#é»è®¤10ç§æ£æ¥ä¸æ¬¡æä»¶åæ´</span>
+        <span class="string">show_keyword</span> <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span> <span class="comment">#æ¶æ¯æ¯å¦åå«è§¦åå³é®å­ä¿¡æ¯ï¼é»è®¤ä¸º0</span>
     <span class="operator">}</span><span class="operator">);</span>
 </code></pre>
 
@@ -1684,10 +1736,7 @@
 
 <p>&#x8C03;&#x7528;&#x7CFB;&#x7EDF;&#x7684;&#x56FE;&#x7247;&#x67E5;&#x770B;&#x7A0B;&#x5E8F;&#x6765;&#x5C55;&#x793A;&#x4E8C;&#x7EF4;&#x7801;&#x56FE;&#x7247;&#xFF0C;&#x65B9;&#x4FBF;&#x626B;&#x63CF;&#xFF0C;&#x4F5C;&#x8005; autodataming <a href="https://github.com/autodataming">https://github.com/autodataming</a></p>
 
-<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowQRcode"</span><span class="operator">);</span><span class="comment">#å½åä»æ¯æwin,å¹¶ä¸éè¦å¨è°ç¨$client-&gt;login()æ¹æ³ä¹åå è½½</span>
-    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">();</span>
-    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowMsg"</span><span class="operator">);</span>
-    <span class="operator">...;</span>
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"ShowQRcode"</span><span class="operator">);</span><span class="comment">#å½åä»æ¯æwin</span>
 </code></pre>
 
 <h2 id="Mojo::Webqq::Plugin::GasPrice">Mojo::Webqq::Plugin::GasPrice</h2>
@@ -1703,6 +1752,20 @@
         <span class="string">apikey</span>      <span class="operator">=&gt;</span> <span class="string">"xxxx"</span><span class="operator">,</span>   <span class="comment">#å¯éï¼åè§ http://apistore.baidu.com/apiworks/servicedetail/710.html</span>
         <span class="string">msg_tail</span>    <span class="operator">=&gt;</span> <span class="string">"æ¶æ¯å°¾å·´"</span><span class="operator">,</span> <span class="comment">#å¯é</span>
         <span class="string">is_need_at</span>  <span class="operator">=&gt;</span> <span class="number">0</span><span class="operator">,</span> <span class="comment">#æ¯å¦éè¦è¾ç¹,é»è®¤å¼ä¸º0</span>
+    <span class="operator">}</span><span class="operator">);</span>
+</code></pre>
+
+<h2 id="Mojo::Webqq::Plugin::Qiandao">Mojo::Webqq::Plugin::Qiandao</h2>
+
+<p>QQ&#x7FA4;&#x6BCF;&#x65E5;&#x7B7E;&#x5230;&#x63D2;&#x4EF6;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Qiandao"</span><span class="operator">);</span>
+    
+    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"Qiandao"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+        <span class="string">allow_group</span> <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">"PERLå­¦ä¹ äº¤æµ"</span><span class="operator">]</span><span class="operator">,</span>  <span class="comment">#å¯éï¼åè®¸æä»¶çç¾¤ï¼å¯ä»¥æ¯ç¾¤åç§°æç¾¤å·ç </span>
+        <span class="string">ban_group</span>   <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">"ç§äººç¾¤"</span><span class="operator">,</span><span class="number">123456</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#å¯éï¼ç¦ç¨è¯¥æä»¶çç¾¤ï¼å¯ä»¥æ¯ç¾¤åç§°æç¾¤å·ç </span>
+        <span class="string">is_qiandao_on_login</span> <span class="operator">=&gt;</span> <span class="number">0</span> <span class="operator">,</span>        <span class="comment">#å¯éï¼æ¯å¦ç»å½æ¶è¿è¡ç­¾å°ï¼é»è®¤å¼ä¸º0</span>
+        <span class="string">qiandao_time</span> <span class="operator">=&gt;</span> <span class="string">"09:30"</span> <span class="operator">,</span>         <span class="comment">#å¯éï¼æ¯æ¥ç­¾å°çæ¶é´ï¼é»è®¤æ¯ 09:30</span>
     <span class="operator">}</span><span class="operator">);</span>
 </code></pre>
 
@@ -1740,24 +1803,29 @@
     <span class="operator">}</span><span class="operator">);</span>
 </code></pre>
 
+<h2 id="Mojo::Webqq::Plugin::UploadQRcode">Mojo::Webqq::Plugin::UploadQRcode</h2>
+
+<p>&#x5C06;&#x4E8C;&#x7EF4;&#x7801;&#x56FE;&#x7247;&#x4E0A;&#x4F20;&#x81F3;&#x817E;&#x8BAF;&#x4E91;&#x5BF9;&#x8C61;&#x5B58;&#x50A8;&#xFF0C;&#x83B7;&#x53D6;&#x5230;&#x516C;&#x7F51;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x7684;url&#x5730;&#x5740;</p>
+
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"UploadQRcode"</span><span class="operator">);</span>
+</code></pre>
+
 <h2 id="Mojo::Webqq::Plugin::PostQRcode">Mojo::Webqq::Plugin::PostQRcode</h2>
 
 <p>&#x767B;&#x5F55;&#x8FC7;&#x7A0B;&#x5982;&#x679C;&#x9700;&#x8981;&#x624B;&#x673A;&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;&#xFF0C;&#x4F1A;&#x5C06;&#x4E8C;&#x7EF4;&#x7801;&#x4EE5;&#x90AE;&#x4EF6;&#x9644;&#x4EF6;&#x7684;&#x5F62;&#x5F0F;&#x53D1;&#x9001;&#x5230;&#x6307;&#x5B9A;&#x90AE;&#x7BB1;&#xFF0C;&#x518D;&#x901A;&#x8FC7;&#x624B;&#x673A;QQ&#x626B;&#x63CF;&#x4E8C;&#x7EF4;&#x7801;</p>
 
 <p>&#x6CE8;&#x610F;&#xFF1A; &#x7531;&#x4E8E;&#x9700;&#x8981;&#x53D1;&#x9001;&#x90AE;&#x4EF6;&#x9644;&#x4EF6;&#xFF0C;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a href="../../../site/lib/Mojo/SMTP/Client.html">Mojo::SMTP::Client</a> <a href="../../../site/lib/MIME/Lite.html">MIME::Lite</a>&#xFF0C;&#x9700;&#x8981;&#x5355;&#x72EC;&#x5B89;&#x88C5;</p>
 
-<pre><code>    <span class="comment">#æä»¶éè¦ä½¿ç¨å°login()æ¹æ³æ§è¡è¿ç¨ä¸­è§¦åçinput_qrcodeäºä»¶ï¼å æ­¤éè¦å¨login()æ§è¡ä¹åå è½½</span>
-    <span class="comment">#æä»¶èªèº«è®¾ç½®äºcall_on_load=&gt;1ï¼å æ­¤ä¼å¨å è½½åé©¬ä¸æ§è¡</span>
-    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"PostQRcode"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"PostQRcode"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
         <span class="string">smtp</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#é®ç®±çsmtpå°å  </span>
         <span class="string">port</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#smtpæå¡å¨ç«¯å£ï¼é»è®¤25</span>
         <span class="string">from</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#åä»¶äºº</span>
         <span class="string">to</span>      <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#æ¶ä»¶äºº</span>
         <span class="string">user</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#smtpç»å½å¸å·</span>
         <span class="string">pass</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#smtpç»å½å¯ç </span>
+        <span class="string">tls</span>     <span class="operator">=&gt;</span>  <span class="number">0</span><span class="operator">,</span>      <span class="comment">#å¯éï¼æ¯å¦ä½¿ç¨SMTPSåè®®ï¼é»è®¤ä¸º0</span>
+                            <span class="comment">#å¨æ²¡æè®¾ç½®çæåµä¸ï¼å¦æä½¿ç¨çç«¯å£ä¸º465ï¼åè¯¥éé¡¹ä¼èªå¨è¢«è®¾ç½®ä¸º1</span>
     <span class="operator">}</span><span class="operator">);</span>
-    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">();</span>
-    <span class="operator">...;</span>
     
     æ¶å°çé®ä»¶åå®¹å¦ä¸ï¼
     
@@ -1772,9 +1840,7 @@
 
 <p>&#x6CE8;&#x610F;&#xFF1A; &#x7531;&#x4E8E;&#x9700;&#x8981;&#x53D1;&#x9001;&#x90AE;&#x4EF6;&#x9644;&#x4EF6;&#xFF0C;&#x4F9D;&#x8D56;&#x6A21;&#x5757; <a href="../../../site/lib/Mojo/SMTP/Client.html">Mojo::SMTP::Client</a> <a href="../../../site/lib/MIME/Lite.html">MIME::Lite</a>&#xFF0C;&#x9700;&#x8981;&#x5355;&#x72EC;&#x5B89;&#x88C5;</p>
 
-<pre><code>    <span class="comment">#æä»¶éè¦ä½¿ç¨å°login()æ¹æ³æ§è¡è¿ç¨ä¸­è§¦åçinput_img_verifycodeäºä»¶ï¼å æ­¤éè¦å¨login()æ§è¡ä¹åå è½½</span>
-    <span class="comment">#æä»¶èªèº«è®¾ç½®äºcall_on_load=&gt;1ï¼å æ­¤ä¼å¨å è½½åé©¬ä¸æ§è¡</span>
-    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"PostImgVerifycode"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+<pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"PostImgVerifycode"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
         <span class="string">smtp</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#é®ç®±çsmtpå°å  </span>
         <span class="string">port</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#smtpæå¡å¨ç«¯å£ï¼é»è®¤25</span>
         <span class="string">from</span>    <span class="operator">=&gt;</span>  <span class="string">'xxxx'</span><span class="operator">,</span> <span class="comment">#åä»¶äºº</span>
@@ -1784,8 +1850,6 @@
         <span class="string">post_host</span> <span class="operator">=&gt;</span> <span class="string">'xxx.xxx.xxx.xxx'</span> <span class="operator">,</span> <span class="comment">#æ¬æºå¬ç½IPå°åï¼éè¦è¿ç¨è®¿é®</span>
         <span class="string">post_port</span> <span class="operator">=&gt;</span> <span class="string">'xxxx'</span>            <span class="operator">,</span> <span class="comment">#æäº¤éªè¯ç çé¾æ¥å°åä¸­ä½¿ç¨çç«¯å£ï¼é»è®¤1987</span>
     <span class="operator">}</span><span class="operator">);</span>
-    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">login</span><span class="operator">();</span>
-    <span class="operator">...;</span>
     
     æ¶å°çé®ä»¶åå®¹å¦ä¸ï¼
     
@@ -1801,15 +1865,17 @@
 <p>&#x4E3A;&#x907F;&#x514D;&#x5BF9;&#x7FA4;&#x5185;&#x6210;&#x5458;&#x4EA7;&#x751F;&#x5F71;&#x54CD;&#xFF0C;&#x9ED8;&#x8BA4;&#x7FA4;&#x5185;&#x9700;&#x8981;&#x4F7F;&#x7528; @&#x5E10;&#x53F7;&#x6635;&#x79F0; &#x6765;&#x89E6;&#x53D1;</p>
 
 <pre><code>    <span class="variable">$client</span><span class="operator">-&gt;</span><span class="variable">load</span><span class="operator">(</span><span class="string">"SmartReply"</span><span class="operator">,</span><span class="string">data</span><span class="operator">=&gt;</span><span class="operator">{</span>
+        <span class="string">apikey</span>          <span class="operator">=&gt;</span> <span class="string">'4c53b48522ac4efdfe5dfb4f6149ae51'</span><span class="operator">,</span> <span class="comment">#å¯éï¼åèhttp://www.tuling123.com/html/doc/apikey.html</span>
         <span class="string">allow_group</span>     <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">"PERLå­¦ä¹ äº¤æµ"</span><span class="operator">]</span><span class="operator">,</span>  <span class="comment">#å¯éï¼åè®¸æä»¶çç¾¤ï¼å¯ä»¥æ¯ç¾¤åç§°æç¾¤å·ç </span>
         <span class="string">ban_group</span>       <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">"ç§äººç¾¤"</span><span class="operator">,</span><span class="number">123456</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#å¯éï¼ç¦ç¨è¯¥æä»¶çç¾¤ï¼å¯ä»¥æ¯ç¾¤åç§°æç¾¤å·ç </span>
         <span class="string">ban_user</span>        <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">"åè"</span><span class="operator">,</span><span class="number">123456</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#å¯éï¼ç¦ç¨è¯¥æä»¶çç¨æ·ï¼å¯ä»¥æ¯ç¨æ·çæ¾ç¤ºåç§°æqqå·ç </span>
         <span class="string">notice_reply</span>    <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">"å¯¹ä¸èµ·ï¼è¯·ä¸è¦è¿ä¹é¢ç¹çè¾ç¹æ"</span><span class="operator">,</span><span class="string">"å¯¹ä¸èµ·ï¼æ¨çè¾ç¹æ¬¡æ°å¤ªå¤"</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#å¯éï¼æéæ¶ç¨è¯­</span>
         <span class="string">notice_limit</span>    <span class="operator">=&gt;</span> <span class="number">8</span> <span class="operator">,</span>  <span class="comment">#å¯éï¼è¾¾å°è¯¥æ¬¡æ°æéå¯¹è¯æ¬¡æ°å¤ªå¤ï¼æéè¯­æ¥èªé»è®¤æ notice_reply</span>
         <span class="string">warn_limit</span>      <span class="operator">=&gt;</span> <span class="number">10</span><span class="operator">,</span>  <span class="comment">#å¯é,è¾¾å°è¯¥æ¬¡æ°ï¼ä¼è¢«è­¦å</span>
-        <span class="string">ban_limit</span>       <span class="operator">=&gt;</span> <span class="number">12</span><span class="operator">,</span>  <span class="comment">#å¯é,è¾¾å°è¯¥æ¬¡æ°ä¼è¢«åå¥é»åå¤§ä¸åè¿è¡åå¤</span>
+        <span class="string">ban_limit</span>       <span class="operator">=&gt;</span> <span class="number">12</span><span class="operator">,</span>  <span class="comment">#å¯é,è¾¾å°è¯¥æ¬¡æ°ä¼è¢«åå¥é»ååä¸åè¿è¡åå¤</span>
         <span class="string">period</span>          <span class="operator">=&gt;</span> <span class="number">600</span><span class="operator">,</span> <span class="comment">#å¯éï¼éå¶å¨æï¼åä½ ç§</span>
-        <span class="string">is_need_at</span>       <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span>  <span class="comment">#é»è®¤æ¯1 æ¯å¦éè¦è¾ç¹æè§¦ååå¤</span>
+        <span class="string">is_need_at</span>      <span class="operator">=&gt;</span> <span class="number">1</span><span class="operator">,</span>  <span class="comment">#é»è®¤æ¯1 æ¯å¦éè¦è¾ç¹æè§¦ååå¤</span>
+        <span class="string">keyword</span>         <span class="operator">=&gt;</span> <span class="operator">[</span><span class="string">qw(å°ç° å°çº¢ å°çª)</span><span class="operator">]</span><span class="operator">,</span> <span class="comment">#è§¦åæºè½åå¤çå³é®å­ï¼ä½¿ç¨æ¶è¯·è®¾ç½®is_need_at=&gt;0</span>
     <span class="operator">}</span><span class="operator">);</span>
 </code></pre>
 

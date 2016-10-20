@@ -1,7 +1,7 @@
 package Mojo::Webqq;
 use strict;
 use Carp ();
-$Mojo::Webqq::VERSION = "1.7.6";
+$Mojo::Webqq::VERSION = "1.8.6";
 use base qw(Mojo::Base);
 use Mojo::Webqq::Log;
 use Mojo::Webqq::Cache;
@@ -15,14 +15,17 @@ use base qw(Mojo::EventEmitter Mojo::Webqq::Base Mojo::Webqq::Model Mojo::Webqq:
 has qq                  => undef;
 has pwd                 => undef;
 has security            => 0;
-has state               => 'online';   #online|away|busy|silent|hidden|offline,
+has state               => 'online';   #online|away|busy|silent|hidden|offline|callme,
 has type                => 'smartqq';  #smartqq
 has login_type          => 'qrlogin';    #qrlogin|login
 has ua_debug            => 0;
+has ua_debug_req_body   => sub{$_[0]->ua_debug};
+has ua_debug_res_body   => sub{$_[0]->ua_debug};
 has log_level           => 'info';     #debug|info|warn|error|fatal
 has log_path            => undef;
 has log_encoding        => undef;      #utf8|gbk|...
 has email               => undef;
+has ignore_1202         => 1;           #对发送消息返回状态码1202是否认为发送失败
 
 has is_init_friend         => 1;                            #是否在首次登录时初始化好友信息
 has is_init_group          => 1;                            #是否在首次登录时初始化群组信息
@@ -33,13 +36,14 @@ has is_update_user          => 0;                            #是否定期更新
 has is_update_group         => 1;                            #是否定期更新群组信息
 has is_update_friend        => 1;                            #是否定期更新好友信息
 has is_update_discuss       => 1;                            #是否定期更新讨论组信息
+has update_interval         => 600;                          #定期更新的时间间隔
 
 has encrypt_method      => "perl";     #perl|js
 has tmpdir              => sub {File::Spec->tmpdir();};
 has pic_dir             => sub {$_[0]->tmpdir};
 has cookie_dir          => sub{return $_[0]->tmpdir;};
-has verifycode_path     => sub {File::Spec->catfile($_[0]->tmpdir,join('','mojo_webqq_verifycode_',$_[0]->qq,'.jpg'))};
-has qrcode_path         => sub {File::Spec->catfile($_[0]->tmpdir,join('','mojo_webqq_qrcode_',$_[0]->qq,'.png'))};
+has verifycode_path     => sub {File::Spec->catfile($_[0]->tmpdir,join('','mojo_webqq_verifycode_',$_[0]->qq || 'default','.jpg'))};
+has qrcode_path         => sub {File::Spec->catfile($_[0]->tmpdir,join('','mojo_webqq_qrcode_',$_[0]->qq || 'default','.png'))};
 has ioloop              => sub {Mojo::IOLoop->singleton};
 has keep_cookie         => 1;
 has max_recent          => 20;
@@ -85,8 +89,10 @@ has id_to_qq_cache => sub {Mojo::Webqq::Cache->new};
 
 has is_stop                 => 0;
 has is_ready                => 0;
+has is_polling              => 0;
 has ua_retry_times          => 5;
 has is_first_login          => -1;
+has is_set_qq               => 0; #是否在初始化时设置qq参数
 has login_state             => "init";#init|relogin|success|scaning|confirming
 has qrcode_count            => 0;
 has qrcode_count_max        => 10;
@@ -94,12 +100,15 @@ has send_failure_count      => 0;
 has send_failure_count_max  => 5;
 has poll_failure_count      => 0;
 has poll_failure_count_max  => 3;
+has poll_connection_id      => undef;
 has message_queue           => sub { $_[0]->gen_message_queue };
 has ua                      => sub {
     require Mojo::UserAgent;
+    require Mojo::UserAgent::Proxy;
     #local $ENV{MOJO_USERAGENT_DEBUG} = $_[0]->ua_debug; 
     require Storable if $_[0]->keep_cookie;
     Mojo::UserAgent->new(
+        proxy              => sub{ my $proxy = Mojo::UserAgent::Proxy->new;$proxy->detect;$proxy}->(),
         max_redirects      => 7,
         request_timeout    => 120,
         inactivity_timeout => 120,
@@ -188,9 +197,12 @@ sub new {
     #$ENV{MOJO_USERAGENT_DEBUG} = $self->{ua_debug};
     $self->info("当前正在使用 Mojo-Webqq v" . $self->version);
     if(not defined $self->{qq}){
-        $self->fatal("客户端初始化缺少qq参数");
-        $self->exit();
+        $self->warn("客户端初始化缺少qq参数，尝试自动检测");
+        $self->is_set_qq(0);
+    #    $self->fatal("客户端初始化缺少qq参数");
+    #    $self->exit();
     }
+    else{ $self->is_set_qq(1); }
     $self->ioloop->reactor->on(error=>sub{
         my ($reactor, $err) = @_;
         $self->error("reactor error: " . Carp::longmess($err));
@@ -213,12 +225,34 @@ sub new {
         $self->model_status->{$type} = $status;
         $self->emit("model_update_fail") if $self->get_model_status == 0;
     });
+    $self->on(before_send_message=>sub{
+        my($self,$msg) = @_;
+        my $content = $msg->content;
+        $content =~s/>/＞/g;
+        $content =~s/</＜/g;
+        $msg->content($content);
+    });
     $self->on(send_message=>sub{
         my($self,$msg,$status)=@_;
         if($status->is_success){$self->send_failure_count(0);}
         elsif($status->code == -3){my $count = $self->send_failure_count;$self->send_failure_count(++$count);}
         if($self->send_failure_count >= $self->send_failure_count_max){
             $self->relogin();
+        }
+    });
+    $self->on(send_message=>sub{
+        my($self,$msg)=@_;
+        return unless $msg->type =~/^message|sess_message$/;
+        $self->add_recent($msg->receiver);
+    });
+    $self->on(receive_message=>sub{
+        my($self,$msg)=@_;
+        return unless $msg->type =~/^message|sess_message$/;
+        my $sender_id = $msg->sender->id;
+        $self->add_recent($msg->sender);
+        unless(exists $self->data->{first_talk}{$sender_id}) {
+            $self->data->{first_talk}{$sender_id}++;
+            $self->emit(first_talk=>$msg->sender,$msg);
         }
     });
     $self->on(new_group=>sub{

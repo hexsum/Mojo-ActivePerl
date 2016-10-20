@@ -65,6 +65,7 @@
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Model/Remote/_get_user_info.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Model/Remote/_invite_friend.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Model/Remote/_kick_group_member.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Model/Remote/_qiandao.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Model/Remote/_remove_group_admin.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Model/Remote/_set_group_admin.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Model/Remote/_set_group_member_card.pm
@@ -72,11 +73,13 @@
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Model/Remote/get_qq_from_id.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Model/Remote/get_single_long_nick.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/FuckAndroid.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/FuckDaShen.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/GasPrice.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/GroupManage.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/IRCShell.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/KnowledgeBase.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/KnowledgeBase2.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/MobileInfo.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/MsgSync.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/Openqq.pm
@@ -85,12 +88,14 @@
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/PostImgVerifycode.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/PostQRcode.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/ProgramCode.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/Qiandao.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/Riddle.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/ShowMsg.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/ShowQRcode.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/SmartReply.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/StockInfo.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/Translation.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Plugin/UploadQRcode.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Recent/Discuss.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Recent/Friend.pm
 /tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/site/lib/Mojo/Webqq/Recent/Group.pm

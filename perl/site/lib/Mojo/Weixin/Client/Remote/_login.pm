@@ -1,7 +1,7 @@
 sub Mojo::Weixin::_login {
     my $self = shift;
     $self->info("客户端准备登录...");
-    my $api = 'https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login';
+    my $api = 'https://login.'. $self->domain .'/cgi-bin/mmwebwx-bin/login';
     if(not $self->_is_need_login()){
         $self->info("检测到近期登录活动，尝试直接恢复登录");
         $self->wxuin($self->search_cookie("wxuin"));
@@ -30,7 +30,7 @@ sub Mojo::Weixin::_login {
             loginicon => 'true',
             uuid    =>  $qrcode_uuid,
             tip     =>  $show_tip ,
-            r       =>  sub{use integer;~time}->(),
+            r       =>  sub{use integer;-1 * ~time}->(),
             _       =>  $self->now(),
         );
         my $r = $self->http_get($self->gen_url($api,@query_string));
@@ -40,6 +40,7 @@ sub Mojo::Weixin::_login {
         if($data{code} == 408){
             select undef,undef,undef,0.5;
             if($i==5){
+                $self->emit("qrcode_expire");
                 $self->info("登录二维码已失效，重新获取二维码");
                 $qrcode_uuid = $self->_get_qrcode_uuid();
                 $self->_get_qrcode_image($qrcode_uuid);
@@ -59,7 +60,7 @@ sub Mojo::Weixin::_login {
             if($data{redirect_uri}=~m#https?://([^/]+)#m){
                 $self->domain($1) if ($1 and $1 ne $self->domain);
             }   
-            my $data = $self->http_get($data{redirect_uri} . '&fun=new&version=v2&lang=zh_CN');
+            my $data = $self->http_get($data{redirect_uri} . '&fun=new&version=v2&lang=zh_CN',{Referer=>'https://' . $self->domain . '/'});
             #<error><ret>0</ret><message>OK</message><skey>@crypt_859d8a8a_3f3db5290570080d1db29da9507e35de</skey><wxsid>rsuMHe7xmA0aHW1D</wxsid><wxuin>138122335</wxuin><pass_ticket>hWdpMVCMqXIVfhXLcsJxYrC6bv785tVDLZAres096ZE%3D</pass_ticket></error
             if($data !~ m#^<error>.*</error>#){
                 $self->error("登录返回数据格式异常");
@@ -73,7 +74,7 @@ sub Mojo::Weixin::_login {
             $self->pass_ticket($d{pass_ticket} || '');
             $self->info("微信登录成功");
             $self->login_state("success");
-            return 1;
+            return 2;
         }
         elsif($data{code} == 400){
             $self->info("登录错误，客户端退出");

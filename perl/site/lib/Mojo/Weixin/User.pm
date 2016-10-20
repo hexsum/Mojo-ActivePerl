@@ -1,6 +1,6 @@
 package Mojo::Weixin::User;
 use Mojo::Weixin::Base 'Mojo::Weixin::Model::Base';
-has [qw(    
+has [qw(
     name
     account
     province
@@ -10,7 +10,20 @@ has [qw(
     signature
     display
     markname
+    _avatar    
 )];
+
+sub new {
+    my $self = shift;
+    $self = $self->Mojo::Weixin::Base::new(@_);
+    $self->client->emoji_convert(\$self->{name},$self->client->emoji_to_text);
+    $self;
+}
+sub get_avatar{
+    my $self = shift;
+    $self->client->get_avatar($self,@_);
+}
+
 sub displayname {
     my $self = shift;
     return $self->display || $self->markname || $self->name;
@@ -21,6 +34,7 @@ sub update{
     my $hash = shift;
     for(grep {substr($_,0,1) ne "_"} keys %$self){
         if(exists $hash->{$_}){
+            $self->client->emoji_convert(\$hash->{$_},$self->client->emoji_to_text) if $_ eq "name";
             if(defined $hash->{$_} and defined $self->{$_}){
                 if($hash->{$_} ne $self->{$_}){
                     my $old_property = $self->{$_};

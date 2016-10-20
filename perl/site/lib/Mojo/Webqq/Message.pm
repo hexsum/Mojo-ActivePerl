@@ -88,7 +88,7 @@ sub gen_message_queue{
         elsif($msg->msg_class eq "send"){
             #消息的ttl值减少到0则丢弃消息
             if($msg->ttl <= 0){
-                $self->debug("消息[ " . $msg->msg_id.  " ]已被消息队列丢弃，当前TTL: ". $msg->ttl);
+                $self->warn("消息[ " . $msg->msg_id.  " ]已被消息队列丢弃，当前TTL: ". $msg->ttl);
                 my $status = $self->new_send_status(code=>-5,msg=>"发送失败",info=>"TTL失效");
                 if(ref $msg->cb eq 'CODE'){
                     $msg->cb->(
@@ -356,7 +356,12 @@ sub parse_send_status_msg{
                 return $self->new_send_status(code=>0,msg=>"发送成功",info=>'发送正常');
             }
             elsif($json->{retcode}==1202){
-                return $self->new_send_status(code=>0,msg=>"发送成功",info=>'无法确定发送状态');
+                if($self->ignore_1202){
+                    return $self->new_send_status(code=>0,msg=>"发送成功",info=>'无法判断是否发送成功');
+                }
+                else{
+                    return $self->new_send_status(code=>-5,msg=>"发送失败",info=>'发送异常1202');
+                }
             }
             else{
                 return $self->new_send_status(code=>-4,msg=>"发送失败",info=>'响应未知: ' . encode_json($json));
@@ -546,7 +551,7 @@ sub parse_receive_msg {
     }
 
     #未重新登录
-    elsif ( $json->{retcode} == 100 ) {
+    elsif ( $json->{retcode} == 100 or $json->{retcode} == 103) {
         $self->warn("因网络或其他原因与服务器失去联系，客户端需要重新登录...\n");
         $self->relogin();
     }

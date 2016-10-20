@@ -20,7 +20,7 @@ use Mojo::Webqq::Client::Remote::_recv_message;
 use Mojo::Webqq::Client::Remote::_relink;
 use Mojo::Webqq::Client::Remote::logout;
 
-use base qw(Mojo::Webqq::Request Mojo::Webqq::Client::Cron);
+use base qw(Mojo::Webqq::Request);
 
 sub run{
     my $self = shift;
@@ -69,24 +69,9 @@ sub ready{
         $self->call($_);
     }
     $self->emit("after_load_plugin");
-
+    $self->login() if $self->login_state ne 'success';
     $self->relogin() if $self->get_model_status() == 0;
 
-    $self->on(send_message=>sub{
-        my($self,$msg)=@_;
-        return unless $msg->type =~/^message|sess_message$/;
-        $self->add_recent($msg->receiver);
-    });
-    $self->on(receive_message=>sub{
-        my($self,$msg)=@_;
-        return unless $msg->type =~/^message|sess_message$/;
-        my $sender_id = $msg->sender->id;
-        $self->add_recent($msg->sender);
-        unless(exists $self->data->{first_talk}{$sender_id}) {
-            $self->data->{first_talk}{$sender_id}++;
-            $self->emit(first_talk=>$msg->sender,$msg);
-        }
-    });   
     $self->interval(3600*4,sub{$self->data(+{})});
     $self->interval(900,sub{
         $self->debug("检查数据完整性...");
@@ -148,14 +133,14 @@ sub ready{
         }
         
     });
-    $self->interval(600,sub{
+    $self->interval($self->update_interval || 600,sub{
         return if $self->is_stop;
         return if not $self->is_update_group;
         $self->update_group(is_blocking=>0,is_update_group_ext=>0,is_update_group_member=>1,is_update_group_member_ext=>0);
     });
 
     $self->timer(60,sub{
-        $self->interval(600,sub{
+        $self->interval($self->update_interval || 600,sub{
             return if $self->is_stop;
             return if not $self->is_update_discuss;
             $self->update_discuss(is_blocking=>0,is_update_discuss_member=>1);    
@@ -163,7 +148,7 @@ sub ready{
     });
 
     $self->timer(60+60,sub{
-        $self->interval(600,sub{
+        $self->interval($self->update_interval || 600,sub{
             return if $self->is_stop;
             return if not $self->is_update_friend;
             $self->update_friend(is_blocking=>0,is_update_friend_ext=>0);
@@ -171,7 +156,7 @@ sub ready{
     });
 
     $self->timer(60+60+60,sub{
-        $self->interval(600,sub{
+        $self->interval($self->update_interval || 600,sub{
             return if $self->is_stop;
             return if not $self->is_update_user;
             $self->update_user(is_blocking=>0);
@@ -180,10 +165,10 @@ sub ready{
 
     #接收消息
     $self->on(poll_over=>sub{ my $self = $_[0];$self->timer(1,sub{$self->_recv_message()}) } );
-    $self->info("开始接收消息...\n");
-    $self->_recv_message();
+    $self->on(run=>sub{my $self = $_[0]; $self->info("开始接收消息..."); $self->_recv_message();});
     $self->is_ready(1);
     $self->emit("ready");
+    return $self;
 }
 
 sub timer {
@@ -197,6 +182,14 @@ sub interval{
 sub relogin{
     my $self = shift;
     $self->info("正在重新登录...\n");
+    if(defined $self->poll_connection_id){
+        eval{
+            $self->ioloop->remove($self->poll_connection_id);
+            $self->is_polling(0);
+            $self->info("停止接收消息...");
+        };
+        $self->info("停止接收消息失败: $@") if $@;
+    }
     $self->logout();
     $self->login_state("relogin");
     $self->sess_sig_cache(Mojo::Webqq::Cache->new);
@@ -217,6 +210,8 @@ sub relogin{
     $self->model_status(+{});
 
     $self->login(delay=>0);
+    $self->info("重新开始接收消息...");
+    $self->_recv_message();
     $self->emit("relogin");
 }
 sub relink {
@@ -232,7 +227,9 @@ sub relink {
 }
 sub login {
     my $self = shift;
+    return if $self->login_state eq 'success';
     my %p = @_;
+    my $is_scan  = 0;
     $self->qq($p{qq}) if defined $p{qq};
     $self->pwd($p{pwd}) if defined $p{pwd};
     my $delay = defined $p{delay}?$p{delay}:0;
@@ -242,82 +239,82 @@ sub login {
     elsif($self->is_first_login == 1){
         $self->is_first_login(0);
     }
-    my $callback = sub{
-        if($self->is_first_login){
-            $self->load_cookie();
-            my $ptwebqq = $self->search_cookie("ptwebqq");
-            my $skey = $self->search_cookie("skey");
-            $self->ptwebqq($ptwebqq) if defined $ptwebqq;
-            $self->skey($skey) if defined $skey;
+    if($self->is_first_login){
+        $self->load_cookie();
+        my $ptwebqq = $self->search_cookie("ptwebqq");
+        my $skey = $self->search_cookie("skey");
+        $self->ptwebqq($ptwebqq) if defined $ptwebqq;
+        $self->skey($skey) if defined $skey;
+    }
+    if(defined $self->ptwebqq and defined $self->skey){
+        $self->info("检测到最近登录活动，尝试直接恢复登录...");
+        if(not $self->_get_vfwebqq() && $self->_login2()){
+            $self->relogin();
+            return;
         }
-        if(defined $self->ptwebqq and defined $self->skey){
-            $self->info("检测到最近登录活动，尝试直接恢复登录...");
-            if(not $self->_get_vfwebqq() && $self->_login2()){
+        $is_scan = 0;
+    } 
+    elsif(
+        $self->_prepare_for_login()    
+        && $self->_check_verify_code()     
+        && $self->_get_img_verify_code()
+        && $self->_get_qrlogin_pic()
+
+    ){
+        while(1){
+            my $ret = $self->_login1();
+            if($ret == -1){#验证码输入错误
+                $self->_get_img_verify_code();
+                next;
+            }
+            elsif($ret == -2){#帐号或密码错误
+                $self->error("登录失败，尝试更换加密算法计算方式，重新登录...");
+                $self->encrypt_method("js");
                 $self->relogin();
                 return;
             }
-        } 
-        elsif(
-            $self->_prepare_for_login()    
-            && $self->_check_verify_code()     
-            && $self->_get_img_verify_code()
-            && $self->_get_qrlogin_pic()
-
-        ){
-            while(1){
-                my $ret = $self->_login1();
-                if($ret == -1){#验证码输入错误
-                    $self->_get_img_verify_code();
-                    next;
-                }
-                elsif($ret == -2){#帐号或密码错误
-                    $self->error("登录失败，尝试更换加密算法计算方式，重新登录...");
-                    $self->encrypt_method("js");
-                    $self->relogin();
-                    return;
-                }
-                elsif($ret == -4 ){#等待二维码扫描
-                    sleep 3;
-                    next;
-                }
-                elsif($ret == -5 ){#二维码已经扫描 等待手机端进行授权登录
-                    sleep 3;
-                    next;
-                }
-                elsif($ret == -6){#二维码已经过期，重新下载二维码
-                    $self->emit("qrcode_expire");
-                    $self->_get_qrlogin_pic();
-                    next;
-                }
-                elsif($ret == 1){#登录成功
-                    $self->_check_sig() 
-                    && $self->_get_vfwebqq()
-                    && $self->_login2();
-                    last;
-                }
-                else{
-                    last;
-                }
+            elsif($ret == -4 ){#等待二维码扫描
+                sleep 3;
+                next;
+            }
+            elsif($ret == -5 ){#二维码已经扫描 等待手机端进行授权登录
+                sleep 3;
+                next;
+            }
+            elsif($ret == -6){#二维码已经过期，重新下载二维码
+                $self->emit("qrcode_expire");
+                $self->_get_qrlogin_pic();
+                next;
+            }
+            elsif($ret == 1){#登录成功
+                $is_scan = 1;
+                $self->_check_sig() 
+                && $self->_get_vfwebqq()
+                && $self->_login2();
+                last;
+            }
+            else{
+                last;
             }
         }
+    }
 
-        #登录不成功，客户端退出运行
-        if($self->login_state ne 'success'){
-            $self->fatal("登录失败，客户端退出（可能网络不稳定，请多尝试几次）");
-            $self->stop();
-        }
-        else{
-            $self->qrcode_count(0);
-            $self->info("帐号(" . $self->qq . ")登录成功");
-            $self->update_user;
-            $self->update_friend(is_blocking=>1,is_update_friend_ext=>1) if $self->is_init_friend;
-            $self->update_group(is_blocking=>1,is_update_group_ext=>1,is_update_group_member_ext=>0,is_update_group_member=>0)  if $self->is_init_group;
-            $self->update_discuss(is_blocking=>1,is_update_discuss_member=>0) if $self->is_init_discuss;
-            $self->update_recent(is_blocking=>1) if $self->is_init_recent;
-            $self->emit("login");
-        }
-    };
-    $delay?$self->on(after_load_plugin=>$callback):$callback->();
+    #登录不成功，客户端退出运行
+    if($self->login_state ne 'success'){
+        $self->fatal("登录失败，客户端退出（可能网络不稳定，请多尝试几次）");
+        $self->stop();
+    }
+    else{
+        $self->qrcode_count(0);
+        $self->info("帐号(" . $self->qq . ")登录成功");
+        $self->login_type eq "qrlogin"?$self->clean_qrcode():$self->clean_verifycode();
+        $self->update_user;
+        $self->update_friend(is_blocking=>1,is_update_friend_ext=>1) if $self->is_init_friend;
+        $self->update_group(is_blocking=>1,is_update_group_ext=>1,is_update_group_member_ext=>0,is_update_group_member=>0)  if $self->is_init_group;
+        $self->update_discuss(is_blocking=>1,is_update_discuss_member=>0) if $self->is_init_discuss;
+        $self->update_recent(is_blocking=>1) if $self->is_init_recent;
+        $self->emit("login",$is_scan);
+    }
     return $self;
 }
 
@@ -351,15 +348,16 @@ sub mail{
         $self->error("发送邮件，请先安装模块 Mojo::SMTP::Client");
         return;
     }
-    my @new = (
+    my %new = (
         address => $opt{smtp},
         port    => $opt{port} || 25,
         autodie => $is_blocking,
     ); 
     for(qw(tls tls_ca tls_cert tls_key)){
-        push @new, ($_,$opt{$_}) if defined $opt{$_}; 
+        $new{$_} = $opt{$_} if defined $opt{$_}; 
     }
-    my $smtp = Mojo::SMTP::Client->new(@new);
+    $new{tls} = 1 if($new{port} == 465 and !defined $new{tls});
+    my $smtp = Mojo::SMTP::Client->new(%new);
     unless(defined $smtp){
         $self->error("Mojo::SMTP::Client客户端初始化失败");
         return;
@@ -421,9 +419,11 @@ sub spawn {
     my $self = shift;
     my %opt = @_;
     require Mojo::Webqq::Run;
-    my $run = Mojo::Webqq::Run->new(ioloop=>$self->ioloop,log=>$self->log); 
+    my $is_blocking = delete $opt{is_blocking};
+    my $run = Mojo::Webqq::Run->new(ioloop=>($is_blocking?Mojo::IOLoop->new:$self->ioloop),log=>$self->log); 
     $run->max_forks(delete $opt{max_forks}) if defined $opt{max_forks};
     $run->spawn(%opt);
+    $run->start if $is_blocking;
     $run;
 }
 sub clean_qrcode{
@@ -439,6 +439,12 @@ sub clean_verifycode{
     return if not -f $self->verifycode_path;
     $self->info("清除残留的历史验证码图片");
     unlink $self->verifycode_path or $self->warn("删除验证码图片[ ". $self->verifycode_path . " ]失败: $!");
+}
+
+sub add_job {
+    my $self = shift;
+    require Mojo::Webqq::Client::Cron;
+    $self->Mojo::Webqq::Client::Cron::add_job(@_);
 }
 
 1;

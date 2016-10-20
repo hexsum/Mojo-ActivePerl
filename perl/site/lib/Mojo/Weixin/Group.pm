@@ -1,12 +1,16 @@
 package Mojo::Weixin::Group;
 use Mojo::Weixin::Base 'Mojo::Weixin::Model::Base';
 use Mojo::Weixin::Group::Member;
-use Mojo::Weixin::Const qw(%FACE_MAP_QQ %FACE_MAP_EMOJI);
 
 has 'id';
 has name => '';
 has member => sub{[]};
+has _avatar => '';
 
+sub get_avatar{
+    my $self = shift;
+    $self->client->get_avatar($self,@_);
+}
 sub displayname { 
     my $self = shift;
     return $self->name if $self->name;
@@ -23,15 +27,8 @@ sub new {
             $_->_group_id($self->id);
         }
     }
-    if( my @code = $self->name=~/<span class="emoji emoji([a-zA-Z0-9]+)"><\/span>/g){
-        my %map = reverse %FACE_MAP_EMOJI;
-        for(@code){
-            my $name = $self->name;
-            $name=~s/<span class="emoji emoji$_"><\/span>/exists $map{$_}?"[$map{$_}]":"[未知表情]"/eg;
-            $self->name($name);
-        }
-    }
 
+    $self->client->emoji_convert(\$self->{name},$self->client->emoji_to_text);
     $self;
 }
 sub is_empty{
@@ -68,6 +65,7 @@ sub update {
         }
         else{
             if(exists $hash->{$_}){
+                $self->client->emoji_convert(\$hash->{$_},$self->client->emoji_to_text) if $_ eq "name";
                 if(defined $hash->{$_} and defined $self->{$_}){
                     if($hash->{$_} ne $self->{$_}){
                         my $old_property = $self->{$_};
@@ -96,7 +94,7 @@ sub search_group_member{
             my @g = $self->_search($self->member,@_);
             if(@g){return @g}
             else{
-                $self->update_group($self);
+                $self->client->update_group($self);
                 return $self->_search($self->member,@_);
             }
         }
@@ -104,7 +102,7 @@ sub search_group_member{
             my $g = $self->_search($self->member,@_);
             if(defined $g){return $g }
             else{
-                $self->update_group($self);
+                $self->client->update_group($self);
                 return $self->_search($self->member,@_);
             }
         }
@@ -115,22 +113,43 @@ sub add_group_member{
     my $self = shift;
     my $member = shift;
     $self->client->die("不支持的数据类型\n") if ref $member ne "Mojo::Weixin::Group::Member";
-    $self->client->emit(new_group_member=>$member) if $self->_add($self->member,$member) == 1;
+    $self->client->emit(new_group_member=>$member,$self) if $self->_add($self->member,$member) == 1;
 }
 sub remove_group_member{
     my $self = shift;
     my $member = shift;
     $self->client->die("不支持的数据类型\n") if ref $member ne "Mojo::Weixin::Group::Member";
-    $self->client->emit(lose_group_member=>$member) if $self->_remove($self->member,$member) == 1;
+    $self->client->emit(lose_group_member=>$member,$self) if $self->_remove($self->member,$member) == 1;
 }
 
 sub me {
     my $self = shift;
     return $self->search_group_member(id=>$self->client->user->id);
 }
+sub members {
+    my $self = shift;
+    return @{$self->member};
+}
 sub send{
     my $self = shift;
     $self->client->send_message($self,@_);
+}
+sub send_media {
+    my $self = shift;
+    $self->client->send_media($self,@_);
+}
+sub set_displayname{
+    my $self = shift;
+    my $displayname = shift;
+    $self->client->set_group_displayname($self,$displayname);
+}
+sub invite_friend{
+    my $self = shift;
+    $self->client->invite_friend($self,@_)
+}
+sub kick_group_member{
+    my $self = shift;
+    $self->client->kick_group_member($self,@_);
 }
 
 1;

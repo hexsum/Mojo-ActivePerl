@@ -6,9 +6,9 @@ sub Mojo::Weixin::_sync {
     my $api = 'https://'. $self->domain . '/cgi-bin/mmwebwx-bin/webwxsync';
     my @query_string = (
         sid     => $self->wxsid,
-        skey    => url_escape($self->skey),
-        pass_ticket => $self->pass_ticket,
     );
+    push @query_string,(skey => $self->skey) if $self->skey;
+    push @query_string,(pass_ticket    => url_escape($self->pass_ticket)) if $self->pass_ticket;
     my $post = {
         BaseRequest =>  {Uin => $self->wxuin,Sid=>$self->wxsid,},
         SyncKey     =>  $self->sync_key,
@@ -18,8 +18,15 @@ sub Mojo::Weixin::_sync {
         my ($json,$ua,$tx) = @_;
         $self->emit(receive_raw_message=>$tx->res->body,$json);
         $self->_sync_running(0);
-        $self->emit("sync_over",$json);
+        if(defined $json and $json->{BaseResponse}{Ret} == -1){#对于 -1 的消息做延迟处理，防止刷屏
+            $self->timer(5,sub{
+                $self->emit("sync_over",$json);
+            }); 
+        }
+        else{
+            $self->emit("sync_over",$json);
+        }
     };
-    $self->http_post($self->gen_url($api,@query_string),{json=>1},json=>$post,$callback);
+    $self->http_post($self->gen_url($api,@query_string),{Referer=>'https://' . $self->domain .  '/',json=>1},json=>$post,$callback);
 }
 1;
