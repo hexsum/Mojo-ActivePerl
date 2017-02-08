@@ -1,7 +1,5 @@
 package Mojo::Weixin::Plugin::SmartReply;
 use POSIX;
-use Encode;
-use Mojo::Util;
 my $api = 'http://www.tuling123.com/openapi/api';
 my %limit;
 my %ban;
@@ -51,24 +49,24 @@ sub call{
         $input=~s/\@\Q$user_nick\E(|"\xe2\x80\x85")(\s+)?|\[[^\[\]]+\]//g;
         return unless $input;
 
-        my @query_string = (
-            "key"       =>  $data->{apikey} || "4c53b48522ac4efdfe5dfb4f6149ae51",
+        my $json = {
+            "key"       =>  $data->{apikey} || "bbdaba85b5cf47bc80e27cbaee7a77df",
             "userid"    =>  $msg->sender->id,
-            "info"      =>  decode("utf8",$input),
-        );
+            "info"      =>  $input,
+        };
 
-        push @query_string,(loc=>$msg->sender->city."市") if $msg->type eq "group_message" and  $msg->sender->city; 
-        $client->http_get($api,{json=>1},form=>{@query_string},sub{
+        $json->{"loc"} = $msg->sender->city if $msg->type eq "group_message" and  $msg->sender->city;
+        $client->http_post($api,{json=>1},json=>$json,sub{
             my $json = shift;
             return unless defined $json;
             return if $json->{code}=~/^4000[1-7]$/;
             my $reply;
             if($json->{code} == 100000){
                 return unless $json->{text};
-                $reply = encode("utf8",$json->{text});
+                $reply = $json->{text};
             } 
             elsif($json->{code} == 200000){
-                $reply = encode("utf8","$json->{text}$json->{url}");
+                $reply = "$json->{text}$json->{url}";
             }
             else{return}
             $reply=~s#<br(\s*/)?>#\n#g;
