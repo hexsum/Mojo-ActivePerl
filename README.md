@@ -21,7 +21,7 @@
         
         #如果下载速度较慢可以使用国内的腾讯云存储地址（文件可能会较旧）
         
-        $ wget http://share-10066126.cos.myqcloud.com/Mojo-ActivePerl-20161109.zip -O Mojo-ActivePerl.zip
+        $ wget http://share-10066126.cos.myqcloud.com/Mojo-ActivePerl-20170208.zip -O Mojo-ActivePerl.zip
 
 2. 解压到当前目录并进入目录
     
