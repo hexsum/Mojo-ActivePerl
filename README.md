@@ -7,8 +7,8 @@
 
 ##包含的组件：
 * Perl 5.22.1
-* Mojo-Webqq 2.0.6
-* Mojo-Weixin 1.3.1
+* Mojo-Webqq 2.0.8
+* Mojo-Weixin 1.3.2
 * Mojo-IRC-Server-Chinese 1.7.7
 * Mojolicious 6.57
 * cpanm 1.7.4
@@ -21,7 +21,7 @@
         
         #如果下载速度较慢可以使用国内的腾讯云存储地址（文件可能会较旧）
         
-        $ wget http://share-10066126.cos.myqcloud.com/Mojo-ActivePerl-20170208.zip -O Mojo-ActivePerl.zip
+        $ wget http://share-10066126.cos.myqcloud.com/Mojo-ActivePerl-20170214.zip -O Mojo-ActivePerl.zip
 
 2. 解压到当前目录并进入目录
     
